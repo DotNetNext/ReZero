@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="Database\Tables\" />
     <Folder Include="Database\Databases\" />
+    <Folder Include="DbModels\" />
   </ItemGroup>
 
 </Project>
