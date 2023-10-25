@@ -19,7 +19,7 @@ namespace ReZero
         public static void ReZeroInit(this IApplicationBuilder app, ReZeroOptions? options=null)
         {
             // Create an instance of ZeroApiMiddleware
-            ZeroApiMiddleware zeroApi = new ZeroApiMiddleware();
+            ZeroApiMiddleware zeroApi = new ZeroApiMiddleware(app);
 
             // Use ZeroApiMiddleware to handle API requests
             app.Use(zeroApi.HandleApiRequests());

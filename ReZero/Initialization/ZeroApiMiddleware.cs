@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
 
@@ -6,6 +7,17 @@ namespace ReZero
 {
     public class ZeroApiMiddleware
     {
+        private readonly IApplicationBuilder _applicationBuilder;
+
+        /// <summary>
+        /// nitialize a new instance of ZeroApiMiddleware.
+        /// </summary>
+        /// <param name="application">ASP.NET Core application Generator.</param>
+        public ZeroApiMiddleware(IApplicationBuilder application)
+        {
+            _applicationBuilder = application ?? throw new ArgumentNullException(nameof(application));
+        } 
+
         /// <summary>
         /// Middleware function to handle custom ZeroApi requests.
         /// </summary>
