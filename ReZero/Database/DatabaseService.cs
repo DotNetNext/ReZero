@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.Database
+namespace ReZero 
 {
     internal class DatabaseService
     {
