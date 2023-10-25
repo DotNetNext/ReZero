@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tables\" />
+    <Folder Include="Database\Tables\" />
+    <Folder Include="Database\Databases\" />
   </ItemGroup>
 
 </Project>
