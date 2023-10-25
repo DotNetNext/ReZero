@@ -16,6 +16,7 @@
     <Folder Include="Database\Tables\" />
     <Folder Include="Database\Databases\" />
     <Folder Include="Http\" />
+    <Folder Include="Interface\" />
   </ItemGroup>
 
 </Project>
