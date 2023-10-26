@@ -51,7 +51,8 @@ namespace ReZero
         /// <returns>True if the URL is for ZeroApi, otherwise false.</returns>
         private bool IsZeroApi(PathString requestedUrl)
         {
-            return requestedUrl == "/custom-url";
+            var app= App.ServiceProvider.GetService<IApi>();
+            return app.IsApi(requestedUrl);
         }
 
         /// <summary>
@@ -61,7 +62,8 @@ namespace ReZero
         /// <returns>A Task representing the asynchronous operation.</returns>
         private async Task WriteZeroApiResponse(HttpContext context)
         {
-            await context.Response.WriteAsync("Custom response for /custom-url");
+            var app = App.ServiceProvider.GetService<IApi>();
+            await app.WriteAsync(context);
         }
     }
 }

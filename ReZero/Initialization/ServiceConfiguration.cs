@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using ReZero.Options;
 
 namespace ReZero
 {
@@ -20,7 +21,8 @@ namespace ReZero
         {
             // Create an instance of ZeroApiMiddleware
             ZeroApiMiddleware zeroApi = new ZeroApiMiddleware(app);
-
+            // Create a new instance of ApplicationServiceProvider and set it as the global service provider
+            App.ServiceProvider= new ApplicationServiceProvider(app.ApplicationServices); ;
             // Use ZeroApiMiddleware to handle API requests
             app.Use(zeroApi.HandleApiRequests());
         }
