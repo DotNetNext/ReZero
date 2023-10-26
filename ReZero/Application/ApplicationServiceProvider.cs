@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace ReZero
@@ -9,15 +10,15 @@ namespace ReZero
     /// </summary>
     public class ApplicationServiceProvider
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IApplicationBuilder _app;
 
         /// <summary>
         /// 构造函数，接受一个 <see cref="IServiceProvider"/> 实例。
         /// </summary>
         /// <param name="serviceProvider">依赖注入容器。</param>
-        public ApplicationServiceProvider(IServiceProvider serviceProvider)
+        public ApplicationServiceProvider(IApplicationBuilder serviceProvider)
         {
-            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            _app = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
         /// <summary>
@@ -27,10 +28,14 @@ namespace ReZero
         /// <returns>指定类型的服务实例。</returns>
         public T GetService<T>()
         {
-         
-#pragma warning disable CS8603 
-            return _serviceProvider.GetService<T>();
-#pragma warning restore CS8603  
+            // 获取IOC容器（服务提供程序）
+            var serviceProvider = _app.ApplicationServices;
+
+            // 使用IOC容器执行操作
+#pragma warning disable CS8714 // 类型不能用作泛型类型或方法中的类型参数。类型参数的为 Null 性与 "notnull" 约束不匹配。
+            var myService = serviceProvider.GetRequiredService<T>();
+#pragma warning restore CS8714 // 类型不能用作泛型类型或方法中的类型参数。类型参数的为 Null 性与 "notnull" 约束不匹配。
+            return myService;
         }
     }
 }
