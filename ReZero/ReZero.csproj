@@ -17,6 +17,7 @@
     <Folder Include="Database\Tables\" />
     <Folder Include="Database\Databases\" />
     <Folder Include="DbModels\" />
+    <Folder Include="Api_ReZero\" />
   </ItemGroup>
 
 </Project>
