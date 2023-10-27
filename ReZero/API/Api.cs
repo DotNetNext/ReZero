@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using ReZero.API;
-using ReZero.API.RequestHandler;
 using System;
 using System.Collections.Generic;
 using System.Text;

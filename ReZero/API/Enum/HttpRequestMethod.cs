@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.API.Enum
+namespace ReZero 
 {
     public enum HttpRequestMethod
     {
