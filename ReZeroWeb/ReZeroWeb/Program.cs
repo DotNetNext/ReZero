@@ -1,5 +1,4 @@
-using ReZero;
-using ReZero.API.Interface;
+using ReZero; 
 
 var builder = WebApplication.CreateBuilder(args) ;
 
@@ -10,11 +9,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//×¢²á£ºÎÞ´úÂëAPI
 builder.Services.ReZero();
 
-var app = builder.Build();
-
-var xxx=app.Services.GetService<IApi>();
+var app = builder.Build(); 
  
 
 // Configure the HTTP request pipeline.
