@@ -19,17 +19,26 @@ namespace ReZero
         {
             var helper = new ApiHelper();
             var requestMethodString = context.Request.Method;
-            if (Enum.TryParse<HttpRequestMethod>(requestMethodString, ignoreCase: true, out var requestMethod))
+            HttpRequestMethod requestMethod;
+            if (helper.IsHttpMethod(requestMethodString, out requestMethod))
             {
-                var handler = helper.GetHandler(requestMethod);
-                var result = handler.HandleRequest();
-                await context.Response.WriteAsync(result);
+                await WriteAsyncSuccess(context, helper, requestMethod);
             }
             else
             {
-                context.Response.StatusCode = 400; // Bad Request
-                await context.Response.WriteAsync("Invalid request method");
+                await WriteError(context);
             }
         }
+        private static async Task WriteAsyncSuccess(HttpContext context, ApiHelper helper, HttpRequestMethod requestMethod)
+        {
+            var handler = helper.GetHandler(requestMethod);
+            var result = handler.HandleRequest();
+            await context.Response.WriteAsync(result);
+        }
+        private static async Task WriteError(HttpContext context)
+        {
+            context.Response.StatusCode = 400; // Bad Request
+            await context.Response.WriteAsync("Invalid request method");
+        } 
     }
 }

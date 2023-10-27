@@ -7,7 +7,10 @@ namespace ReZero.API
 {
     internal class ApiHelper
     {
-
+        public  bool IsHttpMethod(string requestMethodString, out HttpRequestMethod requestMethod)
+        {
+            return Enum.TryParse<HttpRequestMethod>(requestMethodString, ignoreCase: true, out requestMethod);
+        }
         public IRequestMethodHandler GetHandler(HttpRequestMethod method)
         {
             switch (method)
