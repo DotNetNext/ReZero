@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,16 @@ namespace ReZero.API.RequestHandler
 {
     public class GetRequestHandler : IRequestMethodHandler
     {
-        public string HandleRequest()
+        private HttpContext context;
+
+        public GetRequestHandler(HttpContext context)
         {
-            return "Handling GET request";
+            this.context = context;
+        }
+
+        public HandleResult HandleRequest()
+        {
+            throw new NotImplementedException();
         }
     }
 }

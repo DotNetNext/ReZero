@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,16 @@ namespace ReZero
 {
     public class PutRequestHandler : IRequestMethodHandler
     {
-        public string HandleRequest()
+        private HttpContext context;
+
+        public PutRequestHandler(HttpContext context)
         {
-            return "Handling PUT request";
+            this.context = context;
+        }
+
+        public HandleResult HandleRequest()
+        {
+            throw new NotImplementedException();
         }
     }
 }

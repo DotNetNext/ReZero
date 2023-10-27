@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,17 @@ namespace ReZero
 {
     public class PostRequestHandler : IRequestMethodHandler
     {
-        public string HandleRequest()
+        private HttpContext context;
+
+        public PostRequestHandler(HttpContext context)
         {
-            return "Handling POST request";
+            this.context = context;
+        }
+
+
+        public HandleResult HandleRequest()
+        {
+            throw new NotImplementedException();
         }
     }
 

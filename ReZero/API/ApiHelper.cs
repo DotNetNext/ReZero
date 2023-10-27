@@ -1,4 +1,5 @@
-﻿using ReZero.API.Enum;
+﻿using Microsoft.AspNetCore.Http;
+using ReZero.API.Enum;
 using ReZero.API.RequestHandler;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,20 @@ namespace ReZero.API
         {
             return Enum.TryParse<HttpRequestMethod>(requestMethodString, ignoreCase: true, out requestMethod);
         }
-        public IRequestMethodHandler GetHandler(HttpRequestMethod method)
+        public IRequestMethodHandler GetHandler(HttpRequestMethod method, HttpContext context)
         {
             switch (method)
             {
                 case HttpRequestMethod.GET:
-                    return new GetRequestHandler();
+                    return new GetRequestHandler(context);
                 case HttpRequestMethod.POST:
-                    return new PostRequestHandler();
+                    return new PostRequestHandler(context);
                 case HttpRequestMethod.PUT:
-                    return new PutRequestHandler();
+                    return new PutRequestHandler(context);
                 case HttpRequestMethod.DELETE:
-                    return new DeleteRequestHandler();
+                    return new DeleteRequestHandler(context);
                 case HttpRequestMethod.PATCH:
-                    return new PatchRequestHandler();
+                    return new PatchRequestHandler(context);
                 default:
                     throw new NotSupportedException("Unsupported HTTP request method");
             }

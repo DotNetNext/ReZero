@@ -32,9 +32,9 @@ namespace ReZero
         }
         private static async Task WriteAsyncSuccess(HttpContext context, ApiHelper helper, HttpRequestMethod requestMethod)
         {
-            var handler = helper.GetHandler(requestMethod);
+            var handler = helper.GetHandler(requestMethod,context);
             var result = handler.HandleRequest();
-            await context.Response.WriteAsync(result);
+            await context.Response.WriteAsync("");
         }
         private static async Task WriteError(HttpContext context)
         {

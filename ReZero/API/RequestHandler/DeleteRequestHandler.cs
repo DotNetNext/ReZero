@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,16 @@ namespace ReZero
 {
     public class DeleteRequestHandler : IRequestMethodHandler
     {
-        public string HandleRequest()
+        private HttpContext context;
+
+        public DeleteRequestHandler(HttpContext context)
         {
-            return "Handling DELETE request";
+            this.context = context;
+        }
+
+        public HandleResult HandleRequest()
+        {
+            throw new NotImplementedException();
         }
     }
 }

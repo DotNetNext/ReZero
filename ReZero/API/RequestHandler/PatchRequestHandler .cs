@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,9 +7,16 @@ namespace ReZero
 {
     public class PatchRequestHandler : IRequestMethodHandler
     {
-        public string HandleRequest()
+        private HttpContext context;
+
+        public PatchRequestHandler(HttpContext context)
         {
-            return "Handling PATCH request";
+            this.context = context;
+        }
+
+        public HandleResult HandleRequest()
+        {
+            throw new NotImplementedException();
         }
     }
 }
