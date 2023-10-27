@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal class InterfaceService
+    public interface IRequestMethodHandler
     {
-        
+        string HandleRequest();
     }
 }

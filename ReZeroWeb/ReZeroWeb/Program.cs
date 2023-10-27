@@ -1,4 +1,6 @@
 using ReZero;
+using ReZero.API.Interface;
+
 var builder = WebApplication.CreateBuilder(args) ;
 
 // Add services to the container.

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero
 {
     public static class MyServiceCollectionExtensions
     {
