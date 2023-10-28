@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using ReZero.Api_ReZero.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero
 {
     public class ReZeroApi : IReZeroApi
     {

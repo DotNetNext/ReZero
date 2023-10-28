@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using ReZero.Api_ReZero.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;

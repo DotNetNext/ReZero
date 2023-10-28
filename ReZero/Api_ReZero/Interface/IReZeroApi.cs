@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero.Api_ReZero.Interface
 {
-    public interface IReZeroApi 
+    public interface IReZeroApi
     {
         bool IsApi(string url);
         Task WriteAsync(HttpContext context);

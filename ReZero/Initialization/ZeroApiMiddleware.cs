@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using System; 
+using System;
+using ReZero.Api_ReZero.Interface;
 
 namespace ReZero
 {
