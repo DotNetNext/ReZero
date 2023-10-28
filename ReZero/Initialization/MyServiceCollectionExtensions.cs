@@ -27,7 +27,7 @@ namespace ReZero
             services.AddTransient<IStartupFilter, RequestSetOptionsStartupFilter>();
 
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
-            services.AddTransient<ORM>(it => new ORM(options.ConnectionConfig));
+            services.AddTransient<DatabaseReZeroContext>(it => new DatabaseReZeroContext(options.ConnectionConfig));
 
             // Return the updated IServiceCollection.
             return services;
