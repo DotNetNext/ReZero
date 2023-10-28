@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReZero
 {
-    public class Api : IApi
+    public class DynamicApi : IDynamicApi
     {
         public bool IsApi(string url)
         {

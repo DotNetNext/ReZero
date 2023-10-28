@@ -13,7 +13,8 @@ namespace ReZero
             options = options ?? new ReZeroOptions();
 
 
-            services.AddTransient<IApi, Api>();
+            services.AddTransient<IDynamicApi, DynamicApi>();
+            services.AddTransient<IReZeroApi, ReZeroApi>();
             services.AddTransient<IStartupFilter,RequestSetOptionsStartupFilter>();
             services.AddTransient<ORM>(it => new ORM(options.ConnectionConfig));
 
