@@ -1,22 +1,34 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ReZero 
+namespace ReZero
 {
-    
-   
+    /// <summary>
+    /// Custom startup filter to configure application services and middleware.
+    /// </summary>
     public class RequestSetOptionsStartupFilter : IStartupFilter
     {
+        /// <summary>
+        /// Configures application services and middleware.
+        /// </summary>
+        /// <param name="next">The next middleware delegate.</param>
+        /// <returns>An action to configure the application builder.</returns>
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
+            // Return an action to configure the application builder.
             return builder =>
-            { 
+            {
+                // Initialize the application service provider with the application builder.
                 App.ServiceProvider = new ApplicationServiceProvider(builder);
-                var func= new ZeroApiMiddleware(builder).HandleApiRequests();
+
+                // Create an instance of ZeroApiMiddleware and handle API requests.
+                var func = new ZeroApiMiddleware(builder).HandleApiRequests();
+
+                // Use the created middleware in the pipeline.
                 builder.Use(func);
+
+                // Call the next middleware in the pipeline.
                 next(builder);
             };
         }
