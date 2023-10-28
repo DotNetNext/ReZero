@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ReZero.Api_ReZero.Interface;
+using ReZero.Enties.Options;
 using System;
 
 namespace ReZero
