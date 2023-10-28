@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    public interface IDynamicApi
+    public interface IDynamicApi:IApi
     {
-        bool IsApi(string url);
-        Task WriteAsync(HttpContext context);
     }
+
+   
 }

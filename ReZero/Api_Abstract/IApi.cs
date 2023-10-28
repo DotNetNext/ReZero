@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    public interface IReZeroApi:IApi
-    { 
+    public interface IApi
+    {
+
+        bool IsApi(string url);
+        Task WriteAsync(HttpContext context);
     }
 }
