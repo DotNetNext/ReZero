@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.Enties.Options
+namespace ReZero 
 {
     /// <summary>
     /// Represents configuration options for ReZero.

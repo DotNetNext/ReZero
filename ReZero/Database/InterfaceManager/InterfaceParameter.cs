@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.Database.InterfaceManager
 {
-    public class InterfaceParameter : DbBase
-    { 
+    public class InterfaceParameter
+    {
         public string? Name { get; set; }
         public object? Value { get; set; }
         public string? ValueType { get; set; }
