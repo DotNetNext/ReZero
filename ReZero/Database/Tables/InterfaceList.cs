@@ -7,7 +7,8 @@ namespace ReZero
 {
     public class InterfaceList: DbReZeroBase
     {
-        public string Name { get; set; }
+        public string Name { get; set; }  
+        public string Description { get; set; }
         public HttpRequestMethod HttpMethod { get; set; }
         public List<InterfaceParameter> Parameters { get; set; }
     }
