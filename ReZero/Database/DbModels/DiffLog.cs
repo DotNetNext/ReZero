@@ -8,10 +8,10 @@ namespace ReZero.Database.DbModels
 {
     public class DiffLog : DbReZeroBase
     {
-        public string TableName { get; set; }
+        public string? TableName { get; set; }
         [SugarColumn(IsJson = true)]
-        public JArray BeforeData { get; set; }
+        public JArray? BeforeData { get; set; }
         [SugarColumn(IsJson = true)]
-        public JArray AfterData { get; set; }
+        public JArray? AfterData { get; set; }
     }
 }
