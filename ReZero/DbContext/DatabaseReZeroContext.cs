@@ -18,7 +18,7 @@ namespace ReZero
         /// </summary>
         /// <param name="connectionConfig">Database connection configuration.</param>
         public DatabaseReZeroContext(ConnectionConfig connectionConfig)
-        {
+        { 
             // Create a new SqlSugar client instance using the provided connection configuration.
             SugarClient = new SqlSugarClient(connectionConfig);
         }
