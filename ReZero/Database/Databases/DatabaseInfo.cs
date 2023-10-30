@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal class DatabaseInfo
+    public class DatabaseInfo: DbBase
     {
-        public string Connection { get; set; }
+        public string? Connection { get; set; }
     }
 }

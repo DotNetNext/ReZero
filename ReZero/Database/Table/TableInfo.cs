@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class TableInfo:DbReZeroBase
+    public class TableInfo:DbBase
     {
         public string? ClassName { get; set; }
         public string? TableName { get; set; }   

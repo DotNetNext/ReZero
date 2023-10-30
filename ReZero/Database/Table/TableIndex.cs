@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class TableIndex
+    public class TableIndex: DbBase
     {
         public IndexType IndexType { get; set; }
         public string? Name { get; set; } 

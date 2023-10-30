@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class InterfaceParameter : DbReZeroBase
+    public class InterfaceParameter : DbBase
     {
         [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }

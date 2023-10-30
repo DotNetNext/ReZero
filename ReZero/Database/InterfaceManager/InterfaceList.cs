@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.Database.DbModels
+namespace ReZero
 {
-    public class InterfaceList : DbReZeroBase
+    public class InterfaceList : DbBase
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

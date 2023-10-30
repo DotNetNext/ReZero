@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ReZero
 {
-    public class TableColumnTypeInfo
+    public class TableColumnTypeInfo: DbBase
     {
+
     }
 }

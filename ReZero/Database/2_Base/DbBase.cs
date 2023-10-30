@@ -3,7 +3,7 @@ using System;
 
 namespace ReZero
 {
-    public class DbReZeroBase
+    public class DbBase
     {
         [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }

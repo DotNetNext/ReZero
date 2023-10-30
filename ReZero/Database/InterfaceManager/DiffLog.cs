@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ReZero.Database.DbModels
 {
-    public class DiffLog : DbReZeroBase
+    public class DiffLog : DbBase
     {
         public string? TableName { get; set; }
         [SugarColumn(IsJson = true)]
