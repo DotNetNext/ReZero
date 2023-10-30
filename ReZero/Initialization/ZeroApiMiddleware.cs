@@ -56,7 +56,7 @@ namespace ReZero
         /// <returns>A Task representing the asynchronous operation.</returns>
         private async Task ZeroDynamicApi(HttpContext context)
         {
-            var app = App.ServiceProvider.GetService<IDynamicApi>();
+            var app = App.ServiceProvider!.GetService<IDynamicApi>();
             await app.WriteAsync(context);
         }
 
@@ -67,7 +67,7 @@ namespace ReZero
         /// <returns>True if the URL is for ZeroApi, otherwise false.</returns>
         private bool IsZeroDynamicApi(PathString requestedUrl)
         {
-            var app = App.ServiceProvider.GetService<IDynamicApi>();
+            var app = App.ServiceProvider!.GetService<IDynamicApi>();
             return app.IsApi(requestedUrl);
         }
 
@@ -78,7 +78,7 @@ namespace ReZero
         /// <returns>A Task representing the asynchronous operation.</returns>
         private async Task ZeroApi(HttpContext context)
         {
-            var app = App.ServiceProvider.GetService<IReZeroApi>();
+            var app = App.ServiceProvider!.GetService<IReZeroApi>();
             await app.WriteAsync(context);
         }
 
@@ -89,7 +89,7 @@ namespace ReZero
         /// <returns>True if the URL is for standard ZeroApi, otherwise false.</returns>
         private bool IsZeroApi(PathString requestedUrl)
         {
-            var app = App.ServiceProvider.GetService<IReZeroApi>();
+            var app = App.ServiceProvider!.GetService<IReZeroApi>();
             return app.IsApi(requestedUrl);
         }
     }
