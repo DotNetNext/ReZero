@@ -17,5 +17,7 @@ namespace ReZero
         public string? Modifier { get; set; }
         [SugarColumn(IsNullable = true)]
         public string? ModifierId { get; set; }
+        [SugarColumn(IsNullable = true)]
+        public string? LanguageKey { get; set; } 
     }
 }
