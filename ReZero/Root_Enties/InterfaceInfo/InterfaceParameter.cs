@@ -6,11 +6,9 @@ using System.Text;
 namespace ReZero 
 {
     public class InterfaceParameter : DbBase
-    {
-        [SugarColumn(IsPrimaryKey = true)]
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public object Value { get; set; }
-        public string ValueType { get; set; }
+    { 
+        public string? Name { get; set; }
+        public object? Value { get; set; }
+        public string? ValueType { get; set; }
     }
 }
