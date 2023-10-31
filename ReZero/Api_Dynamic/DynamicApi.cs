@@ -11,7 +11,7 @@ namespace ReZero
         public bool IsApi(string url)
         {
             var db = App.Db;
-            var isAnyUrl = db.Queryable<InterfaceList>().Any(it => it!.Url!.ToLower() == url.ToLower());
+            var isAnyUrl = db.Queryable<Zero_InterfaceList>().Any(it => it!.Url!.ToLower() == url.ToLower());
             return false;
         }
 

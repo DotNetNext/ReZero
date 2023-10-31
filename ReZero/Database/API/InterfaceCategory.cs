@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class InterfaceCategory:DbBase
+    public class Zero_InterfaceCategory : DbBase
     {
         public string? Name { get; set; }
         public long ParentId{get;set;}

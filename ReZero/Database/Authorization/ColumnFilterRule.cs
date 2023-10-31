@@ -18,6 +18,6 @@ namespace ReZero
         public string? TableName { get; set; }
         public long TableId {  get; set; }
         [SugarColumn(IsJson =true)]
-        public List<long]>? AllowedColumns { get; set; } 
+        public List<long>? AllowedColumns { get; set; } 
     }
 }

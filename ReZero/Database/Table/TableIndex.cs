@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class TableIndex: DbBase
+    public class Zero_TableIndex : DbBase
     {
         public IndexType IndexType { get; set; }
         public string? Name { get; set; } 
-        public List<TableColumnInfo>? TableColumnInfos { get; set; }
+        public List<Zero_TableColumnInfo>? TableColumnInfos { get; set; }
     }
 }
