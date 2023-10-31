@@ -4,9 +4,9 @@ using System.Text;
 using SqlSugar;
 namespace ReZero 
 {
-    public class Authorization: DbBase
+    public class Public_Authorization : DbBase
     { 
-        public int UserId { get; set; }
-        public int RoleId { get; set; }
+        public string? UserId { get; set; }
+        public string? RoleId { get; set; }
     }
 }

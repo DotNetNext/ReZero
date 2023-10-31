@@ -6,7 +6,7 @@ using System.Text.Json.Nodes;
 
 namespace ReZero 
 {
-    public class FilterCondition:DbBase
+    public class Public_FilterCondition : DbBase
     {
         /// <summary>
         /// 可以是用户ID或者角色ID，根据上下文传递相应的值
