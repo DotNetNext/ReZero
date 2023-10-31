@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.Database.DbModels
+namespace ReZero 
 {
     public class DiffLog : DbBase
     {
