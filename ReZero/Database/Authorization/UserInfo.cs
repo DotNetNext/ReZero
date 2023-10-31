@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero
 {
-    public class Public_UserInfo : DbBase
+    public class PublicUserInfo : DbBase
     { 
         public string? UserId { get; set; }
         public string? Username { get; set; }

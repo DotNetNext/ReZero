@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Public_ColumnFilterRule : DbBase
+    public class PublicColumnFilterRule : DbBase
     {
         /// <summary>
         /// 可以是用户ID或者角色ID，根据上下文传递相应的值

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Public_RoleInfo : DbBase
+    public class PublicRoleInfo : DbBase
     { 
         public string? RoleId {  get; set; }
         public string? RoleName { get; set; }

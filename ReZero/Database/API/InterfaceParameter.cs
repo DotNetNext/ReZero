@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Zero_InterfaceParameter
+    public class ZeroInterfaceParameter
     {
         public string? Name { get; set; }
         public object? Value { get; set; }
