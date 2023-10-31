@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,6 +17,7 @@ namespace ReZero
         public PrincipalType PrincipalType { get; set; }
         public string? TableName { get; set; }
         public long TableId {  get; set; }
-        public string? AllowedColumns { get; set; } 
+        [SugarColumn(IsJson =true)]
+        public List<long]>? AllowedColumns { get; set; } 
     }
 }
