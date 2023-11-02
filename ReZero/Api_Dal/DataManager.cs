@@ -8,13 +8,18 @@ namespace ReZero
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var actionTypeName = $"ReZero.{dataModel.ActionType}";
+            var actionTypeName = GetActionTypeName(dataModel);
             var actionType = Type.GetType(actionTypeName);
-            CheckActionType(dataModel, actionType); 
+            CheckActionType(dataModel, actionType);
             var actionInstance = (IDataManager)Activator.CreateInstance(actionType);
             var result = await actionInstance.ExecuteAction(dataModel);
             return result;
         }
+
+        private static string GetActionTypeName(DataModel dataModel)
+        {
+            return $"ReZero.{dataModel.ActionType}";
+        } 
 
         private static void CheckActionType(DataModel dataModel, Type actionType)
         {

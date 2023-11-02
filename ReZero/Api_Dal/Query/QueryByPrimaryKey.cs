@@ -15,19 +15,9 @@ namespace ReZero
         }
         public async Task<object> ExecuteAction(DataModel dataModel)
         { 
-            var data= db.QueryableByObject(dataModel.MasterEntityType).InSingleAsync(dataModel.Data);
+            var data=await db.QueryableByObject(dataModel.MasterEntityType).InSingleAsync(dataModel.Data);
             return data;
         }
-
-      
-        public async Task<object> QueryAll(Type type, CommonPage commonPage)
-        {
-            var db = App.Db;
-            var count = 0;
-            var result =await db.QueryableByObject(type)
-                          .ToPageListAsync(commonPage.PageNumber, commonPage.PageSize,  count);
-            commonPage.Total = count;
-            return true;
-        }
+         
     }
 }
