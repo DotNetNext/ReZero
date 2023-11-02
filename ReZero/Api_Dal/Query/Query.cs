@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ReZero 
 {
@@ -12,28 +13,26 @@ namespace ReZero
         {
             db = App.Db;
         }
-        public bool QuerySingle(Type type,object Id)
-        {
-            
-            //SqlSugar 缺少Type.InSingle
-            //db.QueryableByObject(type).Where();
-            return true;
+        public Task<object> QuerySingleAsync(Type type,object primaryKeyValue)
+        { 
+            var data= db.QueryableByObject(type).InSingleAsync(primaryKeyValue);
+            return data;
         }
 
-        public bool QueryPage(Type type,CommonPage commonPage)
+        public async Task<object> QueryPage(Type type,CommonPage commonPage)
         {
            
-            var count = 0;
-            var result= db.QueryableByObject(type)
-                          .ToPageList(commonPage.PageNumber, commonPage.PageSize,ref count);
-            return true;
+            RefAsync<int> count = 0;
+            var result=await db.QueryableByObject(type)
+                          .ToPageListAsync(commonPage.PageNumber, commonPage.PageSize, count);
+            return result;
         }
-        public bool QueryAll(Type type, CommonPage commonPage)
+        public async Task<object> QueryAll(Type type, CommonPage commonPage)
         {
             var db = App.Db;
             var count = 0;
-            var result = db.QueryableByObject(type)
-                          .ToPageList(commonPage.PageNumber, commonPage.PageSize, ref count);
+            var result =await db.QueryableByObject(type)
+                          .ToPageListAsync(commonPage.PageNumber, commonPage.PageSize,  count);
             return true;
         }
     }
