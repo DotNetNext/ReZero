@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api_Dal\Insert\" />
-    <Folder Include="Api_Dal\Query\" />
-    <Folder Include="Api_Dal\Delete\" />
-    <Folder Include="Api_Dal\Update\" />
     <Folder Include="Api_Dal\DDL\" />
     <Folder Include="Database\Databases\" />
   </ItemGroup>
