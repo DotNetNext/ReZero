@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    internal class InsertObject
+    internal class InsertObject: IDataManager
     {
-        public async Task<bool> Insert(object InsertObject)
+        public async Task<object> ExecuteAction(DataModel dataModel)
         {
             var db = App.Db;
-            await db.InsertableByObject(InsertObject).ExecuteCommandAsync();
+            await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();
             return true;
         }
     }
