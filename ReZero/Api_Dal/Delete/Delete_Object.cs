@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    internal class DeleteObject : IDataManager
+    internal class Delete_Object : IDataManager
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
