@@ -22,7 +22,7 @@ namespace ReZero
         {
             DbType = DbType.Sqlite,                  // Default to SQLite database type
             IsAutoCloseConnection = true,            // Automatically close the connection after operation
-            ConnectionString = "ReZero.db"           // Default database file name: ReZero.db
+            ConnectionString = "datasource=ReZero.db"           // Default database file name: ReZero.db
         };
     }
 }

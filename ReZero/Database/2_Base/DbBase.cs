@@ -3,7 +3,7 @@ using System;
 
 namespace ReZero
 {
-    public class DbBase
+    public class DbBase:IDeleted
     {
         [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }
@@ -19,5 +19,7 @@ namespace ReZero
         public string? ModifierId { get; set; }
         [SugarColumn(IsNullable = true)]
         public string? LanguageKey { get; set; } 
+        public bool IsDeleted { get; set; }
     }
+
 }

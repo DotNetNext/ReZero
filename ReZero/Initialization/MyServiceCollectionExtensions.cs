@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;  
 using System;
+using System.Runtime.CompilerServices;
 
 namespace ReZero
 {
@@ -28,8 +29,22 @@ namespace ReZero
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
             services.AddTransient<DatabaseReZeroContext>(it => new DatabaseReZeroContext(options.ConnectionConfig));
 
+            InitDataBase(options);
+
             // Return the updated IServiceCollection.
             return services;
+        }
+
+        private static void InitDataBase(ReZeroOptions options)
+        {
+            if (options.InitTable == false) 
+            {
+                return;
+            }
+            var types=PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
+            var db = new DatabaseReZeroContext(options.ConnectionConfig).SugarClient;
+            db.DbMaintenance.CreateDatabase();
+            db.CodeFirst.InitTables(types?.ToArray());
         }
     }
 }
