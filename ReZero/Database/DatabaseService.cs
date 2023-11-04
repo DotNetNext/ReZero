@@ -4,7 +4,19 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal class DatabaseService
+    public class  UserService
     {
+        public void Init(ReZeroOptions options) 
+        {
+            InitUser();
+        }
+
+        private void InitUser()
+        {
+            App.Db.Insertable(new Zero_UserInfo()
+            {
+
+            }).ExecuteCommand();
+        }
     }
 }

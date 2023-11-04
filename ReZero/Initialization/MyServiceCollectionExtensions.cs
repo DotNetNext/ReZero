@@ -31,8 +31,22 @@ namespace ReZero
 
             InitDataBase(options);
 
+            InitUser(options);
+
+            InitReZeroApi(options);
+
             // Return the updated IServiceCollection.
             return services;
+        }
+
+        private static void InitUser(ReZeroOptions options)
+        {
+            new UserService().Init(options);
+        }
+
+        private static void InitReZeroApi(ReZeroOptions options)
+        {
+            new BuiltInApi().Init(options);
         }
 
         private static void InitDataBase(ReZeroOptions options)
