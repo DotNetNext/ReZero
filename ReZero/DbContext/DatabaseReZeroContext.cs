@@ -24,7 +24,10 @@ namespace ReZero
             SetAop(connectionConfig);
 
             // Create a new SqlSugar client instance using the provided connection configuration.
-            SugarClient = new SqlSugarClient(connectionConfig);
+            SugarClient = new SqlSugarClient(connectionConfig, db => 
+            {
+                db.QueryFilter.AddTableFilter<IDeleted>(it=>it.IsDeleted==false);
+            }); 
         }
 
         private static void SetAop(ConnectionConfig connectionConfig)
