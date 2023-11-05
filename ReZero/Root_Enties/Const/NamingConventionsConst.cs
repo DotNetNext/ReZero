@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.Enties.Const
+namespace ReZero 
 {
     public class NamingConventionsConst
     {
