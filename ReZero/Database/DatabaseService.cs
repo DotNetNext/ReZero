@@ -6,7 +6,7 @@ namespace ReZero
 {
     public class UserService
     {
-        public void Init(ReZeroOptions options)
+        public void Initialize(ReZeroOptions options)
         {
             InitUser();
         }

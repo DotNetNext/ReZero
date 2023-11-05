@@ -1,47 +1,55 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;  
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace ReZero
 {
     /// <summary>
     /// Extension methods for configuring ReZero services in IServiceCollection.
     /// </summary>
-    public static class MyServiceCollectionExtensions
+    public static class ReZeroServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds ReZero services to the specified IServiceCollection.
+        /// Configures ReZero services within the specified IServiceCollection.
         /// </summary>
         /// <param name="services">The IServiceCollection to which ReZero services are added.</param>
         /// <param name="options">Optional ReZero options.</param>
         /// <returns>The updated IServiceCollection.</returns>
-        public static IServiceCollection ReZero(this IServiceCollection services, ReZeroOptions? options = null)
+        public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions? options = null)
         {
-            options=InitOptions(options);
+            options = InitializeOptions(options);
 
-            AddTransien(services, options);
+            AddTransientServices(services, options);
 
-            InitDataBase(options);
+            InitializeDataBase(options);
 
-            InitUser(options);
+            InitializeUser(options);
 
-            InitReZeroApi(options);
+            InitializeReZeroApi(options);
 
             // Return the updated IServiceCollection.
             return services;
         }
 
-        private static ReZeroOptions InitOptions(ReZeroOptions? options)
+        /// <summary>
+        /// Initializes ReZero options. If options are not provided, creates a new instance of ReZeroOptions.
+        /// </summary>
+        /// <param name="options">Optional ReZero options.</param>
+        /// <returns>Initialized ReZero options.</returns>
+        private static ReZeroOptions InitializeOptions(ReZeroOptions? options)
         {
-            // If options are not provided, create a new instance of ReZeroOptions.
             options = options ?? new ReZeroOptions();
             return options;
         }
 
-        private static void AddTransien(IServiceCollection services, ReZeroOptions options)
+        /// <summary>
+        /// Adds transient services to the IServiceCollection.
+        /// </summary>
+        /// <param name="services">The IServiceCollection to which services are added.</param>
+        /// <param name="options">ReZero options.</param>
+        private static void AddTransientServices(IServiceCollection services, ReZeroOptions options)
         {
-            // Add services to the IServiceCollection.
+            // Add transient services to the IServiceCollection.
             services.AddTransient<IDynamicApi, DynamicApi>();
             services.AddTransient<IReZeroApi, ReZeroApi>();
             services.AddTransient<IStartupFilter, RequestSetOptionsStartupFilter>();
@@ -50,24 +58,36 @@ namespace ReZero
             services.AddTransient<DatabaseReZeroContext>(it => new DatabaseReZeroContext(options.ConnectionConfig));
         }
 
-        private static void InitUser(ReZeroOptions options)
+        /// <summary>
+        /// Initializes user-related functionality based on ReZero options.
+        /// </summary>
+        /// <param name="options">ReZero options.</param>
+        private static void InitializeUser(ReZeroOptions options)
         {
-            new UserService().Init(options);
+            new UserService().Initialize(options);
         }
 
-        private static void InitReZeroApi(ReZeroOptions options)
+        /// <summary>
+        /// Initializes built-in ReZero API based on ReZero options.
+        /// </summary>
+        /// <param name="options">ReZero options.</param>
+        private static void InitializeReZeroApi(ReZeroOptions options)
         {
-            new BuiltInApi().Init(options);
+            new BuiltInApi().Initialize(options);
         }
 
-        private static void InitDataBase(ReZeroOptions options)
+        /// <summary>
+        /// Initializes the database based on ReZero options.
+        /// </summary>
+        /// <param name="options">ReZero options.</param>
+        private static void InitializeDataBase(ReZeroOptions options)
         {
-            if (options!.InitTable == false) 
+            if (options.InitTable == false)
             {
                 return;
             }
-            var types=PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
-            var db = new DatabaseReZeroContext(options!.ConnectionConfig)!.SugarClient;
+            var types = PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
+            var db = new DatabaseReZeroContext(options.ConnectionConfig).SugarClient;
             db.DbMaintenance.CreateDatabase();
             db.CodeFirst.InitTables(types?.ToArray());
         }

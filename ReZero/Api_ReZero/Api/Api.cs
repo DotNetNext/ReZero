@@ -7,7 +7,7 @@ namespace ReZero
     internal class BuiltInApi
     {
         ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
-        public void Init(ReZeroOptions options) 
+        public void Initialize(ReZeroOptions options) 
         {
             App.Db.Insertable(zeroInterfaceList).ExecuteCommand();
         }
