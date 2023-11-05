@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReZero
 {
-    public class DynamicApi : IDynamicApi
+    public class DynamicApiManager : IDynamicApi
     {
         public bool IsApi(string url)
         {
@@ -17,7 +17,7 @@ namespace ReZero
 
         public async Task WriteAsync(HttpContext context)
         {
-            var helper = new ApiHelper();
+            var helper = new DynamicApiHelper();
             var requestMethodString = context.Request.Method;
             HttpRequestMethod requestMethod;
             if (helper.IsHttpMethod(requestMethodString, out requestMethod))
@@ -29,7 +29,7 @@ namespace ReZero
                 await WriteError(context);
             }
         }
-        private static async Task WriteAsyncSuccess(HttpContext context, ApiHelper helper, HttpRequestMethod requestMethod)
+        private static async Task WriteAsyncSuccess(HttpContext context, DynamicApiHelper helper, HttpRequestMethod requestMethod)
         {
             var handler = helper.GetHandler(requestMethod,context);
             var result = handler.HandleRequest();

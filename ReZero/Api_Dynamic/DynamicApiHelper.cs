@@ -7,7 +7,7 @@ namespace ReZero
     /// <summary>
     /// Helper class for handling API requests and determining appropriate request method handlers.
     /// </summary>
-    internal class ApiHelper
+    internal class DynamicApiHelper
     {
         /// <summary>
         /// Determines if the provided string represents a valid HTTP request method.
