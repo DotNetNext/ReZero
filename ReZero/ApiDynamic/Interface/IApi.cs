@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using ReZero.Root_Interface.Api_Interface;
+﻿using Microsoft.AspNetCore.Http; 
 using System.Threading.Tasks;
 
 namespace ReZero
 {
-    public interface IDynamicApi:IApi
+    public interface IDynamicApi:IZeroApi
     {
-    }
-
-   
+    }  
 }

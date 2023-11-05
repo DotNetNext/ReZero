@@ -1,95 +1,83 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
-using System; 
 
 namespace ReZero
 {
-    /// <summary>
-    /// Middleware for handling custom ZeroApi requests.
-    /// </summary>
+    // Middleware class for handling Zero Dynamic API and Internal API requests
     public class ZeroApiMiddleware
     {
         private readonly IApplicationBuilder _applicationBuilder;
 
-        /// <summary>
-        /// Initializes a new instance of the ZeroApiMiddleware class.
-        /// </summary>
-        /// <param name="application">ASP.NET Core application builder.</param>
+        // Constructor for ZeroApiMiddleware class
         public ZeroApiMiddleware(IApplicationBuilder application)
         {
             _applicationBuilder = application ?? throw new ArgumentNullException(nameof(application));
         }
 
-        /// <summary>
-        /// Middleware function to handle custom ZeroApi requests.
-        /// </summary>
-        /// <returns>A delegate representing the middleware function.</returns>
-        public Func<HttpContext, Func<Task>, Task> HandleApiRequests()
+        // Middleware entry point to handle incoming requests
+        public async Task InvokeAsync(HttpContext context, Func<Task> next)
         {
-            return async (context, next) =>
-            {
-                // Get the requested URL
-                var requestedUrl = context.Request.Path;
+            // Get the requested URL path from the context
+            var requestedUrl = context.Request.Path;
 
-                // Implement custom URL request handling logic here
-                if (IsZeroDynamicApi(requestedUrl))
-                {
-                    await ZeroDynamicApi(context);
-                }
-                else if (IsZeroApi(requestedUrl))
-                {
-                    await ZeroApi(context);
-                }
-                else
-                {
-                    // If the requested URL is not specific, pass the request to the next middleware
-                    await next();
-                }
-            };
+            // Check if the requested URL corresponds to Zero Dynamic API
+            if (IsDynamicApi(requestedUrl))
+            {
+                // Handle the request using Zero Dynamic API logic
+                await DynamicApi(context);
+            }
+            // Check if the requested URL corresponds to Internal API
+            else if (IsInternalApi(requestedUrl))
+            {
+                // Handle the request using Internal API logic
+                await InternalApi(context);
+            }
+            // If the requested URL doesn't match any specific API, pass the request to the next middleware
+            else
+            {
+                await next();
+            }
         }
 
-        /// <summary>
-        /// Writes a custom response for ZeroApi requests.
-        /// </summary>
-        /// <param name="context">The HttpContext.</param>
-        /// <returns>A Task representing the asynchronous operation.</returns>
-        private async Task ZeroDynamicApi(HttpContext context)
+        // Handles requests for Dynamic API
+        private async Task DynamicApi(HttpContext context)
         {
+            // Get the IDynamicApi service instance from the application's service provider
             var app = App.ServiceProvider!.GetService<IDynamicApi>();
+
+            // Invoke the WriteAsync method to process and respond to the request
             await app.WriteAsync(context);
         }
 
-        /// <summary>
-        /// Checks if the requested URL matches the ZeroApi pattern.
-        /// </summary>
-        /// <param name="requestedUrl">The requested URL.</param>
-        /// <returns>True if the URL is for ZeroApi, otherwise false.</returns>
-        private bool IsZeroDynamicApi(PathString requestedUrl)
+        // Checks if the requested URL corresponds to Dynamic API
+        private bool IsDynamicApi(PathString requestedUrl)
         {
+            // Get the IDynamicApi service instance from the application's service provider
             var app = App.ServiceProvider!.GetService<IDynamicApi>();
+
+            // Determine if the requested URL matches Dynamic API
             return app.IsApi(requestedUrl);
         }
 
-        /// <summary>
-        /// Writes a custom response for standard ZeroApi requests.
-        /// </summary>
-        /// <param name="context">The HttpContext.</param>
-        /// <returns>A Task representing the asynchronous operation.</returns>
-        private async Task ZeroApi(HttpContext context)
+        // Handles requests for Internal API
+        private async Task InternalApi(HttpContext context)
         {
+            // Get the InternalApi service instance from the application's service provider
             var app = App.ServiceProvider!.GetService<InternalApi>();
+
+            // Invoke the WriteAsync method to process and respond to the request
             await app.WriteAsync(context);
         }
 
-        /// <summary>
-        /// Checks if the requested URL matches the standard ZeroApi pattern.
-        /// </summary>
-        /// <param name="requestedUrl">The requested URL.</param>
-        /// <returns>True if the URL is for standard ZeroApi, otherwise false.</returns>
-        private bool IsZeroApi(PathString requestedUrl)
+        // Checks if the requested URL corresponds to Internal API
+        private bool IsInternalApi(PathString requestedUrl)
         {
+            // Get the InternalApi service instance from the application's service provider
             var app = App.ServiceProvider!.GetService<InternalApi>();
+
+            // Determine if the requested URL matches Internal API
             return app.IsApi(requestedUrl);
         }
     }

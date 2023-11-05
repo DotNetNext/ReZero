@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero.Root_Interface.Api_Interface
+namespace ReZero 
 {
-    public interface IApi
+    public interface IZeroApi
     {
 
         bool IsApi(string url);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReZero
 {
-    public interface IInternalApi : IApi
+    public interface IInternalApi : IZeroApi
     { 
     }
 }
