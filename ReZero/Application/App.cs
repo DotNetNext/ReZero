@@ -9,6 +9,6 @@ namespace ReZero
     {
        
         public  static ApplicationServiceProvider? ServiceProvider { get;internal set; }
-        internal static ISqlSugarClient Db { get => App.ServiceProvider!.GetService<DatabaseReZeroContext>().SugarClient; }
+        internal static ISqlSugarClient Db { get => App.ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
     }
 }

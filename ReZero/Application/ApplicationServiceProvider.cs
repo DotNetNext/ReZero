@@ -26,16 +26,14 @@ namespace ReZero
         /// </summary>
         /// <typeparam name="T">要获取的服务类型。</typeparam>
         /// <returns>指定类型的服务实例。</returns>
-        public T GetService<T>()
+        public T GetService<T>() where T : class
         {
             // 获取IOC容器（服务提供程序）
             var serviceProvider = _app.ApplicationServices;
 
             // 使用IOC容器执行操作
-#pragma warning disable CS8714 // 类型不能用作泛型类型或方法中的类型参数。类型参数的为 Null 性与 "notnull" 约束不匹配。
-            var myService = serviceProvider.GetRequiredService<T>();
-#pragma warning restore CS8714 // 类型不能用作泛型类型或方法中的类型参数。类型参数的为 Null 性与 "notnull" 约束不匹配。
-            return myService;
+            var myService = serviceProvider!.GetRequiredService<T>();
+            return myService; 
         }
     }
 }

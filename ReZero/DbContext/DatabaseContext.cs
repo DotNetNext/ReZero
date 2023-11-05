@@ -6,7 +6,7 @@ namespace ReZero
     /// <summary>
     /// Represents a database context for handling database operations using SqlSugar.
     /// </summary>
-    public class DatabaseReZeroContext
+    public class DatabaseContext
     {
         /// <summary>
         /// Gets the SqlSugar client instance for performing database operations.
@@ -17,7 +17,7 @@ namespace ReZero
         /// Initializes a new instance of the DatabaseContext class with the provided database connection configuration.
         /// </summary>
         /// <param name="connectionConfig">Database connection configuration.</param>
-        public DatabaseReZeroContext(ConnectionConfig connectionConfig)
+        public DatabaseContext(ConnectionConfig connectionConfig)
         {
             SetConfigureExternalServices(connectionConfig);
 

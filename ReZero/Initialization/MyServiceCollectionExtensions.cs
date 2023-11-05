@@ -55,7 +55,7 @@ namespace ReZero
             services.AddTransient<IStartupFilter, RequestSetOptionsStartupFilter>();
 
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
-            services.AddTransient<DatabaseReZeroContext>(it => new DatabaseReZeroContext(options.ConnectionConfig));
+            services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.ConnectionConfig));
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace ReZero
         /// <param name="options">ReZero options.</param>
         private static void InitializeUser(ReZeroOptions options)
         {
-            new UserService().Initialize(options);
+            new UserInitializerService().Initialize(options);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace ReZero
         /// <param name="options">ReZero options.</param>
         private static void InitializeReZeroApi(ReZeroOptions options)
         {
-            new BuiltInApi().Initialize(options);
+            new InternalApiManager().Initialize(options);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ReZero
                 return;
             }
             var types = PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
-            var db = new DatabaseReZeroContext(options.ConnectionConfig).SugarClient;
+            var db = new DatabaseContext(options.ConnectionConfig).SugarClient;
             db.DbMaintenance.CreateDatabase();
             db.CodeFirst.InitTables(types?.ToArray());
         }

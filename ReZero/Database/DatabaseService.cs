@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero
 {
-    public class UserService
+    public class UserInitializerService
     {
         public void Initialize(ReZeroOptions options)
         {

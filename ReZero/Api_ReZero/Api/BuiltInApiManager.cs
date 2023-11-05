@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal class BuiltInApi
+    public class InternalApiManager
     {
         ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
         public void Initialize(ReZeroOptions options) 
