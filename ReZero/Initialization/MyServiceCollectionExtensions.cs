@@ -18,16 +18,9 @@ namespace ReZero
         /// <returns>The updated IServiceCollection.</returns>
         public static IServiceCollection ReZero(this IServiceCollection services, ReZeroOptions? options = null)
         {
-            // If options are not provided, create a new instance of ReZeroOptions.
-            options = options ?? new ReZeroOptions();
+            options=InitOptions(options);
 
-            // Add services to the IServiceCollection.
-            services.AddTransient<IDynamicApi, DynamicApi>();
-            services.AddTransient<IReZeroApi, ReZeroApi>();
-            services.AddTransient<IStartupFilter, RequestSetOptionsStartupFilter>();
-
-            // Create an instance of ORM with the specified connection configuration and add it as a transient service.
-            services.AddTransient<DatabaseReZeroContext>(it => new DatabaseReZeroContext(options.ConnectionConfig));
+            AddTransien(services, options);
 
             InitDataBase(options);
 
@@ -37,6 +30,24 @@ namespace ReZero
 
             // Return the updated IServiceCollection.
             return services;
+        }
+
+        private static ReZeroOptions InitOptions(ReZeroOptions? options)
+        {
+            // If options are not provided, create a new instance of ReZeroOptions.
+            options = options ?? new ReZeroOptions();
+            return options;
+        }
+
+        private static void AddTransien(IServiceCollection services, ReZeroOptions options)
+        {
+            // Add services to the IServiceCollection.
+            services.AddTransient<IDynamicApi, DynamicApi>();
+            services.AddTransient<IReZeroApi, ReZeroApi>();
+            services.AddTransient<IStartupFilter, RequestSetOptionsStartupFilter>();
+
+            // Create an instance of ORM with the specified connection configuration and add it as a transient service.
+            services.AddTransient<DatabaseReZeroContext>(it => new DatabaseReZeroContext(options.ConnectionConfig));
         }
 
         private static void InitUser(ReZeroOptions options)
@@ -51,12 +62,12 @@ namespace ReZero
 
         private static void InitDataBase(ReZeroOptions options)
         {
-            if (options.InitTable == false) 
+            if (options!.InitTable == false) 
             {
                 return;
             }
             var types=PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
-            var db = new DatabaseReZeroContext(options.ConnectionConfig).SugarClient;
+            var db = new DatabaseReZeroContext(options!.ConnectionConfig)!.SugarClient;
             db.DbMaintenance.CreateDatabase();
             db.CodeFirst.InitTables(types?.ToArray());
         }

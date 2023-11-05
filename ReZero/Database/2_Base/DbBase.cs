@@ -11,7 +11,7 @@ namespace ReZero
         [SugarColumn(IsOnlyIgnoreUpdate =true,InsertServerTime =true)]
         public DateTime CreateTime { get; set; }
         public string? Creator { get; set; }
-        public string? CreatorId { get; set; } 
+        public long CreatorId { get; set; } 
         [SugarColumn(UpdateServerTime =true,IsOnlyIgnoreInsert =true)]
         public DateTime UpdateTime { get; set; }
         [SugarColumn(IsNullable = true)]
@@ -21,6 +21,8 @@ namespace ReZero
         [SugarColumn(IsNullable = true)]
         public string? LanguageKey { get; set; } 
         public bool IsDeleted { get; set; }
+        [SugarColumn(IsNullable =true)]
+        public string? EasyDescription { get; set; }
     }
 
 }

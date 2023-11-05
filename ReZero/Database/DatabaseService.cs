@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero
 {
-    public class  UserService
+    public class UserService
     {
-        public void Init(ReZeroOptions options) 
+        public void Init(ReZeroOptions options)
         {
             InitUser();
         }
@@ -15,7 +15,14 @@ namespace ReZero
         {
             App.Db.Insertable(new Zero_UserInfo()
             {
-
+                Id = 1,
+                IsMasterAdmin = true,
+                Password = "admin",
+                Username = Encryption.Encrypt("123456"),
+                SortId = -1,
+                CreatorId=1,
+                Creator= "admin",
+                EasyDescription= "default password 123456"
             }).ExecuteCommand();
         }
     }
