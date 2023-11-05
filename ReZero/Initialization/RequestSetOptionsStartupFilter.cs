@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
+using System.Threading.Tasks;
 
 namespace ReZero
 {
@@ -23,7 +25,7 @@ namespace ReZero
                 App.ServiceProvider = new ApplicationServiceProvider(builder);
 
                 // Create an instance of ZeroApiMiddleware and handle API requests.
-                var func = new ZeroApiMiddleware(builder).HandleApiRequests();
+                Func<HttpContext, Func<Task>, Task> func = async (context, next) =>await new ZeroApiMiddleware(builder).InvokeAsync(context, next);
 
                 // Use the created middleware in the pipeline.
                 builder.Use(func);
