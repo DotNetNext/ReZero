@@ -20,8 +20,8 @@ namespace ReZero
             {
                 Id = 1,
                 IsMasterAdmin = true,
-                Password = "admin",
-                Username = Encryption.Encrypt("123456"),
+                Password =Encryption.Encrypt("123456"),
+                UserName = "admin",
                 SortId = -1,
                 CreatorId=1,
                 Creator= "admin",
