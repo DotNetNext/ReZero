@@ -6,7 +6,7 @@ namespace ReZero
 {
     public class ZeroAuthorization : DbBase
     {
-        public string? UserId { get; set; }
-        public string? RoleId { get; set; }
+        public long UserId { get; set; }
+        public long RoleId { get; set; }
     }
 }

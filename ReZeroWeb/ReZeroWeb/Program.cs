@@ -10,7 +10,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //×¢²á£ºÎÞ´úÂëAPI
-builder.Services.AddReZeroServices();
+builder.Services.AddReZeroServices(new ReZeroOptions() { 
+ ConnectionConfig=new SqlSugar.ConnectionConfig() { 
+   DbType=SqlSugar.DbType.SqlServer,
+   ConnectionString= "server=.;uid=sa;pwd=sasa;database=SQLSUGAR4XTEST",
+   IsAutoCloseConnection=true,
+ }
+});
 
 var app = builder.Build(); 
  

@@ -21,24 +21,27 @@ namespace ReZero
         {
             SetConfigureExternalServices(connectionConfig);
 
-            SetAop(connectionConfig);
+            ConfigureExternalServices(connectionConfig);
 
             // Create a new SqlSugar client instance using the provided connection configuration.
             SugarClient = new SqlSugarClient(connectionConfig, db => 
             {
                 db.QueryFilter.AddTableFilter<IDeleted>(it=>it.IsDeleted==false);
+                db.Aop.OnLogExecuting = (s, p) => UtilMethods.GetNativeSql(s, p);
             }); 
+
+            
         }
 
-        private static void SetAop(ConnectionConfig connectionConfig)
+        private static void ConfigureExternalServices(ConnectionConfig connectionConfig)
         {
             connectionConfig.ConfigureExternalServices.EntityService = (x, p) =>
             {
-                p.DbColumnName = UtilMethods.ToUnderLine(p.DbColumnName, true);
+                p.DbColumnName = UtilMethods.ToUnderLine(p.DbColumnName);
             };
             connectionConfig.ConfigureExternalServices.EntityNameService = (x, p) =>
             {
-                p.DbTableName = UtilMethods.ToUnderLine(p.DbTableName, true);
+                p.DbTableName = UtilMethods.ToUnderLine(p.DbTableName);
             };
         }
 
