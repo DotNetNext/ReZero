@@ -52,7 +52,7 @@ namespace ReZero
             // Add transient services to the IServiceCollection.
             services.AddTransient<IDynamicApi, DynamicApiManager>();
             services.AddTransient<InternalApi, InternalApi>();
-            services.AddTransient<IStartupFilter, RequestSetOptionsStartupFilter>();
+            services.AddTransient<IStartupFilter, ZeroApiRequestSetOptionsStartupFilter>();
 
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
             services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.ConnectionConfig));

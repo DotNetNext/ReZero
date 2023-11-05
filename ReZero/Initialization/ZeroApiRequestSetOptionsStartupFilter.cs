@@ -9,7 +9,7 @@ namespace ReZero
     /// <summary>
     /// Custom startup filter to configure application services and middleware.
     /// </summary>
-    public class RequestSetOptionsStartupFilter : IStartupFilter
+    public class ZeroApiRequestSetOptionsStartupFilter : IStartupFilter
     {
         /// <summary>
         /// Configures application services and middleware.
