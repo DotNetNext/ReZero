@@ -1,14 +1,24 @@
 ﻿using SqlSugar;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ReZero 
+namespace ReZero
 {
+    /// <summary>
+    /// Represents the application's main entry point and provides access to essential services and resources.
+    /// </summary>
     public class App
     {
-       
-        public  static ApplicationServiceProvider? ServiceProvider { get;internal set; }
+        /// <summary>
+        /// Gets or sets the application's service provider, allowing access to registered services.
+        /// </summary>
+        public static ApplicationServiceProvider? ServiceProvider { get; internal set; }
+
+        /// <summary>
+        /// Gets the instance of the SqlSugar client for database operations.
+        /// </summary>
+        /// <remarks>
+        /// This property provides convenient access to the configured SqlSugar client for database operations.
+        /// </remarks>
         internal static ISqlSugarClient Db { get => App.ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
     }
 }
