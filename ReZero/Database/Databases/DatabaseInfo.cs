@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Zero_DatabaseInfo : DbBase
+    public class ZeroDatabaseInfo : DbBase
     {
         public string? Connection { get; set; }
     }

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Zero_RoleInfo : DbBase
+    public class ZeroRoleInfo : DbBase
     {
         public string? RoleId { get; set; }
         public string? RoleName { get; set; }

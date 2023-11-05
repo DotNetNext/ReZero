@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Zero_TableColumnInfo : DbBase
+    public class ZeroTableColumnInfo : DbBase
     {
         public string? PropertyName { get; set; }
         public string? DbColumnName { get; set; }

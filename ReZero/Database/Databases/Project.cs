@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class Zero_ProjectInfo:DbBase
+    public class ZeroProjectInfo:DbBase
     {
 
     }
