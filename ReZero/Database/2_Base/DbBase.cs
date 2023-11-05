@@ -12,7 +12,7 @@ namespace ReZero
         public DateTime CreateTime { get; set; }
         public string? Creator { get; set; }
         public long CreatorId { get; set; } 
-        [SugarColumn(UpdateServerTime =true,IsOnlyIgnoreInsert =true)]
+        [SugarColumn(UpdateServerTime =true,IsNullable =true,IsOnlyIgnoreInsert =true)]
         public DateTime UpdateTime { get; set; }
         [SugarColumn(IsNullable = true)]
         public string? Modifier { get; set; }
