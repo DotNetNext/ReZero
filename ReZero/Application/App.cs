@@ -12,6 +12,10 @@ namespace ReZero
         /// Gets or sets the application's service provider, allowing access to registered services.
         /// </summary>
         public static ApplicationServiceProvider? ServiceProvider { get; internal set; }
+        /// <summary>
+        /// Represents a database connection object used before service startup.
+        /// </summary>
+        internal static ISqlSugarClient? PreStartupDb { get;  set; }
 
         /// <summary>
         /// Gets the instance of the SqlSugar client for database operations.

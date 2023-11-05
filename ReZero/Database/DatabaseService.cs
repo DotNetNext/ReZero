@@ -15,8 +15,8 @@ namespace ReZero
 
         private void InitUser()
         {
-            var db = new DatabaseContext(_options!.ConnectionConfig).SugarClient;
-            db.Insertable(new ZeroUserInfo()
+            var db = App.PreStartupDb;
+            db!.Storageable(new ZeroUserInfo()
             {
                 Id = 1,
                 IsMasterAdmin = true,
@@ -26,7 +26,7 @@ namespace ReZero
                 CreatorId=1,
                 Creator= "admin",
                 EasyDescription= "default password 123456"
-            }).ExecuteCommand();
+            }).ToStorage().AsInsertable.ExecuteCommand();
         }
     }
 }

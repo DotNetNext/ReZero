@@ -88,6 +88,7 @@ namespace ReZero
             }
             var types = PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
             var db = new DatabaseContext(options.ConnectionConfig).SugarClient;
+            App.PreStartupDb = db;
             db.DbMaintenance.CreateDatabase();
             db.CodeFirst.InitTables(types?.ToArray());
         }
