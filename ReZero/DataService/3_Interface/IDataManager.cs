@@ -2,7 +2,7 @@
 
 namespace ReZero
 {
-    public interface IDataManager
+    public interface IDataService
     {
         Task<object> ExecuteAction(DataModel dataModel);
     }

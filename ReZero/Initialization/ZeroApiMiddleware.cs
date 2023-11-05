@@ -78,7 +78,7 @@ namespace ReZero
         /// <returns>A Task representing the asynchronous operation.</returns>
         private async Task ZeroApi(HttpContext context)
         {
-            var app = App.ServiceProvider!.GetService<IReZeroApi>();
+            var app = App.ServiceProvider!.GetService<InternalApi>();
             await app.WriteAsync(context);
         }
 
@@ -89,7 +89,7 @@ namespace ReZero
         /// <returns>True if the URL is for standard ZeroApi, otherwise false.</returns>
         private bool IsZeroApi(PathString requestedUrl)
         {
-            var app = App.ServiceProvider!.GetService<IReZeroApi>();
+            var app = App.ServiceProvider!.GetService<InternalApi>();
             return app.IsApi(requestedUrl);
         }
     }

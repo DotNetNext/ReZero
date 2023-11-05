@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    internal class Insert_Object: IDataManager
+    public class DDL_DatabaseList : IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
             var db = App.Db;
-            await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();
-            return true;
+            var dataBaseList=db.DbMaintenance.GetDataBaseList(); 
+            return await Task.FromResult(dataBaseList);
         }
     }
 }

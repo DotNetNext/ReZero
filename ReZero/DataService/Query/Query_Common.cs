@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    internal class Query_Common : IDataManager
+    internal class Query_Common : IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {

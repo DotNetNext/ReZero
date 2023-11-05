@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    public class DataManager : IDataManager
+    public class DataService : IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
             var actionTypeName = GetActionTypeName(dataModel);
             var actionType = Type.GetType(actionTypeName);
             CheckActionType(dataModel, actionType);
-            var actionInstance = (IDataManager)Activator.CreateInstance(actionType);
+            var actionInstance = (IDataService)Activator.CreateInstance(actionType);
             var result = await actionInstance.ExecuteAction(dataModel);
             return result;
         }
