@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero.Root_Interface.Api_Interface
 {
     public interface IApi
     {
