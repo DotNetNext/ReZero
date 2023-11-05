@@ -8,7 +8,7 @@ namespace ReZero
     {
         public string? PropertyName { get; set; }
         public string? DbColumnName { get; set; }
-        public Zero_TableColumnTypeInfo? TableColumnTypeInfo { get; set; }
+        public ZeroTableColumnTypeInfo? TableColumnTypeInfo { get; set; }
         public string? Description { get; set; }
     }
 }
