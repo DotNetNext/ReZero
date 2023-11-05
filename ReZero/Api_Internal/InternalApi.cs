@@ -7,7 +7,7 @@ namespace ReZero
     /// <summary>
     /// Implementation of the ReZero API interface (IReZeroApi) to handle API-related operations.
     /// </summary>
-    public class ReZeroApi : IReZeroApi
+    public class InternalApi : InternalApi
     {
         /// <summary>
         /// Checks if the provided URL corresponds to a ReZero API endpoint.
