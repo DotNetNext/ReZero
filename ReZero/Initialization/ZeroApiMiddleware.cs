@@ -5,27 +5,36 @@ using System.Threading.Tasks;
 
 namespace ReZero
 {
-    // Middleware class for handling Zero Dynamic API and Internal API requests
+    /// <summary>
+    /// Middleware class for handling Zero Dynamic API and Internal API requests.
+    /// </summary>
     public class ZeroApiMiddleware
     {
         private readonly IApplicationBuilder _applicationBuilder;
 
-        // Constructor for ZeroApiMiddleware class
+        /// <summary>
+        /// Constructor for ZeroApiMiddleware class.
+        /// </summary>
+        /// <param name="application">Instance of IApplicationBuilder.</param>
         public ZeroApiMiddleware(IApplicationBuilder application)
         {
             _applicationBuilder = application ?? throw new ArgumentNullException(nameof(application));
         }
 
-        // Middleware entry point to handle incoming requests
+        /// <summary>
+        /// Middleware entry point to handle incoming requests.
+        /// </summary>
+        /// <param name="context">HttpContext for the current request.</param>
+        /// <param name="next">Delegate representing the next middleware in the pipeline.</param>
         public async Task InvokeAsync(HttpContext context, Func<Task> next)
         {
             // Get the requested URL path from the context
             var requestedUrl = context.Request.Path;
 
-            // Check if the requested URL corresponds to Zero Dynamic API
+            // Check if the requested URL corresponds to Dynamic API
             if (IsDynamicApi(requestedUrl))
             {
-                // Handle the request using Zero Dynamic API logic
+                // Handle the request using Dynamic API logic
                 await DynamicApi(context);
             }
             // Check if the requested URL corresponds to Internal API
@@ -41,7 +50,10 @@ namespace ReZero
             }
         }
 
-        // Handles requests for Dynamic API
+        /// <summary>
+        /// Handles requests for Dynamic API.
+        /// </summary>
+        /// <param name="context">HttpContext for the current request.</param>
         private async Task DynamicApi(HttpContext context)
         {
             // Get the IDynamicApi service instance from the application's service provider
@@ -51,7 +63,11 @@ namespace ReZero
             await app.WriteAsync(context);
         }
 
-        // Checks if the requested URL corresponds to Dynamic API
+        /// <summary>
+        /// Checks if the requested URL corresponds to Dynamic API.
+        /// </summary>
+        /// <param name="requestedUrl">Requested URL path.</param>
+        /// <returns>True if the URL corresponds to Dynamic API, otherwise false.</returns>
         private bool IsDynamicApi(PathString requestedUrl)
         {
             // Get the IDynamicApi service instance from the application's service provider
@@ -61,7 +77,10 @@ namespace ReZero
             return app.IsApi(requestedUrl);
         }
 
-        // Handles requests for Internal API
+        /// <summary>
+        /// Handles requests for Internal API.
+        /// </summary>
+        /// <param name="context">HttpContext for the current request.</param>
         private async Task InternalApi(HttpContext context)
         {
             // Get the InternalApi service instance from the application's service provider
@@ -71,7 +90,11 @@ namespace ReZero
             await app.WriteAsync(context);
         }
 
-        // Checks if the requested URL corresponds to Internal API
+        /// <summary>
+        /// Checks if the requested URL corresponds to Internal API.
+        /// </summary>
+        /// <param name="requestedUrl">Requested URL path.</param>
+        /// <returns>True if the URL corresponds to Internal API, otherwise false.</returns>
         private bool IsInternalApi(PathString requestedUrl)
         {
             // Get the InternalApi service instance from the application's service provider
