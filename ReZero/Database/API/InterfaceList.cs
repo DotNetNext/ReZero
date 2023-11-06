@@ -10,6 +10,7 @@ namespace ReZero
         public string? Url { get; set; }
         public string? Name { get; set; }
         public ActionType? ActionType { get; set; }
+        public long  InterfaceCategoryId { get; set; }
         public string? CustomResultName{get;set;}
         public string? Description { get; set; }
         public HttpRequestMethod HttpMethod { get; set; }
