@@ -13,22 +13,32 @@ namespace ReZero
         } 
         internal void Set()
         {
-            SetZeroInterfaceList();
-            SetInterfaceCategory();
+            GetZeroInterfaceList();
+            GetInterfaceCategory();
+            GetDatabaseList();
         }
 
-        public void SetZeroInterfaceList()
+        private void GetDatabaseList()
+        {
+            ZeroInterfaceList data = GetNewItem(it => {
+                it.ActionType = ActionType.Query_Common;
+                it.HttpMethod = HttpRequestMethod.GET;
+                it.InterfaceCategoryId = InterfaceCategoryProvider.Id200003();
+                it.Url = GetUrl(it, "GetDatabaseList");
+            });
+            zeroInterfaceList.Add(data);
+        } 
+        public void GetZeroInterfaceList()
         {
             ZeroInterfaceList data = GetNewItem(it => {
                 it.ActionType = ActionType.Query_Common;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id100002();
-                it.Url = GetUrl(it, "GetZeroInterfaceList");
+                it.Url = GetUrl(it, "GetInterfaceList");
             });
             zeroInterfaceList.Add(data);
-        }
-         
-        public void SetInterfaceCategory()
+        } 
+        public void GetInterfaceCategory()
         {
             ZeroInterfaceList data = GetNewItem(it => {
 
