@@ -16,24 +16,33 @@ namespace ReZero
         }
         public void GetZeroInterfaceList()
         {
-            ZeroInterfaceList data = GetNewItem();
-            data.HttpMethod = HttpRequestMethod.GET;
-            data.Url = GetUrl(data, "GetZeroInterfaceList");
+            ZeroInterfaceList data = GetNewItem(it => {
+                it.ActionType = ActionType.Query_Common;
+                it.HttpMethod = HttpRequestMethod.GET;
+                it.InterfaceCategoryId = InterfaceCategoryProvider.Id100002();
+                it.Url = GetUrl(it, "GetZeroInterfaceList");
+            });
             zeroInterfaceList.Add(data);
         }
          
         public void GetInterfaceCategoryList()
         {
-            ZeroInterfaceList data = GetNewItem();
-            data.HttpMethod = HttpRequestMethod.GET;
-            data.Url = GetUrl(data, "GetInterfaceCategoryList");
+            ZeroInterfaceList data = GetNewItem(it => {
+
+                it.HttpMethod = HttpRequestMethod.GET;
+                it.InterfaceCategoryId = InterfaceCategoryProvider.Id200002();
+                it.Url = GetUrl(it, "GetInterfaceCategoryList");
+            });
             zeroInterfaceList.Add(data);
         }
-        private static ZeroInterfaceList GetNewItem()
+        private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
-            return new ZeroInterfaceList()
+            var result = new ZeroInterfaceList()
             {
+                IsInitialized = true, 
             };
+            action(result);
+            return result;
         }
 
         private static string GetUrl(ZeroInterfaceList zeroInterface, string actionName)
