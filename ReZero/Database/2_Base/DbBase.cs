@@ -23,6 +23,7 @@ namespace ReZero
         public bool IsDeleted { get; set; }
         [SugarColumn(IsNullable =true)]
         public string? EasyDescription { get; set; }
+        public bool IsInitialized { get; set; }
     }
 
 }

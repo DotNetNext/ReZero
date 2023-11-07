@@ -4,8 +4,9 @@ using System.Text;
 
 namespace ReZero 
 {
-    public class ZeroProjectInfo:DbBase
+    internal class ZeroProjectType:DbBase
     {
-        public string? Name { get; set; }
+
+        public long ParentId { get; set; }
     }
 }
