@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal class InterfaceListProvider
+    internal partial class InterfaceListProvider
     {
         List<ZeroInterfaceList> zeroInterfaceList = new List<ZeroInterfaceList>() { };
         public InterfaceListProvider(List<ZeroInterfaceList> zeroInterfaceList)
@@ -13,8 +13,11 @@ namespace ReZero
         } 
         internal void Set()
         {
+            SetZeroInterfaceList();
+            SetInterfaceCategory();
         }
-        public void GetZeroInterfaceList()
+
+        public void SetZeroInterfaceList()
         {
             ZeroInterfaceList data = GetNewItem(it => {
                 it.ActionType = ActionType.Query_Common;
@@ -25,7 +28,7 @@ namespace ReZero
             zeroInterfaceList.Add(data);
         }
          
-        public void GetInterfaceCategoryList()
+        public void SetInterfaceCategory()
         {
             ZeroInterfaceList data = GetNewItem(it => {
 
@@ -35,19 +38,5 @@ namespace ReZero
             });
             zeroInterfaceList.Add(data);
         }
-        private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
-        {
-            var result = new ZeroInterfaceList()
-            {
-                IsInitialized = true, 
-            };
-            action(result);
-            return result;
-        }
-
-        private static string GetUrl(ZeroInterfaceList zeroInterface, string actionName)
-        {
-            return $"{NamingConventionsConst.ApiReZeroRoute}/{zeroInterface.InterfaceCategoryId}/{actionName}";
-        } 
     }
 }
