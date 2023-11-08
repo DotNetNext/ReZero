@@ -24,5 +24,13 @@ namespace ReZero
         /// This property provides convenient access to the configured SqlSugar client for database operations.
         /// </remarks>
         internal static ISqlSugarClient Db { get => App.ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
+
+        internal static string Language
+        {
+            get
+            {
+                return ReZeroServiceCollectionExtensions._options!.Language.ToString();
+            }
+        }
     }
 }

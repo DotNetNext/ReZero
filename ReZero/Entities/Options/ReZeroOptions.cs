@@ -15,6 +15,8 @@ namespace ReZero
         /// </summary>
         public bool InitTable { get; set; } = true;
 
+        public Language Language { get; set; }
+
         /// <summary>
         /// Gets or sets the initialization connection string information (default: SQLite).
         /// </summary>

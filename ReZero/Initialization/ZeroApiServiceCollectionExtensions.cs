@@ -9,6 +9,7 @@ namespace ReZero
     /// </summary>
     public static class ReZeroServiceCollectionExtensions
     {
+        public static ReZeroOptions? _options = null;
         /// <summary>
         /// Configures ReZero services within the specified IServiceCollection.
         /// </summary>
@@ -17,7 +18,7 @@ namespace ReZero
         /// <returns>The updated IServiceCollection.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions? options = null)
         {
-            options = InitializeOptions(options);
+            _options=options = InitializeOptions(options);
 
             AddTransientServices(services, options);
 

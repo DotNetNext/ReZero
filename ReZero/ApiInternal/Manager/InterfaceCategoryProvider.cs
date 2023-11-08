@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal partial class InterfaceCategoryProvider
+    public partial class InterfaceCategoryProvider
     {
         List<ZeroInterfaceCategory> zeroInterfaceCategory = new List<ZeroInterfaceCategory>() { };
         public InterfaceCategoryProvider(List<ZeroInterfaceCategory> zeroInterfaceCategory) 
