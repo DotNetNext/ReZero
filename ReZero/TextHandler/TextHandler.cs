@@ -9,11 +9,24 @@ namespace ReZero
 {
     internal class TextHandler
     {
-        public string GetText(Type type, object value)
+        public static string? GetInterfaceCategoryText(object value) 
+        {
+            return GetText(typeof(InterfaceCategoryProvider), value);
+        }
+        public static string? GetText(Type type, object value)
         {
             var language = App.Language;
-            var fields=type.GetFields().Where(it=>it.GetCustomAttribute<TextCN>()!=null).ToList();
-            return "";
+            var fieldInfo=type.GetFields()
+                .Where(it=>it.GetCustomAttribute<TextCN>()!=null)
+                .Where(it=>it.GetValue(null)?.ToString()==value?.ToString())
+                .FirstOrDefault(); 
+            switch (language)
+            {
+                case Language.CN:
+                    return fieldInfo?.GetCustomAttribute<TextCN>()?.Text;
+                default:
+                    return fieldInfo?.GetCustomAttribute<TextEN>()?.Text; 
+            } 
         }
 
        

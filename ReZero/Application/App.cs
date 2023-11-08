@@ -25,11 +25,11 @@ namespace ReZero
         /// </remarks>
         internal static ISqlSugarClient Db { get => App.ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
 
-        internal static string Language
+        internal static Language Language
         {
             get
             {
-                return ReZeroServiceCollectionExtensions._options!.Language.ToString();
+                return ReZeroServiceCollectionExtensions._options!.Language;
             }
         }
     }
