@@ -22,27 +22,27 @@ namespace ReZero
         {
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id2();
+                it.Id = Id2;
                 it.Name = "项目管理";
                 it.ParentId = 0;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id200002();
+                it.Id = Id200002;
                 it.Name = "项目分类";
-                it.ParentId = Id2();
+                it.ParentId = Id2;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id200003();
+                it.Id = Id200003;
                 it.Name = "数据库管理";
-                it.ParentId = Id2();
+                it.ParentId = Id2;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id200004();
+                it.Id = Id200004;
                 it.Name = "实体表管理";
-                it.ParentId = Id2();
+                it.ParentId = Id2;
             }));
         }
 
@@ -52,21 +52,21 @@ namespace ReZero
         {
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id1();
+                it.Id = Id1;
                 it.Name = "接口管理";
                 it.ParentId = 0;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id100001();
+                it.Id = Id100001;
                 it.Name = "接口分类";
-                it.ParentId = Id1();
+                it.ParentId = Id1;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id100002();
+                it.Id = Id100002;
                 it.Name = "接口列表";
-                it.ParentId = Id1();
+                it.ParentId = Id1;
             }));
         } 
         private static ZeroInterfaceCategory GetNewItem(Action<ZeroInterfaceCategory> action)

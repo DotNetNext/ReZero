@@ -9,59 +9,36 @@ namespace ReZero
         /// <summary>
         /// 接口管理
         /// </summary>
-        /// <returns></returns>
-        internal static long Id1()
-        {
-            return Convert.ToInt64(1);
-        }
+        internal const long Id1 = 1;
+
         /// <summary>
         /// 接口分类
         /// </summary>
-        /// <returns></returns>
-        internal static long Id100001()
-        {
-            return Convert.ToInt64(100001);
-        }
+        internal const long Id100001 = 100001;
+
         /// <summary>
         /// 接口列表
         /// </summary>
-        /// <returns></returns>
-        internal static long Id100002()
-        {
-            return Convert.ToInt64(100002);
-        }
+        internal const long Id100002 = 100002;
+
         /// <summary>
         /// 实体表管理
         /// </summary>
-        /// <returns></returns>
-        internal static long Id200004()
-        {
-            return Convert.ToInt64(200004);
-        }
+        internal const long Id200004 = 200004;
+
         /// <summary>
         /// 数据库管理
         /// </summary>
-        /// <returns></returns>
-        internal static long Id200003()
-        {
-            return Convert.ToInt64(200003);
-        }
+        internal const long Id200003 = 200003;
+
         /// <summary>
         /// 项目分类
         /// </summary>
-        /// <returns></returns>
-        internal static long Id200002()
-        {
-            return Convert.ToInt64(200001);
-        }
+        internal const long Id200002 = 200001;
+
         /// <summary>
         /// 项目管理
         /// </summary>
-        /// <returns></returns>
-        internal static long Id2()
-        {
-            return Convert.ToInt64(2);
-        }
-
+        internal const long Id2 = 2;
     }
 }
