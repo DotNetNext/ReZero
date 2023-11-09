@@ -11,9 +11,11 @@ namespace ReZero
         public string? Name { get; set; }
         public ActionType? ActionType { get; set; }
         public long  InterfaceCategoryId { get; set; }
-        public string? CustomResultName{get;set;}
+        public string? CustomResultName { get; set; } = "";
+        [SugarColumn(IsNullable =true)]
         public string? Description { get; set; }
         public HttpRequestMethod HttpMethod { get; set; }
+        [SugarColumn(IsNullable =true)]
         public List<ZeroInterfaceParameter>? Parameters { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace ReZero
                 it.ActionType = ActionType.Query_Common;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id200003;
+                it.Name = TextHandler.GetInterfaceCategoryText(InterfaceCategoryProvider.Id200003);
                 it.Url = GetUrl(it, "GetDatabaseList");
             });
             zeroInterfaceList.Add(data);
@@ -34,6 +35,7 @@ namespace ReZero
                 it.ActionType = ActionType.Query_Common;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id100002;
+                it.Name = TextHandler.GetInterfaceCategoryText(InterfaceCategoryProvider.Id100002);
                 it.Url = GetUrl(it, "GetInterfaceList");
             });
             zeroInterfaceList.Add(data);
@@ -41,9 +43,10 @@ namespace ReZero
         public void GetInterfaceCategory()
         {
             ZeroInterfaceList data = GetNewItem(it => {
-
+                it.ActionType = ActionType.Query_Common;
                 it.HttpMethod = HttpRequestMethod.GET;
-                it.InterfaceCategoryId = InterfaceCategoryProvider.Id200002;
+                it.InterfaceCategoryId = InterfaceCategoryProvider.Id100001;
+                it.Name = TextHandler.GetInterfaceCategoryText(InterfaceCategoryProvider.Id100001);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
             });
             zeroInterfaceList.Add(data);
