@@ -10,17 +10,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //×¢²á£ºÎÞ´úÂëAPI
-builder.Services.AddReZeroServices(new ReZeroOptions() { 
- ConnectionConfig=new SqlSugar.ConnectionConfig() { 
-   DbType=SqlSugar.DbType.SqlServer,
-   ConnectionString= "server=.;uid=sa;pwd=sasa;database=SQLSUGAR4XTEST",
-   IsAutoCloseConnection=true,
- }
-});
+builder.Services.AddReZeroServices();
 
 var app = builder.Build();
-app.UseStaticFiles();
-app.UseStaticFiles();
+//app.UseStaticFiles();
+//app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

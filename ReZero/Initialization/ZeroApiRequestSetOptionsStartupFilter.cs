@@ -30,6 +30,8 @@ namespace ReZero
                 // Use the created middleware in the pipeline.
                 builder.Use(func);
 
+                builder.UseMiddleware<ZeroStaticFileMiddleware>();
+
                 // Call the next middleware in the pipeline.
                 next(builder);
             };
