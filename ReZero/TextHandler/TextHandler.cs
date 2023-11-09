@@ -13,6 +13,10 @@ namespace ReZero
         {
             return GetText(typeof(InterfaceCategoryProvider), value);
         }
+        public static string? GetInterfaceListText(object value)
+        {
+            return GetText(typeof(InterfaceListProvider), value);
+        }
         public static string? GetText(Type type, object value)
         {
             var language = App.Language;
