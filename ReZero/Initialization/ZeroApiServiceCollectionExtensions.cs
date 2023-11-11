@@ -18,7 +18,9 @@ namespace ReZero
         /// <returns>The updated IServiceCollection.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions? options = null)
         {
-            _options=options = InitializeOptions(options);
+            _options = options = InitializeOptions(options);
+
+            InitZeroStaticFileMiddleware();
 
             AddTransientServices(services, options);
 
@@ -30,6 +32,14 @@ namespace ReZero
 
             // Return the updated IServiceCollection.
             return services;
+        }
+
+        /// <summary>
+        /// Initializes ZeroStaticFileMiddleware
+        /// </summary>
+        private static void InitZeroStaticFileMiddleware()
+        {
+            _options!.DefaultUiFolderName = ZeroStaticFileMiddleware.DefaultUiFolderName;
         }
 
         /// <summary>

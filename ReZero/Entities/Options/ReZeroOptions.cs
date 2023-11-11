@@ -18,6 +18,19 @@ namespace ReZero
         public Language Language { get; set; }
 
         /// <summary>
+        /// WwwRootPath\ReZeroDirName\DefaultUiFolderName
+        /// </summary>
+        public string? WwwRootPath { get; set; } = "wwwroot";
+        /// <summary>
+        ///  WwwRootPath\ReZeroDirName\DefaultUiFolderName
+        /// </summary>
+        public string? ReZeroDirName { get; set; } = "rezero";
+        /// <summary>
+        ///  WwwRootPath\ReZeroDirName\DefaultUiFolderName
+        /// </summary>
+        public string? DefaultUiFolderName { get; set; } = "default_ui";
+
+        /// <summary>
         /// Gets or sets the initialization connection string information (default: SQLite).
         /// </summary>
         public ConnectionConfig ConnectionConfig { get; set; } = new ConnectionConfig()

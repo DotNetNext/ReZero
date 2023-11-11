@@ -11,12 +11,14 @@ namespace ReZero
         private readonly RequestDelegate _next;
 
         // Constants for ReZero paths and file locations
-        private const string ReZeroDirName = "rezero";
-        private  string RezeroPathPrefix = $"/{ReZeroDirName}/";
-        private  string RezeroRootPath = $"/{ReZeroDirName}";
-        private  string DefaultIndexPath = "index.html";
-        public  string WwwRootPath = "wwwroot";
-        private  string RezeroStaticPath = $"{ReZeroDirName}/default_ui";
+        internal static string ReZeroDirName = "rezero";
+        internal static string RezeroPathPrefix = $"/{ReZeroDirName}/";
+        internal static string RezeroRootPath = $"/{ReZeroDirName}";
+        internal static string DefaultIndexPath = "index.html";
+        internal static string WwwRootPath = "wwwroot";
+        internal static string DefaultUiFolderName = "default_ui";
+        private static string UiFolderPath { get;  set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
+         
 
         public ZeroStaticFileMiddleware(RequestDelegate next)
         {
@@ -80,7 +82,7 @@ namespace ReZero
         private static string GetFilePath(string path)
         {
             var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
-            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), WwwRootPath, RezeroStaticPath, relativePath);
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), WwwRootPath, UiFolderPath, relativePath);
             return Path.GetFullPath(fullPath);
         }
     }
