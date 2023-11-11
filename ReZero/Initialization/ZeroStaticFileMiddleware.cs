@@ -20,7 +20,11 @@ namespace ReZero
         public async Task InvokeAsync(HttpContext context)
         {
             var path = context.Request.Path.Value?.ToLower()+"";
-
+            if (path.TrimEnd('/') == "/rezero") 
+            {
+                context.Response.Redirect("/rezero/index.html");
+                return;
+            }
             // 检查请求路径是否匹配静态文件路径
             if (path.StartsWith("/rezero/"))
             {
