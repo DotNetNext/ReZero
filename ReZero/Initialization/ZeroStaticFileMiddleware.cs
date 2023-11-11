@@ -1,54 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Threading.Tasks;
-namespace ReZero 
-{ 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 
+namespace ReZero
+{
     public class ZeroStaticFileMiddleware
     {
         private readonly RequestDelegate _next;
 
+        // Constants for ReZero paths and file locations
+        private const string RezeroPathPrefix = "/rezero/";
+        private const string RezeroRootPath = "/rezero";
+        private const string DefaultIndexPath = "index.html";
+        private const string WwwRootPath = "wwwroot";
+        private const string RezeroStaticPath = "rezero/default_ui";
+
         public ZeroStaticFileMiddleware(RequestDelegate next)
         {
-            _next = next;
+            _next = next ?? throw new ArgumentNullException(nameof(next));
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var path = context.Request.Path.Value?.ToLower()+"";
-            if (path.TrimEnd('/') == "/rezero") 
+            // Get the lowercase path of the request
+            var path = (context.Request.Path.Value ?? string.Empty).ToLower();
+
+            // Check if the request is for the root URL of ReZero
+            if (IsRezeroRootUrl(path))
             {
-                context.Response.Redirect("/rezero/index.html");
+                // Redirect to the default index.html if it is the root URL
+                context.Response.Redirect($"{RezeroPathPrefix}{DefaultIndexPath}");
                 return;
             }
-            // 检查请求路径是否匹配静态文件路径
-            if (path.StartsWith("/rezero/"))
+            // Check if the request is for a ReZero static file
+            else if (IsRezeroFileUrl(path))
             {
-                // 获取静态文件的物理路径
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "rezero", "default_ui", path.Replace("/rezero/",""));
+                // Get the full path of the requested file
+                var filePath = GetFilePath(path);
 
-                // 检查文件是否存在
+                // Check if the file exists
                 if (File.Exists(filePath))
                 {
-                    // 如果文件存在，将其发送到客户端
-                    var fileContent = File.ReadAllBytes(filePath);
-                    await context.Response.Body.WriteAsync(fileContent, 0, fileContent.Length);
+                    // Read the file content and send it to the client
+                    using (var fileStream = File.OpenRead(filePath))
+                    {
+                        await fileStream.CopyToAsync(context.Response.Body);
+                    }
+
                     return;
                 }
                 else
                 {
-                    // 如果文件不存在，返回404 Not Found
+                    // If the file does not exist, return a 404 Not Found status
                     context.Response.StatusCode = 404;
                     return;
                 }
             }
 
-            // 如果请求不匹配静态文件路径，则调用下一个中间件
+            // If the request doesn't match ReZero paths, call the next middleware
             await _next(context);
+        }
+
+        // Check if the requested URL is for a ReZero static file
+        private static bool IsRezeroFileUrl(string path)
+        {
+            return path.StartsWith(RezeroPathPrefix) && path.Contains(".");
+        }
+
+        // Check if the requested URL is the root URL of ReZero
+        private static bool IsRezeroRootUrl(string path)
+        {
+            return path.TrimEnd('/') == RezeroRootPath;
+        }
+
+        // Get the full path of the requested ReZero static file
+        private static string GetFilePath(string path)
+        {
+            var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), WwwRootPath, RezeroStaticPath, relativePath);
+            return Path.GetFullPath(fullPath);
         }
     }
 }
