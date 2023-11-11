@@ -11,11 +11,12 @@ namespace ReZero
         private readonly RequestDelegate _next;
 
         // Constants for ReZero paths and file locations
-        private const string RezeroPathPrefix = "/rezero/";
-        private const string RezeroRootPath = "/rezero";
-        private const string DefaultIndexPath = "index.html";
-        private const string WwwRootPath = "wwwroot";
-        private const string RezeroStaticPath = "rezero/default_ui";
+        private const string ReZeroDirName = "rezero";
+        private  string RezeroPathPrefix = $"/{ReZeroDirName}/";
+        private  string RezeroRootPath = $"/{ReZeroDirName}";
+        private  string DefaultIndexPath = "index.html";
+        public  string WwwRootPath = "wwwroot";
+        private  string RezeroStaticPath = $"{ReZeroDirName}/default_ui";
 
         public ZeroStaticFileMiddleware(RequestDelegate next)
         {
