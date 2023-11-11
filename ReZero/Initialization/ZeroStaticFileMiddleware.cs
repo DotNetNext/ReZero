@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -44,14 +46,14 @@ namespace ReZero
                 var filePath = GetFilePath(path);
 
                 // Check if the file exists
-                if (File.Exists(filePath))
+                if (FileExistsAndIsNotHtml(filePath))
                 {
-                    // Read the file content and send it to the client
-                    using (var fileStream = File.OpenRead(filePath))
-                    {
-                        await fileStream.CopyToAsync(context.Response.Body);
-                    }
-
+                    await CopyToFile(context, filePath);
+                    return;
+                }
+                else if (FileExistsHtml(filePath))
+                {
+                    await CopyToHtml(context, filePath);
                     return;
                 }
                 else
@@ -64,6 +66,44 @@ namespace ReZero
 
             // If the request doesn't match ReZero paths, call the next middleware
             await _next(context);
+        }
+
+        private static bool FileExistsHtml(string filePath)
+        {
+            return File.Exists(filePath) && filePath.Contains(".html");
+        }
+
+        private static bool FileExistsAndIsNotHtml(string filePath)
+        {
+            return File.Exists(filePath) && !filePath.Contains(".html");
+        }
+
+        private static async Task CopyToHtml(HttpContext context, string filePath)
+        {
+            // Read the file content and replace "A" with "B"
+            string fileContent;
+            using (var reader = new StreamReader(filePath))
+            {
+                fileContent = await reader.ReadToEndAsync();
+            }
+
+            if (fileContent.Contains("@@master_page.html")) 
+            {
+                fileContent=fileContent.Replace("@@master_page.html", "");
+                var path=Path.Combine(Path.GetDirectoryName(filePath),"template", "master_page.html");
+                var masterPageHtml= await File.ReadAllTextAsync(path);
+                fileContent = masterPageHtml.Replace("@@lyear-layout-content", fileContent);
+            }
+            await context.Response.WriteAsync(fileContent);
+        }
+
+        private static async Task CopyToFile(HttpContext context, string filePath)
+        {
+            // Read the file content and send it to the client
+            using (var fileStream = File.OpenRead(filePath))
+            {
+                await fileStream.CopyToAsync(context.Response.Body);
+            }
         }
 
         // Check if the requested URL is for a ReZero static file
