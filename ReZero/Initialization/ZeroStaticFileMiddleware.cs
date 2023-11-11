@@ -78,21 +78,25 @@ namespace ReZero
             return File.Exists(filePath) && !filePath.Contains(".html");
         }
 
+        // Copy the file content to the response, if the file is not a master page
         private static async Task CopyToHtml(HttpContext context, string filePath)
-        { 
+        {
+            // Read the file content
             string fileContent;
             using (var reader = new StreamReader(filePath))
             {
                 fileContent = await reader.ReadToEndAsync();
             }
-            DefaultUiManager defaultUiManager = new DefaultUiManager(fileContent,filePath);
-            
+            // Check if the file is a master page
+            DefaultUiManager defaultUiManager = new DefaultUiManager(fileContent, filePath);
             if (defaultUiManager.IsMasterPage(fileContent))
             {
-                fileContent =await defaultUiManager.GetHtmlAsync();
+                // If the file is a master page, get the HTML and send it to the client
+                fileContent = await defaultUiManager.GetHtmlAsync();
             }
+            // Send the file content to the client
             await context.Response.WriteAsync(fileContent);
-        } 
+        }
 
         private static async Task CopyToFile(HttpContext context, string filePath)
         {
