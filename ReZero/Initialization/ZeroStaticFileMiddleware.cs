@@ -86,6 +86,7 @@ namespace ReZero
                 fileContent = await reader.ReadToEndAsync();
             }
             DefaultUiManager defaultUiManager = new DefaultUiManager(fileContent,filePath);
+            
             if (defaultUiManager.IsMasterPage(fileContent))
             {
                 fileContent =await defaultUiManager.GetHtmlAsync();

@@ -1,38 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero
 {
-    /// <summary>
-    /// The default UI manager does not use read-write separation for the sake of launching without installation.
-    /// Custom UI implementations may not require this mechanism.
-    /// </summary>
     internal class DefaultUiManager
     {
-        private string fileContent;
-        private string filePath;
-        public DefaultUiManager(string fileContent,string filePath)
+        private readonly string originalFileContent;
+        private readonly string originalFilePath;
+        private readonly string masterPagePlaceholder = "@@master_page.html";
+        private readonly string masterPageFolder = "template";
+        private readonly string masterPageFileName = "master_page.html";
+        private readonly string layoutContentPlaceholder = "@@lyear-layout-content";
+
+        public DefaultUiManager(string fileContent, string filePath)
         {
-            this.fileContent = fileContent;
-            this.filePath = filePath;
+            this.originalFileContent = fileContent;
+            this.originalFilePath = filePath;
         }
 
-        public async Task<string> GetHtmlAsync() 
+        public async Task<string> GetHtmlAsync()
         {
-            fileContent = fileContent.Replace("@@master_page.html", "");
-            var path = Path.Combine(Path.GetDirectoryName(this.filePath), "template", "master_page.html");
-            var masterPageHtml = await File.ReadAllTextAsync(path);
-            fileContent = masterPageHtml.Replace("@@lyear-layout-content", fileContent);
-            return fileContent;
+            var modifiedContent = originalFileContent.Replace(masterPagePlaceholder, "");
+            var masterPagePath = Path.Combine(Path.GetDirectoryName(originalFilePath), masterPageFolder, masterPageFileName);
+            var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
+            modifiedContent = masterPageHtml.Replace(layoutContentPlaceholder, modifiedContent);
+            return modifiedContent;
         }
 
-
-        public  bool IsMasterPage(string fileContent)
+        public bool IsMasterPage(string fileContent)
         {
-            return fileContent.Contains("@@master_page.html");
+            return fileContent.Contains(masterPagePlaceholder);
         }
     }
 }
