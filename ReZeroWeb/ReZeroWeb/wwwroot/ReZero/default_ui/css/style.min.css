@@ -200,7 +200,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     background-color: #f96868;
 }
 .label-dark {
-    background-color: #465161;
+    background-color: #222437;
 }
 .label-secondary {
     background-color: #e4e7ea;
@@ -255,7 +255,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     background-color: #f96868;
 }
 .label-outline-dark::before {
-    background-color: #465161;
+    background-color: #222437;
 }
 .label-outline-secondary::before {
     background-color: #e4e7ea;
@@ -421,14 +421,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .panel-dark>.panel-heading {
     color: #fff;
-    background-color: #465161;
-    border-color: #465161;
+    background-color: #222437;
+    border-color: #222437;
 }
 .panel-dark {
-    border-color: #465161;
+    border-color: #222437;
 }
 .panel-dark>.panel-heading+.panel-collapse>.panel-body {
-    border-top-color: #465161;
+    border-top-color: #222437;
 }
 .panel-secondary>.panel-heading {
     background-color: #e4e7ea;
@@ -775,8 +775,8 @@ input[type=radio] {
     border-color: #fff;
 }
 .checkbox-dark input:checked~span::before {
-    background-color: #465161;
-    border-color: #465161;
+    background-color: #222437;
+    border-color: #222437;
 }
 .checkbox-dark input:checked~span::after {
     border-color: #fff;
@@ -874,8 +874,8 @@ input[type=radio] {
     background-color: #fff;
 }
 .radio-dark input:checked~span::before {
-    background-color: #465161;
-    border-color: #465161;
+    background-color: #222437;
+    border-color: #222437;
 }
 .radio-dark input:checked~span::after {
     background-color: #fff;
@@ -1010,7 +1010,7 @@ input[type=radio] {
 	background-color: #868e96
 }
 .switch-dark input:checked~span:after {
-	background-color: #465161
+	background-color: #222437
 }
 .switch-purple input:checked~span:after {
 	background-color: #926dde
@@ -1090,12 +1090,12 @@ input[type=radio] {
 	color: #868e96
 }
 .switch-solid.switch-dark input:checked~span {
-	background-color: #465161;
-	border-color: #465161
+	background-color: #222437;
+	border-color: #222437
 }
 .switch-solid.switch-dark input:checked~span:after {
 	background-color: #fff;
-	color: #465161
+	color: #222437
 }
 .switch-solid.switch-purple input:checked~span {
 	background-color: #926dde;
@@ -1250,7 +1250,7 @@ input[type=radio] {
   background-color: #868e96;
 }
 .progress-bar-dark {
-  background-color: #465161;
+  background-color: #222437;
 }
 .progress-sm {
     height: 8px;
@@ -1950,8 +1950,8 @@ fieldset[disabled] .btn-brown:hover {
     border-color: #755043;
 }
 .btn-dark {
-	background-color: #465161;
-	border-color: #465161;
+	background-color: #222437;
+	border-color: #222437;
 	color: #fff!important;
 }
 .btn-dark:hover {
@@ -1968,8 +1968,8 @@ fieldset[disabled] .btn-brown:hover {
 }
 .btn-dark.disabled,
 .btn-dark:disabled {
-	background-color: #465161;
-	border-color: #465161;
+	background-color: #222437;
+	border-color: #222437;
 	opacity: 0.5
 }
 .btn-dark:not([disabled]):not(.disabled).active,
@@ -2124,7 +2124,7 @@ fieldset[disabled] .btn-dark:hover {
 	color: #fff!important;
 }
 .bg-dark {
-	background-color: #465161 !important;
+	background-color: #222437 !important;
 	color: #fff!important;
 }
 .bg-white {
@@ -2184,7 +2184,7 @@ fieldset[disabled] .btn-dark:hover {
 	color: #868e96 !important
 }
 .text-dark {
-	color: #465161 !important
+	color: #222437 !important
 }
 .text-default {
 	color: #4d5259 !important
@@ -3599,8 +3599,8 @@ dd, dt {
 	border: 1px solid #33cabb;
 }
 #header_bg_8+label, #logo_bg_8+label, #sidebar_bg_8+label, #site_theme_2+label {
-    background-color: #465161;
-	border: 1px solid #465161;
+    background-color: #222437;
+	border: 1px solid #222437;
 }
 #site_theme_3+label {
     background: -webkit-linear-gradient(135deg, #65FDF0 10%, #1D6FA3 100%);
@@ -4501,7 +4501,7 @@ body[data-theme='translucent'] .jconfirm {
 [data-headerbg='color_8'] .lyear-layout-header,
 [data-logobg='color_8'] .sidebar-header,
 [data-sidebarbg='color_8'] .lyear-layout-sidebar-scroll {
-    background-color: #465161;
+    background-color: #222437;
 }
 
 [data-logobg*='color_'] .sidebar-header img,
