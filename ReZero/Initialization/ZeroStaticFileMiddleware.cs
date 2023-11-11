@@ -79,23 +79,19 @@ namespace ReZero
         }
 
         private static async Task CopyToHtml(HttpContext context, string filePath)
-        {
-            // Read the file content and replace "A" with "B"
+        { 
             string fileContent;
             using (var reader = new StreamReader(filePath))
             {
                 fileContent = await reader.ReadToEndAsync();
             }
-
-            if (fileContent.Contains("@@master_page.html")) 
+            DefaultUiManager defaultUiManager = new DefaultUiManager(fileContent,filePath);
+            if (defaultUiManager.IsMasterPage(fileContent))
             {
-                fileContent=fileContent.Replace("@@master_page.html", "");
-                var path=Path.Combine(Path.GetDirectoryName(filePath),"template", "master_page.html");
-                var masterPageHtml= await File.ReadAllTextAsync(path);
-                fileContent = masterPageHtml.Replace("@@lyear-layout-content", fileContent);
+                fileContent =await defaultUiManager.GetHtmlAsync();
             }
             await context.Response.WriteAsync(fileContent);
-        }
+        } 
 
         private static async Task CopyToFile(HttpContext context, string filePath)
         {
