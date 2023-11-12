@@ -14,14 +14,12 @@ namespace ReZero
 
             var categoryProvider = new InterfaceCategoryProvider(zeroInterfaceCategory);
             categoryProvider.Set();
-            if (!db!.Queryable<ZeroInterfaceCategory>().Any())
-                db!.Insertable(zeroInterfaceCategory).ExecuteCommand();
+            db!.Storageable(zeroInterfaceCategory).ExecuteCommand();
 
 
             var interfaceListProvider = new InterfaceListProvider(zeroInterfaceList);
             interfaceListProvider.Set(); 
-            if (!db!.Queryable<ZeroInterfaceList>().Any())
-                db!.Insertable(zeroInterfaceList).ExecuteCommand();
+            db!.Storageable(zeroInterfaceList).ExecuteCommand();
         } 
     }
 }

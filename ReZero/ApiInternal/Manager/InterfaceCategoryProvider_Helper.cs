@@ -7,11 +7,43 @@ namespace ReZero
     public partial class InterfaceCategoryProvider
     {
         /// <summary>
+        /// 根目录
+        /// </summary>
+        [TextCN("根目录")]
+        [TextEN("Root")]
+        public const long Id = 0;
+
+
+        /// <summary>
+        /// 首页
+        /// </summary>
+        [TextCN("首页")]
+        [TextEN("Index")]
+        public const long Id1 = 1;
+
+
+        /// <summary>
+        /// 内置接口
+        /// </summary>
+        [TextCN("内置接口")]
+        [TextEN("Internal interface")]
+        public const long Id10 = 100;
+
+        /// <summary>
+        /// 自定义接口
+        /// </summary>
+        [TextCN("自定义接口")]
+        [TextEN("Dynamic interface")]
+        public const long Id200 = 200;
+
+
+
+        /// <summary>
         /// 接口管理
         /// </summary> 
         [TextCN("接口管理")]
         [TextEN("Interface management")]
-        public const long Id1= 1;
+        public const long Id100= 100;
 
         /// <summary>
         /// 接口分类
@@ -52,7 +84,7 @@ namespace ReZero
         /// 项目管理
         /// </summary>
         [TextCN("项目管理")]
-        [TextEN("项目管理 management")]
-        public const long Id2 = 2;
-    }
-}
+        [TextEN("management")]
+        public const long Id20 = 200;
+    }  
+} 
