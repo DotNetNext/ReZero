@@ -16,9 +16,9 @@ namespace ReZero
         private const string IconName3 = "mdi mdi-book-open";
         private const string IconName4 = "mdi-arrange-send-backward";
 
-        internal List<IconData> GetDatas()
+        internal List<ZeroIconData> GetDatas()
         {
-            List<IconData> datas = new List<IconData>();
+            List<ZeroIconData> datas = new List<ZeroIconData>();
 
             datas.Add(GetNewItem(it =>
             {
@@ -46,9 +46,9 @@ namespace ReZero
 
             return datas;
         }
-        private static IconData GetNewItem(Action<IconData> action)
+        private static ZeroIconData GetNewItem(Action<ZeroIconData> action)
         {
-            var result = new IconData()
+            var result = new ZeroIconData()
             {
                 IsInitialized = true,
             };
