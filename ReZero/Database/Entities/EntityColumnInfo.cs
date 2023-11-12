@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal class ZeroIconColumnInfo
+    public class ZeroEntityColumnInfo
     {
         public long TableId { get; set; }
         public string? Name { get; set; }
