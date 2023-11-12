@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero
 {
-    public class IconData:DbBase
+    public class ZeroIconData : DbBase
     { 
         // Name of the icon
         public string? IconName { get; set; }
