@@ -6,10 +6,10 @@ namespace ReZero
 {
     internal class IconProvider
     {
-        private const int Id1 = 1;
-        private const int Id2 = 2;
-        private const int Id3 = 3;
-        private const int Id4 = 4;
+        internal const int Id1 = 1;
+        internal const int Id2 = 2;
+        internal const int Id3 = 3;
+        internal const int Id4 = 4;
 
         private const string IconName1 = "mdi mdi-home";
         private const string IconName2 = "mdi polymer";
