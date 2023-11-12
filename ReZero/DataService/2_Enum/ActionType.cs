@@ -7,8 +7,9 @@ namespace ReZero
     public enum ActionType
     {
         //Query
-        QueryBy_PrimaryKey=10000,
+        Query_PrimaryKey=10000,
         Query_Common = 10001,
+        Query_Tree = 10001,
 
         //Insert
         Insert_Object =20000,
