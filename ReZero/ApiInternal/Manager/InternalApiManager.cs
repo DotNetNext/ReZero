@@ -20,6 +20,9 @@ namespace ReZero
             var interfaceListProvider = new InterfaceListProvider(zeroInterfaceList);
             interfaceListProvider.Set(); 
             db!.Storageable(zeroInterfaceList).ExecuteCommand();
+
+            var icon = new IconProvider();
+            //db.Storageable(icon.GetDatas()).ExecuteCommand();
         } 
     }
 }
