@@ -13,7 +13,7 @@ namespace ReZero
         [SugarColumn(IsNullable =true)]
         public string? Description { get; set; }
         [SugarColumn(IsIgnore = true)]
-        public List<ZeroInterfaceCategory>? SubInterfaceCategories { get; set; };
+        public List<ZeroInterfaceCategory>? SubInterfaceCategories { get; set; }
         public string? Url { get; set; } = "#";
     }
 }
