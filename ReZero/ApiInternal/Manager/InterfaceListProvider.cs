@@ -24,7 +24,7 @@ namespace ReZero
                 it.ActionType = ActionType.Query_Common;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id1;
-                it.InterfaceCategoryId = InterfaceCategoryProvider.Id200003;
+                it.InterfaceCategoryId = InterfaceCategoryProvider.Id300003;
                 it.Name = TextHandler.GetInterfaceListText(Id1);
                 it.Url = GetUrl(it, "GetDatabaseList");
             });

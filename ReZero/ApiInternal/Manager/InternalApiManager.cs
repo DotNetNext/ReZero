@@ -11,7 +11,7 @@ namespace ReZero
         public void Initialize(ReZeroOptions options)
         {
             var db = App.PreStartupDb;
-
+            db!.Deleteable<ZeroInterfaceCategory>().Where(it => it.IsInitialized).ExecuteCommand();
             var categoryProvider = new InterfaceCategoryProvider(zeroInterfaceCategory);
             categoryProvider.Set();
             db!.Storageable(zeroInterfaceCategory).ExecuteCommand();

@@ -40,53 +40,72 @@ namespace ReZero
         {
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id20;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id20);
+                it.Id = Id300;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300);
+                it.ParentId = Id;
+            }));  
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300002;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300002);
+                it.ParentId = Id300;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300003;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300003);
+                it.ParentId = Id300;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300004;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300004);
+                it.ParentId = Id300;
+            }));
+        }
+         
+        private void SetInterfaceManager()
+        {
+            //Dyanamic interface
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id200;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id200);
                 it.ParentId = Id;
             })); 
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id200002;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id200002);
-                it.ParentId = Id20;
+                it.Id = Id200001;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id200001);
+                it.ParentId = Id200;
             }));
+            //internal interface
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id200003;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id200003);
-                it.ParentId = Id20;
-            }));
-            zeroInterfaceCategory.Add(GetNewItem(it =>
-            {
-                it.Id = Id200004;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id200004);
-                it.ParentId = Id20;
-            }));
-        }
-
-      
-
-        private void SetInterfaceManager()
-        {
-            zeroInterfaceCategory.Add(GetNewItem(it =>
-            {
-                it.Id = Id10;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id10);
+                it.Id = Id100;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id100);
                 it.ParentId = Id;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id100001;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100001);
-                it.ParentId = Id10;
+                it.ParentId = Id100;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id100002;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100002);
-                it.ParentId = Id10;
+                it.ParentId = Id100;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id100003;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id100003);
+                it.ParentId = Id100;
             }));
         } 
+
         private static ZeroInterfaceCategory GetNewItem(Action<ZeroInterfaceCategory> action)
         {
             var result= new ZeroInterfaceCategory()

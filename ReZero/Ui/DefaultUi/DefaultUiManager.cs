@@ -27,6 +27,7 @@ namespace ReZero
             var masterPagePath = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, masterPageFileName);
             var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
             var menuList =await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
+            
             var menuHtml = await GetMenuHtml(menuList);
             masterPageHtml=masterPageHtml.Replace(masterMenuPlaceholder, menuHtml);
             modifiedContent = masterPageHtml.Replace(layoutContentPlaceholder, modifiedContent);
