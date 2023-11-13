@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ReZero
 {
     /// <summary>
-    /// 默认后台管理并非读写离，如果是VUE等UI框架不会走这个逻辑  
+    /// 默认UI使用，如果是Vue前后分离不会使用该类
     /// </summary>
     public class DefaultUiManager : IUiManager
     { 
