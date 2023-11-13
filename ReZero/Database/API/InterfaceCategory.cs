@@ -12,8 +12,9 @@ namespace ReZero
         public long? ParentId{get;set;}
         [SugarColumn(IsNullable =true)]
         public string? Description { get; set; }
+        public string? Url { get; set; } = "#";
         [SugarColumn(IsIgnore = true)]
         public List<ZeroInterfaceCategory>? SubInterfaceCategories { get; set; }
-        public string? Url { get; set; } = "#";
+
     }
 }
