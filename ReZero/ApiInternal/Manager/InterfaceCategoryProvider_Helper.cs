@@ -15,12 +15,12 @@ namespace ReZero
         public const long Id = 0; 
         #endregion
          
-        #region Indexx
+        #region Swagger
         /// <summary>
         /// 首页
         /// </summary>
-        [TextCN("首页")]
-        [TextEN("Index")]
+        [TextCN("原生接口")]
+        [TextEN("Swagger")]
         public const long Id1 = 1;
         #endregion
          
@@ -29,7 +29,7 @@ namespace ReZero
         /// <summary>
         /// 自定义接口
         /// </summary>
-        [TextCN("自定义接口")]
+        [TextCN("动态接口")]
         [TextEN("Dynamic interface")]
         public const long Id200 = 200;
 
