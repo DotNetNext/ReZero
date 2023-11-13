@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace ReZero 
-{
+{ 
     public class MenuBuilder
     {
         public static string GenerateMenu(List<ZeroInterfaceCategory> treeList)
