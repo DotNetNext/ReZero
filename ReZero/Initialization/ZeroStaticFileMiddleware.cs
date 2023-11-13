@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using ReZero.Ui;
 
 namespace ReZero
 {
@@ -88,11 +89,11 @@ namespace ReZero
                 fileContent = await reader.ReadToEndAsync();
             }
             // Check if the file is a master page
-            DefaultUiManager defaultUiManager = new DefaultUiManager(fileContent, filePath);
+            IUiManager defaultUiManager = UIFactory.uiManager;
             if (defaultUiManager.IsMasterPage(fileContent))
             {
                 // If the file is a master page, get the HTML and send it to the client
-                fileContent = await defaultUiManager.GetHtmlAsync();
+                fileContent = await defaultUiManager.GetHtmlAsync(fileContent, filePath);
             }
             // Send the file content to the client
             await context.Response.WriteAsync(fileContent);
