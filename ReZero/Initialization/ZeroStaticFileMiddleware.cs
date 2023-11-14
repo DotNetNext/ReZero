@@ -22,12 +22,15 @@ namespace ReZero
         internal static string DefaultUiFolderName = "default_ui";
         private static string UiFolderPath { get; set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
 
-
         public ZeroStaticFileMiddleware(RequestDelegate next)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
         }
 
+        /// <summary>
+        /// Invokes the middleware to handle the request.
+        /// </summary>
+        /// <param name="context">The HttpContext for the request.</param>
         public async Task InvokeAsync(HttpContext context)
         {
             // Get the lowercase path of the request
@@ -70,7 +73,7 @@ namespace ReZero
         }
 
         /// <summary>
-        /// Check if the requested file exists and is not an HTML file.
+        /// Checks if the requested file exists and is not an HTML file.
         /// </summary>
         /// <param name="filePath">The path of the file to check.</param>
         /// <returns>True if the file exists and is not an HTML file, false otherwise.</returns>
@@ -80,7 +83,7 @@ namespace ReZero
         }
 
         /// <summary>
-        /// Check if the requested file exists and is an HTML file.
+        /// Checks if the requested file exists and is an HTML file.
         /// </summary>
         /// <param name="filePath">The path of the file to check.</param>
         /// <returns>True if the file exists and is an HTML file, false otherwise.</returns>
@@ -89,7 +92,25 @@ namespace ReZero
             return File.Exists(filePath) && filePath.Contains(".html");
         }
 
-        // Copy the file content to the response, if the file is not a master page
+        /// <summary>
+        /// Copies the content of the requested file to the response stream.
+        /// </summary>
+        /// <param name="context">The HttpContext for the request.</param>
+        /// <param name="filePath">The path of the file to copy.</param>
+        private static async Task CopyToFile(HttpContext context, string filePath)
+        {
+            // Read the file content and send it to the client
+            using (var fileStream = File.OpenRead(filePath))
+            {
+                await fileStream.CopyToAsync(context.Response.Body);
+            }
+        }
+
+        /// <summary>
+        /// Copies the content of the requested HTML file to the response stream.
+        /// </summary>
+        /// <param name="context">The HttpContext for the request.</param>
+        /// <param name="filePath">The path of the HTML file to copy.</param>
         private static async Task CopyToHtml(HttpContext context, string filePath)
         {
             // Read the file content
@@ -109,28 +130,31 @@ namespace ReZero
             await context.Response.WriteAsync(fileContent);
         }
 
-        private static async Task CopyToFile(HttpContext context, string filePath)
-        {
-            // Read the file content and send it to the client
-            using (var fileStream = File.OpenRead(filePath))
-            {
-                await fileStream.CopyToAsync(context.Response.Body);
-            }
-        }
-
-        // Check if the requested URL is for a ReZero static file
+        /// <summary>
+        /// Checks if the requested URL is for a ReZero static file.
+        /// </summary>
+        /// <param name="path">The path of the requested URL.</param>
+        /// <returns>True if the requested URL is for a ReZero static file, false otherwise.</returns>
         private static bool IsRezeroFileUrl(string path)
         {
             return path.StartsWith(RezeroPathPrefix) && path.Contains(".");
         }
 
-        // Check if the requested URL is the root URL of ReZero
+        /// <summary>
+        /// Checks if the requested URL is the root URL of ReZero.
+        /// </summary>
+        /// <param name="path">The path of the requested URL.</param>
+        /// <returns>True if the requested URL is the root URL of ReZero, false otherwise.</returns>
         private static bool IsRezeroRootUrl(string path)
         {
             return path.TrimEnd('/') == RezeroRootPath;
         }
 
-        // Get the full path of the requested ReZero static file
+        /// <summary>
+        /// Gets the full path of the requested ReZero static file.
+        /// </summary>
+        /// <param name="path">The path of the requested URL.</param>
+        /// <returns>The full path of the requested ReZero static file.</returns>
         private static string GetFilePath(string path)
         {
             var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
