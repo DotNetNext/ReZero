@@ -20,8 +20,8 @@ namespace ReZero
         internal static string DefaultIndexPath = "index.html";
         internal static string WwwRootPath = "wwwroot";
         internal static string DefaultUiFolderName = "default_ui";
-        private static string UiFolderPath { get;  set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
-         
+        private static string UiFolderPath { get; set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
+
 
         public ZeroStaticFileMiddleware(RequestDelegate next)
         {
@@ -69,14 +69,24 @@ namespace ReZero
             await _next(context);
         }
 
-        private static bool FileExistsHtml(string filePath)
-        {
-            return File.Exists(filePath) && filePath.Contains(".html");
-        }
-
+        /// <summary>
+        /// Check if the requested file exists and is not an HTML file.
+        /// </summary>
+        /// <param name="filePath">The path of the file to check.</param>
+        /// <returns>True if the file exists and is not an HTML file, false otherwise.</returns>
         private static bool FileExistsAndIsNotHtml(string filePath)
         {
             return File.Exists(filePath) && !filePath.Contains(".html");
+        }
+
+        /// <summary>
+        /// Check if the requested file exists and is an HTML file.
+        /// </summary>
+        /// <param name="filePath">The path of the file to check.</param>
+        /// <returns>True if the file exists and is an HTML file, false otherwise.</returns>
+        private static bool FileExistsHtml(string filePath)
+        {
+            return File.Exists(filePath) && filePath.Contains(".html");
         }
 
         // Copy the file content to the response, if the file is not a master page
