@@ -69,7 +69,7 @@ namespace ReZero
             {
                 var urls = GetAllUrls(subTree);
                 var isOpen = urls.Any(it => filePath?.ToLower()?.Contains(it?.ToLower()) == true);
-                var active = isOpen ? " action " : "";
+                var active = isOpen ? " active " : "";
 
                 if (subTree.SubInterfaceCategories != null && subTree.SubInterfaceCategories.Count > 0)
                 {

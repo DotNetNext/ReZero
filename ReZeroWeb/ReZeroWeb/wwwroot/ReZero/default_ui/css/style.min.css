@@ -2810,7 +2810,7 @@ dd, dt {
 }
 .nav-drawer .nav-subnav > li.active > a,
 .nav-drawer .nav-subnav > li > a:hover {
-    color: #33cabb;
+    color: #33cabb !important;
     background-color: transparent;
 }
 .nav-drawer > li > a > i {
