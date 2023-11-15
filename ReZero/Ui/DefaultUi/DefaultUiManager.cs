@@ -32,19 +32,16 @@ namespace ReZero
         public async Task<string> GetHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content)
         {
 
-            var url = content.Request.Path + "";
-            var queryString = content.Request.QueryString + "";
+            var url = (content.Request.Path + ""+content.Request.QueryString).ToLower(); 
             var modifiedContent = fileContent.Replace(masterPagePlaceholder, "");
             var masterPagePath = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, masterPageFileName);
             var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
 
             //menu html
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
-            var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>()
-                                          .WhereIF(queryString == "", it => it.Url!.ToLower()!.EndsWith(url))
-                                          .WhereIF(queryString != "", it => it.Url!.EndsWith("id=" + it.Id.ToString())).FirstAsync();
+            var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Url!.ToLower() == url).FirstAsync();
             var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
-            var menuHtml = await GetMenuHtml(menuList, filePath, url);
+            var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);
 
             //Nav title
             masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
@@ -74,9 +71,9 @@ namespace ReZero
         /// </summary>
         /// <param name="categories">The list of interface categories.</param>
         /// <returns>The HTML code for the menu.</returns>
-        public async Task<string> GetMenuHtml(List<ZeroInterfaceCategory> categories,string filePath,string url)
+        public async Task<string> GetMenuHtml(List<ZeroInterfaceCategory> categories,string filePath, ZeroInterfaceCategory  current)
         {
-            return await Task.FromResult(MenuBuilder.GenerateMenu(categories,url));
+            return await Task.FromResult(MenuBuilder.GenerateMenu(categories, current));
         }
 
         /// <summary>
