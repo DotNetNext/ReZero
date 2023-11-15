@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ReZero 
 {
@@ -7,7 +8,7 @@ namespace ReZero
     /// </summary>
     public interface IUiManager
     {
-        Task<string> GetHtmlAsync(string fileContent, string filePath,string url);
+        Task<string> GetHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content);
         bool IsMasterPage(string fileContent);
     }
 }

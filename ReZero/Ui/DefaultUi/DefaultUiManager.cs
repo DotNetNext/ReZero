@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks; 
 
@@ -28,23 +29,44 @@ namespace ReZero
         /// <param name="fileContent">The content of the file to modify.</param>
         /// <param name="filePath">The path of the file to modify.</param>
         /// <returns>The modified file content.</returns>
-        public async Task<string> GetHtmlAsync(string fileContent, string filePath, string url)
+        public async Task<string> GetHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content)
         {
+
+            var url = content.Request.Path + "";
+            var queryString = content.Request.QueryString + "";
             var modifiedContent = fileContent.Replace(masterPagePlaceholder, "");
             var masterPagePath = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, masterPageFileName);
             var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
+
+            //menu html
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
-            var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it=>it.Url!.ToLower()!.Contains(url)).FirstAsync();
-            if (currentMenu != null) 
-            {
-                var parentMenu=await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
-                var navTitle = parentMenu.Name + "->" + currentMenu.Name;
-                masterPageHtml = masterPageHtml.Replace(mastreNavNamePlaceholder, navTitle);
-            }
-            var menuHtml = await GetMenuHtml(menuList, filePath,url);
+            var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>()
+                                          .WhereIF(queryString == "", it => it.Url!.ToLower()!.EndsWith(url))
+                                          .WhereIF(queryString != "", it => it.Url!.EndsWith("id=" + it.Id.ToString())).FirstAsync();
+            var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
+            var menuHtml = await GetMenuHtml(menuList, filePath, url);
+
+            //Nav title
+            masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
+
+            //Body context
+            masterPageHtml=ReplaceBodyContext(modifiedContent,  masterPageHtml, menuHtml);
+
+            return masterPageHtml;
+        }
+
+        private string ReplaceBodyContext(string modifiedContent, string masterPageHtml, string menuHtml)
+        {
             masterPageHtml = masterPageHtml.Replace(masterMenuPlaceholder, menuHtml);
-            modifiedContent = masterPageHtml.Replace(layoutContentPlaceholder, modifiedContent);
-            return modifiedContent;
+            masterPageHtml = masterPageHtml.Replace(layoutContentPlaceholder, modifiedContent);
+            return masterPageHtml;
+        }
+
+        private string ReplaceNavTitle(string masterPageHtml, ZeroInterfaceCategory currentMenu, ZeroInterfaceCategory parentMenu)
+        {
+            var navTitle = parentMenu.Name + "->" + currentMenu.Name;
+            masterPageHtml = masterPageHtml.Replace(mastreNavNamePlaceholder, navTitle);
+            return masterPageHtml;
         }
 
         /// <summary>
