@@ -1,0 +1,57 @@
+﻿@@master_page.html
+<link href="css/page_interface.css" rel="stylesheet" />
+<div id="apibox">
+    <div class="form-group row">
+        <div class="row show-grid">
+            <div class="col-md-4">
+                <input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本..">
+            </div>
+            <div class="col-md-2">
+                <select class="form-control">
+                    <option value="0">==项目==</option>
+                    <option value="1">选项 #1</option>
+                    <option value="2">选项 #2</option>
+                    <option value="3">选项 #3</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control">
+                    <option value="0">==分类==</option>
+                    <option value="1">选项 #1</option>
+                    <option value="2">选项 #2</option>
+                    <option value="3">选项 #3</option>
+                </select>
+            </div>
+            <div class="col-md-4"> <button class="btn btn-success" type="submit">搜索</button></div>
+        </div>
+    </div>
+    <section>
+        <div class="endpoint">
+            <h2>User Endpoint</h2>
+            <p class="method">GET</p>
+            <p>Retrieve information about a user.</p>
+
+            <div class="parameter">
+                <strong>Parameters:</strong>
+                <ul>
+                    <li><code>id</code> (integer) - The ID of the user.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <h2>Post Endpoint</h2>
+            <p class="method">POST</p>
+            <p>Create a new post.</p>
+
+            <div class="parameter">
+                <strong>Parameters:</strong>
+                <ul>
+                    <li><code>title</code> (string) - The title of the post.</li>
+                    <li><code>content</code> (string) - The content of the post.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
