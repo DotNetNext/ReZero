@@ -27,14 +27,14 @@ namespace ReZero
         /// <param name="fileContent">The content of the file to modify.</param>
         /// <param name="filePath">The path of the file to modify.</param>
         /// <returns>The modified file content.</returns>
-        public async Task<string> GetHtmlAsync(string fileContent, string filePath)
+        public async Task<string> GetHtmlAsync(string fileContent, string filePath, string url)
         {
             var modifiedContent = fileContent.Replace(masterPagePlaceholder, "");
             var masterPagePath = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, masterPageFileName);
             var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
 
-            var menuHtml = await GetMenuHtml(menuList);
+            var menuHtml = await GetMenuHtml(menuList, filePath,url);
             masterPageHtml = masterPageHtml.Replace(masterMenuPlaceholder, menuHtml);
             modifiedContent = masterPageHtml.Replace(layoutContentPlaceholder, modifiedContent);
             return modifiedContent;
@@ -45,9 +45,9 @@ namespace ReZero
         /// </summary>
         /// <param name="categories">The list of interface categories.</param>
         /// <returns>The HTML code for the menu.</returns>
-        public async Task<string> GetMenuHtml(List<ZeroInterfaceCategory> categories)
+        public async Task<string> GetMenuHtml(List<ZeroInterfaceCategory> categories,string filePath,string url)
         {
-            return await Task.FromResult(MenuBuilder.GenerateMenu(categories));
+            return await Task.FromResult(MenuBuilder.GenerateMenu(categories,url));
         }
 
         /// <summary>

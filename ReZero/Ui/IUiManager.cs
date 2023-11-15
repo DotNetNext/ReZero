@@ -7,7 +7,7 @@ namespace ReZero
     /// </summary>
     public interface IUiManager
     {
-        Task<string> GetHtmlAsync(string fileContent, string filePath);
+        Task<string> GetHtmlAsync(string fileContent, string filePath,string url);
         bool IsMasterPage(string fileContent);
     }
 }

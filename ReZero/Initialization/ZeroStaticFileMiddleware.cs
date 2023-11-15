@@ -124,7 +124,7 @@ namespace ReZero
             if (defaultUiManager.IsMasterPage(fileContent))
             {
                 // If the file is a master page, get the HTML and send it to the client
-                fileContent = await defaultUiManager.GetHtmlAsync(fileContent, filePath);
+                fileContent = await defaultUiManager.GetHtmlAsync(fileContent, filePath, context.Request.Path + "");
             }
             // Send the file content to the client
             await context.Response.WriteAsync(fileContent);
