@@ -12,12 +12,12 @@ namespace ReZero
         /// </summary>
         [TextCN("根目录")]
         [TextEN("Root")]
-        public const long Id = 0; 
+        public const long Id = 0;
         #endregion
-         
+
         #region Swagger
         /// <summary>
-        /// 首页
+        /// Swagger
         /// </summary>
         [TextCN("原生接口")]
         [TextEN("Swagger")]

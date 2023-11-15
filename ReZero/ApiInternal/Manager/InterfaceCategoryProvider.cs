@@ -25,7 +25,7 @@ namespace ReZero
             {
                 it.Id = Id;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id);
-                it.ParentId = null;
+                it.ParentId = null; 
             }));
 
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -33,6 +33,7 @@ namespace ReZero
                 it.Id = Id1;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id1);
                 it.ParentId = Id;
+                it.Url = "/rezero/index.html";
             }));
         }
 
@@ -72,12 +73,14 @@ namespace ReZero
                 it.Id = Id200;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200);
                 it.ParentId = Id;
+
             })); 
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id200001;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200001);
-                it.ParentId = Id200;
+                it.ParentId = Id200; 
+                it.Url = "/rezero/dynamic_interface.html";
             }));
             //internal interface
             zeroInterfaceCategory.Add(GetNewItem(it =>

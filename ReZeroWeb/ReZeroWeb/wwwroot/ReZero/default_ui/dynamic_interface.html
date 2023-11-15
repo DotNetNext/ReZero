@@ -1,0 +1,73 @@
+﻿@@master_page.html
+
+<style>
+    #apibox {
+      padding:10px;
+    }
+    section {
+        margin-top: 20px;
+    }
+
+    .endpoint {
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+        .endpoint h2 {
+            margin-bottom: 5px;
+        }
+
+        .endpoint p {
+            margin-top: 5px;
+        }
+
+    .method {
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 3px;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .parameter {
+        margin-top: 10px;
+        padding: 5px;
+        background-color: #f2f2f2;
+        border-radius: 3px;
+    }
+</style>
+
+<div id="apibox">
+    <section>
+        <div class="endpoint">
+            <h2>User Endpoint</h2>
+            <p class="method">GET</p>
+            <p>Retrieve information about a user.</p>
+
+            <div class="parameter">
+                <strong>Parameters:</strong>
+                <ul>
+                    <li><code>id</code> (integer) - The ID of the user.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <h2>Post Endpoint</h2>
+            <p class="method">POST</p>
+            <p>Create a new post.</p>
+
+            <div class="parameter">
+                <strong>Parameters:</strong>
+                <ul>
+                    <li><code>title</code> (string) - The title of the post.</li>
+                    <li><code>content</code> (string) - The content of the post.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
