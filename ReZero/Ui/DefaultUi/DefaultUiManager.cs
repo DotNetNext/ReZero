@@ -16,6 +16,7 @@ namespace ReZero
         private readonly string masterPageFileName = "master_page.html";
         private readonly string layoutContentPlaceholder = "@@lyear-layout-content";
         private readonly string masterMenuPlaceholder = "@@left-menu";
+        private readonly string mastreNavNamePlaceholder = "@@nav-title";
 
         public DefaultUiManager()
         {
@@ -33,7 +34,13 @@ namespace ReZero
             var masterPagePath = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, masterPageFileName);
             var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
-
+            var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it=>it.Url!.ToLower()!.Contains(url)).FirstAsync();
+            if (currentMenu != null) 
+            {
+                var parentMenu=await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
+                var navTitle = parentMenu.Name + "->" + currentMenu.Name;
+                masterPageHtml = masterPageHtml.Replace(mastreNavNamePlaceholder, navTitle);
+            }
             var menuHtml = await GetMenuHtml(menuList, filePath,url);
             masterPageHtml = masterPageHtml.Replace(masterMenuPlaceholder, menuHtml);
             modifiedContent = masterPageHtml.Replace(layoutContentPlaceholder, modifiedContent);
