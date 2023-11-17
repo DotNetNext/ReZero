@@ -13,10 +13,10 @@ namespace ReZero
         [TextEN("Database management")]
         public const long Id1 = 1;
         /// <summary>
-        /// 接口列表
+        /// 内部接口
         /// </summary> 
-        [TextCN("接口列表")]
-        [TextEN("Interface list")]
+        [TextCN("内部接口列表")]
+        [TextEN("Internal interface list")]
         public const long Id2 = 2;
         /// <summary>
         /// 接口分类

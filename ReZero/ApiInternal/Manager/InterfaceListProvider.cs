@@ -38,7 +38,7 @@ namespace ReZero
                 it.Id = Id2;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(Id2);
-                it.Url = GetUrl(it, "GetInterfaceList");
+                it.Url = GetUrl(it, "GetInternalInterfaceList");
             });
             zeroInterfaceList.Add(data);
         } 

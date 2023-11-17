@@ -53,5 +53,27 @@
             </div>
         </div>
     </section>
+    <button @click="fetchData">Fetch Data</button>
 </div>
-
+<script>
+    new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null
+        },
+        methods: {
+            fetchData() {
+                axios.get('/PrivateReZeroRoute/2/GetInternalInterfaceList')
+                    .then(response => {
+                        //this.data = response.data;
+                        //this.error = null;
+                    })
+                    .catch(error => {
+                        //this.error = error.message;
+                        //this.data = null;
+                    });
+            }
+        }
+    });
+</script>

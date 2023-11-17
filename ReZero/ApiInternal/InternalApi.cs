@@ -16,7 +16,7 @@ namespace ReZero
         /// <returns>True if the URL is a ReZero API endpoint, otherwise false.</returns>
         public bool IsApi(string url)
         {
-            return url.ToString()?.StartsWith(NamingConventionsConst.ApiReZeroRoute) == true;
+            return url.ToString().ToLower().TrimStart('/')?.StartsWith(NamingConventionsConst.ApiReZeroRoute.ToLower()) == true;
         }
 
         /// <summary>
@@ -24,9 +24,10 @@ namespace ReZero
         /// </summary>
         /// <param name="context">The HttpContext representing the current request and response context.</param>
         /// <returns>A Task representing the asynchronous operation.</returns>
-        public Task WriteAsync(HttpContext context)
+        public async Task WriteAsync(HttpContext context)
         {
-            throw new NotImplementedException(); // Implementation for writing API response is not provided.
+           //
+           await context.Response.WriteAsync("动态接口成功");
         }
     }
 }
