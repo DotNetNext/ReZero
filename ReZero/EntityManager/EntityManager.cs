@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Newtonsoft.Json.Linq;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,9 +28,51 @@ namespace ReZero
             return type;
         }
 
-        private static Type GetType(NativeTypes nativeTypes)
+        public static Type GetType(NativeTypes nativeTypes)
         {
-            return typeof(string);
+            switch (nativeTypes)
+            {
+                case NativeTypes.Int:
+                    return typeof(int);
+                case NativeTypes.UInt:
+                    return typeof(uint);
+                case NativeTypes.Short:
+                    return typeof(short);
+                case NativeTypes.UShort:
+                    return typeof(ushort);
+                case NativeTypes.Long:
+                    return typeof(long);
+                case NativeTypes.ULong:
+                    return typeof(ulong);
+                case NativeTypes.Byte:
+                    return typeof(byte);
+                case NativeTypes.SByte:
+                    return typeof(sbyte);
+                case NativeTypes.Float:
+                    return typeof(float);
+                case NativeTypes.Double:
+                    return typeof(double);
+                case NativeTypes.Decimal:
+                    return typeof(decimal);
+                case NativeTypes.Char:
+                    return typeof(char);
+                case NativeTypes.Bool:
+                    return typeof(bool);
+                case NativeTypes.String:
+                    return typeof(string);
+                case NativeTypes.DateTime:
+                    return typeof(DateTime);
+                case NativeTypes.TimeSpan:
+                    return typeof(TimeSpan);
+                case NativeTypes.Guid:
+                    return typeof(Guid);
+                case NativeTypes.ByteArray:
+                    return typeof(byte[]);
+                case NativeTypes.Json:
+                    return typeof(object); // Assuming Json is a placeholder for any JSON-related type
+                default:
+                    throw new ArgumentException("Unsupported NativeType");
+            }
         }
     }
 }
