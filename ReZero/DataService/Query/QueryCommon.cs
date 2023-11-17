@@ -13,16 +13,11 @@ namespace ReZero
         {
             var db = App.Db;
             RefAsync<int> count = 0;
-            var type = GetType(dataModel.TableId);
+            var type =await EntityManager.GetTypeAsync(dataModel.TableId);
             //var entityInfo = db.EntityMaintenance.GetEntityInfo(type);
             var result = await db.QueryableByObject(type)
                           .ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
             return result;
-        }
-
-        private static Type GetType(long tableId)
-        {
-            return  null;
         }
     }
 }

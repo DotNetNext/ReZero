@@ -14,8 +14,9 @@ namespace ReZero
             db = App.Db;
         }
         public async Task<object> ExecuteAction(DataModel dataModel)
-        { 
-            var data=await db.QueryableByObject(dataModel.MasterEntityType).InSingleAsync(dataModel.Data);
+        {
+            var type =await EntityManager.GetTypeAsync(dataModel.TableId);
+            var data=await db.QueryableByObject(type).InSingleAsync(dataModel.Data);
             return data;
         }
          
