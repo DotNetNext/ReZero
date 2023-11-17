@@ -7,7 +7,7 @@ namespace ReZero
     /// <summary>
     /// Represents the parameters for a tree structure.
     /// </summary>
-    public class TreeParameter
+    public class DataModelTreeParameter
     {
         /// <summary>
         /// Gets or sets the name of the property that contains the code.

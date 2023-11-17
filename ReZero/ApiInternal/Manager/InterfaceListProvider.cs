@@ -21,7 +21,7 @@ namespace ReZero
         private void GetDatabaseList()
         {
             ZeroInterfaceList data = GetNewItem(it => {
-                it.ActionType = ActionType.Query_Common;
+                it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id1;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id300003;
@@ -33,7 +33,7 @@ namespace ReZero
         public void GetZeroInterfaceList()
         {
             ZeroInterfaceList data = GetNewItem(it => {
-                it.ActionType = ActionType.Query_Common;
+                it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id2;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id100002;
@@ -45,7 +45,7 @@ namespace ReZero
         public void GetInterfaceCategory()
         {
             ZeroInterfaceList data = GetNewItem(it => {
-                it.ActionType = ActionType.Query_Common;
+                it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id3;
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id100001;

@@ -7,7 +7,7 @@ namespace ReZero
     /// <summary>
     /// Represents a common page with page number, page size, and total count.
     /// </summary>
-    public class CommonPage
+    public class DataModelPageParameter
     {
         /// <summary>
         /// Gets or sets the page number.

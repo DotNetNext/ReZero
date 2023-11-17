@@ -7,20 +7,20 @@ namespace ReZero
     public enum ActionType
     {
         //Query
-        Query_PrimaryKey=10000,
-        Query_Common = 10001,
-        Query_Tree = 10001,
+        QueryPrimaryKey=10000,
+        QueryCommon = 10001,
+        QueryTree = 10001,
 
         //Insert
-        Insert_Object =20000,
+        InsertObject =20000,
 
         //Delete
-        Delete_Object = 30000,
+        DeleteObject = 30000,
 
         //Update
-        Update_Object = 40000,
+        UpdateObject = 40000,
 
         //DDL
-        DDL_DatabaseList = 50000
+        DllDatabaseList = 50000
     }
 }

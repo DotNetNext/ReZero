@@ -30,6 +30,7 @@ namespace ReZero
             var result = new ZeroInterfaceList()
             {
                 IsInitialized = true,
+                DataModel = new DataModel()
             };
             action(result);
             return result;

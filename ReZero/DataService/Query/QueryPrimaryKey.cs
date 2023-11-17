@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ReZero 
 {
-    internal class QueryBy_PrimaryKey: IDataService
+    internal class QueryByPrimaryKey: IDataService
     {
         private ISqlSugarClient db;
-        public QueryBy_PrimaryKey() 
+        public QueryByPrimaryKey() 
         {
             db = App.Db;
         }
