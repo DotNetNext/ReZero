@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -44,6 +45,7 @@ namespace ReZero
         } 
         public void GetInterfaceCategory()
         {
+            
             ZeroInterfaceList data = GetNewItem(it => {
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
@@ -51,6 +53,10 @@ namespace ReZero
                 it.InterfaceCategoryId = InterfaceCategoryProvider.Id100001;
                 it.Name = TextHandler.GetInterfaceListText(Id3);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
+                it.DataModel = new DataModel()
+                {
+                        
+                };
             });
             zeroInterfaceList.Add(data);
         }

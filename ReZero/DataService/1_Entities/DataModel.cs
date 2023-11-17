@@ -9,9 +9,12 @@ namespace ReZero
     {
         public ActionType ActionType { get; set; }
         public object? Data { get; set; } 
-        public Type? MasterEntityType { get; set; }
+        public long TableId { get; set; }
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; } 
         public DataModelJoinParameters? DataModelJoinParameters { get; set; }
+        [Navigate(NavigateType.OneToMany,nameof(TableId))]
+
+        public ZeroEntityInfo? MasterEntityInfo { get; set; }
     }
 }
