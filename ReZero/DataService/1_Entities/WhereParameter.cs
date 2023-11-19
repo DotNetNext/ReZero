@@ -5,9 +5,11 @@ using System.Text;
 namespace ReZero 
 {
     public class WhereParameter
-    {
+    {  
+        public long TableId { get; set; }  
+        public string? ProperyName { get; set; }
         public string? FieldName { get; set; }
         public string? FieldValue { get; set; }
-        public string? FieldOperator { get; set; }
+        public FieldOperatorType? FieldOperator { get; set; } 
     }
 }
