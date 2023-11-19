@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.InitializerService.InterfaceInitializerService.Items
 {
     public class UserInitializerProvider
     {

@@ -1,9 +1,10 @@
-﻿using SqlSugar;
+﻿using ReZero.InitializerService.InterfaceInitializerService.Items;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.InitializerService.InterfaceInitializerService
 {
     public class InternalApiManager
     {

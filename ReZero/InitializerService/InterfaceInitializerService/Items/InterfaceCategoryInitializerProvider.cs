@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.InitializerService.InterfaceInitializerService.Items
 {
     public partial class InterfaceCategoryInitializerProvider
     {
         List<ZeroInterfaceCategory> zeroInterfaceCategory = new List<ZeroInterfaceCategory>() { };
-        public InterfaceCategoryInitializerProvider(List<ZeroInterfaceCategory> zeroInterfaceCategory) 
+        public InterfaceCategoryInitializerProvider(List<ZeroInterfaceCategory> zeroInterfaceCategory)
         {
             this.zeroInterfaceCategory = zeroInterfaceCategory;
         }
@@ -25,7 +25,7 @@ namespace ReZero
             {
                 it.Id = Id;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id);
-                it.ParentId = null; 
+                it.ParentId = null;
             }));
 
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -44,7 +44,7 @@ namespace ReZero
                 it.Id = Id300;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300);
                 it.ParentId = Id;
-            }));  
+            }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id300002;
@@ -64,7 +64,7 @@ namespace ReZero
                 it.ParentId = Id300;
             }));
         }
-         
+
         private void SetInterfaceManager()
         {
             //Dyanamic interface
@@ -74,12 +74,12 @@ namespace ReZero
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200);
                 it.ParentId = Id;
 
-            })); 
+            }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id200001;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200001);
-                it.ParentId = Id200; 
+                it.ParentId = Id200;
                 it.Url = "/rezero/dynamic_interface.html";
             }));
             //internal interface
@@ -110,17 +110,17 @@ namespace ReZero
                 it.ParentId = Id100;
                 it.Url = "/rezero/internal_interface.html?id=" + Id100003;
             }));
-        } 
+        }
 
         private static ZeroInterfaceCategory GetNewItem(Action<ZeroInterfaceCategory> action)
         {
-            var result= new ZeroInterfaceCategory()
+            var result = new ZeroInterfaceCategory()
             {
-                  IsInitialized=true
+                IsInitialized = true
             };
             action(result);
             return result;
-        } 
-    } 
+        }
+    }
 
 }
