@@ -13,7 +13,7 @@ namespace ReZero
         {
             var db = App.Db;
             RefAsync<int> count = 0;
-            var type = await EntityManager.GetTypeAsync(dataModel.TableId);
+            var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             var queryObject = db.QueryableByObject(type);
             queryObject = Where(dataModel, queryObject);
             var result = await queryObject

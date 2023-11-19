@@ -13,7 +13,7 @@ namespace ReZero
             var db = App.Db;
             RefAsync<int> count = 0;
             var parameter = dataModel.TreeParameter;
-            var type =await EntityManager.GetTypeAsync(dataModel.TableId);
+            var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             var result = await db.QueryableByObject(type)
                           .ToTreeAsync(parameter?.ChildPropertyName,parameter?.ParentCodePropertyName,parameter?.RootValue,parameter?.CodePropertyName);
             return result;

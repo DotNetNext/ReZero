@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReZero
 {
-    public class EntityManager
+    public class EntityGeneratorManager
     {
         public async static Task<Type> GetTypeAsync(long tableId)
         {
