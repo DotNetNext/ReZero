@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace ReZero
@@ -9,7 +9,11 @@ namespace ReZero
     /// </summary>
     public static class ReZeroServiceCollectionExtensions
     {
+        /// <summary>
+        /// Holds the ReZeroOptions instance.
+        /// </summary>
         public static ReZeroOptions? _options = null;
+
         /// <summary>
         /// Configures ReZero services within the specified IServiceCollection.
         /// </summary>
@@ -26,16 +30,13 @@ namespace ReZero
 
             InitializeDataBase(options);
 
-            //InitializeUser(options);
+            InitializeData(options);
 
-            InitializeReZeroApi(options);
-
-            // Return the updated IServiceCollection.
             return services;
         }
 
         /// <summary>
-        /// Initializes ZeroStaticFileMiddleware
+        /// Initializes ZeroStaticFileMiddleware.
         /// </summary>
         private static void InitZeroStaticFileMiddleware()
         {
@@ -69,20 +70,11 @@ namespace ReZero
             services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.ConnectionConfig));
         }
 
-        ///// <summary>
-        ///// Initializes user-related functionality based on ReZero options.
-        ///// </summary>
-        ///// <param name="options">ReZero options.</param>
-        //private static void InitializeUser(ReZeroOptions options)
-        //{
-        //    new UserInitializerService().Initialize(options);
-        //}
-
         /// <summary>
-        /// Initializes built-in ReZero API based on ReZero options.
+        /// Initializes data based on ReZero options.
         /// </summary>
         /// <param name="options">ReZero options.</param>
-        private static void InitializeReZeroApi(ReZeroOptions options)
+        private static void InitializeData(ReZeroOptions options)
         {
             new DataInitializerService().Initialize(options);
         }
