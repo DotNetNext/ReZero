@@ -10,6 +10,7 @@ namespace ReZero
         public ActionType ActionType { get; set; }
         public object? Data { get; set; } 
         public long TableId { get; set; }
+        public List<WhereParameter>? WhereParameters { get; set; } 
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; } 
         public DataModelJoinParameters? DataModelJoinParameters { get; set; }
