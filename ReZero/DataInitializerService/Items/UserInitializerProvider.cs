@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.InitializerService.InterfaceInitializerService.Items
+namespace ReZero 
 {
-    public class UserInitializerProvider
+    public partial class UserInitializerProvider
     {
         private ReZeroOptions? _options;
         public void Initialize(ReZeroOptions options)

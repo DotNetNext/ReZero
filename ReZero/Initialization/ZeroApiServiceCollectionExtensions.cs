@@ -84,7 +84,7 @@ namespace ReZero
         /// <param name="options">ReZero options.</param>
         private static void InitializeReZeroApi(ReZeroOptions options)
         {
-            new InternalApiManager().Initialize(options);
+            new DataInitializerService().Initialize(options);
         }
 
         /// <summary>

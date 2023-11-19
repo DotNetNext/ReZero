@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Xml.Serialization;
+using System.Xml.Serialization; 
 
-namespace ReZero 
+namespace ReZero
 {
     internal class TextHandler
     {
         public static string? GetInterfaceCategoryText(object value) 
         {
-            return GetText(typeof(InterfaceInitializerService), value);
+            return GetText(typeof(InterfaceCategoryInitializerProvider), value);
         }
         public static string? GetInterfaceListText(object value)
         {

@@ -1,12 +1,11 @@
-﻿using ReZero.InitializerService.InterfaceInitializerService.Items;
-using SqlSugar;
+﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.InitializerService.InterfaceInitializerService
+namespace ReZero 
 {
-    public class InternalApiManager
+    public class DataInitializerService
     {
         List<ZeroInterfaceList> zeroInterfaceList = new List<ZeroInterfaceList>() { };
         List<ZeroInterfaceCategory> zeroInterfaceCategory = new List<ZeroInterfaceCategory>() { };

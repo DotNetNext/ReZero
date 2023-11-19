@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero
 {
     internal partial class InterfaceListInitializerProvider
     {
@@ -25,7 +25,7 @@ namespace ReZero
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id1;
-                it.InterfaceCategoryId = InterfaceInitializerService.Id300003;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300003;
                 it.Name = TextHandler.GetInterfaceListText(Id1);
                 it.Url = GetUrl(it, "GetDatabaseList");
             });
@@ -37,7 +37,7 @@ namespace ReZero
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id2;
-                it.InterfaceCategoryId = InterfaceInitializerService.Id100002;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(Id2);
                 it.Url = GetUrl(it, "GetInternalInterfaceList");
             });
@@ -50,7 +50,7 @@ namespace ReZero
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id3;
-                it.InterfaceCategoryId = InterfaceInitializerService.Id100001;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100001;
                 it.Name = TextHandler.GetInterfaceListText(Id3);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
                 it.DataModel = new DataModel()

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public partial class InterfaceInitializerService
+    public partial class InterfaceCategoryInitializerProvider
     {
         #region Root
         /// <summary>
@@ -23,7 +23,7 @@ namespace ReZero
         [TextEN("Swagger")]
         public const long Id1 = 1;
         #endregion
-         
+
 
         #region Dynamic interface
         /// <summary>
@@ -70,7 +70,7 @@ namespace ReZero
         /// </summary>
         [TextCN("接口管理")]
         [TextEN("Interface list")]
-        public const long Id100003 = 100003; 
+        public const long Id100003 = 100003;
         #endregion
 
 
@@ -101,8 +101,8 @@ namespace ReZero
         /// </summary>
         [TextCN("项目分类")]
         [TextEN("Project classification")]
-        public const long Id300002 = 300003; 
+        public const long Id300002 = 300003;
         #endregion
 
     }
-} 
+}
