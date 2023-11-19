@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text; 
+using System.Text;
 
-namespace ReZero
+namespace ReZero.DataService.InitializerService
 {
     public class UserInitializerService
     {
@@ -20,12 +20,12 @@ namespace ReZero
             {
                 Id = 1,
                 IsMasterAdmin = true,
-                Password =Encryption.Encrypt("123456"),
+                Password = Encryption.Encrypt("123456"),
                 UserName = "admin",
                 SortId = -1,
-                CreatorId=1,
-                Creator= "admin",
-                EasyDescription= "default password 123456"
+                CreatorId = 1,
+                Creator = "admin",
+                EasyDescription = "default password 123456"
             }).ToStorage().AsInsertable.ExecuteCommand();
         }
     }
