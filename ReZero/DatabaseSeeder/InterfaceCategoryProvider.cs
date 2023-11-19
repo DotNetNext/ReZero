@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public partial class InterfaceCategoryProvider
+    public partial class InterfaceInitializerService
     {
         #region Root
         /// <summary>

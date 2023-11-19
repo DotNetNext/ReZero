@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public partial class IconProvider
+    public partial class IconInitializerProvider
     {  
         internal List<ZeroIconData> GetDatas()
         {

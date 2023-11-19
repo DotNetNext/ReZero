@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ReZero 
 {
-    internal partial class InterfaceListProvider
+    internal partial class InterfaceListInitializerProvider
     {
         List<ZeroInterfaceList> zeroInterfaceList = new List<ZeroInterfaceList>() { };
-        public InterfaceListProvider(List<ZeroInterfaceList> zeroInterfaceList)
+        public InterfaceListInitializerProvider(List<ZeroInterfaceList> zeroInterfaceList)
         {
             this.zeroInterfaceList = zeroInterfaceList;
         } 
@@ -25,7 +25,7 @@ namespace ReZero
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id1;
-                it.InterfaceCategoryId = InterfaceCategoryProvider.Id300003;
+                it.InterfaceCategoryId = InterfaceInitializerService.Id300003;
                 it.Name = TextHandler.GetInterfaceListText(Id1);
                 it.Url = GetUrl(it, "GetDatabaseList");
             });
@@ -37,7 +37,7 @@ namespace ReZero
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id2;
-                it.InterfaceCategoryId = InterfaceCategoryProvider.Id100002;
+                it.InterfaceCategoryId = InterfaceInitializerService.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(Id2);
                 it.Url = GetUrl(it, "GetInternalInterfaceList");
             });
@@ -50,7 +50,7 @@ namespace ReZero
                 it.ActionType = ActionType.QueryCommon;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id3;
-                it.InterfaceCategoryId = InterfaceCategoryProvider.Id100001;
+                it.InterfaceCategoryId = InterfaceInitializerService.Id100001;
                 it.Name = TextHandler.GetInterfaceListText(Id3);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
                 it.DataModel = new DataModel()

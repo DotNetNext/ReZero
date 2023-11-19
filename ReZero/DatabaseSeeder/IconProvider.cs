@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero 
 {
-    public partial class IconProvider
+    public partial class IconInitializerProvider
     {
         internal const int Id1 = 1;
         internal const int Id2 = 2;

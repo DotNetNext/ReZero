@@ -11,11 +11,11 @@ namespace ReZero
     {
         public static string? GetInterfaceCategoryText(object value) 
         {
-            return GetText(typeof(InterfaceCategoryProvider), value);
+            return GetText(typeof(InterfaceInitializerService), value);
         }
         public static string? GetInterfaceListText(object value)
         {
-            return GetText(typeof(InterfaceListProvider), value);
+            return GetText(typeof(InterfaceListInitializerProvider), value);
         }
         public static string? GetText(Type type, object value)
         {

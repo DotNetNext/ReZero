@@ -4,10 +4,10 @@ using System.Text;
 
 namespace ReZero 
 {
-    public partial class InterfaceCategoryProvider
+    public partial class InterfaceCategoryInitializerProvider
     {
         List<ZeroInterfaceCategory> zeroInterfaceCategory = new List<ZeroInterfaceCategory>() { };
-        public InterfaceCategoryProvider(List<ZeroInterfaceCategory> zeroInterfaceCategory) 
+        public InterfaceCategoryInitializerProvider(List<ZeroInterfaceCategory> zeroInterfaceCategory) 
         {
             this.zeroInterfaceCategory = zeroInterfaceCategory;
         }

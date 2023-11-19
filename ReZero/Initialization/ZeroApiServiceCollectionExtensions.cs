@@ -26,7 +26,7 @@ namespace ReZero
 
             InitializeDataBase(options);
 
-            InitializeUser(options);
+            //InitializeUser(options);
 
             InitializeReZeroApi(options);
 
@@ -69,14 +69,14 @@ namespace ReZero
             services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.ConnectionConfig));
         }
 
-        /// <summary>
-        /// Initializes user-related functionality based on ReZero options.
-        /// </summary>
-        /// <param name="options">ReZero options.</param>
-        private static void InitializeUser(ReZeroOptions options)
-        {
-            new UserInitializerService().Initialize(options);
-        }
+        ///// <summary>
+        ///// Initializes user-related functionality based on ReZero options.
+        ///// </summary>
+        ///// <param name="options">ReZero options.</param>
+        //private static void InitializeUser(ReZeroOptions options)
+        //{
+        //    new UserInitializerService().Initialize(options);
+        //}
 
         /// <summary>
         /// Initializes built-in ReZero API based on ReZero options.

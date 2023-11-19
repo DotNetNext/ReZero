@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero
 {
-    internal partial class InterfaceListProvider
+    internal partial class InterfaceListInitializerProvider
     {
         /// <summary>
         /// 数据库管理
