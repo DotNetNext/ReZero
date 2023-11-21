@@ -15,6 +15,15 @@ namespace ReZero
         public int Length { get; set; }
         public int ? DecimalDigits { get; set; }
 
-        public string? Description { get; set; }
+        public string? Description { get; set; } 
+        public bool IsIdentity { get; internal set; }
+        public bool IsPrimarykey { get;   set; }
+        public bool IsArray { get; internal set; }
+        public bool IsJson { get; internal set; }
+        public bool IsNullable { get; internal set; }
+        public int Scale { get; internal set; }
+        public bool? IsUnsigned { get; internal set; }
+        public NativeTypes PropertyType { get;   set; }
+        public string? DataType { get; internal set; } 
     }
 }

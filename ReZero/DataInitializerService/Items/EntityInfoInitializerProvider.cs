@@ -11,7 +11,7 @@ namespace ReZero
         {
             List<ZeroEntityInfo> datas = new List<ZeroEntityInfo>(); 
             var entityMappingService = new EntityMappingService();
-            var dbTable = entityMappingService.ConvertEntityToDbTableInfo(typeof(ZeroEntityInfo));
+            var dbTable = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityInfo));
             dbTable.Id = Id_ZeroEntityInfo;
             return datas;
         }

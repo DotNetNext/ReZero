@@ -15,8 +15,16 @@ namespace ReZero
 
             InitUser(options);
             InitInterfaceCategory(db);
+            InitEntityInfo(db);
             InitInterfaceList(db);
             InitIcon();
+        }
+
+        private void InitEntityInfo(ISqlSugarClient? db)
+        {
+            var entity =new  EntityInfoInitializerProvider();
+            var datas = entity.GetDatas();
+            db!.Storageable(datas).ExecuteCommand();
         }
 
         private static void InitIcon()

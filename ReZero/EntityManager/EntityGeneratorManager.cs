@@ -19,16 +19,15 @@ namespace ReZero
             });
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
             {
-                builder.CreateProperty(item.PropertyName, GetType(item.NativeTypes), new SugarColumn()
+                builder.CreateProperty(item.PropertyName, GetTypeByNativeTypes(item.NativeTypes), new SugarColumn()
                 {
                     ColumnName = item.DbCoumnName
                 });
             }
             var type = builder.BuilderType();
             return type;
-        }
-
-        public static Type GetType(NativeTypes nativeTypes)
+        } 
+        public static Type GetTypeByNativeTypes(NativeTypes nativeTypes)
         {
             switch (nativeTypes)
             {
@@ -73,6 +72,54 @@ namespace ReZero
                 default:
                     throw new ArgumentException("Unsupported NativeType");
             }
+        }
+        public static NativeTypes GetNativeTypeByType(Type type)
+        {
+            if (type == typeof(int))
+                return NativeTypes.Int;
+            else if (type == typeof(uint))
+                return NativeTypes.UInt;
+            else if (type == typeof(short))
+                return NativeTypes.Short;
+            else if (type == typeof(ushort))
+                return NativeTypes.UShort;
+            else if (type == typeof(long))
+                return NativeTypes.Long;
+            else if (type == typeof(ulong))
+                return NativeTypes.ULong;
+            else if (type == typeof(byte))
+                return NativeTypes.Byte;
+            else if (type == typeof(sbyte))
+                return NativeTypes.SByte;
+            else if (type == typeof(float))
+                return NativeTypes.Float;
+            else if (type == typeof(double))
+                return NativeTypes.Double;
+            else if (type == typeof(decimal))
+                return NativeTypes.Decimal;
+            else if (type == typeof(char))
+                return NativeTypes.Char;
+            else if (type == typeof(bool))
+                return NativeTypes.Bool;
+            else if (type == typeof(string))
+                return NativeTypes.String;
+            else if (type == typeof(DateTime))
+                return NativeTypes.DateTime;
+            else if (type == typeof(TimeSpan))
+                return NativeTypes.TimeSpan;
+            else if (type == typeof(Guid))
+                return NativeTypes.Guid;
+            else if (type == typeof(byte[]))
+                return NativeTypes.ByteArray;
+            else if (typeof(JToken).IsAssignableFrom(type))
+                return NativeTypes.Json;
+            else
+                throw new ArgumentException("Unsupported Type");
+        }
+
+        internal static NativeTypes GetNativeTypeByDataType(string dataType)
+        {
+            return NativeTypes.Int;
         }
     }
 }

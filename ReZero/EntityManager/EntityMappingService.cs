@@ -12,15 +12,42 @@ namespace ReZero
 
         public Action<ZeroEntityColumnInfo>? TableColumnInfoConvertFunc { get; set; }
 
-        public ZeroEntityInfo ConvertDbToEntityInfo(DbTableInfo dbTableInfo)
+        public ZeroEntityInfo ConvertDbToEntityInfo(Type type)
         {
-            return null;
+            var db = App.PreStartupDb;
+            var entityInfo = db!.EntityMaintenance.GetEntityInfo(type);
+            ZeroEntityInfo result = new ZeroEntityInfo()
+            {
+                DbTableName = entityInfo.DbTableName,
+                ClassName=entityInfo.EntityName,
+                Description = entityInfo.TableDescription,
+            };
+            var columnInfos = db.DbMaintenance.GetColumnInfosByTableName(entityInfo.DbTableName);
+            result.ZeroEntityColumnInfos = columnInfos.Select(it => new  ZeroEntityColumnInfo()
+            {
+                Description = it.ColumnDescription,
+                DataType = it.DataType,
+                DbCoumnName = it.DbColumnName,
+                DecimalDigits = it.DecimalDigits,
+                IsIdentity = it.IsIdentity,
+                Length = it.Length,
+                IsPrimarykey = it.IsPrimarykey,
+                IsArray = it.IsArray,
+                IsJson = it.IsJson,
+                IsNullable = it.IsJson, 
+                IsUnsigned = it.IsUnsigned,
+                PropertyName = it.PropertyName,
+                PropertyType =EntityGeneratorManager.GetNativeTypeByDataType(it.DataType), 
+                TableId = it.TableId
+            }).ToList();
+            // 实现转换逻辑
+            return result;
         }
          
         public DbTableInfo ConvertEntityToDbTableInfo(Type type)
         {
-            var db = App.Db;
-            var entityInfo = db.EntityMaintenance.GetEntityInfo(type);
+            var db = App.PreStartupDb;
+            var entityInfo = db!.EntityMaintenance.GetEntityInfo(type);
             DbTableInfo result = new DbTableInfo()
             {
                 Name = entityInfo.DbTableName,
