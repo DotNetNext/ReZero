@@ -40,6 +40,15 @@ namespace ReZero
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(Id2);
                 it.Url = GetUrl(it, "GetInternalInterfaceList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryCommon,
+                    WhereParameters = new List<WhereParameter>() {
+                           new WhereParameter(){ ProperyName=nameof(ZeroInterfaceList.InterfaceCategoryId), FieldOperator=FieldOperatorType.Equal },
+                           new WhereParameter(){ ProperyName=nameof(ZeroInterfaceList.Name) , FieldOperator=FieldOperatorType.Like }, 
+                         }
+                };
             });
             zeroInterfaceList.Add(data);
         } 
@@ -47,7 +56,7 @@ namespace ReZero
         {
             
             ZeroInterfaceList data = GetNewItem(it => {
-                it.ActionType = ActionType.QueryCommon;
+                it.ActionType = ActionType.QueryTree;
                 it.HttpMethod = HttpRequestMethod.GET;
                 it.Id = Id3;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100001;
@@ -58,8 +67,8 @@ namespace ReZero
                          TableId= EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                          ActionType=ActionType.QueryCommon,
                          WhereParameters=new List<WhereParameter>() {
-                           new WhereParameter(){ ProperyName=nameof(ZeroInterfaceList.InterfaceCategoryId), FieldOperator=FieldOperatorType.Equal },
-                           new WhereParameter(){ ProperyName=nameof(ZeroInterfaceList.Name) , FieldOperator=FieldOperatorType.Like },
+                           new WhereParameter(){ ProperyName=nameof(ZeroInterfaceCategory.Id), FieldOperator=FieldOperatorType.Equal },
+                           new WhereParameter(){ ProperyName=nameof(ZeroInterfaceCategory.Name) , FieldOperator=FieldOperatorType.Like },
                          }
                 };
             });
