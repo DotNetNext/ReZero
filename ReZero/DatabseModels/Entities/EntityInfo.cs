@@ -9,6 +9,7 @@ namespace ReZero
     { 
         public string?  ClassName { get; set; } 
         public string?  DbTableName { get; set; }
+        [SugarColumn(IsNullable =true)]
         public string ? Description { get; set; }
         [Navigate(NavigateType.OneToMany,nameof(ZeroEntityColumnInfo.TableId))]
         public List<ZeroEntityColumnInfo>? ZeroEntityColumnInfos { get; set; }
