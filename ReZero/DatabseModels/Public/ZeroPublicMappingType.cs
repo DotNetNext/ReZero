@@ -12,6 +12,7 @@ namespace ReZero
         public ReZero.NativeTypes NativeTypes { get; set; }
         [SqlSugar.SugarColumn(IsNullable = true)]
         public ReZero.NativeTypes NativeTypesDescription { get; set; }
+        public string? DataType { get; set; }
 
     }
 }

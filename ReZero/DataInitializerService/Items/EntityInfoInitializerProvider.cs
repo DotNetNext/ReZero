@@ -9,12 +9,27 @@ namespace ReZero
 
         internal List<ZeroEntityInfo> GetDatas()
         {
-            List<ZeroEntityInfo> datas = new List<ZeroEntityInfo>(); 
-            var entityMappingService = new EntityMappingService();
-            var dbTable = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityInfo));
-            dbTable.Id = Id_ZeroEntityInfo;
+            List<ZeroEntityInfo> datas = new List<ZeroEntityInfo>();
+            AddZeroInterfaceList(datas);
+            AddZeroInterfaceCategory(datas);
             return datas;
         }
+
+        private static void AddZeroInterfaceList(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroInterfaceList));
+            data.Id = Id_ZeroInterfaceList;
+            datas.Add(data);
+        }
+        private static void AddZeroInterfaceCategory(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroInterfaceCategory));
+            data.Id = Id_ZeroInterfaceCategory;
+            datas.Add(data);
+        }
+
         private static ZeroEntityInfo GetNewItem(Action<ZeroEntityInfo> action)
         {
             var result = new ZeroEntityInfo()

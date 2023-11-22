@@ -55,7 +55,7 @@ namespace ReZero
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
                 it.DataModel = new DataModel()
                 {
-                         TableId= EntityInfoInitializerProvider.Id_ZeroEntityInfo,
+                         TableId= EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                          ActionType=ActionType.QueryCommon,
                          WhereParameters=new List<WhereParameter>() {
                            new WhereParameter(){ ProperyName=nameof(ZeroInterfaceList.InterfaceCategoryId), FieldOperator=FieldOperatorType.Equal },
