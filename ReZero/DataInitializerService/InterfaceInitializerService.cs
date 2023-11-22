@@ -24,7 +24,7 @@ namespace ReZero
         {
             var entity =new  EntityInfoInitializerProvider();
             var datas = entity.GetDatas();
-            db!.Storageable(datas).ExecuteCommand();
+            db!.UpdateNav(datas,new UpdateNavRootOptions() { IsInsertRoot=true }).Include(x=>x.ZeroEntityColumnInfos).ExecuteCommand();
         }
 
         private static void InitIcon()

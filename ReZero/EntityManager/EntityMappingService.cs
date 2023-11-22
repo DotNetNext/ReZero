@@ -22,24 +22,34 @@ namespace ReZero
                 ClassName=entityInfo.EntityName,
                 Description = entityInfo.TableDescription,
             };
-            var columnInfos = db.DbMaintenance.GetColumnInfosByTableName(entityInfo.DbTableName);
-            result.ZeroEntityColumnInfos = columnInfos.Select(it => new  ZeroEntityColumnInfo()
-            {
-                Description = it.ColumnDescription,
-                DataType = it.DataType,
-                DbCoumnName = it.DbColumnName,
-                DecimalDigits = it.DecimalDigits,
-                IsIdentity = it.IsIdentity,
-                Length = it.Length,
-                IsPrimarykey = it.IsPrimarykey,
-                IsArray = it.IsArray,
-                IsJson = it.IsJson,
-                IsNullable = it.IsJson, 
-                IsUnsigned = it.IsUnsigned,
-                PropertyName = it.PropertyName,
-                PropertyType =EntityGeneratorManager.GetNativeTypeByDataType(it.DataType), 
-                TableId = it.TableId
+            var columnInfos = db.DbMaintenance.GetColumnInfosByTableName(entityInfo.DbTableName,false);
+            result.ZeroEntityColumnInfos = columnInfos.Select(it => {
+
+                var propertyInfo = entityInfo.Columns.Where(it=>it.IsIgnore==false).FirstOrDefault(x => x.DbColumnName?.ToLower()==it.DbColumnName?.ToLower());
+                if (propertyInfo == null) 
+                {
+                    return new ZeroEntityColumnInfo() { };
+                }
+                var data = new ZeroEntityColumnInfo()
+                {
+                    Description = propertyInfo.ColumnDescription??"",
+                    DataType = it.DataType,
+                    DbCoumnName = propertyInfo.DbColumnName,
+                    DecimalDigits = propertyInfo.DecimalDigits,
+                    IsIdentity = propertyInfo.IsIdentity,
+                    Length = propertyInfo.Length,
+                    IsPrimarykey = propertyInfo.IsPrimarykey,
+                    IsArray = propertyInfo.IsArray,
+                    IsJson = propertyInfo.IsJson,
+                    IsNullable = propertyInfo.IsNullable,
+                    IsUnsigned = it.IsUnsigned??false,
+                    PropertyName = propertyInfo?.PropertyName,
+                    PropertyType = EntityGeneratorManager.GetNativeTypeByType(propertyInfo!.PropertyInfo.PropertyType),
+                    TableId = it.TableId
+                };
+                return data;
             }).ToList();
+            result.ZeroEntityColumnInfos = result.ZeroEntityColumnInfos.Where(it => it.PropertyName != null).ToList();
             // 实现转换逻辑
             return result;
         }

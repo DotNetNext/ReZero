@@ -113,8 +113,16 @@ namespace ReZero
                 return NativeTypes.ByteArray;
             else if (typeof(JToken).IsAssignableFrom(type))
                 return NativeTypes.Json;
-            else
-                throw new ArgumentException("Unsupported Type");
+            else if (type.IsEnum)
+                return NativeTypes.Int;
+            // Check if the type is nullable and get the underlying type
+            Type underlyingType = Nullable.GetUnderlyingType(type);
+            if (underlyingType != null)
+            {
+                return GetNativeTypeByType(underlyingType);
+            }
+
+            return NativeTypes.Json;
         }
 
         internal static NativeTypes GetNativeTypeByDataType(string dataType)
