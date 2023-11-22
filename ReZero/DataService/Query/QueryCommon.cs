@@ -5,20 +5,35 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero
 {
     internal class QueryCommon : IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var db = App.Db;
-            RefAsync<int> count = 0;
-            var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
-            var queryObject = db.QueryableByObject(type);
-            queryObject = Where(dataModel, queryObject);
-            var result = await queryObject
-                          .ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
-            return result;
+            try
+            {
+                var db = App.Db;
+                RefAsync<int> count = 0;
+                var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+                var queryObject = db.QueryableByObject(type);
+                queryObject = Where(dataModel, queryObject);
+                if (dataModel.CommonPage == null)
+                {
+                    var result = queryObject.ToList();
+                    return result;
+                }
+                else
+                {
+                    var result = queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         private static QueryMethodInfo Where(DataModel dataModel, QueryMethodInfo queryObject)
@@ -29,9 +44,9 @@ namespace ReZero
             {
                 foreach (var item in dataModel.WhereParameters)
                 {
-                     
+
                 }
-            } 
+            }
             queryObject = queryObject.Where(conditionalModels);
             foreach (var item in funcModels)
             {

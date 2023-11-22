@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http; 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReZero
@@ -26,8 +27,22 @@ namespace ReZero
         /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task WriteAsync(HttpContext context)
         {
-           //
-           await context.Response.WriteAsync("动态接口成功");
+            var db = App.Db;
+            var path = context.Request.Path.ToString()?.ToLower() ;
+            var interfaceInfos=db.Queryable<ZeroInterfaceList>().ToList();
+            var interInfo=interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault(); 
+          
+            if (interInfo == null)
+            {
+                var message = TextHandler.GetErrorTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询",$"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
+                await context.Response.WriteAsync(message);
+            }
+            else 
+            {
+                DataService dataService = new DataService();
+                var data= await dataService.ExecuteAction(interInfo.DataModel??new DataModel() { });
+                await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+            }
         }
     }
 }

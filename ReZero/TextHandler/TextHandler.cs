@@ -9,6 +9,17 @@ namespace ReZero
 {
     internal class TextHandler
     {
+        public static string GetErrorTexst(string cn, string en) 
+        {
+            var language = App.Language;
+            switch (language)
+            {
+                case Language.CN:
+                    return cn;
+                default:
+                    return en;
+            }
+        }
         public static string? GetInterfaceCategoryText(object value) 
         {
             return GetText(typeof(InterfaceCategoryInitializerProvider), value);

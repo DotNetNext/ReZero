@@ -38,7 +38,7 @@ namespace ReZero
 
         private static string GetUrl(ZeroInterfaceList zeroInterface, string actionName)
         {
-            return $"{NamingConventionsConst.ApiReZeroRoute}/{zeroInterface.InterfaceCategoryId}/{actionName}";
+            return $"/{NamingConventionsConst.ApiReZeroRoute}/{zeroInterface.InterfaceCategoryId}/{actionName}";
         }
     }
 }
