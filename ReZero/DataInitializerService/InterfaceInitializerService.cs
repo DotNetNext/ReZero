@@ -34,6 +34,7 @@ namespace ReZero
 
         private void InitInterfaceList(ISqlSugarClient? db)
         {
+            db!.Deleteable<ZeroInterfaceList>().Where(it => it.IsInitialized).ExecuteCommand();
             var interfaceListProvider = new InterfaceListInitializerProvider(zeroInterfaceList);
             interfaceListProvider.Set();
             db!.Storageable(zeroInterfaceList).ExecuteCommand();

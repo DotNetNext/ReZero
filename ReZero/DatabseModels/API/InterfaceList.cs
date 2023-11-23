@@ -14,7 +14,7 @@ namespace ReZero
         public string? CustomResultName { get; set; } = "";
         [SugarColumn(IsNullable = true)]
         public string? Description { get; set; }
-        public HttpRequestMethod HttpMethod { get; set; }
+        public string? HttpMethod { get; set; }
         [SugarColumn(IsNullable = true)]
         public List<ZeroInterfaceParameter>? Parameters { get; set; }
         [SugarColumn(IsJson = true)]

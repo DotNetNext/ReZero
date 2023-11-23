@@ -23,7 +23,7 @@ namespace ReZero
         {
             ZeroInterfaceList data = GetNewItem(it => {
                 it.ActionType = ActionType.QueryCommon;
-                it.HttpMethod = HttpRequestMethod.GET;
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id1;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300003;
                 it.Name = TextHandler.GetInterfaceListText(Id1);
@@ -35,14 +35,14 @@ namespace ReZero
         {
             ZeroInterfaceList data = GetNewItem(it => {
                 it.ActionType = ActionType.QueryCommon;
-                it.HttpMethod = HttpRequestMethod.GET;
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id2;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(Id2);
                 it.Url = GetUrl(it, "GetInternalInterfaceList");
                 it.DataModel = new DataModel()
                 {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryCommon,
                     WhereParameters = new List<WhereParameter>() {
                            new WhereParameter(){ ProperyName=nameof(ZeroInterfaceList.InterfaceCategoryId), FieldOperator=FieldOperatorType.Equal },
@@ -57,7 +57,7 @@ namespace ReZero
             
             ZeroInterfaceList data = GetNewItem(it => {
                 it.ActionType = ActionType.QueryTree;
-                it.HttpMethod = HttpRequestMethod.GET;
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id3;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100001;
                 it.Name = TextHandler.GetInterfaceListText(Id3);
