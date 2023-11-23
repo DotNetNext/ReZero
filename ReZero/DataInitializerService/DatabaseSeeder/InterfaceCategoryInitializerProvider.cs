@@ -36,8 +36,8 @@ namespace ReZero
         /// <summary>
         /// 全部接口
         /// </summary>
-        [TextCN("全部接口")]
-        [TextEN("All interfaces")]
+        [TextCN("动态所有")]
+        [TextEN("All dynamic")]
         public const long Id200001 = 200001;
         #endregion
 
@@ -46,7 +46,7 @@ namespace ReZero
         /// <summary>
         /// 内置接口
         /// </summary>
-        [TextCN("内置接口")]
+        [TextCN("系统接口")]
         [TextEN("Internal interface")]
         public const long Id100 = 100;
 
@@ -54,8 +54,8 @@ namespace ReZero
         /// <summary>
         /// 全部接口
         /// </summary>
-        [TextCN("全部接口")]
-        [TextEN("All interfaces")]
+        [TextCN("系统所有")]
+        [TextEN("All internal")]
         public const long Id100001 = 100001;
 
         /// <summary>
