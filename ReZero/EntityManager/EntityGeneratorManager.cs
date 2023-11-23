@@ -19,7 +19,7 @@ namespace ReZero
             });
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
             {
-                builder.CreateProperty(item.PropertyName, GetTypeByNativeTypes(item.NativeTypes), new SugarColumn()
+                builder.CreateProperty(item.PropertyName, GetTypeByNativeTypes(item.PropertyType), new SugarColumn()
                 {
                     ColumnName = item.DbCoumnName
                 });

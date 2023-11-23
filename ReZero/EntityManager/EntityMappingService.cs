@@ -43,7 +43,7 @@ namespace ReZero
                     IsJson = propertyInfo.IsJson,
                     IsNullable = propertyInfo.IsNullable,
                     IsUnsigned = it.IsUnsigned??false,
-                    PropertyName = propertyInfo?.PropertyName,
+                    PropertyName = propertyInfo?.PropertyName, 
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(propertyInfo!.PropertyInfo.PropertyType),
                     TableId = it.TableId
                 };
