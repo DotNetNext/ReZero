@@ -56,6 +56,7 @@ section {
     padding: 10px;
     font-weight: bold !important;
     border-top: 1px solid #61affe;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
 .show-grid {
     padding-left: 20px;
