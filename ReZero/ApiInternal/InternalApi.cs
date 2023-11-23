@@ -34,7 +34,7 @@ namespace ReZero
           
             if (interInfo == null)
             {
-                var message = TextHandler.GetErrorTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询",$"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
+                var message = TextHandler.GetCommonTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询",$"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
                 await context.Response.WriteAsync(message);
             }
             else 

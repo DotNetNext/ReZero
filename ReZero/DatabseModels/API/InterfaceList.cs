@@ -15,7 +15,7 @@ namespace ReZero
         [SugarColumn(IsNullable = true)]
         public string? Description { get; set; }
         public string? HttpMethod { get; set; }
-        [SugarColumn(IsNullable = true)]
+        [SugarColumn(IsNullable = true,IsJson =true)]
         public List<ZeroInterfaceParameter>? Parameters { get; set; }
         [SugarColumn(IsJson = true)]
         public DataModel? DataModel { get; set; }

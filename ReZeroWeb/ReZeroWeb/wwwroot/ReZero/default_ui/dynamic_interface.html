@@ -25,33 +25,47 @@
             <div class="col-md-4"> <button class="btn btn-success" type="submit">搜索</button></div>
         </div>
     </div>
-    <section>
+    <section v-for="item in data" :key="item.Id">
         <div class="endpoint">
-            <h2>User Endpoint</h2>
-            <p class="method">GET</p>
-            <p>Retrieve information about a user.</p>
+            <h2>{{ item.Name }} </h2>
+            <p class="method">{{ item.HttpMethod }} {{item.Url}}</p>
+            <p>{{ item.Description }}</p>
 
-            <div class="parameter">
+            <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
                 <strong>Parameters:</strong>
                 <ul>
-                    <li><code>id</code> (integer) - The ID of the user.</li>
+                    <li v-for="param in item.Parameters" :key="param.Name">
+                        <code>{{ param.Name }}</code> ({{ param.Value }}) - {{param.Type}} {{ param.Description }}
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <div class="endpoint">
-            <h2>Post Endpoint</h2>
-            <p class="method">POST</p>
-            <p>Create a new post.</p>
-
-            <div class="parameter">
-                <strong>Parameters:</strong>
-                <ul>
-                    <li><code>title</code> (string) - The title of the post.</li>
-                    <li><code>content</code> (string) - The content of the post.</li>
-                </ul>
-            </div>
-        </div>
     </section>
 </div>
-
+<script>
+    new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null
+        },
+        mounted() {
+            // 在组件加载时触发数据获取
+            this.fetchData();
+        },
+        methods: {
+            fetchData() {
+                axios.get('/PrivateReZeroRoute/100002/GetInternalInterfaceList')
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            }
+        }
+    });
+</script>

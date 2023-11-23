@@ -29,13 +29,12 @@
         <div class="endpoint" >
             <h2>{{ item.Name }} </h2>
             <p class="method">{{ item.HttpMethod }} {{item.Url}}</p>
-            <p>{{ item.Description }}</p>
-
+            <p>{{ item.Description }}</p> 
             <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
                 <strong>Parameters:</strong>
                 <ul>
                     <li v-for="param in item.Parameters" :key="param.Name">
-                        <code>{{ param.Name }}</code> ({{ param.Type }}) - {{ param.Description }}
+                        <code>{{ param.Name }}</code> ({{ param.Value }}) - {{param.Type}} {{ param.Description }}
                     </li>
                 </ul>
             </div>

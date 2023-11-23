@@ -9,7 +9,7 @@ namespace ReZero
 {
     internal class TextHandler
     {
-        public static string GetErrorTexst(string cn, string en) 
+        public static string GetCommonTexst(string cn, string en) 
         {
             var language = App.Language;
             switch (language)

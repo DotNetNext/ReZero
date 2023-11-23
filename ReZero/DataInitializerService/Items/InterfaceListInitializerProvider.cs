@@ -40,6 +40,11 @@ namespace ReZero
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(Id2);
                 it.Url = GetUrl(it, "GetInternalInterfaceList");
+                it.Parameters = new List<ZeroInterfaceParameter>()
+                {
+                    new ZeroInterfaceParameter(){ Name="InterfaceCategoryId",  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
+                    new ZeroInterfaceParameter(){ Name="Name", Value=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                };
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
