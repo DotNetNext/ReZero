@@ -21,7 +21,8 @@ namespace ReZero
             {
                 builder.CreateProperty(item.PropertyName, GetTypeByNativeTypes(item.PropertyType), new SugarColumn()
                 {
-                    ColumnName = item.DbCoumnName
+                    ColumnName = item.DbCoumnName,
+                    IsJson= item.PropertyType== NativeTypes.Json
                 });
             }
             var type = builder.BuilderType();
