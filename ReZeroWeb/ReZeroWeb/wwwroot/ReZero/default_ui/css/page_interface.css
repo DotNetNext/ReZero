@@ -5,38 +5,57 @@
 section {
     margin-top: 20px;
 }
+    section > h2 {
+        font-family: sans-serif;
+        font-size: 24px;
+        padding-left: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(59,65,81,.3);
+        padding-right:10px;
+    }
 
-.endpoint {
-    border: 1px solid #ddd;
+.endpoint { 
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 10px 0;
     border-radius: 5px;
+    background-color: rgba(97,175,254,.1);
+    border-radius: 3px;
+    border: 1px solid #61affe;
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(0,0,0,.19);
 }
 
     .endpoint h2 {
-        margin-bottom: 5px;
+        margin-bottom: 5px; 
     }
 
     .endpoint p {
         margin-top: 5px;
+        font-weight: bold;
     }
+        .endpoint p .url {
+            font-size: 16px;
+            font-family: monospace;
+        }
 
 .method {
     padding: 5px 10px;
-    background-color: #4CAF50;
+    background-color: #61affe;
     color: white;
-    border-radius: 3px;
-    font-weight: bold;
-    margin-right: 5px;
+    border-radius: 3px; 
+    margin-left: 10px;
 }
 
 .parameter {
     margin-top: 10px;
     padding: 5px;
-    background-color: #f2f2f2;
-    border-radius: 3px;
 }
-
+.parameter-title 
+{
+    background:#fff; 
+    padding:10px;
+    font-weight:bold !important
+}
 .show-grid {
     padding-left: 20px;
     padding-top: 10px;

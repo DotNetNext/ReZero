@@ -26,13 +26,12 @@
         </div>
     </div>
     <section v-for="item in data" :key="item.Id">
+        <h2>{{ item.Name }} </h2>
         <div class="endpoint">
-            <h2>{{ item.Name }} </h2>
-            <p class="method">{{ item.HttpMethod }} {{item.Url}}</p>
+            <p><span class="method">{{ item.HttpMethod }}</span><span class="url"> {{item.Url}}</span> </p>
             <p>{{ item.Description }}</p>
-
+            <div class="parameter-title">Parameters:</div>
             <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
-                <strong>Parameters:</strong>
                 <ul>
                     <li v-for="param in item.Parameters" :key="param.Name">
                         <code>{{ param.Name }}</code> ({{ param.Value }}) - {{param.Type}} {{ param.Description }}
