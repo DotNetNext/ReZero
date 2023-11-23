@@ -12,6 +12,7 @@ section {
         padding-bottom: 10px;
         border-bottom: 1px solid rgba(59,65,81,.3);
         padding-right:10px;
+        font-weight:bold
     }
 
 .endpoint { 
@@ -50,11 +51,11 @@ section {
     margin-top: 10px;
     padding: 5px;
 }
-.parameter-title 
-{
-    background:#fff; 
-    padding:10px;
-    font-weight:bold !important
+.parameter-title {
+    background: #fff;
+    padding: 10px;
+    font-weight: bold !important;
+    border-top: 1px solid #61affe;
 }
 .show-grid {
     padding-left: 20px;
