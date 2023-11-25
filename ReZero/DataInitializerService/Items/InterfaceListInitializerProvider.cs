@@ -33,7 +33,7 @@ namespace ReZero
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.QueryCommon,
                     WhereParameters = new List<WhereParameter>() { 
-                            new WhereParameter(){ Name="Name", ValueType=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                            new WhereParameter(){ Name="Name" , FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
                             DataInitHelper.GetIsInitializedParameter(),
                          }
                 };
@@ -55,8 +55,8 @@ namespace ReZero
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryCommon,
                     WhereParameters = new List<WhereParameter>() {
-                            new WhereParameter(){ Name="InterfaceCategoryId",  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
-                            new WhereParameter(){ Name="Name", ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                            new WhereParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
+                            new WhereParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
                             DataInitHelper.GetIsInitializedParameter(),
                          }
                 };
