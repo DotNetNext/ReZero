@@ -1,79 +1,31 @@
 @@master_page.html
-<link href="css/page_interface.css" rel="stylesheet" />
-<div id="apibox">
-    <div class="form-group row">
-        <div class="row show-grid">
-            <div class="col-md-2"> </div>
-            <div class="col-md-2">
-                <input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本..">
-            </div>
-            <div class="col-md-2">
-                <select class="form-control">
-                    <option value="0">==项目==</option>
-                    <option value="1">选项 #1</option>
-                    <option value="2">选项 #2</option>
-                    <option value="3">选项 #3</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control">
-                    <option value="0">==分类==</option>
-                    <option value="1">选项 #1</option>
-                    <option value="2">选项 #2</option>
-                    <option value="3">选项 #3</option>
-                </select>
-            </div>
-            <div class="col-md-4"> <button class="btn btn-success" type="submit">搜索</button></div>
-        </div>
-    </div>
-    <section v-for="item in data" :key="item.Id">
-        <h2>{{ item.Name }} </h2>
-        <div class="endpoint">
-            <p>
-                <span class="method">{{ item.HttpMethod }}</span>
-                <span class="url"> {{item.Url}}</span>
-            </p>
-            <p>{{ item.Description }}</p>
-            <div class="parameter-title">
-                Parameters:
-                <div class="try-out">
-                    <button class="btn try-out__btn">Try it out </button>
-                </div>
-            </div>
-            <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
-                <ul>
-                    <li v-for="param in item.Parameters" :key="param.Name">
-                        <code>{{ param.Name }}</code> ({{ param.Value }}) - {{param.Type}} {{ param.Description }}
-                    </li>
-                </ul>
-            </div>
-        </div>
+<style>
+    iframe {
+        width: 100%;
+        border: none; /* 去除 iframe 边框 */
+    }
+</style>
+<iframe id="myIframe" src="/swagger" frameborder="0" scrolling="no"></iframe>
 
-    </section>
-</div>
 <script>
-    new Vue({
-        el: '#apibox',
-        data: {
-            data: null,
-            error: null
-        },
-        mounted() {
-            // 在组件加载时触发数据获取
-            this.fetchData();
-        },
-        methods: {
-            fetchData() {
-                axios.get('/PrivateReZeroRoute/100002/GetInternalInterfaceList')
-                    .then(response => {
-                        this.data = response.data;
-                        this.error = null;
-                    })
-                    .catch(error => {
-                        this.error = error.message;
-                        this.data = null;
-                    });
+    function resizeIframe() {
+        setInterval(function () {
+
+            var iframe = document.getElementById('myIframe');
+            if (iframe) {
+                var height = iframe.contentWindow.document.body.scrollHeight;
+                iframe.style.height = (height) + 'px';
             }
-        }
-    });
+
+        }, 50)
+    }
+
+    // 在页面加载和 iframe 加载完成时调整 iframe 高度
+    window.onload = resizeIframe;
+    document.getElementById('myIframe').onload = resizeIframe;
+
+    // 你还可以在窗口大小发生变化时触发调整，以确保动态适应
+    window.onresize = resizeIframe;
 </script>
+
+
