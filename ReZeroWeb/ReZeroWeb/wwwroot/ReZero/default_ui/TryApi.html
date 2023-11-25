@@ -1,0 +1,47 @@
+﻿@@master_page.html
+<link href="css/page_interface_detail.css" rel="stylesheet" />
+<div id="app">
+    <h1>HTTP接口测试</h1>
+
+    <label for="param1">参数1:</label>
+    <input v-model="param1" type="text" id="param1" placeholder="请输入参数1">
+
+    <label for="param2">参数2:</label>
+    <input v-model="param2" type="text" id="param2" placeholder="请输入参数2">
+
+    <label for="url">地址:</label>
+    <input v-model="url" type="text" id="url" placeholder="请输入URL">
+
+    <button v-on:click="submitRequest">提交</button>
+
+    <label for="response">结果:</label>
+    <textarea id="response" v-model="response" readonly></textarea>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            param1: '',
+            param2: '',
+            url: '',
+            response: ''
+        },
+        methods: {
+            submitRequest: function () {
+                // 构造请求
+                var fullUrl = this.url + "?param1=" + this.param1 + "&param2=" + this.param2;
+
+                // 发送 POST 请求
+                axios.post(fullUrl)
+                    .then(function (response) {
+                        // 更新响应
+                        this.response = response.data;
+                    }.bind(this))
+                    .catch(function (error) {
+                        // 处理错误
+                        this.response = "网络错误";
+                    }.bind(this));
+            }
+        }
+    });
+</script>

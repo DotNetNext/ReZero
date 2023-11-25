@@ -40,6 +40,10 @@ namespace ReZero
             //menu html
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
             var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Url!.ToLower() == url).FirstAsync();
+            if (currentMenu == null) 
+            {
+                currentMenu=await App.Db.Queryable<ZeroInterfaceCategory>().FirstAsync();
+            }
             var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
             var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);
 
@@ -61,7 +65,11 @@ namespace ReZero
 
         private string ReplaceNavTitle(string masterPageHtml, ZeroInterfaceCategory currentMenu, ZeroInterfaceCategory parentMenu)
         {
-            var navTitle = parentMenu.Name + "->" + currentMenu.Name;
+            var navTitle = parentMenu?.Name + "->" + currentMenu.Name;
+            if (parentMenu == null) 
+            {
+                navTitle=TextHandler.GetCommonTexst("详情页","Detail");
+            }
             masterPageHtml = masterPageHtml.Replace(mastreNavNamePlaceholder, navTitle);
             return masterPageHtml;
         }
