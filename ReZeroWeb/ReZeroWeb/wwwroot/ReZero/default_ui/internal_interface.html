@@ -40,10 +40,10 @@
                     <button class="btn try-out__btn" @click="tryItOut(item)" >Try it out </button>
                 </div>
             </div>
-            <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
+            <div class="parameter" v-if="item.DataModel.WhereParameters && item.DataModel.WhereParameters.length > 0">
                 <ul>
-                    <li v-for="param in item.Parameters" :key="param.Name">
-                        <code>{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}
+                    <li v-for="param in item.DataModel.WhereParameters" :key="param.Name">
+                        <code>{{ param.ValueIsReadOnly ?   'Readonly:':''}}{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}  {{ param.Value  ?  ' ['+param.Name +' = ' + param.Value+']' : ''}}
                     </li>
                 </ul>
             </div>

@@ -5,12 +5,12 @@ using System.Text;
 namespace ReZero 
 {
     public class WhereParameter
-    {  
-        public long TableId { get; set; }  
-        public string? ProperyName { get; set; }
-        public string? FieldName { get; set; }
-        public string? FieldValue { get; set; } 
-        public string? Description { get; set; } 
+    {
+        public string? Name { get; set; }
+        public object? Value { get; set; }
+        public bool ValueIsReadOnly { get; set; }
+        public string? Description { get; set; }
+        public string? ValueType { get; set; } 
         public FieldOperatorType? FieldOperator { get; set; } 
     }
 }
