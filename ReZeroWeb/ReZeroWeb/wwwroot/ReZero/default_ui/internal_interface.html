@@ -31,7 +31,7 @@
         <div class="endpoint">
             <p><span class="method">{{ item.HttpMethod }}</span><span class="url"> {{item.Url}}</span> </p>
             <p>{{ item.Description }}</p>
-            <div class="parameter-title">Parameters:</div>
+            <div class="parameter-title">Parameters: <div class="try-out"><button class="btn try-out__btn">Try it out </button></div></div>
             <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
                 <ul>
                     <li v-for="param in item.Parameters" :key="param.Name">
