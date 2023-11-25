@@ -28,6 +28,18 @@ namespace ReZero
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300003;
                 it.Name = TextHandler.GetInterfaceListText(Id1);
                 it.Url = GetUrl(it, "GetDatabaseList");
+                it.Parameters = new List<ZeroInterfaceParameter>()
+                { 
+                    new ZeroInterfaceParameter(){ Name="Name", ValueType=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                };
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.QueryCommon,
+                    WhereParameters = new List<WhereParameter>() { 
+                           new WhereParameter(){ ProperyName=nameof(ZeroDatabaseInfo.Name) , FieldOperator=FieldOperatorType.Like },
+                         }
+                };
             });
             zeroInterfaceList.Add(data);
         } 
@@ -43,7 +55,7 @@ namespace ReZero
                 it.Parameters = new List<ZeroInterfaceParameter>()
                 {
                     new ZeroInterfaceParameter(){ Name="InterfaceCategoryId",  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
-                    new ZeroInterfaceParameter(){ Name="Name", Value=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                    new ZeroInterfaceParameter(){ Name="Name", ValueType=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
                 };
                 it.DataModel = new DataModel()
                 {

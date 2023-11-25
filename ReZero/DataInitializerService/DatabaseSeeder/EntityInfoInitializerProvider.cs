@@ -9,5 +9,6 @@ namespace ReZero
     {
         public const long Id_ZeroInterfaceList = 1;
         public const long Id_ZeroInterfaceCategory = 2;
+        public const long Id_ZeroDatabaseInfo = 3;
     }
 }
