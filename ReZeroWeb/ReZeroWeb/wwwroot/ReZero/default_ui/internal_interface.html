@@ -37,13 +37,13 @@
             <div class="parameter-title">
                 Parameters:
                 <div class="try-out">
-                    <button class="btn try-out__btn">Try it out </button>
+                    <button class="btn try-out__btn" @click="tryItOut(item)" >Try it out </button>
                 </div>
             </div>
             <div class="parameter" v-if="item.Parameters && item.Parameters.length > 0">
                 <ul>
                     <li v-for="param in item.Parameters" :key="param.Name">
-                        <code>{{ param.Name }}</code> ({{ param.Value }}) - {{param.Type}} {{ param.Description }}
+                        <code>{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}
                     </li>
                 </ul>
             </div>
@@ -73,6 +73,9 @@
                         this.error = error.message;
                         this.data = null;
                     });
+            },
+            tryItOut(item) {
+                window.open('/your-new-page-url?id='+item.Id, '_blank');
             }
         }
     });
