@@ -1,16 +1,15 @@
 ﻿@@master_page.html
 <link href="css/page_interface_detail.css" rel="stylesheet" />
 <div id="app">
-    <h1>HTTP接口测试</h1>
+    <h1>{{data.Name}}</h1>
 
-    <label for="param1">参数1:</label>
-    <input v-model="param1" type="text" id="param1" placeholder="请输入参数1">
-
-    <label for="param2">参数2:</label>
-    <input v-model="param2" type="text" id="param2" placeholder="请输入参数2">
-
-    <label for="url">地址:</label>
-    <input v-model="url" type="text" id="url" placeholder="请输入URL">
+    <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
+        <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
+            <label for="param1">{{param.Description}} [ {{ param.Name }}]:</label>
+            <input v-model="param1" type="text" id="param1" placeholder="">
+        
+        </div>
+    </div>
 
     <button v-on:click="submitRequest">提交</button>
 
@@ -21,7 +20,8 @@
     new Vue({
         el: '#app',
         data: {
-            Id: '1', 
+            data: null,
+            error: null
         },
         mounted() {
             // 在组件加载时触发数据获取
@@ -49,7 +49,8 @@
                 // 发送 GET 请求
                 axios.get('/PrivateReZeroRoute/0/GetInternalDetail?id=' + idFromUrl)
                     .then(function (response) {
-                        alert(idFromUrl);
+                        this.data = response.data;
+                        this.error = null;
                     }.bind(this))
                     .catch(function (error) {
                         // 处理错误
