@@ -1,17 +1,24 @@
 ﻿@@master_page.html
 <link href="css/page_interface_detail.css" rel="stylesheet" />
 <div id="app">
-    <h1>{{data.Name}}</h1>
+    <h1>
+        {{data.Name}} 
+    </h1>
     <div class="url">
         Url: {{data.Url}}
     </div>
     <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
         <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
-            <label for="param1">{{param.Description}} [ {{ param.Name }}]:</label>
+            <label>{{param.Description}} [ {{ param.Name }}]:</label>
 
-            
-            <input v-model="param1" type="text" id="param1" placeholder="">
-        
+            <div v-if="param.ValueIsReadOnly==false">
+                <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
+            </div>
+
+            <div v-if="param.ValueIsReadOnly==true">
+                <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
+            </div>
+
         </div>
     </div>
 
@@ -33,19 +40,21 @@
         },
         methods: {
             submitRequest: function () {
+                var json= this.data;
                 // 构造请求
-                var fullUrl = this.url + "?param1=" + this.param1 + "&param2=" + this.param2;
+                var fullUrl = json.Url;
+                alert(fullUrl)
 
-                // 发送 POST 请求
-                axios.post(fullUrl)
-                    .then(function (response) {
-                        // 更新响应
-                        this.response = response.data;
-                    }.bind(this))
-                    .catch(function (error) {
-                        // 处理错误
-                        this.response = "网络错误";
-                    }.bind(this));
+                //// 发送 POST 请求
+                //axios.post(fullUrl)
+                //    .then(function (response) {
+                //        // 更新响应
+                //        this.response = response.data;
+                //    }.bind(this))
+                //    .catch(function (error) {
+                //        // 处理错误
+                //        this.response = "网络错误";
+                //    }.bind(this));
             },
             fetchData: function () {
                 var urlParams = new URLSearchParams(window.location.search);

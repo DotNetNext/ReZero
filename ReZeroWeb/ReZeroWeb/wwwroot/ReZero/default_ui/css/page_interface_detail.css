@@ -25,6 +25,11 @@ input, textarea {
     height: 200px;
 }
 
+.readonly 
+{
+    background:#ccc
+}
+
 button {
     padding: 10px;
     background-color: #4CAF50;
