@@ -7,7 +7,12 @@ label {
     display: block;
     margin-bottom: 5px;
 }
-
+.url 
+{
+    font-size:20px;
+    padding:30px;
+    padding-left:0;
+}
 input, textarea {
     width: 100%;
     padding: 8px;

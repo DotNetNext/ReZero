@@ -2,10 +2,14 @@
 <link href="css/page_interface_detail.css" rel="stylesheet" />
 <div id="app">
     <h1>{{data.Name}}</h1>
-
+    <div class="url">
+        Url: {{data.Url}}
+    </div>
     <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
         <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
             <label for="param1">{{param.Description}} [ {{ param.Name }}]:</label>
+
+            
             <input v-model="param1" type="text" id="param1" placeholder="">
         
         </div>
