@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace ReZero
 {
     internal class QueryCommon : IDataService
@@ -42,9 +42,37 @@ namespace ReZero
             List<IFuncModel> funcModels = new List<IFuncModel>();
             if (dataModel.WhereParameters != null)
             {
-                foreach (var item in dataModel.WhereParameters)
+                foreach (var item in dataModel.WhereParameters.Where(it=>(it.Value+"")!=""))
                 {
-
+                    switch (item.FieldOperator) 
+                    {
+                        case FieldOperatorType.Equal:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Equal,CSharpTypeName=item.ValueType, FieldValue = item.Value+"" });
+                            break; 
+                        case FieldOperatorType.GreaterThan:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.GreaterThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;
+                        case FieldOperatorType.GreaterThanOrEqual:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.GreaterThanOrEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;
+                        case FieldOperatorType.LessThan:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.LessThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;
+                        case FieldOperatorType.LessThanOrEqual:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.LessThanOrEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;
+                        case FieldOperatorType.Like:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;   
+                        case FieldOperatorType.In:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.In, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;
+                        case FieldOperatorType.NotIn:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.NotIn, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break; 
+                        default:
+                            break;
+                    }  
                 }
             }
             queryObject = queryObject.Where(conditionalModels);
