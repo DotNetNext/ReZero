@@ -1,38 +1,45 @@
 ﻿@@master_page.html
 <link href="css/page_interface_detail.css" rel="stylesheet" />
 <div id="app">
-    <h1>
-        {{data.Name}} 
-    </h1>
-    <div class="url">
-        {{ data.HttpMethod }}: {{data.Url}}
-    </div>
-    <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
-        <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
-            <label>{{param.Description}} [ {{ param.Name }}]:</label>
-
-            <div v-if="param.ValueIsReadOnly==false">
-                <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
-            </div>
-
-            <div v-if="param.ValueIsReadOnly==true">
-                <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
-            </div>
-
+    <div v-if="data">
+        <h1>
+            {{data.Name}}
+        </h1>
+        <div class="url">
+            {{ data.HttpMethod }}: {{data.Url}}
         </div>
+        <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
+            <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
+                <label>{{param.Description}} [ {{ param.Name }}]:</label>
+
+                <div v-if="param.ValueIsReadOnly==false">
+                    <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
+                </div>
+
+                <div v-if="param.ValueIsReadOnly==true">
+                    <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
+                </div>
+
+            </div>
+        </div>
+
+        <button v-on:click="submitRequest">提交</button>
+
+        <label for="response">结果:</label>
+        <textarea id="response" v-model="response" readonly></textarea>
+    </div>  
+    <div v-else>
+        <!-- 处理 data 为 null 的情况，可以显示加载中或错误信息 -->
+        <p>Loading...</p>
     </div>
-
-    <button v-on:click="submitRequest">提交</button>
-
-    <label for="response">结果:</label>
-    <textarea id="response" v-model="response" readonly></textarea>
 </div>
 <script>
     new Vue({
         el: '#app',
         data: {
             data: null,
-            error: null
+            error: null,
+            response: ""
         },
         mounted() {
             // 在组件加载时触发数据获取
@@ -40,19 +47,26 @@
         },
         methods: {
             submitRequest: function () {
-                var json= this.data;
+                this.response = "a";
+                var vm = this;
+                var json = vm.data; // Uncomment this line
                 // 构造请求
-                var fullUrl = json.Url; 
+                var fullUrl = json.Url;
+                var postData = {}; 
+              
+                json.DataModel.WhereParameters.forEach(function (param) {
+                    postData[param.Name] = param.Value;
+                });
                 // 发送 POST 请求
-                axios.post(fullUrl)
+                axios.post(fullUrl, postData)
                     .then(function (response) {
                         // 更新响应
-                        this.response = JSON.stringify(response.data);
-                    }.bind(this))
+                        vm.response = JSON.stringify(response.data);
+                    }.bind(vm))
                     .catch(function (error) {
                         // 处理错误
-                        this.response = "网络错误";
-                    }.bind(this));
+                        vm.response = "网络错误";
+                    }.bind(vm));
             },
             fetchData: function () {
                 var urlParams = new URLSearchParams(window.location.search);

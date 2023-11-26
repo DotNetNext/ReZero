@@ -27,7 +27,8 @@ namespace ReZero
             SugarClient = new SqlSugarClient(connectionConfig, db =>
             {
                 db.QueryFilter.AddTableFilter<IDeleted>(it => it.IsDeleted == false);
-                db.Aop.OnLogExecuting = (s, p) => UtilMethods.GetNativeSql(s, p);
+                db.Aop.OnLogExecuting = (s, p) =>
+                Console.WriteLine( UtilMethods.GetNativeSql(s, p) );
             });
 
 

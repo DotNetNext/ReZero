@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 using SqlSugar;
 using SqlSugar.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero
 {
     public class DataService : IDataService
     {
@@ -29,7 +32,7 @@ namespace ReZero
         private static string GetActionTypeName(DataModel dataModel)
         {
             return $"ReZero.{dataModel.ActionType}";
-        } 
+        }
 
         private static void CheckActionType(DataModel dataModel, Type actionType)
         {
@@ -41,19 +44,38 @@ namespace ReZero
 
         internal void BindHttpParameters(DataModel? dataModel, HttpContext context)
         {
-            foreach (var item in  dataModel?.WhereParameters??new System.Collections.Generic.List<WhereParameter>())
+            var formDatas = GetForDatams(context);
+            foreach (var item in dataModel?.WhereParameters ?? new System.Collections.Generic.List<WhereParameter>())
             {
-                item.Value = GetParameterValueFromRequest(item,context);
+                item.Value = GetParameterValueFromRequest(item, context, formDatas);
             }
         }
-        private string GetParameterValueFromRequest(WhereParameter parameter,HttpContext context)
+        private string GetParameterValueFromRequest(WhereParameter parameter, HttpContext context, Dictionary<string, string> formDatas)
         {
             // 假设你希望获取名为 "parameterName" 的查询字符串参数
             string parameterValue = context.Request.Query[parameter.Name];
-
+            if (formDatas.ContainsKey(parameter.Name ?? ""))
+                parameterValue = formDatas[parameter.Name ?? ""];
             parameter.Value = parameterValue;
 
             return parameterValue;
+        }
+
+        private static Dictionary<string, string> GetForDatams(HttpContext context)
+        {
+            Dictionary<string, string> formDatas = new Dictionary<string, string>();
+            if (context.Request.Body != null)
+            {
+                // 从请求正文中读取参数值
+                using var reader = new System.IO.StreamReader(context.Request.Body);
+                var body = reader.ReadToEndAsync().Result;
+                if (!string.IsNullOrEmpty(body))
+                {
+                    formDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(body) ?? new Dictionary<string, string>();
+
+                }
+            }
+            return formDatas ?? new Dictionary<string, string>();
         }
     }
 }

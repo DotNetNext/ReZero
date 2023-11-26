@@ -17,7 +17,8 @@ namespace ReZero
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
-            var data=await db.QueryableByObject(type).InSingleAsync(dataModel.WhereParameters.First().Value);
+            var id = dataModel.WhereParameters.First().Value;
+            var data=await db.QueryableByObject(type).InSingleAsync(id);
             return data;
         }
          
