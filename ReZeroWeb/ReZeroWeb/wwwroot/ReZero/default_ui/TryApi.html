@@ -21,10 +21,11 @@
     new Vue({
         el: '#app',
         data: {
-            param1: '',
-            param2: '',
-            url: '',
-            response: ''
+            Id: '1', 
+        },
+        mounted() {
+            // 在组件加载时触发数据获取
+            this.fetchData();
         },
         methods: {
             submitRequest: function () {
@@ -40,6 +41,20 @@
                     .catch(function (error) {
                         // 处理错误
                         this.response = "网络错误";
+                    }.bind(this));
+            },
+            fetchData: function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var idFromUrl = urlParams.get('id');
+                // 发送 GET 请求
+                axios.get('/PrivateReZeroRoute/0/GetInternalDetail?id=' + idFromUrl)
+                    .then(function (response) {
+                        alert(idFromUrl);
+                    }.bind(this))
+                    .catch(function (error) {
+                        // 处理错误
+                        this.error = error.message;
+                        this.data = null;
                     }.bind(this));
             }
         }

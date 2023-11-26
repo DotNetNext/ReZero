@@ -7,7 +7,7 @@ namespace ReZero
     public enum ActionType
     {
         //Query
-        QueryPrimaryKey=10000,
+        QueryByPrimaryKey=10000,
         QueryCommon = 10001,
         QueryTree = 10001,
 

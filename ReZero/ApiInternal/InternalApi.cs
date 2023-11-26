@@ -40,6 +40,7 @@ namespace ReZero
             else 
             {
                 DataService dataService = new DataService();
+                dataService.BindHttpParameters(interInfo.DataModel,context);
                 var data= await dataService.ExecuteAction(interInfo.DataModel??new DataModel() { });
                 await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
             }

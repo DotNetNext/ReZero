@@ -11,6 +11,7 @@ namespace ReZero
         public bool ValueIsReadOnly { get; set; }
         public string? Description { get; set; }
         public string? ValueType { get; set; } 
+        public bool IsRequired { get; set; }
         public FieldOperatorType? FieldOperator { get; set; } 
     }
 }

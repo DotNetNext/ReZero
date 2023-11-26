@@ -25,6 +25,13 @@ namespace ReZero
         [TextEN("Interface classification")]
         public const long Id3 = 3;
 
+        /// <summary>
+        /// 接口详情
+        /// </summary>
+        [TextCN("接口详情")]
+        [TextEN("Interface Detail")]
+        public const long Id4 = 4;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

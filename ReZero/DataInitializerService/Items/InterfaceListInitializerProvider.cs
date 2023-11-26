@@ -62,6 +62,25 @@ namespace ReZero
                 };
             });
             zeroInterfaceList.Add(data);
+
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.ActionType = ActionType.QueryByPrimaryKey;
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = Id4;
+                it.InterfaceCategoryId = 0;
+                it.Name = TextHandler.GetInterfaceListText(Id4);
+                it.Url = GetUrl(it, "GetInternalDetail"); 
+                it.DataModel = new DataModel()
+                { 
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
+                    ActionType = ActionType.QueryByPrimaryKey,
+                    WhereParameters = new List<WhereParameter>() {
+                            new WhereParameter(){ Name="Id",IsRequired=true,FieldOperator=FieldOperatorType.Equal,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("根据主键获取接口","Get interface detail") },
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data2);
         }
 
         public void GetInterfaceCategory()
