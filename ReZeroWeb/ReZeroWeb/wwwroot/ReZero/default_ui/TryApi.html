@@ -5,7 +5,7 @@
         {{data.Name}} 
     </h1>
     <div class="url">
-        Url: {{data.Url}}
+        {{ data.HttpMethod }}: {{data.Url}}
     </div>
     <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
         <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
@@ -42,19 +42,17 @@
             submitRequest: function () {
                 var json= this.data;
                 // 构造请求
-                var fullUrl = json.Url;
-                alert(fullUrl)
-
-                //// 发送 POST 请求
-                //axios.post(fullUrl)
-                //    .then(function (response) {
-                //        // 更新响应
-                //        this.response = response.data;
-                //    }.bind(this))
-                //    .catch(function (error) {
-                //        // 处理错误
-                //        this.response = "网络错误";
-                //    }.bind(this));
+                var fullUrl = json.Url; 
+                // 发送 POST 请求
+                axios.post(fullUrl)
+                    .then(function (response) {
+                        // 更新响应
+                        this.response = JSON.stringify(response.data);
+                    }.bind(this))
+                    .catch(function (error) {
+                        // 处理错误
+                        this.response = "网络错误";
+                    }.bind(this));
             },
             fetchData: function () {
                 var urlParams = new URLSearchParams(window.location.search);
