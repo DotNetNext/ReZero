@@ -12,7 +12,16 @@ namespace ReZero
             List<ZeroEntityInfo> datas = new List<ZeroEntityInfo>();
             AddZeroInterfaceList(datas);
             AddZeroInterfaceCategory(datas);
+            AddZeroDataBaseInfo(datas);
             return datas;
+        }
+
+        private void AddZeroDataBaseInfo(List<ZeroEntityInfo> datas)
+        { 
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroDatabaseInfo));
+            data.Id = Id_ZeroDatabaseInfo;
+            datas.Add(data);
         }
 
         private static void AddZeroInterfaceList(List<ZeroEntityInfo> datas)
