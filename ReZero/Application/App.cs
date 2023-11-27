@@ -29,7 +29,7 @@ namespace ReZero
         {
             get
             {
-                return ReZeroServiceCollectionExtensions._options!.Language;
+                return ReZeroServiceCollectionExtensions._apiOptions!.Language;
             }
         }
     }

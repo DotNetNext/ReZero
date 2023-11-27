@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI.Initialization
 {
     /// <summary>
     /// Custom startup filter to configure application services and middleware.
@@ -25,7 +25,7 @@ namespace ReZero
                 App.ServiceProvider = new ApplicationServiceProvider(builder);
 
                 // Create an instance of ZeroApiMiddleware and handle API requests.
-                Func<HttpContext, Func<Task>, Task> func = async (context, next) =>await new ZeroApiMiddleware(builder).InvokeAsync(context, next);
+                Func<HttpContext, Func<Task>, Task> func = async (context, next) => await new ZeroApiMiddleware(builder).InvokeAsync(context, next);
 
                 // Use the created middleware in the pipeline.
                 builder.Use(func);

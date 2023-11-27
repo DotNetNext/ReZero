@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI.Initialization
 {
     /// <summary>
     /// Middleware class for handling Zero Dynamic API and Internal API requests.

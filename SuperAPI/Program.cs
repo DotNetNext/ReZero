@@ -8,8 +8,10 @@ builder.Services.AddSwaggerGen();
 
 
 //×¢²á£º×¢²á³¬¼¶API·þÎñ
-builder.Services.AddSuperAPIServices();
-
+builder.Services.AddReZeroServices(new ReZeroOptions()
+{
+    SuperApiOptions = new SuperAPIOptions()
+}); 
 
 
 
