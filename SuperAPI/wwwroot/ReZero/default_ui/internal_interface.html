@@ -64,7 +64,7 @@
         },
         methods: {
             fetchData() {
-                axios.get('/PrivateReZeroRoute/100002/GetInternalInterfaceList')
+                axios.get('/PrivateReZeroRoute/100002/GetInternalInterfaceList?IsInitialized=1')
                     .then(response => {
                         this.data = response.data;
                         this.error = null;

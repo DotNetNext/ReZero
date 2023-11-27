@@ -15,7 +15,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 内部接口
         /// </summary> 
-        [TextCN("内部接口列表")]
+        [TextCN("接口列表")]
         [TextEN("Internal interface list")]
         public const long Id2 = 2;
         /// <summary>
@@ -31,6 +31,15 @@ namespace ReZero.SuperAPI
         [TextCN("接口详情")]
         [TextEN("Interface Detail")]
         public const long Id4 = 4;
+
+
+
+        /// <summary>
+        /// 动态接口[测试01]
+        /// </summary>
+        [TextCN("测试动态接口01")]
+        [TextEN("Test API 01")]
+        public const long TestId = 5;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

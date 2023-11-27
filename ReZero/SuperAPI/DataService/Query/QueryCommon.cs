@@ -46,6 +46,13 @@ namespace ReZero.SuperAPI
                 foreach (var item in dataModel.WhereParameters.Where(it=>(it.Value+"")!=""))
                 {
                     item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name,queryObject.EntityType);
+                    if (item.Value != null)
+                    {
+                        if (item.ValueType == typeof(Boolean).Name)
+                        {
+                            item.Value = Convert.ToBoolean(Convert.ToInt32(item.Value));
+                        }
+                    }
                     switch (item.FieldOperator) 
                     {
                         case FieldOperatorType.Equal:
