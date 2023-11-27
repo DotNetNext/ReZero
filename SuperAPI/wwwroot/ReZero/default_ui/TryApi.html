@@ -75,7 +75,8 @@
                 axios.get('/PrivateReZeroRoute/0/GetInternalDetail?id=' + idFromUrl)
                     .then(function (response) {
                         this.data = response.data;
-                        this.error = null;
+                        this.error = null; 
+                        $("body").addClass("lyear-layout-sidebar-close");
                     }.bind(this))
                     .catch(function (error) {
                         // 处理错误
