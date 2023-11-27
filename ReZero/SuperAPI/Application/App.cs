@@ -29,7 +29,7 @@ namespace ReZero.SuperAPI
         {
             get
             {
-                return ReZeroServiceCollectionExtensions._apiOptions!.Language;
+                return SuperAPIModule._apiOptions!.Language;
             }
         }
     }
