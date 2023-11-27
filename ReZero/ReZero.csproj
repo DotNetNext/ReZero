@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\DTO\" />
+    <Folder Include="SuperAPI\Entities\DTO\" />
   </ItemGroup>
 
 </Project>
