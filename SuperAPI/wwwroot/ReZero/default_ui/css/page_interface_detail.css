@@ -1,6 +1,6 @@
 ﻿#app {
     font-family: Arial, sans-serif;
-    padding: 30px;
+    padding: 35px;
 }
 
 label {
@@ -41,3 +41,7 @@ button {
     button:hover {
         background-color: #45a049;
     }
+
+.btn-close {
+     margin-left:10px
+}

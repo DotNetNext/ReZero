@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <button v-on:click="submitRequest">提交</button>
-
+        <button class="btn btn-success" v-on:click="submitRequest">提交</button>
+        <button  class="btn btn-close" v-on:click="submitClose">关闭</button>
         <label for="response">结果:</label>
         <textarea id="response" v-model="response" readonly></textarea>
     </div>  
@@ -46,6 +46,9 @@
             this.fetchData();
         },
         methods: {
+            submitClose: function () {
+                window.close();
+            },
             submitRequest: function () {
                 this.response = "a";
                 var vm = this;
