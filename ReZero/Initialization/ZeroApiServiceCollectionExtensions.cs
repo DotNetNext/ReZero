@@ -12,15 +12,16 @@ namespace ReZero
         /// <summary>
         /// Holds the ReZeroOptions instance.
         /// </summary>
-        public static ReZeroOptions? _options = null;
+        public static SuperAPIOptions? _options = null;
 
-        /// <summary>
-        /// Configures ReZero services within the specified IServiceCollection.
+   
+        ///<summary>
+        /// Adds Super API services to the IServiceCollection.
         /// </summary>
-        /// <param name="services">The IServiceCollection to which ReZero services are added.</param>
+        /// <param name="services">The IServiceCollection to which services are added.</param>
         /// <param name="options">Optional ReZero options.</param>
         /// <returns>The updated IServiceCollection.</returns>
-        public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions? options = null)
+        public static IServiceCollection AddSuperAPIServices(this IServiceCollection services, SuperAPIOptions? options = null)
         {
             _options = options = InitializeOptions(options);
 
@@ -33,6 +34,18 @@ namespace ReZero
             InitializeData(options);
 
             return services;
+        }
+
+
+        /// <summary>
+        /// Adds ReZero services to the IServiceCollection.
+        /// </summary>
+        /// <param name="services">The IServiceCollection to which services are added.</param>
+        /// <param name="options">Optional ReZero options.</param>
+        /// <returns>The updated IServiceCollection.</returns>
+        public static IServiceCollection AddReZeroServices(this IServiceCollection services, SuperAPIOptions? options = null)
+        {
+            throw new Exception("未来计划");
         }
 
         /// <summary>
@@ -48,9 +61,9 @@ namespace ReZero
         /// </summary>
         /// <param name="options">Optional ReZero options.</param>
         /// <returns>Initialized ReZero options.</returns>
-        private static ReZeroOptions InitializeOptions(ReZeroOptions? options)
+        private static SuperAPIOptions InitializeOptions(SuperAPIOptions? options)
         {
-            options = options ?? new ReZeroOptions();
+            options = options ?? new SuperAPIOptions();
             return options;
         }
 
@@ -59,7 +72,7 @@ namespace ReZero
         /// </summary>
         /// <param name="services">The IServiceCollection to which services are added.</param>
         /// <param name="options">ReZero options.</param>
-        private static void AddTransientServices(IServiceCollection services, ReZeroOptions options)
+        private static void AddTransientServices(IServiceCollection services, SuperAPIOptions options)
         {
             // Add transient services to the IServiceCollection.
             services.AddTransient<IDynamicApi, DynamicApiManager>();
@@ -74,7 +87,7 @@ namespace ReZero
         /// Initializes data based on ReZero options.
         /// </summary>
         /// <param name="options">ReZero options.</param>
-        private static void InitializeData(ReZeroOptions options)
+        private static void InitializeData(SuperAPIOptions options)
         {
             new DataInitializerService().Initialize(options);
         }
@@ -83,7 +96,7 @@ namespace ReZero
         /// Initializes the database based on ReZero options.
         /// </summary>
         /// <param name="options">ReZero options.</param>
-        private static void InitializeDataBase(ReZeroOptions options)
+        private static void InitializeDataBase(SuperAPIOptions options)
         {
             if (options.InitTable == false)
             {

@@ -7,8 +7,8 @@ builder.Services.AddSwaggerGen();
 
 
 
-//注册：无代码API  ，启动后 /rezero 可以访问
-builder.Services.AddReZeroServices();
+//注册：注册超级API服务
+builder.Services.AddSuperAPIServices();
 
 
 

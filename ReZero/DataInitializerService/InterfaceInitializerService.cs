@@ -9,7 +9,7 @@ namespace ReZero
     {
         List<ZeroInterfaceList> zeroInterfaceList = new List<ZeroInterfaceList>() { };
         List<ZeroInterfaceCategory> zeroInterfaceCategory = new List<ZeroInterfaceCategory>() { };
-        public void Initialize(ReZeroOptions options)
+        public void Initialize(SuperAPIOptions options)
         {
             var db = App.PreStartupDb;
 
@@ -48,7 +48,7 @@ namespace ReZero
             db!.Storageable(zeroInterfaceCategory).ExecuteCommand();
         }
 
-        private static void InitUser(ReZeroOptions options)
+        private static void InitUser(SuperAPIOptions options)
         {
             UserInitializerProvider userInitializerProvider = new UserInitializerProvider();
             userInitializerProvider.Initialize(options);

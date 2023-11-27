@@ -6,10 +6,10 @@ namespace ReZero
 {
     public partial class UserInitializerProvider
     {
-        private ReZeroOptions? _options;
-        public void Initialize(ReZeroOptions options)
+        private SuperAPIOptions? _options;
+        public void Initialize(SuperAPIOptions options)
         {
-            _options = options ?? new ReZeroOptions();
+            _options = options ?? new SuperAPIOptions();
             InitUser();
         }
 

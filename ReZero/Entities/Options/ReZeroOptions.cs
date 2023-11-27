@@ -8,7 +8,7 @@ namespace ReZero
     /// <summary>
     /// Represents configuration options for ReZero.
     /// </summary>
-    public class ReZeroOptions
+    public class SuperAPIOptions
     {
         /// <summary>
         /// Gets or sets whether to initialize configuration tables (default: true).
