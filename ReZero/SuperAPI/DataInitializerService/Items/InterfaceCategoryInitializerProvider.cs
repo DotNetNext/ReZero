@@ -101,14 +101,14 @@ namespace ReZero.SuperAPI
                 it.Id = Id100002;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100002);
                 it.ParentId = Id100;
-                it.Url = "/rezero/internal_interface.html?id=" + Id100002;
+                it.Url = "/rezero/internal_interface.html?InterfaceCategoryId=" + Id100002;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id100003;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100003);
                 it.ParentId = Id100;
-                it.Url = "/rezero/internal_interface.html?id=" + Id100003;
+                it.Url = "/rezero/internal_interface.html?InterfaceCategoryId=" + Id100003;
             }));
         }
 
