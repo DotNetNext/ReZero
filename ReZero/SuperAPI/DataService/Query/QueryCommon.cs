@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq; 
+using System.Linq;
+using System.Data;
 namespace ReZero.SuperAPI
 {
     internal class QueryCommon : IDataService
@@ -44,6 +45,7 @@ namespace ReZero.SuperAPI
             {
                 foreach (var item in dataModel.WhereParameters.Where(it=>(it.Value+"")!=""))
                 {
+                    item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name,queryObject.EntityType);
                     switch (item.FieldOperator) 
                     {
                         case FieldOperatorType.Equal:
