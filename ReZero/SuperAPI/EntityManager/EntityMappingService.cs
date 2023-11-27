@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public class EntityMappingService
     {

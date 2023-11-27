@@ -4,10 +4,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using ReZero.Ui;
+using Microsoft.AspNetCore.Http; 
 
-namespace ReZero.SuperAPI.Initialization
+namespace ReZero.SuperAPI
 {
     public class ZeroStaticFileMiddleware
     {

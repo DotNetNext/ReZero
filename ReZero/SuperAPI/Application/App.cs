@@ -1,7 +1,7 @@
 ﻿using SqlSugar;
 using System;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Represents the application's main entry point and provides access to essential services and resources.
@@ -15,7 +15,7 @@ namespace ReZero
         /// <summary>
         /// Represents a database connection object used before service startup.
         /// </summary>
-        internal static ISqlSugarClient? PreStartupDb { get;  set; }
+        internal static ISqlSugarClient? PreStartupDb { get; set; }
 
         /// <summary>
         /// Gets the instance of the SqlSugar client for database operations.
@@ -23,7 +23,7 @@ namespace ReZero
         /// <remarks>
         /// This property provides convenient access to the configured SqlSugar client for database operations.
         /// </remarks>
-        internal static ISqlSugarClient Db { get => App.ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
+        internal static ISqlSugarClient Db { get => ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
 
         internal static Language Language
         {

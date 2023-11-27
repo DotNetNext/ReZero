@@ -1,26 +1,28 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using ReZero.SuperAPI.Initialization;
+using Microsoft.Extensions.DependencyInjection;  
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
-    public static partial class ReZeroServiceCollectionExtensions
+    public static partial class SuperAPIModule
     {
        
         public static SuperAPIOptions? _apiOptions = null;
 
    
-        private static void InitSupperApi(IServiceCollection services, ReZeroOptions options)
+        internal static void Init(IServiceCollection services, ReZeroOptions options)
         {
-            var apiOptions = options.SuperApiOptions;
-            _apiOptions = InitializeOptions(apiOptions);
-            InitZeroStaticFileMiddleware();
-            InitializeDataBase(_apiOptions);
-            InitializeData(_apiOptions);
-            AddTransientServices(services, _apiOptions);
+            if (IsInitSupperApi(options))
+            {
+                var apiOptions = options.SuperApiOptions;
+                _apiOptions = InitializeOptions(apiOptions);
+                InitZeroStaticFileMiddleware();
+                InitializeDataBase(_apiOptions);
+                InitializeData(_apiOptions);
+                AddTransientServices(services, _apiOptions);
+            }
         }
 
 

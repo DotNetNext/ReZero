@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
- 
+
     /// <summary>
     /// 应用程序的主要类，用于管理依赖注入和服务定位。
     /// </summary>
@@ -33,7 +33,7 @@ namespace ReZero
 
             // 使用IOC容器执行操作
             var myService = serviceProvider!.GetRequiredService<T>();
-            return myService; 
+            return myService;
         }
     }
 }

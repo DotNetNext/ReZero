@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text; 
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     public partial class UserInitializerProvider
     {

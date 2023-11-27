@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public class DataService : IDataService
     {
@@ -31,7 +31,7 @@ namespace ReZero
 
         private static string GetActionTypeName(DataModel dataModel)
         {
-            return $"ReZero.{dataModel.ActionType}";
+            return $"ReZero.SuperAPI.{dataModel.ActionType}";
         }
 
         private static void CheckActionType(DataModel dataModel, Type actionType)

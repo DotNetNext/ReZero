@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Implementation of the ReZero API interface (IReZeroApi) to handle API-related operations.

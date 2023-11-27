@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     public class ZeroTableIndex : DbBase
     {

@@ -1,7 +1,7 @@
 ﻿using SqlSugar;
 using System;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Represents a database context for handling database operations using SqlSugar.

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public interface IInternalApi : IZeroApi
     { 

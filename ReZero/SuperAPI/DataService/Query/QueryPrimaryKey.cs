@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     internal class QueryByPrimaryKey: IDataService
     {

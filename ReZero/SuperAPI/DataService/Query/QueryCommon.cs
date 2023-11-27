@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-namespace ReZero
+using System.Linq; 
+namespace ReZero.SuperAPI
 {
     internal class QueryCommon : IDataService
     {

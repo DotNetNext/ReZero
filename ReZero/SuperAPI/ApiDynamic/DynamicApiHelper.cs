@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using ReZero.API.RequestHandler;
+﻿using Microsoft.AspNetCore.Http; 
 using System;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Helper class for handling API requests and determining appropriate request method handlers.

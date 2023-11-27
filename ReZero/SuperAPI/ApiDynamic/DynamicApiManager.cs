@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http; 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public class DynamicApiManager : IDynamicApi
     {

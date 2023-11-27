@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// 默认UI使用，如果是Vue前后分离不会使用该类

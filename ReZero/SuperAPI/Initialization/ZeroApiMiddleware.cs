@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http; 
 using System;
 using System.Threading.Tasks;
 
-namespace ReZero.SuperAPI.Initialization
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Middleware class for handling Zero Dynamic API and Internal API requests.

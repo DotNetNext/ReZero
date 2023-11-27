@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Nodes;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     public class ZeroPublicFilterCondition : DbBase
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Represents the parameters for a tree structure.

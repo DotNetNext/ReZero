@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     public class ZeroDiffLog : DbBase
     {

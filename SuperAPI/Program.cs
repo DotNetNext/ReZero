@@ -1,4 +1,5 @@
-using ReZero; 
+using ReZero;
+using ReZero.SuperAPI;
 
 var builder = WebApplication.CreateBuilder(args) ;
 builder.Services.AddControllers();

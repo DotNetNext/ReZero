@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public interface IDataService
     {

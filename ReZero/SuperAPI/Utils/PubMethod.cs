@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// 

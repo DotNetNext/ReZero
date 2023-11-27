@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization; 
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     internal class TextHandler
     {

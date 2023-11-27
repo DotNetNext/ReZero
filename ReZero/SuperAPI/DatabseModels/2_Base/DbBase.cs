@@ -1,7 +1,7 @@
 ﻿using SqlSugar;
 using System;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public class DbBase:IDeleted
     {

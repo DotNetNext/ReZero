@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     public class ZeroDatabaseInfo : DbBase
     {

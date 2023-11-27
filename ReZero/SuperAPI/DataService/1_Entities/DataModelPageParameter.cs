@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Represents a common page with page number, page size, and total count.

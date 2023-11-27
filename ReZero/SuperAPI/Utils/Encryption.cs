@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public class Encryption
     {

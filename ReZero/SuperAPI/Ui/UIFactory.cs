@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.Ui
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// 默认UI使用，如果是Vue前后分离不会使用该类

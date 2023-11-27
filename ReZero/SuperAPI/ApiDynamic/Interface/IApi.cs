@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http; 
 using System.Threading.Tasks;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public interface IDynamicApi:IZeroApi
     {

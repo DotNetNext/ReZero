@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http; 
 using System;
 using System.Threading.Tasks;
 
-namespace ReZero.SuperAPI.Initialization
+namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Custom startup filter to configure application services and middleware.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using SqlSugar;
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     public class ZeroAuthorization : DbBase
     {

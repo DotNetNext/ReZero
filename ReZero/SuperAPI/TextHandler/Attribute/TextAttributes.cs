@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero 
+namespace ReZero.SuperAPI
 {
     [AttributeUsage(AttributeTargets.All )]
     public class TextCN : Attribute

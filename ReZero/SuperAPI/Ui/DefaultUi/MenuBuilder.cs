@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace ReZero
+namespace ReZero.SuperAPI
 {
     public class MenuBuilder
     {
