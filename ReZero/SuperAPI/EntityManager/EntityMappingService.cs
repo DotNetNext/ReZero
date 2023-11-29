@@ -45,10 +45,33 @@ namespace ReZero.SuperAPI
                     IsUnsigned = it.IsUnsigned??false,
                     PropertyName = propertyInfo?.PropertyName, 
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(propertyInfo!.PropertyInfo.PropertyType),
-                    TableId = it.TableId
+                    TableId = it.TableId,
+                    IsInitialized=true
                 };
                 return data;
             }).ToList();
+            var expColumns=entityInfo.Columns.Where(it =>it.IsIgnore==true&&it.ExtendedAttribute != null).ToList();
+            foreach(var item in expColumns)
+            {
+                var data = new ZeroEntityColumnInfo()
+                {
+                    Description = item.ColumnDescription ?? "",
+                    DataType = item.DataType??"",
+                    DbCoumnName = item.DbColumnName??"",
+                    DecimalDigits = item.DecimalDigits,
+                    IsIdentity = item.IsIdentity,
+                    Length = item.Length,
+                    IsPrimarykey = item.IsPrimarykey,
+                    IsArray = item.IsArray,
+                    IsJson = item.IsJson,
+                    IsNullable = item.IsNullable, 
+                    PropertyName = item?.PropertyName, 
+                    ExtendedAttribute = item?.ExtendedAttribute,
+                    IsInitialized=true,
+                    IsUnsigned=false 
+                };
+                result.ZeroEntityColumnInfos.Add(data);
+            }
             result.ZeroEntityColumnInfos = result.ZeroEntityColumnInfos.Where(it => it.PropertyName != null).ToList();
             // 实现转换逻辑
             return result;

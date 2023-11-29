@@ -1,6 +1,7 @@
 ﻿ using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,8 +15,13 @@ namespace ReZero.SuperAPI
             RefAsync<int> count = 0;
             var parameter = dataModel.TreeParameter;
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+            var data = await db.QueryableByObject(type)
+                .InSingleAsync(dataModel.WhereParameters.First().Value);
+            object? parentId = 1;
+            if(data!=null)
+                parentId=data.GetType()?.GetProperty(parameter?.ParentCodePropertyName)?.GetValue(data)??1;
             var result = await db.QueryableByObject(type)
-                          .ToTreeAsync(parameter?.ChildPropertyName,parameter?.ParentCodePropertyName,parameter?.RootValue,parameter?.CodePropertyName);
+                          .ToTreeAsync(parameter?.ChildPropertyName,parameter?.ParentCodePropertyName, parentId , parameter?.CodePropertyName);
             return result;
         }
     }

@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="SqlSugarCore" Version="5.1.4.116" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.125-preview12" />
   </ItemGroup>
 
 </Project>

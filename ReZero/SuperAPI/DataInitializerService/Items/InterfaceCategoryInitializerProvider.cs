@@ -26,7 +26,7 @@ namespace ReZero.SuperAPI
             {
                 it.Id = Id;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id);
-                it.ParentId = null;
+                it.ParentId = Id-1;
             }));
 
             zeroInterfaceCategory.Add(GetNewItem(it =>

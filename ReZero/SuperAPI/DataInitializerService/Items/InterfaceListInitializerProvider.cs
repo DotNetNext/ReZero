@@ -158,7 +158,7 @@ namespace ReZero.SuperAPI
                     },
                     WhereParameters = new List<WhereParameter>()
                     {
-                       
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,Value=InterfaceCategoryInitializerProvider.Id,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("根目录ID", "Root id") },
                     }
                 };
             });

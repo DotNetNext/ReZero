@@ -23,5 +23,7 @@ namespace ReZero.SuperAPI
         public bool? IsUnsigned { get; set; }
         public NativeTypes PropertyType { get; set; }
         public string? DataType { get; set; }
+        [SugarColumn(IsNullable=true)]
+        public object? ExtendedAttribute { get;  set; }
     }
 }

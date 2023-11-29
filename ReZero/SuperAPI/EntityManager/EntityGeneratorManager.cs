@@ -19,13 +19,20 @@ namespace ReZero.SuperAPI
             });
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
             {
-                builder.CreateProperty(item.PropertyName, GetTypeByNativeTypes(item.PropertyType), new SugarColumn()
+                var propertyType = GetTypeByNativeTypes(item.PropertyType);
+                var column = new SugarColumn()
                 {
                     ColumnName = item.DbCoumnName,
-                    IsJson= item.PropertyType== NativeTypes.Json,
+                    IsJson = item.PropertyType == NativeTypes.Json,
                     IsIdentity = item.IsIdentity,
                     IsPrimaryKey = item.IsPrimarykey,
-                });
+                };
+                if (item.ExtendedAttribute?.ToString() == PubConst.TreeChild) 
+                { 
+                    propertyType = typeof(DynamicOneselfTypeList);
+                    column.IsIgnore = true;
+                }
+                builder.CreateProperty(item.PropertyName, propertyType, column); 
             }
             var type = builder.BuilderType();
             return type;
