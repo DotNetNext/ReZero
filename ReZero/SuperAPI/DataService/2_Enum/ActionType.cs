@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
         //Query
         QueryByPrimaryKey=10000,
         QueryCommon = 10001,
-        QueryTree = 10001,
+        QueryTree = 10002,
 
         //Insert
         InsertObject =20000,
