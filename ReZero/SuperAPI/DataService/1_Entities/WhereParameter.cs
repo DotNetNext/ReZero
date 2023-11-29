@@ -10,6 +10,7 @@ namespace ReZero.SuperAPI
         public string? FieldName { get; set; }  
         public object? Value { get; set; }
         public bool ValueIsReadOnly { get; set; }
+        public string? MergeForName { get; set; }
         public string? Description { get; set; }
         public string? ValueType { get; set; } 
         public bool IsRequired { get; set; }  
