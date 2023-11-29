@@ -23,9 +23,9 @@ namespace ReZero.SuperAPI
         {
             ZeroInterfaceList data = GetNewItem(it => { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = Id1;
+                it.Id = DbManId;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300003;
-                it.Name = TextHandler.GetInterfaceListText(Id1);
+                it.Name = TextHandler.GetInterfaceListText(DbManId);
                 it.Url = GetUrl(it, "GetDatabaseList"); 
                 it.DataModel = new DataModel()
                 {
@@ -41,51 +41,19 @@ namespace ReZero.SuperAPI
         } 
         public void GetZeroInterfaceList()
         {
-            ZeroInterfaceList data = GetNewItem(it =>
-            { 
-                it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = Id2;
-                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
-                it.Name = TextHandler.GetInterfaceListText(Id2);
-                it.Url = GetUrl(it, "GetInternalInterfaceList"); 
-                it.DataModel = new DataModel()
-                {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
-                    ActionType = ActionType.QueryCommon,
-                    WhereParameters = new List<WhereParameter>() {
-                            new WhereParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
-                            new WhereParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
-                            new WhereParameter() { Name = "IsInitialized",FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") ,
-                            } 
-                    }
-                };
-            });
-            zeroInterfaceList.Add(data);
+            Intenal();
 
-            ZeroInterfaceList data2 = GetNewItem(it =>
-            { 
-                it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = Id4;
-                it.InterfaceCategoryId = 0;
-                it.Name = TextHandler.GetInterfaceListText(Id4);
-                it.Url = GetUrl(it, "GetInternalDetail"); 
-                it.DataModel = new DataModel()
-                { 
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
-                    ActionType = ActionType.QueryByPrimaryKey,
-                    WhereParameters = new List<WhereParameter>() {
-                            new WhereParameter(){ Name="Id",IsRequired=true,FieldOperator=FieldOperatorType.Equal,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("根据主键获取接口","Get interface detail") },
-                         }
-                };
-            });
-            zeroInterfaceList.Add(data2);
+            Dynamic();
+        }
 
-
+        private void Dynamic()
+        {
+            //动态测试接口
             ZeroInterfaceList data3 = GetNewItem(it =>
-            { 
+            {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = TestId;
-                it.InterfaceCategoryId = 0;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id200100;
                 it.Name = TextHandler.GetInterfaceListText(TestId);
                 it.Url = GetUrl(it, "GetInternalDetail");
                 it.DataModel = new DataModel()
@@ -101,25 +69,92 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data3);
         }
 
+        private void Intenal()
+        {
+            //内部接口列表
+            ZeroInterfaceList data = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = IntIntListId;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(IntIntListId);
+                it.Url = GetUrl(it, "GetInternalInterfaceList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
+                    ActionType = ActionType.QueryCommon,
+                    WhereParameters = new List<WhereParameter>() {
+                            new WhereParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
+                            new WhereParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                            new WhereParameter() { Name = "IsInitialized",FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") ,
+                            }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data);
+
+            //内部接口列表详情
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = IntDetId;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(IntDetId);
+                it.Url = GetUrl(it, "GetInternalDetail");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
+                    ActionType = ActionType.QueryByPrimaryKey,
+                    WhereParameters = new List<WhereParameter>() {
+                            new WhereParameter(){ Name="Id",IsRequired=true,FieldOperator=FieldOperatorType.Equal,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("根据主键获取接口","Get interface detail") },
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data2);
+        }
+
         public void GetInterfaceCategory()
         {
-            
+            //接口分类列表
             ZeroInterfaceList data = GetNewItem(it => { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = Id3;
-                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100001;
-                it.Name = TextHandler.GetInterfaceListText(Id3);
+                it.Id = IntCateListId;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(IntCateListId);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
                 it.DataModel = new DataModel()
                 {
                          TableId= EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                          ActionType=ActionType.QueryCommon,
                          WhereParameters=new List<WhereParameter>() {
-                           
+                             new WhereParameter() { Name = "IsInitialized",FieldName="Id",FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") },
+                             new WhereParameter() { Name = "Id1",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id, Description = TextHandler.GetCommonTexst("主键", "Id") },
+                             new WhereParameter() { Name = "Id2" ,FieldName="Id", ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id100, Description = TextHandler.GetCommonTexst("主键", "Id") },
+                             new WhereParameter() { Name = "Id3",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id1, Description = TextHandler.GetCommonTexst("主键", "Id") },
+                             new WhereParameter() { Name = "Id4",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id200, Description = TextHandler.GetCommonTexst("主键", "Id") }
                          }
                 };
             });
             zeroInterfaceList.Add(data);
+
+            //接口分类树
+            ZeroInterfaceList data2 = GetNewItem(it => {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = IntCateTreeId;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
+                it.Name = TextHandler.GetInterfaceListText(IntCateTreeId);
+                it.Url = GetUrl(it, "GetInterfaceCategoryList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryCommon,
+                    WhereParameters = new List<WhereParameter>()
+                    {
+
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data2);
         }
     }
 }

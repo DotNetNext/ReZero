@@ -47,7 +47,12 @@ namespace ReZero.SuperAPI
             var formDatas = GetForDatams(context);
             foreach (var item in dataModel?.WhereParameters ?? new System.Collections.Generic.List<WhereParameter>())
             {
+                
                 item.Value = GetParameterValueFromRequest(item, context, formDatas);
+                if (!string.IsNullOrEmpty(item.FieldName))
+                {
+                    item.Name=item.FieldName;
+                }
             }
         }
         private string GetParameterValueFromRequest(WhereParameter parameter, HttpContext context, Dictionary<string, string> formDatas)

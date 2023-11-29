@@ -77,8 +77,8 @@ namespace ReZero.SuperAPI
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id200001;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id200001);
+                it.Id = Id200100;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id200100);
                 it.ParentId = Id200;
                 it.Url = "/rezero/dynamic_interface.html";
             }));
@@ -89,13 +89,13 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100);
                 it.ParentId = Id;
             }));
-            zeroInterfaceCategory.Add(GetNewItem(it =>
-            {
-                it.Id = Id100001;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id100001);
-                it.ParentId = Id100;
-                it.Url = "/rezero/internal_interface.html";
-            }));
+            //zeroInterfaceCategory.Add(GetNewItem(it =>
+            //{
+            //    it.Id = Id100001;
+            //    it.Name = TextHandler.GetInterfaceCategoryText(Id100001);
+            //    it.ParentId = Id100;
+            //    it.Url = "/rezero/internal_interface.html";
+            //}));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id100002;

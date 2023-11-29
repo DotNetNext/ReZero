@@ -34,11 +34,12 @@ namespace ReZero.SuperAPI
         public const long Id200 = 200;
 
         /// <summary>
-        /// 全部接口
+        /// 测试分类1
         /// </summary>
-        [TextCN("动态所有")]
-        [TextEN("All dynamic")]
-        public const long Id200001 = 200001;
+        [TextCN("测试分类1")]
+        [TextEN("Test 01")]
+        public const long Id200100 = 200100;
+
         #endregion
 
 
@@ -49,14 +50,7 @@ namespace ReZero.SuperAPI
         [TextCN("系统接口")]
         [TextEN("Internal interface")]
         public const long Id100 = 100;
-
-
-        /// <summary>
-        /// 全部接口
-        /// </summary>
-        [TextCN("系统所有")]
-        [TextEN("All internal")]
-        public const long Id100001 = 100001;
+         
 
         /// <summary>
         /// 页面布局

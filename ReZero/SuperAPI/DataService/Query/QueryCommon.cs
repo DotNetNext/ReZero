@@ -57,7 +57,10 @@ namespace ReZero.SuperAPI
                     {
                         case FieldOperatorType.Equal:
                             conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Equal,CSharpTypeName=item.ValueType, FieldValue = item.Value+"" });
-                            break; 
+                            break;
+                        case FieldOperatorType.NoEqual:
+                            conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.NoEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                            break;
                         case FieldOperatorType.GreaterThan:
                             conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.GreaterThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                             break;

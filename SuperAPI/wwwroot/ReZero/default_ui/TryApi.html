@@ -10,7 +10,7 @@
         </div>
         <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
             <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
-                <label>{{param.Description}} [ {{ param.Name }}]:</label>
+                <label>{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
 
                 <div v-if="param.ValueIsReadOnly==false">
                     <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">

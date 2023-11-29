@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
+using ReZero.SuperAPI;
 using System;
 
-namespace ReZero.SuperAPI
+namespace ReZero
 {
     
     public static partial class ReZeroServiceCollectionExtensions

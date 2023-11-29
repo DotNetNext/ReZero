@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ReZero.SuperAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.SuperAPI
+namespace ReZero
 {
     public class ReZeroOptions
     {

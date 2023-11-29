@@ -11,26 +11,26 @@ namespace ReZero.SuperAPI
         /// </summary> 
         [TextCN("数据库管理")]
         [TextEN("Database management")]
-        public const long Id1 = 1;
+        public const long DbManId = 1;
         /// <summary>
         /// 内部接口
         /// </summary> 
         [TextCN("接口列表")]
         [TextEN("Internal interface list")]
-        public const long Id2 = 2;
+        public const long IntIntListId = 2;
         /// <summary>
         /// 接口分类
         /// </summary> 
-        [TextCN("接口分类")]
-        [TextEN("Interface classification")]
-        public const long Id3 = 3;
+        [TextCN("接口分类列表")]
+        [TextEN("Interface category list")]
+        public const long IntCateListId = 3;
 
         /// <summary>
         /// 接口详情
         /// </summary>
         [TextCN("接口详情")]
         [TextEN("Interface Detail")]
-        public const long Id4 = 4;
+        public const long IntDetId = 4;
 
 
 
@@ -40,6 +40,14 @@ namespace ReZero.SuperAPI
         [TextCN("测试动态接口01")]
         [TextEN("Test API 01")]
         public const long TestId = 5;
+
+
+        /// <summary>
+        /// 接口分类树
+        /// </summary> 
+        [TextCN("接口分类树")]
+        [TextEN("Interface category tree")]
+        public const long IntCateTreeId = 6;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
