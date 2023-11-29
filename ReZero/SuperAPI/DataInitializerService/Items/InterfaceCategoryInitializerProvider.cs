@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -82,6 +83,8 @@ namespace ReZero.SuperAPI
                 it.ParentId = Id200;
                 it.Url = "/rezero/dynamic_interface.html";
             }));
+            zeroInterfaceCategory.Last().IsInitialized = false;
+
             //internal interface
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
