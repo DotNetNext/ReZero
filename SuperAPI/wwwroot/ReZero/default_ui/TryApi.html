@@ -75,7 +75,7 @@
                 var urlParams = new URLSearchParams(window.location.search);
                 var idFromUrl = urlParams.get('id');
                 // 发送 GET 请求
-                axios.get('/PrivateReZeroRoute/0/GetInternalDetail?id=' + idFromUrl)
+                axios.get('/PrivateReZeroRoute/100003/GetInternalDetail?id=' + idFromUrl)
                     .then(function (response) {
                         this.data = response.data;
                         this.error = null; 

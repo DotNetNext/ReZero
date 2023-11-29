@@ -127,7 +127,7 @@ namespace ReZero.SuperAPI
                          TableId= EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                          ActionType=ActionType.QueryCommon,
                          WhereParameters=new List<WhereParameter>() {
-                             new WhereParameter() { Name = "IsInitialized",FieldName="Id",FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") },
+                             new WhereParameter() { Name = "IsInitialized" ,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") },
                              new WhereParameter() { Name = "Id1",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id, Description = TextHandler.GetCommonTexst("主键", "Id") },
                              new WhereParameter() { Name = "Id2" ,FieldName="Id", ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id100, Description = TextHandler.GetCommonTexst("主键", "Id") },
                              new WhereParameter() { Name = "Id3",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id1, Description = TextHandler.GetCommonTexst("主键", "Id") },
