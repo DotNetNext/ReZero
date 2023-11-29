@@ -21,8 +21,7 @@ namespace ReZero.SuperAPI
 
         private void GetDatabaseList()
         {
-            ZeroInterfaceList data = GetNewItem(it => {
-                it.ActionType = ActionType.QueryCommon;
+            ZeroInterfaceList data = GetNewItem(it => { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id1;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300003;
@@ -43,8 +42,7 @@ namespace ReZero.SuperAPI
         public void GetZeroInterfaceList()
         {
             ZeroInterfaceList data = GetNewItem(it =>
-            {
-                it.ActionType = ActionType.QueryCommon;
+            { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id2;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
@@ -65,8 +63,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data);
 
             ZeroInterfaceList data2 = GetNewItem(it =>
-            {
-                it.ActionType = ActionType.QueryByPrimaryKey;
+            { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id4;
                 it.InterfaceCategoryId = 0;
@@ -85,8 +82,7 @@ namespace ReZero.SuperAPI
 
 
             ZeroInterfaceList data3 = GetNewItem(it =>
-            {
-                it.ActionType = ActionType.QueryByPrimaryKey;
+            { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = TestId;
                 it.InterfaceCategoryId = 0;
@@ -108,8 +104,7 @@ namespace ReZero.SuperAPI
         public void GetInterfaceCategory()
         {
             
-            ZeroInterfaceList data = GetNewItem(it => {
-                it.ActionType = ActionType.QueryTree;
+            ZeroInterfaceList data = GetNewItem(it => { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = Id3;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100001;
