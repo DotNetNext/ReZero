@@ -4,26 +4,10 @@
     <div class="form-group row">
         <div class="row show-grid">
             <div class="col-md-2"> </div>
-            <div class="col-md-2">
-                <input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本..">
+            <div class="col-md-6">
+                <input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="Url or name">
             </div>
-            <div class="col-md-2">
-                <select class="form-control">
-                    <option value="0">==项目==</option>
-                    <option value="1">选项 #1</option>
-                    <option value="2">选项 #2</option>
-                    <option value="3">选项 #3</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control">
-                    <option value="0">==分类==</option>
-                    <option value="1">选项 #1</option>
-                    <option value="2">选项 #2</option>
-                    <option value="3">选项 #3</option>
-                </select>
-            </div>
-            <div class="col-md-4"> <button class="btn btn-success" type="submit">搜索</button></div>
+            <div class="col-md-4"> <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit">搜索</button></div>
         </div>
     </div>
     <section v-for="item in data" :key="item.Id">
@@ -60,11 +44,20 @@
         },
         mounted() {
             // 在组件加载时触发数据获取
-            this.fetchData();
+            this.fetchData(null);
         },
         methods: {
-            fetchData() {
-                axios.get('/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=0')
+            fetchData(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                var idFromUrl = urlParams.get('InterfaceCategoryId');
+                var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=0';
+                if (idFromUrl != null) {
+                    url += '&InterfaceCategoryId=' + idFromUrl;
+                }
+                if (name != null) {
+                    url += '&Name=' + name;
+                }
+                axios.get(url)
                     .then(response => {
                         this.data = response.data;
                         this.error = null;
@@ -76,6 +69,9 @@
             },
             tryItOut(item) {
                 window.open('/rezero/TryApi.html?id=' + item.Id, '_blank');
+            },
+            onSearch: function () {
+                this.fetchData($("#txtSearch").val());
             }
         }
     });
