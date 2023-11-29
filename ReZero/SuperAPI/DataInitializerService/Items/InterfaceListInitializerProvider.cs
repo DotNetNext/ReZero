@@ -44,6 +44,7 @@ namespace ReZero.SuperAPI
             Intenal();
 
             Dynamic();
+
         }
 
         private void Dynamic()
@@ -147,10 +148,17 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
-                    ActionType = ActionType.QueryCommon,
+                    ActionType = ActionType.QueryTree,
+                    TreeParameter=new DataModelTreeParameter() 
+                    {
+                         ChildPropertyName=nameof(ZeroInterfaceCategory.SubInterfaceCategories),
+                         RootValue=0,
+                         CodePropertyName=nameof(ZeroInterfaceCategory.Id),
+                         ParentCodePropertyName = nameof(ZeroInterfaceCategory.ParentId)
+                    },
                     WhereParameters = new List<WhereParameter>()
                     {
-
+                       
                     }
                 };
             });

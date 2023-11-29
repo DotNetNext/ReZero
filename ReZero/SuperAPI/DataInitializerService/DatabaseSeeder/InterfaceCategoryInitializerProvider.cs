@@ -70,18 +70,18 @@ namespace ReZero.SuperAPI
 
         #region Project management
         /// <summary>
-        /// 项目管理
+        /// 接口管理
         /// </summary>
-        [TextCN("项目管理")]
-        [TextEN("Project management")]
+        [TextCN("接口管理")]
+        [TextEN("Api management")]
         public const long Id300 = 300;
 
         /// <summary>
         /// 实体表管理
         /// </summary>
-        [TextCN("实体表管理")]
+        [TextCN("实体和表管理")]
         [TextEN("Entity and table management")]
-        public const long Id300004 = 300001;
+        public const long Id300001 = 300001;
 
         /// <summary>
         /// 数据库管理
@@ -91,11 +91,18 @@ namespace ReZero.SuperAPI
         public const long Id300003 = 300002;
 
         /// <summary>
-        /// 项目分类
+        /// 接口分类管理
         /// </summary>
-        [TextCN("项目分类")]
-        [TextEN("Project classification")]
+        [TextCN("分类管理")]
+        [TextEN("InterfaceCategory")]
         public const long Id300002 = 300003;
+
+        /// <summary>
+        /// 接口管理
+        /// </summary>
+        [TextCN("分类管理")]
+        [TextEN("InterfaceCategory")]
+        public const long Id300005 = 300005;
         #endregion
 
     }

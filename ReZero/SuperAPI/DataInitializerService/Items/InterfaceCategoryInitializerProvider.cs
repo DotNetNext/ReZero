@@ -60,8 +60,8 @@ namespace ReZero.SuperAPI
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = Id300004;
-                it.Name = TextHandler.GetInterfaceCategoryText(Id300004);
+                it.Id = Id300001;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300001);
                 it.ParentId = Id300;
             }));
         }
