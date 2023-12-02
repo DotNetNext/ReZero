@@ -10,13 +10,13 @@
             <div class="col-md-4"> <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit">搜索</button></div>
         </div>
     </div>
-    <div v-for="masterItem in data" :key="masterItem.Key">
+    <div class="data" v-for="masterItem in data" :key="masterItem.Key">
         <h2>{{ masterItem.Key }} </h2>
         <section v-for="item in masterItem.Value" :key="item.Id">
             <div class="endpoint">
                 <p class="p" @click="toggleEndpoint">
                     <span class="method">{{ item.HttpMethod }}</span>
-                    <span class="url"> {{item.Url}}</span>
+                    <span class="url"> {{item.Url}}   {{item.Name}}</span>
                     <span class="openapi">+</span>
                 </p>
                 <p>{{ item.Description }}</p>
