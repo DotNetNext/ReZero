@@ -23,9 +23,11 @@ section {
     border-radius: 3px;
     border: 1px solid #61affe;
     border-radius: 4px;
-    box-shadow: 0 0 3px rgba(0,0,0,.19);
-    cursor: pointer;
+    box-shadow: 0 0 3px rgba(0,0,0,.19); 
 }
+    .endpoint .p {
+        cursor:pointer
+    }
 
     .endpoint h2 {
         margin-bottom: 5px; 

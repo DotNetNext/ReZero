@@ -12,8 +12,8 @@
     </div>
     <section v-for="item in data" :key="item.Id">
         <h2>{{ item.Name }} </h2>
-        <div class="endpoint" @click="toggleEndpoint">
-            <p>
+        <div class="endpoint">
+            <p class="p" @click="toggleEndpoint">
                 <span class="method">{{ item.HttpMethod }}</span>
                 <span class="url"> {{item.Url}}</span>
                 <span class="openapi">+</span>
@@ -75,7 +75,7 @@
                 this.fetchData($("#txtSearch").val());
             },
             toggleEndpoint(event) {
-                $(event.currentTarget).find(".parameter-title,.parameter").toggle(300);
+                $(event.currentTarget).parent().find(".parameter-title,.parameter").toggle(300);
                 var textEle = $(event.currentTarget).find(".openapi");
                 var text = textEle.text();
                 if (text == "+") {
