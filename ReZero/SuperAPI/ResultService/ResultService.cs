@@ -20,12 +20,12 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static object GetResultProvider(object data, ResultModel result)
+        private static object GetResultProvider(object data, ResultModel model)
         {
-            var actionType = Type.GetType("ReZero.SuperAPI.Items." + result?.ResultType);
+            var actionType = Type.GetType("ReZero.SuperAPI.Items." + model?.ResultType);
             var actionInstance = (IResultService)Activator.CreateInstance(actionType);
-            var result2 = actionInstance.GetResult(data, result ?? new ResultModel());
-            return data;
+            var result = actionInstance.GetResult(data, model!);
+            return result;
         }
     }
 }

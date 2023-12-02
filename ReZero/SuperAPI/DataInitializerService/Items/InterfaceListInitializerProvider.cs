@@ -78,7 +78,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntIntListId;
-                it.CustomResultModel = new ResultModel() { GroupName=nameof(ZeroInterfaceList.Name) };
+                it.CustomResultModel = new ResultModel() { ResultType=ResultType.Group, GroupName=nameof(ZeroInterfaceList.GroupName) };
                 it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntIntListId);
