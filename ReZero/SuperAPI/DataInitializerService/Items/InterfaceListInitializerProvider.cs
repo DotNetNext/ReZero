@@ -54,6 +54,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = TestId;
+                it.GroupName =nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id200100;
                 it.Name = TextHandler.GetInterfaceListText(TestId);
                 it.Url = GetUrl(it, "GetInternalDetail");
@@ -77,6 +78,8 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntIntListId;
+                it.CustomResultModel = new ResultModel() { GroupName=nameof(ZeroInterfaceList.Name) };
+                it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntIntListId);
                 it.Url = GetUrl(it, "GetInternalInterfaceList");
@@ -99,6 +102,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntDetId;
+                it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntDetId);
                 it.Url = GetUrl(it, "GetInternalDetail");
@@ -120,6 +124,7 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList data = GetNewItem(it => { 
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntCateListId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntCateListId);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
@@ -142,6 +147,7 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList data2 = GetNewItem(it => {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntCateTreeId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100002;
                 it.Name = TextHandler.GetInterfaceListText(IntCateTreeId);
                 it.Url = GetUrl(it, "GetInterfaceCategoryList");
@@ -169,6 +175,7 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList data3 = GetNewItem(it => {
                 it.HttpMethod = HttpRequestMethod.POST.ToString();
                 it.Id = AddCateTreeId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(AddCateTreeId);
                 it.Url = GetUrl(it, "AddDynamicInterfaceCategory");
