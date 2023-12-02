@@ -57,7 +57,7 @@ namespace ReZero.SuperAPI
                 it.GroupName =nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id200100;
                 it.Name = TextHandler.GetInterfaceListText(TestId);
-                it.Url = GetUrl(it, "GetInternalDetail");
+                it.Url ="/MyTest/API";
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http; 
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace ReZero.SuperAPI
         {
             var db = App.Db;
             var isAnyUrl = db.Queryable<ZeroInterfaceList>().Any(it => it!.Url!.ToLower() == url.ToLower());
-            return false;
+            return isAnyUrl;
         }
 
         /// <summary>
@@ -48,9 +49,26 @@ namespace ReZero.SuperAPI
         private static async Task WriteAsyncSuccess(HttpContext context, DynamicApiHelper helper, HttpRequestMethod requestMethod)
         {
             var handler = helper.GetHandler(requestMethod, context);
-            var result = handler.HandleRequest();
-            await context.Response.WriteAsync("");
+            var db = App.Db;
+            var path = context.Request.Path.ToString()?.ToLower();
+            var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
+            var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
+
+            if (interInfo == null)
+            {
+                var message = TextHandler.GetCommonTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
+                await context.Response.WriteAsync(message);
+            }
+            else
+            {
+                DataService dataService = new DataService();
+                dataService.BindHttpParameters(interInfo.DataModel, context);
+                var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
+                data = new ResultService().GetResult(data, interInfo.CustomResultModel ?? new ResultModel());
+                await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+            }
         }
+
 
         /// <summary>
         /// Writes the response for an invalid API request.
