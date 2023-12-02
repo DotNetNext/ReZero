@@ -49,6 +49,14 @@ namespace ReZero.SuperAPI
         [TextEN("Interface category tree")]
         public const long IntCateTreeId = 6;
 
+
+        /// <summary>
+        /// 添加动态接口分类
+        /// </summary> 
+        [TextCN("添加动态接口分类")]
+        [TextEN("Add Interface category")]
+        public const long AddCateTreeId = 7;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

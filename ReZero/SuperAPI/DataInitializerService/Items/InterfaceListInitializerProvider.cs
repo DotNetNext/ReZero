@@ -163,6 +163,29 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data2);
+
+
+            //添加动态接口分类
+            ZeroInterfaceList data3 = GetNewItem(it => {
+                it.HttpMethod = HttpRequestMethod.POST.ToString();
+                it.Id = AddCateTreeId;
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(AddCateTreeId);
+                it.Url = GetUrl(it, "AddDynamicInterfaceCategory");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.InsertObject, 
+                    WhereParameters = new List<WhereParameter>()
+                    {
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.ParentId) ,ValueType = typeof(long).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= GetUrl(it, "AddDynamicInterfaceCategory"),ValueType = typeof(string).Name },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data3);
         }
     }
 }

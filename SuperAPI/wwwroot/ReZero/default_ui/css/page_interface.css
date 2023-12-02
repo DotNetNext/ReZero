@@ -84,3 +84,15 @@ section {
     padding-left: 20px;
     padding-top: 35px;
 }
+.openapi {
+    right: 30px;
+    position: absolute;
+    font-size: 30px;
+    margin-top: -12px;
+    cursor: pointer;
+    padding: 0 20px;
+}
+.reduction {
+    margin-top: -15px;
+    padding:0 20px;
+}
