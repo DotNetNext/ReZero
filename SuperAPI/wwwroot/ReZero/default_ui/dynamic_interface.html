@@ -12,11 +12,11 @@
     </div>
     <section v-for="item in data" :key="item.Id">
         <h2>{{ item.Name }} </h2>
-        <div class="endpoint">
+        <div class="endpoint" @click="toggleEndpoint">
             <p>
                 <span class="method">{{ item.HttpMethod }}</span>
                 <span class="url"> {{item.Url}}</span>
-                <span class="openapi" @click="toggleEndpoint">+</span>
+                <span class="openapi" >+</span>
             </p>
             <p>{{ item.Description }}</p>
             <div class="parameter-title" style="display:none">
@@ -76,14 +76,15 @@
             },
             toggleEndpoint(event) {
                 $(".parameter-title,.parameter").toggle(300);
-                var text = $(event.currentTarget).text();
+                var textEle = $(event.currentTarget).find(".openapi");
+                var text = textEle.text();
                 if (text == "+") {
-                    $(event.currentTarget).text("-");
-                    $(event.currentTarget).addClass("reduction");
+                    textEle.text("-");
+                    textEle.addClass("reduction");
                 }
                 else {
-                    $(event.currentTarget).text("+");
-                    $(event.currentTarget).removeClass("reduction");
+                    textEle.text("+");
+                    textEle.removeClass("reduction");
                 }
             },
         }

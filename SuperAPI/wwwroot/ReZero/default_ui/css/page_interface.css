@@ -15,7 +15,7 @@ section {
         font-weight:bold
     }
 
-.endpoint { 
+.endpoint {
     margin-bottom: 10px;
     padding: 10px 0;
     border-radius: 5px;
@@ -24,6 +24,7 @@ section {
     border: 1px solid #61affe;
     border-radius: 4px;
     box-shadow: 0 0 3px rgba(0,0,0,.19);
+    cursor: pointer;
 }
 
     .endpoint h2 {

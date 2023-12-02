@@ -6,23 +6,23 @@
             <div class="col-md-2"> </div>
             <div class="col-md-6">
                 <input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="Url or name">
-            </div> 
+            </div>
             <div class="col-md-4"> <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit">搜索</button></div>
         </div>
     </div>
     <section v-for="item in data" :key="item.Id">
         <h2>{{ item.Name }} </h2>
-        <div class="endpoint">
+        <div class="endpoint" @click="toggleEndpoint">
             <p>
                 <span class="method">{{ item.HttpMethod }}</span>
                 <span class="url"> {{item.Url}}</span>
-                <span class="openapi" @click="toggleEndpoint">+</span>
+                <span class="openapi">+</span>
             </p>
             <p>{{ item.Description }}</p>
             <div class="parameter-title" style="display:none">
                 Parameters:
                 <div class="try-out">
-                    <button class="btn try-out__btn" @click="tryItOut(item)" >Try it out </button>
+                    <button class="btn try-out__btn" @click="tryItOut(item)">Try it out </button>
                 </div>
             </div>
             <div class="parameter" style="display:none" v-if="item.DataModel.WhereParameters && item.DataModel.WhereParameters.length > 0">
@@ -76,16 +76,15 @@
             },
             toggleEndpoint(event) {
                 $(".parameter-title,.parameter").toggle(300);
-                var text = $(event.currentTarget).text();
-                if (text == "+")
-                {
-                    $(event.currentTarget).text("-");
-                    $(event.currentTarget).addClass("reduction");
+                var textEle = $(event.currentTarget).find(".openapi");
+                var text = textEle.text();
+                if (text == "+") {
+                    textEle.text("-");
+                    textEle.addClass("reduction");
                 }
-                else
-                {
-                    $(event.currentTarget).text("+");
-                    $(event.currentTarget).removeClass("reduction");
+                else {
+                    textEle.text("+");
+                    textEle.removeClass("reduction");
                 }
             },
         }
