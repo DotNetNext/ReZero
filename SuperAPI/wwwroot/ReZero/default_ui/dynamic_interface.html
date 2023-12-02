@@ -16,15 +16,16 @@
             <p>
                 <span class="method">{{ item.HttpMethod }}</span>
                 <span class="url"> {{item.Url}}</span>
+                <span class="openapi" @click="toggleEndpoint">+</span>
             </p>
             <p>{{ item.Description }}</p>
-            <div class="parameter-title">
+            <div class="parameter-title" style="display:none">
                 Parameters:
                 <div class="try-out">
                     <button class="btn try-out__btn" @click="tryItOut(item)">Try it out </button>
                 </div>
             </div>
-            <div class="parameter" v-if="item.DataModel.WhereParameters && item.DataModel.WhereParameters.length > 0">
+            <div class="parameter" style="display:none" v-if="item.DataModel.WhereParameters && item.DataModel.WhereParameters.length > 0">
                 <ul>
                     <li v-for="param in item.DataModel.WhereParameters" :key="param.Name">
                         <code>{{ param.ValueIsReadOnly ?   'Readonly:':''}}{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}  {{ param.Value  ?  ' ['+param.Name +' = ' + param.Value+']' : ''}}
@@ -72,7 +73,19 @@
             },
             onSearch: function () {
                 this.fetchData($("#txtSearch").val());
-            }
+            },
+            toggleEndpoint(event) {
+                $(".parameter-title,.parameter").toggle(300);
+                var text = $(event.currentTarget).text();
+                if (text == "+") {
+                    $(event.currentTarget).text("-");
+                    $(event.currentTarget).addClass("reduction");
+                }
+                else {
+                    $(event.currentTarget).text("+");
+                    $(event.currentTarget).removeClass("reduction");
+                }
+            },
         }
     });
 </script>
