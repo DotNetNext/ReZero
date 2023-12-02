@@ -16,7 +16,7 @@
             <p>
                 <span class="method">{{ item.HttpMethod }}</span>
                 <span class="url"> {{item.Url}}</span>
-                <span class="openapi" >+</span>
+                <span class="openapi">+</span>
             </p>
             <p>{{ item.Description }}</p>
             <div class="parameter-title" style="display:none">
@@ -51,7 +51,7 @@
             fetchData(name) {
                 var urlParams = new URLSearchParams(window.location.search);
                 var idFromUrl = urlParams.get('InterfaceCategoryId');
-                var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=0';
+                var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=1';
                 if (idFromUrl != null) {
                     url += '&InterfaceCategoryId=' + idFromUrl;
                 }
@@ -75,7 +75,7 @@
                 this.fetchData($("#txtSearch").val());
             },
             toggleEndpoint(event) {
-                $(".parameter-title,.parameter").toggle(300);
+                $(event.currentTarget).find(".parameter-title,.parameter").toggle(300);
                 var textEle = $(event.currentTarget).find(".openapi");
                 var text = textEle.text();
                 if (text == "+") {
