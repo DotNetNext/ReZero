@@ -76,7 +76,7 @@
                 this.fetchData($("#txtSearch").val());
             },
             toggleEndpoint(event) {
-                $(event.currentTarget).parent().find(".parameter-title,.parameter").toggle(300);
+                $(event.currentTarget).parent().find(".parameter-title,.parameter").toggle(100);
                 var textEle = $(event.currentTarget).find(".openapi");
                 var text = textEle.text();
                 if (text == "+") {
