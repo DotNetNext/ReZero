@@ -1,9 +1,55 @@
 ﻿@@master_page.html
-<div class="card">
-    <div class="card-header"><h4>表格</h4></div>
+<style>
+    .table-responsive th {
+        text-align: center;
+    }
+
+    .table_opt {
+        text-align: center;
+        width: 250px;
+    }
+
+        .table_opt button {
+            max-width: 80px;
+            margin: 0 10px;
+        }
+
+    .form-group label {
+        border: 0 !important;
+        text-align: right
+    }
+
+    .search-bar {
+        padding: 0 15px;
+        padding-top: 35px;
+    }
+</style>
+<div id="apibox" class="card">
+    <div class="search-bar">
+
+        <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-1"><label class="form-control" t>名称:</label></div>
+                    <div class="col-md-3"><input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本.."></div>
+                    <div class="col-md-1">
+                        <button class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
+                    </div>
+                    <div class="col-md-1">
+                      
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-w-xs btn-primary"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </form>
+
+    </div>
     <div class="card-body">
 
-        <h5>分面产</h5> 
+        <h5> </h5>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -14,7 +60,7 @@
                         <th>国籍</th>
                         <th>分类</th>
                         <th>库存</th>
-                        <th>价格</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,13 +70,37 @@
                         <td>果戈理</td>
                         <td>俄国</td>
                         <td>国外名族</td>
-                        <td>125</td>
-                        <td>36.00</td>
+                        <td>sdfa</td>
+                        <td class="table_opt">
+                            <button class="btn btn-cyan btn-w-md" type="button">
+                                <i class="mdi mdi-lead-pencil"></i> 修改
+                            </button>
+                            <button class="btn btn-danger btn-w-md" type="button">
+                                <i class="mdi mdi-do-not-disturb"></i> 删除
+                            </button>
+                        </td>
                     </tr>
-                
+
                 </tbody>
             </table>
         </div>
 
     </div>
 </div>
+<script>
+    new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null
+        },
+        mounted() {
+            this.fetchData();
+        },
+        methods: {
+            fetchData(name) {
+
+            }
+        }
+    });
+</script>
