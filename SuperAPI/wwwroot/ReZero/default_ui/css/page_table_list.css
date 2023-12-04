@@ -1,0 +1,23 @@
+﻿.table-responsive th {
+    text-align: center;
+}
+
+.table_opt {
+    text-align: center;
+    width: 250px;
+}
+
+    .table_opt button {
+        max-width: 80px;
+        margin: 0 10px;
+    }
+
+.form-group label {
+    border: 0 !important;
+    text-align: right
+}
+
+.search-bar {
+    padding: 0 15px;
+    padding-top: 35px;
+}
