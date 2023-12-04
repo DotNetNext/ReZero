@@ -10,6 +10,7 @@ namespace ReZero.SuperAPI
         public ActionType ActionType { get; set; }
         public object? Data { get; set; } 
         public long TableId { get; set; }
+        public List<OrderParemter>? OrderParemters { get; set; }
         public List<WhereParameter>? WhereParameters { get; set; } 
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; } 
