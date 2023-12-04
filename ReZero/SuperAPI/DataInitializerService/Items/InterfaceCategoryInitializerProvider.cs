@@ -45,24 +45,28 @@ namespace ReZero.SuperAPI
                 it.Id = Id300;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300);
                 it.ParentId = Id;
+                it.Url= "/rezero/interface_manager.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id300002;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300002);
                 it.ParentId = Id300;
+                it.Url= "/rezero/interface_categroy.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id300003;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300003);
                 it.ParentId = Id300;
+                it.Url="/rezero/database.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id300001;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300001);
                 it.ParentId = Id300;
+                it.Url="/rezero/entity_manager.html";
             }));
         }
 
