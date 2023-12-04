@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
 
         //Delete
         DeleteObject = 30000,
+        BizDeleteObject = 30001,
 
         //Update
         UpdateObject = 40000,

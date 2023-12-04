@@ -119,32 +119,9 @@ namespace ReZero.SuperAPI
         }
 
         public void GetInterfaceCategory()
-        {
-            //接口分类列表
-            ZeroInterfaceList data = GetNewItem(it => { 
-                it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = IntCateListId;
-                it.GroupName = nameof(ZeroInterfaceCategory);
-                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
-                it.Name = TextHandler.GetInterfaceListText(IntCateListId);
-                it.Url = GetUrl(it, "GetInterfaceCategoryList");
-                it.DataModel = new DataModel()
-                {
-                         TableId= EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
-                         ActionType=ActionType.QueryCommon,
-                         WhereParameters=new List<WhereParameter>() {
-                             new WhereParameter() { Name = "IsInitialized" ,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") },
-                             new WhereParameter() { Name = "Id1",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id, Description = TextHandler.GetCommonTexst("主键", "Id") },
-                             new WhereParameter() { Name = "Id2" ,FieldName="Id", ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id100, Description = TextHandler.GetCommonTexst("主键", "Id") },
-                             new WhereParameter() { Name = "Id3",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id1, Description = TextHandler.GetCommonTexst("主键", "Id") },
-                             new WhereParameter() { Name = "Id4",FieldName="Id",  ValueIsReadOnly=true,FieldOperator=FieldOperatorType.NoEqual,  ValueType = typeof(long).Name,Value=InterfaceCategoryInitializerProvider.Id200, Description = TextHandler.GetCommonTexst("主键", "Id") }
-                         }
-                };
-            });
-            zeroInterfaceList.Add(data);
-
+        { 
             //接口分类树
-            ZeroInterfaceList data2 = GetNewItem(it => {
+            ZeroInterfaceList data1 = GetNewItem(it => {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntCateTreeId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
@@ -168,11 +145,50 @@ namespace ReZero.SuperAPI
                     }
                 };
             });
+            zeroInterfaceList.Add(data1);
+
+
+            //接口分类列表
+            ZeroInterfaceList data2 = GetNewItem(it => {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = IntCateListId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(IntCateListId);
+                it.Url = GetUrl(it, "GetInterfaceCategoryList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryCommon,
+                    WhereParameters = new List<WhereParameter>() {
+                             new WhereParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("上级Id", "ParentId") }
+                         }
+                };
+            });
             zeroInterfaceList.Add(data2);
 
 
-            //添加动态接口分类
+            //接口分类删除
             ZeroInterfaceList data3 = GetNewItem(it => {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = DeleteCateTreeId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(DeleteCateTreeId);
+                it.Url = GetUrl(it, "DeleteInterfaceCategoryList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryCommon,
+                    WhereParameters = new List<WhereParameter>() {
+                             new WhereParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("上级Id", "ParentId") }
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data3);
+
+            //添加动态接口分类
+            ZeroInterfaceList data4 = GetNewItem(it => {
                 it.HttpMethod = HttpRequestMethod.POST.ToString();
                 it.Id = AddCateTreeId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
@@ -192,7 +208,32 @@ namespace ReZero.SuperAPI
                     }
                 };
             });
-            zeroInterfaceList.Add(data3);
+            zeroInterfaceList.Add(data4);
+
+
+            //修改动态接口分类
+            ZeroInterfaceList data5 = GetNewItem(it => {
+                it.HttpMethod = HttpRequestMethod.POST.ToString();
+                it.Id = UpdateCateTreeId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(UpdateCateTreeId);
+                it.Url = GetUrl(it, "UpdateDynamicInterfaceCategory");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.UpdateObject,
+                    WhereParameters = new List<WhereParameter>()
+                    {
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,ValueType = typeof(long).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.ParentId) ,ValueType = typeof(long).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= GetUrl(it, "AddDynamicInterfaceCategory"),ValueType = typeof(string).Name },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data5);
         }
     }
 }
