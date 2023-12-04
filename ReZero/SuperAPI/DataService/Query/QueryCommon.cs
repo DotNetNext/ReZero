@@ -19,6 +19,7 @@ namespace ReZero.SuperAPI
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
                 var queryObject = db.QueryableByObject(type);
                 queryObject = Where(dataModel, queryObject);
+                queryObject = OrderBy(dataModel, queryObject);
                 if (dataModel.CommonPage == null)
                 {
                     var result = queryObject.ToList();
@@ -35,6 +36,24 @@ namespace ReZero.SuperAPI
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        private QueryMethodInfo OrderBy(DataModel dataModel, QueryMethodInfo queryObject)
+        {
+            List<OrderByModel> orderByModels = new List<OrderByModel>();
+            if (dataModel.OrderParemters != null)
+            {
+                foreach (var item in dataModel.OrderParemters)
+                {
+                    orderByModels.Add(new OrderByModel()
+                    {
+                         FieldName= App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType),
+                         OrderByType=item.OrderByType
+                    });
+                }
+            }
+            queryObject = queryObject.OrderBy(orderByModels);
+            return queryObject;
         }
 
         private static QueryMethodInfo Where(DataModel dataModel, QueryMethodInfo queryObject)
