@@ -1,90 +1,40 @@
 ﻿@@master_page.html
-<style>
-    .table-responsive th {
-        text-align: center;
-    }
-
-    .table_opt {
-        text-align: center;
-        width: 250px;
-    }
-
-        .table_opt button {
-            max-width: 80px;
-            margin: 0 10px;
-        }
-
-    .form-group label {
-        border: 0 !important;
-        text-align: right
-    }
-
-    .search-bar {
-        padding: 0 15px;
-        padding-top: 35px;
-    }
-</style>
-<div id="apibox" class="card">
-    <div class="search-bar">
-
-        <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-1"><label class="form-control" t>名称:</label></div>
-                    <div class="col-md-3"><input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本.."></div>
-                    <div class="col-md-1">
-                        <button class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
+<link href="css/page_interface.css" rel="stylesheet" />
+<div id="apibox">
+    <div class="form-group row">
+        <div class="row show-grid">
+            <div class="col-md-2"> </div>
+            <div class="col-md-6">
+                <input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="Url or name">
+            </div>
+            <div class="col-md-4"> <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit">搜索</button></div>
+        </div>
+    </div>
+    <div class="data" v-for="masterItem in data" :key="masterItem.Key">
+        <h2>{{ masterItem.Key }} </h2>
+        <section v-for="item in masterItem.Value" :key="item.Id">
+            <div class="endpoint">
+                <p class="p" @click="toggleEndpoint">
+                    <span class="method">{{ item.HttpMethod }}</span>
+                    <span class="url"> {{item.Url}}   {{item.Name}}</span>
+                    <span class="openapi">+</span>
+                </p>
+                <p>{{ item.Description }}</p>
+                <div class="parameter-title" style="display:none">
+                    Parameters:
+                    <div class="try-out">
+                        <button class="btn try-out__btn" @click="tryItOut(item)">Try it out </button>
                     </div>
-                    <div class="col-md-1">
-
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-w-xs btn-primary"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
-                    </div>
-                    <div class="col-md-4"></div>
+                </div>
+                <div class="parameter" style="display:none" v-if="item.DataModel.WhereParameters && item.DataModel.WhereParameters.length > 0">
+                    <ul>
+                        <li v-for="param in item.DataModel.WhereParameters" :key="param.Name">
+                            <code>{{ param.ValueIsReadOnly ?   'Readonly:':''}}{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}  {{ param.Value  ?  ' ['+param.Name +' = ' + param.Value+']' : ''}}
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </form>
-
-    </div>
-    <div class="card-body">
-
-        <h5> </h5>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>书籍名</th>
-                        <th>作者</th>
-                        <th>国籍</th>
-                        <th>分类</th>
-                        <th>库存</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>钦差大臣</td>
-                        <td>果戈理</td>
-                        <td>俄国</td>
-                        <td>国外名族</td>
-                        <td>sdfa</td>
-                        <td class="table_opt">
-                            <button class="btn btn-cyan btn-w-md" type="button">
-                                <i class="mdi mdi-lead-pencil"></i> 修改
-                            </button>
-                            <button class="btn btn-danger btn-w-md" type="button">
-                                <i class="mdi mdi-do-not-disturb"></i> 删除
-                            </button>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-
+        </section>
     </div>
 </div>
 <script>
@@ -95,12 +45,49 @@
             error: null
         },
         mounted() {
-            this.fetchData();
+            // 在组件加载时触发数据获取
+            this.fetchData(null);
         },
         methods: {
             fetchData(name) {
-
-            }
+                var urlParams = new URLSearchParams(window.location.search);
+                var idFromUrl = urlParams.get('InterfaceCategoryId');
+                var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=1';
+                if (idFromUrl != null) {
+                    url += '&InterfaceCategoryId=' + idFromUrl;
+                }
+                if (name != null) {
+                    url += '&Name=' + name;
+                }
+                axios.get(url)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            tryItOut(item) {
+                window.open('/rezero/TryApi.html?id=' + item.Id, '_blank');
+            },
+            onSearch: function () {
+                this.fetchData($("#txtSearch").val());
+            },
+            toggleEndpoint(event) {
+                $(event.currentTarget).parent().find(".parameter-title,.parameter").toggle(100);
+                var textEle = $(event.currentTarget).find(".openapi");
+                var text = textEle.text();
+                if (text == "+") {
+                    textEle.text("-");
+                    textEle.addClass("reduction");
+                }
+                else {
+                    textEle.text("+");
+                    textEle.removeClass("reduction");
+                }
+            },
         }
     });
 </script>
