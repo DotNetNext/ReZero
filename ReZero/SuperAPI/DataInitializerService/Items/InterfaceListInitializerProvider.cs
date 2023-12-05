@@ -155,7 +155,7 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntCateListId);
-                it.Url = GetUrl(it, "GetInterfaceCategoryList");
+                it.Url = GetUrl(it, "GetDynamicInterfaceCategoryList");
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
@@ -176,7 +176,7 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(DeleteCateTreeId);
-                it.Url = GetUrl(it, "DeleteInterfaceCategoryList");
+                it.Url = GetUrl(it, "DeleteDynamicInterfaceCategoryList");
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,

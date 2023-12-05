@@ -21,8 +21,8 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 接口分类
         /// </summary> 
-        [TextCN("接口分类列表")]
-        [TextEN("Interface category list")]
+        [TextCN("动态分类列表")]
+        [TextEN("Dynamic category list")]
         public const long IntCateListId = 3;
 
         /// <summary>
@@ -54,15 +54,15 @@ namespace ReZero.SuperAPI
         /// 添加动态接口分类
         /// </summary> 
         [TextCN("添加动态接口分类")]
-        [TextEN("Add Interface category")]
+        [TextEN("Add dynamic category")]
         public const long AddCateTreeId = 7;
 
         [TextCN("修改动态接口分类")]
-        [TextEN("Update Interface category")]
+        [TextEN("Update dynamic category")]
         public const long UpdateCateTreeId = 8;
 
         [TextCN("删除动态接口分类")]
-        [TextEN("Delete Interface category")]
+        [TextEN("Delete dynamic category")]
         public const long DeleteCateTreeId = 9;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
