@@ -59,7 +59,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id300003;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300003);
                 it.ParentId = Id300;
-                it.Url="/rezero/database.html";
+                it.Url= "/rezero/database_manager.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
