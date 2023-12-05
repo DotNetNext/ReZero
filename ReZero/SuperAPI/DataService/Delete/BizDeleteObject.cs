@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI 
 {
-    internal class BizDeleteObject
+    internal class BizDeleteObject : CommonDataService, IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
             var db = App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+            base.InitData(type,db, dataModel);
             var entity = db.EntityMaintenance.GetEntityInfo(type);
             if (!entity.Columns.Any(it => it.PropertyName?.ToLower() == "isdeleted")) 
             {

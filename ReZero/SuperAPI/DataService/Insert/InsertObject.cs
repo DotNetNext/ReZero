@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
-    internal class InsertObject: IDataService
+    internal class InsertObject: CommonDataService, IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
             var db = App.Db;
+            var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+            base.InitData(type,db,dataModel);
             await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();
             return true;
         }

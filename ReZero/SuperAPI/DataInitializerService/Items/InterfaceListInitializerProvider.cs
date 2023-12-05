@@ -203,7 +203,7 @@ namespace ReZero.SuperAPI
                     WhereParameters = new List<WhereParameter>()
                     {
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.ParentId) ,ValueType = typeof(long).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= GetUrl(it, "AddDynamicInterfaceCategory"),ValueType = typeof(string).Name },
                     }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
-    public class DataService : IDataService
+    public class DataService :IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
