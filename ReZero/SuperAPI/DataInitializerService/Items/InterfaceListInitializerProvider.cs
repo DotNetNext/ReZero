@@ -180,9 +180,10 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
-                    ActionType = ActionType.QueryCommon,
+                    ActionType = ActionType.BizDeleteObject,
                     WhereParameters = new List<WhereParameter>() {
-                             new WhereParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("上级Id", "ParentId") }
+                             new WhereParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") },
+                              new WhereParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="true", Description = TextHandler.GetCommonTexst("是否删除", "IsDeleted") }
                          }
                 };
             });
