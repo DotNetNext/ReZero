@@ -15,7 +15,7 @@ namespace ReZero.SuperAPI
             int i = 0;
             foreach (var tree in treeList)
             {
-                var isOpen = current.Id.ToString().StartsWith(tree.Id.ToString());
+                var isOpen = IsOpen(current, tree);
                 var active = isOpen ? " active " : null;
                 if (tree.SubInterfaceCategories != null && tree.SubInterfaceCategories.Count > 0)
                 {
@@ -45,7 +45,7 @@ namespace ReZero.SuperAPI
 
             foreach (var subTree in subTreeList)
             {
-                var isOpen = current.Id.ToString().StartsWith(subTree.Id.ToString());
+                var isOpen = IsOpen(current, subTree);
                 var active = isOpen ? " active " : "";
 
                 if (subTree.SubInterfaceCategories != null && subTree.SubInterfaceCategories.Count > 0)
@@ -66,6 +66,11 @@ namespace ReZero.SuperAPI
                     htmlBuilder.AppendLine("    </li>");
                 }
             }
+        }
+
+        private static bool IsOpen(ZeroInterfaceCategory current, ZeroInterfaceCategory subTree)
+        {
+            return current.ParentId.ToString().Equals(subTree.Id.ToString()) || current.Id == subTree.Id;
         }
     }
 }
