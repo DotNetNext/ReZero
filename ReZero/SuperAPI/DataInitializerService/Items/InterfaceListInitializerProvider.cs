@@ -205,7 +205,7 @@ namespace ReZero.SuperAPI
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= GetUrl(it, "AddDynamicInterfaceCategory"),ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId={Id}",ValueType = typeof(string).Name },
                         DataInitHelper.GetIsDynamicParameter(),
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Creator),Value="" ,ValueType = typeof(string).Name },
 

@@ -92,7 +92,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id200100;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200100);
                 it.ParentId = Id200;
-                it.Url = "/rezero/dynamic_interface.html";
+                it.Url = "/rezero/dynamic_interface.html?InterfaceCategoryId=" + Id200100;
             }));
             zeroInterfaceCategory.Last().IsInitialized = false;
 
