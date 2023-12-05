@@ -18,17 +18,24 @@ namespace ReZero.SuperAPI
                 var columnInfo = columnInfos.First();
                 if (IsSnowFlakeSingle(columnInfo))
                 {
-                    SetIsSnowFlakeSingle(dataModel, columnInfo);
+                    SetIsSnowFlakeSingle(entityInfo.Columns, type,dataModel, columnInfo);
                 }
             }
         }
 
-        private static void SetIsSnowFlakeSingle(DataModel dataModel, EntityColumnInfo columnInfo)
+        private static void SetIsSnowFlakeSingle(List<EntityColumnInfo> columnInfos, Type type, DataModel dataModel, EntityColumnInfo columnInfo)
         {
             var value = Convert.ToInt64(columnInfo.PropertyInfo.GetValue(dataModel.Data));
             if (value == 0)
             {
-                columnInfo.PropertyInfo.SetValue(dataModel.Data, SnowFlakeSingle.Instance.NextId());
+                value = SnowFlakeSingle.Instance.NextId();
+                columnInfo.PropertyInfo.SetValue(dataModel.Data,value);
+            }
+            if (type.Name == nameof(ZeroInterfaceCategory)) 
+            {
+                var urlColumnInfo = columnInfos.First(it => it.PropertyName == nameof(ZeroInterfaceCategory.Url));
+                var url = urlColumnInfo.PropertyInfo.GetValue(dataModel.Data)+"";
+                urlColumnInfo.PropertyInfo.SetValue(dataModel.Data, url.Replace(PubConst.TreeUrlFormatId, value+""));
             }
         }
 

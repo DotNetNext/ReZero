@@ -7,5 +7,6 @@ namespace ReZero.SuperAPI
     public class PubConst
     {
         public const string TreeChild = "TreeChild";
+        public const string TreeUrlFormatId = "{Id}";
     }
 }
