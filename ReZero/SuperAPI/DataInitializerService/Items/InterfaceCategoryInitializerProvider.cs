@@ -45,7 +45,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id300;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300);
                 it.ParentId = Id;
-                it.Url= "/rezero/interface_manager.html";
+                //it.Url= "/rezero/interface_manager.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
@@ -67,6 +67,13 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300001);
                 it.ParentId = Id300;
                 it.Url="/rezero/entity_manager.html";
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300006;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300006);
+                it.ParentId = Id300;
+                it.Url = "/rezero/interface_manager.html";
             }));
         }
 

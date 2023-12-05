@@ -79,30 +79,30 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 实体表管理
         /// </summary>
-        [TextCN("实体和表管理")]
+        [TextCN("实体表维护")]
         [TextEN("Entity and table management")]
         public const long Id300001 = 300001;
 
         /// <summary>
         /// 数据库管理
         /// </summary>
-        [TextCN("数据库管理")]
+        [TextCN("数据库维护")]
         [TextEN("Database management")]
         public const long Id300003 = 300002;
 
         /// <summary>
         /// 接口分类管理
         /// </summary>
-        [TextCN("分类管理")]
+        [TextCN("分类维护")]
         [TextEN("InterfaceCategory")]
         public const long Id300002 = 300003;
-
+         
         /// <summary>
         /// 接口管理
         /// </summary>
-        [TextCN("分类管理")]
-        [TextEN("InterfaceCategory")]
-        public const long Id300005 = 300005;
+        [TextCN("接口维护")]
+        [TextEN("Api management")]
+        public const long Id300006 = 300006;
         #endregion
 
     }
