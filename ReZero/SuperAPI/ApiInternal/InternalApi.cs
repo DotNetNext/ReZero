@@ -28,22 +28,29 @@ namespace ReZero.SuperAPI
         public async Task WriteAsync(HttpContext context)
         {
             var db = App.Db;
-            var path = context.Request.Path.ToString()?.ToLower() ;
-            var interfaceInfos=db.Queryable<ZeroInterfaceList>().ToList();
-            var interInfo=interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault(); 
-          
-            if (interInfo == null)
+            try
             {
-                var message = TextHandler.GetCommonTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询",$"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
-                await context.Response.WriteAsync(message);
+                var path = context.Request.Path.ToString()?.ToLower();
+                var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
+                var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
+
+                if (interInfo == null)
+                {
+                    var message = TextHandler.GetCommonTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
+                    await context.Response.WriteAsync(message);
+                }
+                else
+                {
+                    DataService dataService = new DataService();
+                    dataService.BindHttpParameters(interInfo.DataModel, context);
+                    var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
+                    data = new ResultService().GetResult(data, interInfo.CustomResultModel ?? new ResultModel());
+                    await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+                }
             }
-            else 
+            catch (Exception ex)
             {
-                DataService dataService = new DataService();
-                dataService.BindHttpParameters(interInfo.DataModel,context);
-                var data= await dataService.ExecuteAction(interInfo.DataModel??new DataModel() { });
-                data=new ResultService().GetResult(data, interInfo.CustomResultModel??new ResultModel());
-                await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+                await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
             }
         }
     }

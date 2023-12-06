@@ -61,11 +61,18 @@ namespace ReZero.SuperAPI
             }
             else
             {
-                DataService dataService = new DataService();
-                dataService.BindHttpParameters(interInfo.DataModel, context);
-                var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
-                data = new ResultService().GetResult(data, interInfo.CustomResultModel ?? new ResultModel());
-                await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+                try
+                {
+                    DataService dataService = new DataService();
+                    dataService.BindHttpParameters(interInfo.DataModel, context);
+                    var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
+                    data = new ResultService().GetResult(data, interInfo.CustomResultModel ?? new ResultModel());
+                    await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+                }
+                catch (Exception ex)
+                {
+                    await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
+                }
             }
         }
 
