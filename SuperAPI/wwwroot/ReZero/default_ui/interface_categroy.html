@@ -8,12 +8,10 @@
                 <div class="row">
                     <div class="col-md-1"><label class="form-control" t>名称:</label></div>
                     <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="文本.."></div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
-                    </div>
-                    <div class="col-md-1">
-
-                    </div>
+                        <button onclick="$('#txtSearch').val('')" id="btnSearch" class="btn btn-close" type="submit">清空</button>
+                    </div> 
                     <div class="col-md-1">
                         <button class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
                     </div>

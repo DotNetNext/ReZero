@@ -7,7 +7,8 @@
             <div class="col-md-6">
                 <input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="Url or name">
             </div>
-            <div class="col-md-4"> <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit">搜索</button></div>
+            <div class="col-md-4"> <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit">搜索</button>
+                                   <button  onclick="$('#txtSearch').val('')" id="btnSearch" class="btn btn-close" type="submit">清空</button></div>
         </div>
     </div>
     <div class="data" v-for="masterItem in data" :key="masterItem.Key">
