@@ -44,7 +44,9 @@ namespace ReZero.SuperAPI
                     DataService dataService = new DataService();
                     dataService.BindHttpParameters(interInfo.DataModel, context);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
-                    data = new ResultService().GetResult(data, interInfo.CustomResultModel ?? new ResultModel());
+                    var resultModel = interInfo.CustomResultModel ?? new ResultModel();
+                    resultModel.OutPutData = interInfo.DataModel?.OutPutData;
+                    data = new ResultService().GetResult(data, resultModel);
                     await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
                 }
             }

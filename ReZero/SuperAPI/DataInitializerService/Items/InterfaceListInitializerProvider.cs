@@ -176,6 +176,26 @@ namespace ReZero.SuperAPI
                         PageSize = 20,
                         PageNumber = 1
                     },
+                    Columns = new List<DataColumnParameter>()
+                    {
+
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Id) ,
+                            Description=TextHandler.GetCommonTexst("上级Id", "Primary key")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Name) ,
+                            Description=TextHandler.GetCommonTexst("名称", "Name")
+                        },
+                       new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Description) ,
+                            Description=TextHandler.GetCommonTexst("备注", "Description")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Url) ,
+                            Description=TextHandler.GetCommonTexst("跳转地址", "Url")
+                        } 
+                    },
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.QueryCommon,
                     WhereParameters = new List<WhereParameter>() {

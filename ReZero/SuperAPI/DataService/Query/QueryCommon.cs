@@ -30,17 +30,26 @@ namespace ReZero.SuperAPI
                 {
                     result = await queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
                     dataModel.CommonPage.TotalCount = count.Value;
+                    if (dataModel.Columns?.Any() == false)
+                    {
+                        dataModel.Columns = App.Db.EntityMaintenance.GetEntityInfo(type).Columns.Select(it => new DataColumnParameter
+                        {
+                            PropertyName = it.PropertyName,
+                            Description = it.ColumnDescription
+                        }).ToList();
+                    }
                     dataModel.OutPutData = new DataModelOutPut
                     {
-                        Entity = db.EntityMaintenance.GetEntityInfo(type),
                         Page = new DataModelPageParameter()
                         {
                             TotalCount = count.Value,
                             PageNumber = dataModel.CommonPage.PageNumber,
                             PageSize = dataModel.CommonPage.PageSize,
                             TotalPage = (int)Math.Ceiling((double)count.Value / dataModel.CommonPage.PageSize)
-                        }
+                        },
+                        Columns = dataModel.Columns
                     };
+
                 }
                 return result;
             }

@@ -13,17 +13,18 @@ namespace ReZero.SuperAPI.Items
             return new ResultPageGrid
             {
                 Data = data,
-                Columns = dataModelOutPut!.Entity!.Columns!.Select(it => new ResultGridColumn
+                Columns = dataModelOutPut!.Columns!.Select(it => new ResultGridColumn
                 {
                     PropertyName=it.PropertyName,
-                    ColumnDescription=it.ColumnDescription
+                    ColumnDescription=it.Description
                 }),
                 Page = 
                 new ResultPage
                 {
                     PageNumber=dataModelOutPut.Page!.PageNumber,
                     PageSize=dataModelOutPut.Page.PageSize,
-                    TotalCount= dataModelOutPut.Page.TotalCount!.Value
+                    TotalCount= dataModelOutPut.Page.TotalCount!.Value,
+                    TotalPage=dataModelOutPut.Page.TotalPage
                 }
    
             };

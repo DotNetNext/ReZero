@@ -19,5 +19,6 @@ namespace ReZero.SuperAPI
 
         public ZeroEntityInfo? MasterEntityInfo { get; set; }
         public object? OutPutData { get; set; }
+        public List<DataColumnParameter>? Columns { get;   set; }
     }
 }
