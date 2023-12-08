@@ -18,5 +18,6 @@ namespace ReZero.SuperAPI
         [Navigate(NavigateType.OneToMany,nameof(TableId))]
 
         public ZeroEntityInfo? MasterEntityInfo { get; set; }
+        public object? OutPutData { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         public InterfaceListInitializerProvider(List<ZeroInterfaceList> zeroInterfaceList)
         {
             this.zeroInterfaceList = zeroInterfaceList;
-        } 
+        }
         internal void Set()
         {
             GetZeroInterfaceList();
@@ -21,24 +21,30 @@ namespace ReZero.SuperAPI
 
         private void GetDatabaseList()
         {
-            ZeroInterfaceList data = GetNewItem(it => { 
+            ZeroInterfaceList data = GetNewItem(it =>
+            {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = DbManId;
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300003;
                 it.Name = TextHandler.GetInterfaceListText(DbManId);
-                it.Url = GetUrl(it, "GetDatabaseList"); 
+                it.Url = GetUrl(it, "GetDatabaseList");
                 it.DataModel = new DataModel()
                 {
+                    CommonPage = new DataModelPageParameter
+                    {
+                        PageSize = 20,
+                        PageNumber = 1
+                    },
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.QueryCommon,
-                    WhereParameters = new List<WhereParameter>() { 
+                    WhereParameters = new List<WhereParameter>() {
                             new WhereParameter(){ Name="Name" , FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name,Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
                             DataInitHelper.GetIsInitializedParameter(),
                          }
                 };
             });
             zeroInterfaceList.Add(data);
-        } 
+        }
         public void GetZeroInterfaceList()
         {
             Intenal();
@@ -54,10 +60,10 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = TestId;
-                it.GroupName =nameof(ZeroInterfaceList);
+                it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id200100;
                 it.Name = TextHandler.GetInterfaceListText(TestId);
-                it.Url ="/MyTest/API";
+                it.Url = "/MyTest/API";
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
@@ -78,7 +84,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntIntListId;
-                it.CustomResultModel = new ResultModel() { ResultType=ResultType.Group, GroupName=nameof(ZeroInterfaceList.GroupName) };
+                it.CustomResultModel = new ResultModel() { ResultType = ResultType.Group, GroupName = nameof(ZeroInterfaceList.GroupName) };
                 it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntIntListId);
@@ -119,9 +125,10 @@ namespace ReZero.SuperAPI
         }
 
         public void GetInterfaceCategory()
-        { 
+        {
             //接口分类树
-            ZeroInterfaceList data1 = GetNewItem(it => {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntCateTreeId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
@@ -132,45 +139,59 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.QueryTree,
-                    TreeParameter=new DataModelTreeParameter() 
+                    TreeParameter = new DataModelTreeParameter()
                     {
-                         ChildPropertyName=nameof(ZeroInterfaceCategory.SubInterfaceCategories),
-                         RootValue=0,
-                         CodePropertyName=nameof(ZeroInterfaceCategory.Id),
-                         ParentCodePropertyName = nameof(ZeroInterfaceCategory.ParentId)
+                        ChildPropertyName = nameof(ZeroInterfaceCategory.SubInterfaceCategories),
+                        RootValue = 0,
+                        CodePropertyName = nameof(ZeroInterfaceCategory.Id),
+                        ParentCodePropertyName = nameof(ZeroInterfaceCategory.ParentId),
                     },
                     WhereParameters = new List<WhereParameter>()
                     {
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,Value=InterfaceCategoryInitializerProvider.Id,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("根目录ID", "Root id") },
+
                     }
                 };
             });
             zeroInterfaceList.Add(data1);
 
 
-            //接口分类列表
-            ZeroInterfaceList data2 = GetNewItem(it => {
+            //获取动态接口分类
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntCateListId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntCateListId);
                 it.Url = GetUrl(it, "GetDynamicInterfaceCategoryList");
+                it.CustomResultModel = new ResultModel()
+                {
+                    ResultType = ResultType.Grid
+                };
                 it.DataModel = new DataModel()
                 {
+                    CommonPage = new DataModelPageParameter
+                    {
+                        PageSize = 20,
+                        PageNumber = 1
+                    },
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.QueryCommon,
                     WhereParameters = new List<WhereParameter>() {
                              new WhereParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=200,ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("上级Id", "ParentId") },
-                               new WhereParameter() { Name = nameof(ZeroInterfaceCategory.Name),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonTexst("名称", "Name") }
-                    } 
+                             new WhereParameter() { Name = nameof(ZeroInterfaceCategory.Name),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonTexst("名称", "Name") },
+                             new WhereParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("第几页", "Page number") },
+                             new WhereParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("每页几条", "Pageize") }
+                    }
                 };
             });
             zeroInterfaceList.Add(data2);
 
 
-            //接口分类删除
-            ZeroInterfaceList data3 = GetNewItem(it => {
+            //动态接口分类删除
+            ZeroInterfaceList data3 = GetNewItem(it =>
+            {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = DeleteCateTreeId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
@@ -190,7 +211,8 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data3);
 
             //添加动态接口分类
-            ZeroInterfaceList data4 = GetNewItem(it => {
+            ZeroInterfaceList data4 = GetNewItem(it =>
+            {
                 it.HttpMethod = HttpRequestMethod.POST.ToString();
                 it.Id = AddCateTreeId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
@@ -200,7 +222,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
-                    ActionType = ActionType.InsertObject, 
+                    ActionType = ActionType.InsertObject,
                     WhereParameters = new List<WhereParameter>()
                     {
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
@@ -217,7 +239,8 @@ namespace ReZero.SuperAPI
 
 
             //修改动态接口分类
-            ZeroInterfaceList data5 = GetNewItem(it => {
+            ZeroInterfaceList data5 = GetNewItem(it =>
+            {
                 it.HttpMethod = HttpRequestMethod.POST.ToString();
                 it.Id = UpdateCateTreeId;
                 it.GroupName = nameof(ZeroInterfaceCategory);

@@ -20,16 +20,18 @@ namespace ReZero.SuperAPI
                 var queryObject = db.QueryableByObject(type);
                 queryObject = Where(dataModel, queryObject);
                 queryObject = OrderBy(dataModel, queryObject);
+                object? result = null;
                 if (dataModel.CommonPage == null)
                 {
-                    var result = queryObject.ToList();
-                    return result;
+                     result =await queryObject.ToListAsync();
                 }
                 else
                 {
-                    var result = queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
-                    return result;
+                     result =await queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
+                    dataModel.CommonPage.TotalCount = count.Value;
+                    dataModel.OutPutData = new DataModelOutPut { Entity= db.EntityMaintenance.GetEntityInfo(type)};
                 }
+                return result;
             }
             catch (Exception ex)
             {
@@ -144,4 +146,6 @@ namespace ReZero.SuperAPI
             }
         }
     }
+
+   
 }

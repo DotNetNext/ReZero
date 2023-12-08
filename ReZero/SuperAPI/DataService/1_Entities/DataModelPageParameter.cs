@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,5 +24,6 @@ namespace ReZero.SuperAPI
         /// Gets or sets the total count.
         /// </summary>
         public int Total { get; set; }
+        public RefAsync<int>? TotalCount { get;  set; }
     }
 }

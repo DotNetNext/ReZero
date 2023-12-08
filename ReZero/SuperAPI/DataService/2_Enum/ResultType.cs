@@ -6,6 +6,7 @@ namespace ReZero.SuperAPI
 {
     public enum ResultType
     {
-        Group=0
+        Group=0,
+        Grid=1000
     }
 }

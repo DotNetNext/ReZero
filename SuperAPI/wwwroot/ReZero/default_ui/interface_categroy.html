@@ -7,7 +7,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-1"><label class="form-control" t>名称:</label></div>
-                    <div class="col-md-3"><input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本.."></div>
+                    <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="文本.."></div>
                     <div class="col-md-1">
                         <button @click="onSearch()" class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
                     </div>
@@ -30,23 +30,23 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>书籍名</th>
-                        <th>作者</th>
-                        <th>国籍</th>
-                        <th>分类</th>
-                        <th>库存</th>
+                      
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>接口地址</th>
+                        <th>描述</th>
+                        <th>创建时间</th>
                         <th>操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>钦差大臣</td>
-                        <td>果戈理</td>
-                        <td>俄国</td>
-                        <td>国外名族</td>
-                        <td>sdfa</td>
+                <tbody >
+                    <tr v-for="item in data" :key="item.Id">
+                        <th scope="row">{{item.Id}}</th>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.Url}}</td>
+                        <td>{{item.Description}}</td>
+                        <td>{{item.CreateTime}}</td>
+                 
                         <td class="table_opt">
                             <button data-toggle="modal" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
@@ -116,14 +116,24 @@
             error: null
         },
         mounted() {
-            this.fetchData();
+            this.fetchData("");
         },
         methods: {
-            fetchData(name) {
-
+            fetchData(append) {
+                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryList?ParentId=200" + append;
+                axios.get(url)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             },
             onSearch: function () {
-                alert("onSearch");
+
+                fetchData("&Name="+$("#txtSearch").val());
             },
         }
     });</script>
