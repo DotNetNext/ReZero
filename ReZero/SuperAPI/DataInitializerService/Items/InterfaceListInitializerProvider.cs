@@ -181,7 +181,7 @@ namespace ReZero.SuperAPI
 
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceCategory.Id) ,
-                            Description=TextHandler.GetCommonTexst("上级Id", "Primary key")
+                            Description=TextHandler.GetCommonTexst("ID", "Primary key")
                         },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceCategory.Name) ,
