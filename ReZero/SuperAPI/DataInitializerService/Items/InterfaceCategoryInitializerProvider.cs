@@ -130,7 +130,8 @@ namespace ReZero.SuperAPI
         {
             var result = new ZeroInterfaceCategory()
             {
-                IsInitialized = true
+                IsInitialized = true,
+                IsDeleted=false
             };
             action(result);
             return result;

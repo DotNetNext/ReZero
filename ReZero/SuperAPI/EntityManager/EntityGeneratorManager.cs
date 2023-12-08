@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
             var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
             {
                 TableName = tableInfo.DbTableName
-            });
+            },typeof(DbBase));
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
             {
                 var propertyType = GetTypeByNativeTypes(item.PropertyType);
