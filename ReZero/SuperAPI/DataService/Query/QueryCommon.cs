@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data;
+using System.Text.RegularExpressions;
 namespace ReZero.SuperAPI
 {
     internal class QueryCommon : IDataService
@@ -23,13 +24,23 @@ namespace ReZero.SuperAPI
                 object? result = null;
                 if (dataModel.CommonPage == null)
                 {
-                     result =await queryObject.ToListAsync();
+                    result = await queryObject.ToListAsync();
                 }
                 else
                 {
-                     result =await queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
+                    result = await queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
                     dataModel.CommonPage.TotalCount = count.Value;
-                    dataModel.OutPutData = new DataModelOutPut { Entity= db.EntityMaintenance.GetEntityInfo(type)};
+                    dataModel.OutPutData = new DataModelOutPut
+                    {
+                        Entity = db.EntityMaintenance.GetEntityInfo(type),
+                        Page = new DataModelPageParameter()
+                        {
+                            TotalCount = count.Value,
+                            PageNumber = dataModel.CommonPage.PageNumber,
+                            PageSize = dataModel.CommonPage.PageSize,
+                            TotalPage = (int)Math.Ceiling((double)count.Value / dataModel.CommonPage.PageSize)
+                        }
+                    };
                 }
                 return result;
             }
@@ -49,8 +60,8 @@ namespace ReZero.SuperAPI
                 {
                     orderByModels.Add(new OrderByModel()
                     {
-                         FieldName= App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType),
-                         OrderByType=item.OrderByType
+                        FieldName = App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType),
+                        OrderByType = item.OrderByType
                     });
                 }
             }
@@ -64,9 +75,9 @@ namespace ReZero.SuperAPI
             List<IFuncModel> funcModels = new List<IFuncModel>();
             if (dataModel.WhereParameters != null)
             {
-                foreach (var item in dataModel.WhereParameters.Where(it=>string.IsNullOrEmpty(it.MergeForName)).Where(it=>(it.Value+"")!=""))
+                foreach (var item in dataModel.WhereParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => (it.Value + "") != ""))
                 {
-                    item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name,queryObject.EntityType);
+                    item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
                     if (item.Value != null)
                     {
                         if (item.ValueType == typeof(Boolean).Name)
@@ -77,7 +88,7 @@ namespace ReZero.SuperAPI
                     var forNames = dataModel.WhereParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
                     if (forNames.Any())
                     {
-                        ForNames(conditionalModels,item, forNames);
+                        ForNames(conditionalModels, item, forNames);
                     }
                     else
                     {
@@ -96,8 +107,9 @@ namespace ReZero.SuperAPI
         private static void ForNames(List<IConditionalModel> conditionalModels, WhereParameter item, List<WhereParameter> forNames)
         {
             var colItem = new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
-            var conditionalCollections = new ConditionalCollections() {  
-             ConditionalList=new List<KeyValuePair<WhereType, ConditionalModel>>() 
+            var conditionalCollections = new ConditionalCollections()
+            {
+                ConditionalList = new List<KeyValuePair<WhereType, ConditionalModel>>()
              {
                  new KeyValuePair<WhereType, ConditionalModel>(WhereType.And,colItem)
              }
@@ -105,7 +117,7 @@ namespace ReZero.SuperAPI
             foreach (var it in forNames)
             {
                 var colItemNext = new ConditionalModel() { FieldName = it.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
-                conditionalCollections.ConditionalList.Add(new KeyValuePair<WhereType, ConditionalModel>(WhereType.Or,colItemNext));
+                conditionalCollections.ConditionalList.Add(new KeyValuePair<WhereType, ConditionalModel>(WhereType.Or, colItemNext));
             }
             conditionalModels.Add(conditionalCollections);
         }
@@ -147,5 +159,5 @@ namespace ReZero.SuperAPI
         }
     }
 
-   
+
 }

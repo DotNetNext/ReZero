@@ -8,5 +8,6 @@ namespace ReZero.SuperAPI
     public class DataModelOutPut
     {
         public EntityInfo? Entity { get; set; }
+        public DataModelPageParameter? Page { get;  set; }
     }
 }

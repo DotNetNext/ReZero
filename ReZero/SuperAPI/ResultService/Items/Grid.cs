@@ -9,18 +9,24 @@ namespace ReZero.SuperAPI.Items
     {
         public object GetResult(object data, ResultModel result)
         {
-            return data;
-            //开发中
-            return new 
-            { 
-                
-                Data=data,
-                Columns= ((DataModelOutPut)result.OutPutData).Entity.Columns.Select(it=>new { 
-                   it.PropertyName,
-                   it.ColumnDescription 
-                }) 
-
+            var dataModelOutPut = ((DataModelOutPut?)result.OutPutData);
+            return new ResultPageGrid
+            {
+                Data = data,
+                Columns = dataModelOutPut!.Entity!.Columns!.Select(it => new ResultGridColumn
+                {
+                    PropertyName=it.PropertyName,
+                    ColumnDescription=it.ColumnDescription
+                }),
+                Page = 
+                new ResultPage
+                {
+                    PageNumber=dataModelOutPut.Page!.PageNumber,
+                    PageSize=dataModelOutPut.Page.PageSize,
+                    TotalCount= dataModelOutPut.Page.TotalCount!.Value
+                }
+   
             };
         }
-    }
+    } 
 }

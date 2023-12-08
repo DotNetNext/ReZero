@@ -25,5 +25,6 @@ namespace ReZero.SuperAPI
         /// </summary>
         public int Total { get; set; }
         public RefAsync<int>? TotalCount { get;  set; }
+        public int TotalPage { get; internal set; }
     }
 }
