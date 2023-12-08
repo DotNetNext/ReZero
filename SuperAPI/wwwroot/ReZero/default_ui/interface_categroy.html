@@ -11,7 +11,7 @@
                     <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="$('#txtSearch').val('')" id="btnSearch" class="btn btn-close" type="submit">清空</button>
-                    </div> 
+                    </div>
                     <div class="col-md-1">
                         <button class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
                     </div>
@@ -43,7 +43,7 @@
                             <button data-toggle="modal" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
                             </button>
-                            <button data-toggle="modal" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
+                            <button data-toggle="modal" @click="deleteFunc(item)" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
                                 <i class="mdi mdi-do-not-disturb"></i> 删除
                             </button>
                         </td>
@@ -89,7 +89,7 @@
     </div>
 </div>
 <script>
-    new Vue({
+    var vueObj = new Vue({
         el: '#apibox',
         data: {
             data: null,
@@ -113,7 +113,25 @@
             },
             onSearch: function () {
 
-                this.fetchData("&Name="+$("#txtSearch").val());
+                this.fetchData("&Name=" + $("#txtSearch").val());
             },
+            deleteFunc: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategoryList?IsDeleted=true&Id=" + localStorage.delId;
+                    axios.get(url)
+                        .then(response => {
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                } 
+            }
         }
     });</script>
