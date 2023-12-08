@@ -29,15 +29,15 @@
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
-                    <tr v-if="data && data.Columns && data.Columns.length > 0"> 
-                        <th   v-for="column in data.Columns">{{column.ColumnDescription}}</th> 
+                    <tr v-if="data && data.Columns && data.Columns.length > 0">
+                        <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody v-if="data &&data.Data">
-                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data"  >
+                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
 
-                        <td   v-for="column in data.Columns"  >
+                        <td v-for="column in data.Columns">
                             {{ item[column.PropertyName] }}
                         </td>
 
@@ -57,21 +57,9 @@
 
     </div>
     <nav>
-        <ul class="pagination no-border">
-            <li class="disabled">
-                <a href="#!">
-                    <span><i class="mdi mdi-chevron-left"></i></span>
-                </a>
-            </li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#!">2</a></li>
-            <li><a href="#!">3</a></li>
-            <li><a href="#!">4</a></li>
-            <li><a href="#!">5</a></li>
-            <li>
-                <a href="#!">
-                    <span><i class="mdi mdi-chevron-right"></i></span>
-                </a>
+        <ul class="pagination no-border" v-if="data && data.Page">
+            <li v-for="page in Array.from({ length: data.Page.TotalPage }, (_, index) => index + 1)" :key="page">
+                <a href="#!">{{ page }}</a>
             </li>
         </ul>
     </nav>
