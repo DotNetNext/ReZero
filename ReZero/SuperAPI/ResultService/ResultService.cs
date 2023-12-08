@@ -22,10 +22,17 @@ namespace ReZero.SuperAPI
          
         private static object GetResultProvider(object data, ResultModel model)
         {
-            var actionType = Type.GetType("ReZero.SuperAPI.Items." + model?.ResultType);
-            var actionInstance = (IResultService)Activator.CreateInstance(actionType);
+            IResultService actionInstance = GetActionInstance(model);
             var result = actionInstance.GetResult(data, model!);
             return result;
+        }
+
+
+        private static IResultService GetActionInstance(ResultModel model)
+        {
+            var actionType = Type.GetType("ReZero.SuperAPI.Items." + model?.ResultType);
+            var actionInstance = (IResultService)Activator.CreateInstance(actionType);
+            return actionInstance;
         }
 
         private static bool IsNoConvert(ResultModel result)
