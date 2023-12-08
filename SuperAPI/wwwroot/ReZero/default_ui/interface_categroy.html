@@ -29,24 +29,18 @@
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
-                    <tr>
-                      
-                        <th>序号</th>
-                        <th>名称</th>
-                        <th>接口地址</th>
-                        <th>描述</th>
-                        <th>创建时间</th>
+                    <tr v-if="data && data.Columns && data.Columns.length > 0"> 
+                        <th   v-for="column in data.Columns">{{column.ColumnDescription}}</th> 
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody >
-                    <tr v-for="item in data" :key="item.Id">
-                        <th scope="row">{{item.Id}}</th>
-                        <td>{{item.Name}}</td>
-                        <td>{{item.Url}}</td>
-                        <td>{{item.Description}}</td>
-                        <td>{{item.CreateTime}}</td>
-                 
+                    <tr v-if="data && data.Columns && data.Columns.length > 0" v-for="item in data.Data"  >
+
+                        <td   v-for="column in data.Columns"  >
+                            {{ item[column.PropertyName] }}
+                        </td>
+
                         <td class="table_opt">
                             <button data-toggle="modal" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
