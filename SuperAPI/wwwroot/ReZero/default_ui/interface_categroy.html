@@ -34,8 +34,8 @@
                         <th>操作</th>
                     </tr>
                 </thead>
-                <tbody >
-                    <tr v-if="data && data.Columns && data.Columns.length > 0" v-for="item in data.Data"  >
+                <tbody v-if="data &&data.Data">
+                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data"  >
 
                         <td   v-for="column in data.Columns"  >
                             {{ item[column.PropertyName] }}
