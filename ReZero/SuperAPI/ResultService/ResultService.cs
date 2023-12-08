@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
     {
         public object GetResult(object data, ResultModel result)
         {
-            if (result == null||result?.ResultType==null)
+            if (IsNoConvert(result))
             {
                 return data;
             }
@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
                 return GetResultProvider(data, result);
             }
         }
-
+         
         private static object GetResultProvider(object data, ResultModel model)
         {
             var actionType = Type.GetType("ReZero.SuperAPI.Items." + model?.ResultType);
@@ -27,5 +27,11 @@ namespace ReZero.SuperAPI
             var result = actionInstance.GetResult(data, model!);
             return result;
         }
+
+        private static bool IsNoConvert(ResultModel result)
+        {
+            return result == null || result?.ResultType == null;
+        }
+
     }
 }
