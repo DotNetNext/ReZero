@@ -69,7 +69,8 @@ namespace ReZero.SuperAPI
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel);
-                    await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+                    var json = db.Utilities.SerializeObject(data);
+                    await context.Response.WriteAsync(json);
                 }
                 catch (Exception ex)
                 {
