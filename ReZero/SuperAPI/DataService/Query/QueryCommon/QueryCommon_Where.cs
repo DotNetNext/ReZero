@@ -1,95 +1,27 @@
 ﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
-using System.Security.AccessControl;
 using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Data;
-using System.Text.RegularExpressions;
-namespace ReZero.SuperAPI
+
+namespace ReZero.SuperAPI 
 {
-    internal class QueryCommon : IDataService
+    /// <summary>
+    /// Helper
+    /// </summary>
+    public partial class QueryCommon : IDataService
     {
-        public async Task<object> ExecuteAction(DataModel dataModel)
-        {
-            try
-            {
-                var db = App.Db;
-                RefAsync<int> count = 0;
-                var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
-                var queryObject = db.QueryableByObject(type);
-                queryObject = Where(dataModel, queryObject);
-                queryObject = OrderBy(dataModel, queryObject);
-                object? result = null;
-                if (dataModel.CommonPage == null)
-                {
-                    result = await queryObject.ToListAsync();
-                }
-                else
-                {
-                    result = await queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
-                    dataModel.CommonPage.TotalCount = count.Value;
-                    if (dataModel.Columns?.Any() == false)
-                    {
-                        dataModel.Columns = App.Db.EntityMaintenance.GetEntityInfo(type).Columns.Select(it => new DataColumnParameter
-                        {
-                            PropertyName = it.PropertyName,
-                            Description = it.ColumnDescription
-                        }).ToList();
-                    }
-                    dataModel.OutPutData = new DataModelOutPut
-                    {
-                        Page = new DataModelPageParameter()
-                        {
-                            TotalCount = count.Value,
-                            PageNumber = dataModel.CommonPage.PageNumber,
-                            PageSize = dataModel.CommonPage.PageSize,
-                            TotalPage = (int)Math.Ceiling((double)count.Value / dataModel.CommonPage.PageSize)
-                        },
-                        Columns = dataModel.Columns
-                    };
-
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
-
-        private QueryMethodInfo OrderBy(DataModel dataModel, QueryMethodInfo queryObject)
-        {
-            List<OrderByModel> orderByModels = new List<OrderByModel>();
-            if (dataModel.OrderParemters != null)
-            {
-                foreach (var item in dataModel.OrderParemters)
-                {
-                    orderByModels.Add(new OrderByModel()
-                    {
-                        FieldName = App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType),
-                        OrderByType = item.OrderByType
-                    });
-                }
-            }
-            queryObject = queryObject.OrderBy(orderByModels);
-            return queryObject;
-        }
-
         private static QueryMethodInfo Where(DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<IConditionalModel> conditionalModels = new List<IConditionalModel>();
             List<IFuncModel> funcModels = new List<IFuncModel>();
             if (dataModel.WhereParameters != null)
             {
-                foreach (var item in dataModel.WhereParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => (it.Value + "") != ""))
+                foreach (var item in dataModel.WhereParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
                 {
                     item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
                     if (item.Value != null)
                     {
-                        if (item.ValueType == typeof(Boolean).Name)
+                        if (item.ValueType == typeof(bool).Name)
                         {
                             item.Value = Convert.ToBoolean(Convert.ToInt32(item.Value));
                         }
@@ -97,11 +29,11 @@ namespace ReZero.SuperAPI
                     var forNames = dataModel.WhereParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
                     if (forNames.Any())
                     {
-                        ForNames(conditionalModels, item, forNames);
+                        ConvetConditionalModelForNames(conditionalModels, item, forNames);
                     }
                     else
                     {
-                        Default(conditionalModels, item);
+                        ConvetConditionalModelDefault(conditionalModels, item);
                     }
                 }
             }
@@ -113,7 +45,7 @@ namespace ReZero.SuperAPI
             return queryObject;
         }
 
-        private static void ForNames(List<IConditionalModel> conditionalModels, WhereParameter item, List<WhereParameter> forNames)
+        private static void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, WhereParameter item, List<WhereParameter> forNames)
         {
             var colItem = new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
             var conditionalCollections = new ConditionalCollections()
@@ -131,7 +63,7 @@ namespace ReZero.SuperAPI
             conditionalModels.Add(conditionalCollections);
         }
 
-        private static void Default(List<IConditionalModel> conditionalModels, WhereParameter? item)
+        private static void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, WhereParameter? item)
         {
             switch (item?.FieldOperator)
             {
@@ -167,6 +99,4 @@ namespace ReZero.SuperAPI
             }
         }
     }
-
-
 }
