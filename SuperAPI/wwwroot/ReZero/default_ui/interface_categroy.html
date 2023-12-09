@@ -66,23 +66,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">发送新消息给 @mdo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">添加动态接口分类</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="frmEdit">
+                        <input type="hidden" name="Id" />
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">收件人：</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="recipient-name" class="control-label">名称：</label>
+                            <input type="text" name="Name" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">消息内容：</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <label for="message-text" class="control-label">内容：</label>
+                            <textarea class="form-control" name="Description" id="message-text"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">发送消息</button>
+                    <button type="button" id="btnCloseEdit" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="AddOrUpdate()" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
@@ -131,7 +132,24 @@
                         });
                 } else {
                     localStorage.delId = item.Id;
-                } 
+                }
+            },
+            AddOrUpdate: function () {
+                var json = tools.formToJson("frmEdit");
+                var url = "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
+                axios.post(url, json)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                        this.onSearch();
+                        btnDelClose.click();
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    }); 
+                $("#btnCloseEdit").click();
+                this.onSearch();
             }
         }
     });</script>
