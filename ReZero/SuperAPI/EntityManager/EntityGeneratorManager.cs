@@ -4,28 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace ReZero.SuperAPI
 {
     public class EntityGeneratorManager
     {
         public async static Task<Type> GetTypeAsync(long tableId)
         {
-            var db = App.Db;
+            var db = App.Db; 
             var tableInfo = await db.Queryable<ZeroEntityInfo>().Includes(x => x.ZeroEntityColumnInfos).InSingleAsync(tableId);
-            var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
+             var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
             {
                 TableName = tableInfo.DbTableName
-            },typeof(DbBase));
+            }); 
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
-            {
+            { 
                 var propertyType = GetTypeByNativeTypes(item.PropertyType);
                 var column = new SugarColumn()
                 {
                     ColumnName = item.DbCoumnName,
                     IsJson = item.PropertyType == NativeTypes.Json,
                     IsIdentity = item.IsIdentity,
-                    IsPrimaryKey = item.IsPrimarykey,
+                    IsPrimaryKey = item.IsPrimarykey
                 };
                 if (item.ExtendedAttribute?.ToString() == PubConst.TreeChild) 
                 { 
