@@ -47,14 +47,34 @@ namespace ReZero.SuperAPI
             var formDatas = GetForDatams(context);
             foreach (var item in dataModel?.WhereParameters ?? new System.Collections.Generic.List<WhereParameter>())
             {
-                
+
                 item.Value = GetParameterValueFromRequest(item, context, formDatas);
-                if (!string.IsNullOrEmpty(item.FieldName))
+                if (IsDefaultValue(item))
                 {
-                    item.Name=item.FieldName;
+                    item.Value = item.DefaultValue;
+                }
+                if (IsUserName(item))
+                {
+                    var options = SuperAPIModule._apiOptions;
+                    item.Value = options?.GetCurrentUserCallback().UserName;
+                }
+                if (!string.IsNullOrEmpty(item?.FieldName))
+                {
+                    item.Name = item.FieldName;
                 }
             }
         }
+
+        private static bool IsUserName(WhereParameter item)
+        {
+            return item?.WhereParameterOnlyInsert?.IsUserName == true;
+        }
+
+        private static bool IsDefaultValue(WhereParameter item)
+        {
+            return item.Value == null && item.DefaultValue != null;
+        }
+
         private string GetParameterValueFromRequest(WhereParameter parameter, HttpContext context, Dictionary<string, string> formDatas)
         {
             if (parameter.ValueIsReadOnly) 

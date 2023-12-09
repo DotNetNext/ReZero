@@ -43,6 +43,6 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Callback function to get the current user information.
         /// </summary>
-        public Func<CallBackUserInfo, CallBackUserInfo>? GetCurrentUserCallback { get; set; } = it => new CallBackUserInfo { UserId="1", UserName="Admin" };
+        public Func<CallBackUserInfo> GetCurrentUserCallback { get; set; } = () => new CallBackUserInfo { UserId="1", UserName="Admin" };
     }
 }

@@ -194,7 +194,7 @@ namespace ReZero.SuperAPI
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceCategory.Url) ,
                             Description=TextHandler.GetCommonTexst("跳转地址", "Url")
-                        } 
+                        }
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.QueryCommon,
@@ -251,7 +251,10 @@ namespace ReZero.SuperAPI
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId="+PubConst.TreeUrlFormatId,ValueType = typeof(string).Name },
                         DataInitHelper.GetIsDynamicParameter(),
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Creator),Value="" ,ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
+                        WhereParameterOnlyInsert=new WhereParameterOnlyInsert(){
+                             IsUserName=true
+                        },Value="" ,ValueType = typeof(string).Name },
 
                     }
                 };
