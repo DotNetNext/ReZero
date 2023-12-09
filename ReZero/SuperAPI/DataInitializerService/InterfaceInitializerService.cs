@@ -12,12 +12,13 @@ namespace ReZero.SuperAPI
         public void Initialize(SuperAPIOptions options)
         {
             var db = App.PreStartupDb;
-
+            App.PreStartupDb!.QueryFilter.ClearAndBackup();
             InitUser(options);
             InitInterfaceCategory(db);
             InitEntityInfo(db);
             InitInterfaceList(db);
             InitIcon();
+            App.PreStartupDb!.QueryFilter.Restore();
         }
 
         private void InitEntityInfo(ISqlSugarClient? db)

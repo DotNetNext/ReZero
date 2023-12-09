@@ -23,7 +23,14 @@ namespace ReZero.SuperAPI
                     {
                         if (item.ValueType == typeof(bool).Name)
                         {
-                            item.Value = Convert.ToBoolean(Convert.ToInt32(item.Value));
+                            if (item.Value?.ToString() == "true" || item.Value?.ToString() == "false")
+                            {
+                                item.Value = Convert.ToBoolean(item.Value);
+                            }
+                            else
+                            {
+                                item.Value = Convert.ToBoolean(Convert.ToInt32(item.Value));
+                            }
                         }
                     }
                     var forNames = dataModel.WhereParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
