@@ -39,5 +39,10 @@ namespace ReZero.SuperAPI
             IsAutoCloseConnection = true,            // Automatically close the connection after operation
             ConnectionString = "datasource=ReZero.db"           // Default database file name: ReZero.db
         };
+
+        /// <summary>
+        /// Callback function to get the current user information.
+        /// </summary>
+        public Func<CallBackUserInfo, CallBackUserInfo>? GetCurrentUserCallback { get; set; } = it => new CallBackUserInfo { UserId="1", UserName="Admin" };
     }
 }
