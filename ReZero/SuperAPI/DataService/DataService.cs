@@ -57,6 +57,10 @@ namespace ReZero.SuperAPI
         }
         private string GetParameterValueFromRequest(WhereParameter parameter, HttpContext context, Dictionary<string, string> formDatas)
         {
+            if (parameter.ValueIsReadOnly) 
+            {
+                return parameter.Value+"";
+            }
             // 假设你希望获取名为 "parameterName" 的查询字符串参数
             string parameterValue = context.Request.Query[parameter.Name];
             if (formDatas.ContainsKey(parameter.Name ?? ""))
