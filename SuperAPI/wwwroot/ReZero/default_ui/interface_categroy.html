@@ -135,14 +135,18 @@
                 }
             },
             AddOrUpdate: function () {
-                var json = tools.formToJson("frmEdit");
-                var url = "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
+                var frmId = "frmEdit";
+                var json = tools.formToJson(frmId);
+                var url = json.Id ?
+                    "/PrivateReZeroRoute/100003/UpdateDynamicInterfaceCategory" :
+                    "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
                 axios.post(url, json)
                     .then(response => {
                         this.data = response.data;
                         this.error = null;
                         this.onSearch();
                         btnDelClose.click();
+                        document.getElementById(frmId).reset();
                     })
                     .catch(error => {
                         this.error = error.message;
