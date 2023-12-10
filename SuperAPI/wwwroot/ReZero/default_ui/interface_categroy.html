@@ -101,7 +101,7 @@
                 var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryList?ParentId=200" + append;
                 axios.get(url)
                     .then(response => {
-                        this.data = response.data;
+                        this.data = response.data; 
                         this.error = null;
                     })
                     .catch(error => {
@@ -167,12 +167,17 @@
             addOrUpdateSubmit: function (url, json) { 
                 var th = this;
                 axios.post(url, json)
-                    .then(response => {
-                        this.data = response.data;
+                    .then(response => { 
                         this.error = null;
                         this.onSearch(); 
-                        frmEdit.reset(); 
-                        btnCloseEdit.click();  
+                        if (response.data == true) {
+                            frmEdit.reset();
+                            btnCloseEdit.click();
+                        }
+                        else
+                        {
+                            alert(this.data);
+                        }
                     })
                     .catch(error => {
                         this.error = error.message;

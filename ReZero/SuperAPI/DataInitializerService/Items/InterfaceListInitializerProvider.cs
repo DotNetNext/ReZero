@@ -124,7 +124,9 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryByPrimaryKey,
                     DefaultParameters = new List<DefaultParameter>() {
-                            new DefaultParameter(){ Name="Id",IsRequired=true,FieldOperator=FieldOperatorType.Equal,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("根据主键获取接口","Get interface detail") },
+                            new DefaultParameter(){ Name="Id", ParameterValidate=new ParameterValidate{
+                             IsRequired=true
+                            },FieldOperator=FieldOperatorType.Equal,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("根据主键获取接口","Get interface detail") },
                          }
                 };
             });
@@ -253,7 +255,11 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.InsertObject,
                     DefaultParameters = new List<DefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
+                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
+                        new ParameterValidate()
+                        {
+                             IsRequired=true
+                        },ValueType = typeof(string).Name },
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId="+PubConst.TreeUrlFormatId,ValueType = typeof(string).Name },
@@ -284,9 +290,13 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.UpdateObject,
                     DefaultParameters = new List<DefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,ValueType = typeof(long).Name },
+                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ParameterValidate=
+                        new ParameterValidate()
+                        {
+                             IsRequired=true
+                        } ,ValueType = typeof(long).Name },
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name }
+                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description),ValueType = typeof(string).Name }
                     }
                 };
             });

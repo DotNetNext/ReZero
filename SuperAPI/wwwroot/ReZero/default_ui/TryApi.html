@@ -8,8 +8,8 @@
         <div class="url">
             {{ data.HttpMethod }}: {{data.Url}}
         </div>
-        <div class="parameter" v-if="data.DataModel.WhereParameters && data.DataModel.WhereParameters.length > 0">
-            <div v-for="param in data.DataModel.WhereParameters" :key="param.Name">
+        <div class="parameter" v-if="data.DataModel.DefaultParameters && data.DataModel.DefaultParameters.length > 0">
+            <div v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
                 <label>{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
 
                 <div v-if="param.ValueIsReadOnly==false">
@@ -57,7 +57,7 @@
                 var fullUrl = json.Url;
                 var postData = {}; 
               
-                json.DataModel.WhereParameters.forEach(function (param) {
+                json.DataModel.DefaultParameters.forEach(function (param) {
                     postData[param.Name] = param.Value;
                 });
                 // 发送 POST 请求
