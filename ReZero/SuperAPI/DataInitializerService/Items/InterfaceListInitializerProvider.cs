@@ -290,12 +290,12 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.UpdateObject,
                     DefaultParameters = new List<DefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ParameterValidate=
+                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ValueType = typeof(long).Name },
+                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
                         new ParameterValidate()
                         {
-                             IsRequired=true
-                        } ,ValueType = typeof(long).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
+                            IsRequired=true
+                        } ,ValueType = typeof(string).Name },
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description),ValueType = typeof(string).Name }
                     }
                 };
