@@ -278,12 +278,8 @@ namespace ReZero.SuperAPI
                     WhereParameters = new List<WhereParameter>()
                     {
                         new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,ValueType = typeof(long).Name },
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name },
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value=null,ValueType = typeof(string).Name },
-                        DataInitHelper.GetIsDynamicParameter(),
-                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Creator),Value="" ,ValueType = typeof(string).Name },
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ValueType = typeof(string).Name }, 
+                        new WhereParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name } 
                     }
                 };
             });
