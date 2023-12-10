@@ -13,7 +13,7 @@
                         <button onclick="$('#txtSearch').val('')" id="btnSearch" class="btn btn-close" type="submit">清空</button>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
+                        <button @click="openAddDiv()" class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -40,10 +40,10 @@
                         </td>
 
                         <td class="table_opt">
-                            <button data-toggle="modal" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
+                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
                             </button>
-                            <button data-toggle="modal" @click="deleteFunc(item)" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
+                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
                                 <i class="mdi mdi-do-not-disturb"></i> 删除
                             </button>
                         </td>
@@ -70,14 +70,14 @@
                 </div>
                 <div class="modal-body">
                     <form id="frmEdit">
-                        <input type="hidden" name="Id" />
+                        <input type="hidden"  v-model="formData.Id"  name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">名称：</label>
-                            <input type="text" name="Name" class="form-control" id="recipient-name">
+                            <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">内容：</label>
-                            <textarea class="form-control" name="Description" id="message-text"></textarea>
+                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
                         </div>
                     </form>
                 </div>
@@ -94,7 +94,10 @@
         el: '#apibox',
         data: {
             data: null,
-            error: null
+            error: null,
+            formData: {
+               
+            }
         },
         mounted() {
             this.fetchData("");
@@ -116,7 +119,7 @@
 
                 this.fetchData("&Name=" + $("#txtSearch").val());
             },
-            deleteFunc: function (item) {
+            deleteAndConfirm: function (item) {
                 if (item == null) {
                     var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategoryList?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url)
@@ -134,29 +137,33 @@
                     localStorage.delId = item.Id;
                 }
             },
-            addOrUpdate: function () {
-                var frmId = "frmEdit";
-                var json = tools.formToJson(frmId);
-                var url = json.Id ?
-                    "/PrivateReZeroRoute/100003/UpdateDynamicInterfaceCategory" :
-                    "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
-                if (json.Id) {
-                    axios.get("/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById")
+            openEditDiv: function (item)
+            {
+                var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById?id="+item.Id;
+                if (item.Id) {
+                    axios.get(urlById)
                         .then(response => {
-                            this.data = response.data;
-                            this.error = null;
-                            this.onSearch();
-                            frmId.reset();
-                            btnCloseEdit.click();  
+                            this.formData= response.data;
                         })
                         .catch(error => {
                             this.error = error.message;
-                            this.data = null; 
+                            this.data = null;
                         });
                 }
-                else {
-                    this.addOrUpdateSubmit(url,json);
-                } 
+            },
+            openAddDiv: function (item)
+            {
+                this.formData = {};
+            },
+            addOrUpdate: function () { 
+                var th = this;
+                var frmId = "frmEdit";
+                var json = this.formData;
+                var url = json.Id ?
+                    "/PrivateReZeroRoute/100003/UpdateDynamicInterfaceCategory" :
+                    "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
+                var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById";
+                this.addOrUpdateSubmit(url, json);
             },
             addOrUpdateSubmit: function (url, json) { 
                 var th = this;

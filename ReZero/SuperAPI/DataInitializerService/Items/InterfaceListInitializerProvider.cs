@@ -288,6 +288,27 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data5);
+
+
+            //动态接口分类根据主键获取详情
+            ZeroInterfaceList data6 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetCateTreeById;
+                it.GroupName = nameof(ZeroInterfaceCategory);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetCateTreeById);
+                it.Url = GetUrl(it, "GetDynamicInterfaceCategoryById");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryByPrimaryKey,
+                    WhereParameters = new List<WhereParameter>() {
+                             new WhereParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") } 
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data6);
         }
     }
 }

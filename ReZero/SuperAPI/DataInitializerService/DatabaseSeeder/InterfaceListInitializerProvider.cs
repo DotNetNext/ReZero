@@ -65,6 +65,11 @@ namespace ReZero.SuperAPI
         [TextEN("Delete dynamic category")]
         public const long DeleteCateTreeId = 9;
 
+
+        [TextCN("根据主键查询接口分类")]
+        [TextEN("Get category by id")]
+        public const long GetCateTreeById = 10;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()
