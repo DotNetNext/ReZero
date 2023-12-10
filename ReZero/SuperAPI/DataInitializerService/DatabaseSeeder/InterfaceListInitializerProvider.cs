@@ -13,6 +13,34 @@ namespace ReZero.SuperAPI
         [TextEN("Database management")]
         public const long DbManId = 1;
         /// <summary>
+        /// 删除数据库
+        /// </summary> 
+        [TextCN("删除数据库")]
+        [TextEN("Daelete Database")]
+        public const long DelDbManId = 11;
+
+        /// <summary>
+        /// 添加数据库
+        /// </summary> 
+        [TextCN("添加数据库")]
+        [TextEN("Add Database")]
+        public const long AddDbManId = 12;
+
+        /// <summary>
+        /// 修改库管理
+        /// </summary> 
+        [TextCN("添加数据库")]
+        [TextEN("Edit Database")]
+        public const long EditDbManId = 13;
+
+        /// <summary>
+        /// 获取数据库根据ID
+        /// </summary> 
+        [TextCN("获取数据库根据ID")]
+        [TextEN("Get database by id")]
+        public const long GetDbManIdById = 14;
+
+        /// <summary>
         /// 内部接口
         /// </summary> 
         [TextCN("接口列表")]
