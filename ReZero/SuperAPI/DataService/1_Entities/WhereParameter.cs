@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ReZero.SuperAPI
 {
-    public class WhereParameter
+    public class DefaultParameter
     {
         public string? Name { get; set; }
         public string? FieldName { get; set; }  

@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
     {
         internal void InitData(Type type, ISqlSugarClient db, DataModel dataModel)
         {
-            var datas = dataModel.WhereParameters.ToDictionary(it => it.Name, it => it.Value);
+            var datas = dataModel.DefaultParameters.ToDictionary(it => it.Name, it => it.Value);
             var entityInfo = db.EntityMaintenance.GetEntityInfo(type);
             dataModel.Data = db.DynamicBuilder().CreateObjectByType(type, datas);
             var columnInfos = entityInfo.Columns.Where(it => it.IsPrimarykey).ToList();

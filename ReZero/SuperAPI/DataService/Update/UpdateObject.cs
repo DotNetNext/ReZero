@@ -13,7 +13,7 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitData(type, db, dataModel);
-            await db.UpdateableByObject(dataModel.Data).UpdateColumns(dataModel.WhereParameters.Select(it=>it.Name).ToArray()).ExecuteCommandAsync();
+            await db.UpdateableByObject(dataModel.Data).UpdateColumns(dataModel.DefaultParameters.Select(it=>it.Name).ToArray()).ExecuteCommandAsync();
             return true;
         }
     }

@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         public object? Data { get; set; } 
         public long TableId { get; set; }
         public List<OrderParemter>? OrderParemters { get; set; }
-        public List<WhereParameter>? WhereParameters { get; set; } 
+        public List<DefaultParameter>? DefaultParameters { get; set; } 
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; } 
         public DataModelJoinParameters? DataModelJoinParameters { get; set; }

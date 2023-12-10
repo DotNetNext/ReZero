@@ -57,7 +57,7 @@
     <nav>
         <ul class="pagination no-border" v-if="data && data.Page">
             <li v-for="page in Array.from({ length: data.Page.TotalPage }, (_, index) => index + 1)" :key="page">
-                <a href="#!">{{ page }}</a>
+                <a @click="onSearch(page)">{{ page }}</a>
             </li>
         </ul>
     </nav>
@@ -115,9 +115,14 @@
                         this.data = null;
                     });
             },
-            onSearch: function () {
+            onSearch: function (page) {
 
-                this.fetchData("&Name=" + $("#txtSearch").val());
+                var urlParameters = "&Name=" + $("#txtSearch").val();
+                if (page)
+                {
+                    urlParameters += "&PageNumber=" + page;
+                }
+                this.fetchData(urlParameters);
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {

@@ -42,7 +42,7 @@ namespace ReZero.SuperAPI
                 else
                 {
                     DataService dataService = new DataService();
-                    dataService.BindHttpParameters(interInfo.DataModel, context);
+                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;

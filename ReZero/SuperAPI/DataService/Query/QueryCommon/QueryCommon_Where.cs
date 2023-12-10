@@ -14,9 +14,9 @@ namespace ReZero.SuperAPI
         {
             List<IConditionalModel> conditionalModels = new List<IConditionalModel>();
             List<IFuncModel> funcModels = new List<IFuncModel>();
-            if (dataModel.WhereParameters != null)
+            if (dataModel.DefaultParameters != null)
             {
-                foreach (var item in dataModel.WhereParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+                foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
                 {
                     item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
                     if (item.Value != null)
@@ -33,7 +33,7 @@ namespace ReZero.SuperAPI
                             }
                         }
                     }
-                    var forNames = dataModel.WhereParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
+                    var forNames = dataModel.DefaultParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
                     if (forNames.Any())
                     {
                         ConvetConditionalModelForNames(conditionalModels, item, forNames);
@@ -52,7 +52,7 @@ namespace ReZero.SuperAPI
             return queryObject;
         }
 
-        private static void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, WhereParameter item, List<WhereParameter> forNames)
+        private static void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, DefaultParameter item, List<DefaultParameter> forNames)
         {
             var colItem = new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
             var conditionalCollections = new ConditionalCollections()
@@ -70,7 +70,7 @@ namespace ReZero.SuperAPI
             conditionalModels.Add(conditionalCollections);
         }
 
-        private static void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, WhereParameter? item)
+        private static void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, DefaultParameter? item)
         {
             switch (item?.FieldOperator)
             {

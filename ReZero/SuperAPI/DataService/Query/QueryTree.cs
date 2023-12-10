@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
             var parameter = dataModel.TreeParameter;
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             var data = await db.QueryableByObject(type)
-                .InSingleAsync(dataModel.WhereParameters.First().Value);
+                .InSingleAsync(dataModel.DefaultParameters.First().Value);
             object? parentId = 1;
             if(data!=null)
                 parentId=data.GetType()?.GetProperty(parameter?.ParentCodePropertyName)?.GetValue(data)??1;

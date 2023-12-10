@@ -7,13 +7,13 @@ namespace ReZero.SuperAPI
     internal class DataInitHelper
     {
 
-        public static WhereParameter GetIsInitializedParameter()
+        public static DefaultParameter GetIsInitializedParameter()
         {
-            return new WhereParameter() { Name = "IsInitialized", ValueIsReadOnly = true, Value = true, ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") };
+            return new DefaultParameter() { Name = "IsInitialized", ValueIsReadOnly = true, Value = true, ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") };
         }
-        public static WhereParameter GetIsDynamicParameter()
+        public static DefaultParameter GetIsDynamicParameter()
         {
-            return new WhereParameter() { Name = "IsInitialized", ValueIsReadOnly = true, Value = false, ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") };
+            return new DefaultParameter() { Name = "IsInitialized", ValueIsReadOnly = true, Value = false, ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") };
         }
     }
 }
