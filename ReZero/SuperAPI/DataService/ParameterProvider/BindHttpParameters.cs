@@ -66,7 +66,7 @@ namespace ReZero.SuperAPI
 
         private static bool IsUserName(DefaultParameter item)
         {
-            return item?.WhereParameterOnlyInsert?.IsUserName == true;
+            return item?.InsertParameter?.IsUserName == true;
         }
 
         private static bool IsDefaultValue(DefaultParameter item)

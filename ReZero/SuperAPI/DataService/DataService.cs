@@ -5,6 +5,7 @@ using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
@@ -17,11 +18,20 @@ namespace ReZero.SuperAPI
             try
             {
                 var actionTypeName = GetActionTypeName(dataModel);
-                var actionType = Type.GetType(actionTypeName);
-                CheckActionType(dataModel, actionType);
-                var actionInstance = (IDataService)Activator.CreateInstance(actionType);
-                var result = await actionInstance.ExecuteAction(dataModel);
-                return result;
+                var errorParameters = ValidateParameters.Check(dataModel);
+                object? errorData = await ErrorParameterHelper.GetErrorParameters(errorParameters);
+                if (ErrorParameterHelper.IsError(errorData))
+                {
+                    return errorData;
+                }
+                else
+                {
+                    var actionType = Type.GetType(actionTypeName);
+                    CheckActionType(dataModel, actionType);
+                    var actionInstance = (IDataService)Activator.CreateInstance(actionType);
+                    var result = await actionInstance.ExecuteAction(dataModel);
+                    return result;
+                }
             }
             catch (Exception ex)
             {
@@ -29,7 +39,7 @@ namespace ReZero.SuperAPI
                 throw;
             }
         }
-
+         
         private static string GetActionTypeName(DataModel dataModel)
         {
             return $"ReZero.SuperAPI.{dataModel.ActionType}";
