@@ -18,7 +18,8 @@ namespace ReZero.SuperAPI
         private readonly string layoutContentPlaceholder = "@@lyear-layout-content";
         private readonly string masterMenuPlaceholder = "@@left-menu";
         private readonly string mastreNavNamePlaceholder = "@@nav-title";
-
+        private readonly string pageControlPlaceholder = "@@page_control.html";
+        private readonly string pageControlName = "page_control.html";
         public DefaultUiManager()
         {
         }
@@ -50,10 +51,24 @@ namespace ReZero.SuperAPI
             //Nav title
             masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
 
+            //Page html
+            modifiedContent = await ReplacePageContext(filePath, modifiedContent);
+
             //Body context
-            masterPageHtml=ReplaceBodyContext(modifiedContent,  masterPageHtml, menuHtml);
+            masterPageHtml =ReplaceBodyContext(modifiedContent,  masterPageHtml, menuHtml);
 
             return masterPageHtml;
+        }
+
+        private async Task<string> ReplacePageContext(string filePath,string html)
+        {
+            if (html?.Contains(pageControlPlaceholder)==true)
+            {
+                var path = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, pageControlName);
+                var pageHtml = await File.ReadAllTextAsync(path);
+                html= html.Replace(pageControlPlaceholder, pageHtml);
+            }
+            return html;
         }
 
         private string ReplaceBodyContext(string modifiedContent, string masterPageHtml, string menuHtml)

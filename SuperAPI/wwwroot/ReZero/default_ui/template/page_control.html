@@ -1,0 +1,8 @@
+﻿<nav>
+    <ul class="pagination no-border" v-if="data && data.Page">
+        <li v-for="page in Array.from({ length: data.Page.TotalPage }, (_, index) => index + 1)" :key="page">
+            <a href="#" @click="onSearch(page)">{{ page }}</a>
+        </li>
+        <li><a>当前：{{data.Page.PageNumber}}/{{data.Page.TotalPage}}&nbsp;&nbsp; 总共：{{data.Page.TotalCount}}</a> </li>
+    </ul>
+</nav>

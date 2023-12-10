@@ -54,14 +54,7 @@
         </div>
 
     </div>
-    <nav>
-        <ul class="pagination no-border" v-if="data && data.Page">
-            <li v-for="page in Array.from({ length: data.Page.TotalPage }, (_, index) => index + 1)" :key="page">
-                <a href="#" @click="onSearch(page)">{{ page }}</a>
-            </li>
-            <li><a>当前：{{data.Page.PageNumber}}/{{data.Page.TotalPage}}&nbsp;&nbsp; 总共：{{data.Page.TotalCount}}</a> </li>
-        </ul>
-    </nav>
+    @@page_control.html
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -71,7 +64,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="frmEdit">
-                        <input type="hidden"  v-model="formData.Id"  name="Id" />
+                        <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">名称：</label>
                             <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
