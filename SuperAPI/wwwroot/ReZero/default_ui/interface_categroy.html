@@ -57,7 +57,7 @@
     <nav>
         <ul class="pagination no-border" v-if="data && data.Page">
             <li v-for="page in Array.from({ length: data.Page.TotalPage }, (_, index) => index + 1)" :key="page">
-                <a @click="onSearch(page)">{{ page }}</a>
+                <a href="#" @click="onSearch(page)">{{ page }}</a>
             </li>
         </ul>
     </nav>
