@@ -66,12 +66,18 @@
                     <form id="frmEdit">
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">名称：</label>
+                            <label for="recipient-name" class="control-label">库备注：</label>
                             <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">内容：</label>
-                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
+                            <label for="message-text" class="control-label">字符串：</label>
+                            <textarea class="form-control" v-model="formData.Connection" name="Connection" id="message-text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">数据库类型：</label>
+                            <select class="form-control" v-model="formData.DbType" name="DbType">
+                                
+                            </select>
                         </div>
                     </form>
                 </div>
