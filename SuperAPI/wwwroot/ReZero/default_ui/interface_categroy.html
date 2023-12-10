@@ -120,7 +120,7 @@
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
-                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategoryList?IsDeleted=true&Id=" + localStorage.delId;
+                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategory?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url)
                         .then(response => {
                             this.data = response.data;

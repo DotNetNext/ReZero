@@ -227,7 +227,7 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(DeleteCateTreeId);
-                it.Url = GetUrl(it, "DeleteDynamicInterfaceCategoryList");
+                it.Url = GetUrl(it, "DeleteDynamicInterfaceCategory");
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,

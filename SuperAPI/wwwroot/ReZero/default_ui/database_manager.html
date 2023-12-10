@@ -7,15 +7,13 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-1"><label class="form-control" t>名称:</label></div>
-                    <div class="col-md-3"><input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本.."></div>
-                    <div class="col-md-1">
-                        <button class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
+                    <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="分类名称"></div>
+                    <div class="col-md-2">
+                        <button @click="onSearch()" class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button onclick="$('#txtSearch').val('')" id="btnSearch" class="btn btn-close" type="submit">清空</button>
                     </div>
                     <div class="col-md-1">
-
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
+                        <button @click="openAddDiv()" class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -29,29 +27,23 @@
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>书籍名</th>
-                        <th>作者</th>
-                        <th>国籍</th>
-                        <th>分类</th>
-                        <th>库存</th>
+                    <tr v-if="data && data.Columns && data.Columns.length > 0">
+                        <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
                         <th>操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>钦差大臣</td>
-                        <td>果戈理</td>
-                        <td>俄国</td>
-                        <td>国外名族</td>
-                        <td>sdfa</td>
+                <tbody v-if="data &&data.Data">
+                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
+
+                        <td v-for="column in data.Columns">
+                            {{ item[column.PropertyName] }}
+                        </td>
+
                         <td class="table_opt">
-                            <button data-toggle="modal" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
+                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
                             </button>
-                            <button data-toggle="modal" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
+                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
                                 <i class="mdi mdi-do-not-disturb"></i> 删除
                             </button>
                         </td>
@@ -62,65 +54,131 @@
         </div>
 
     </div>
-    <nav>
-        <ul class="pagination no-border">
-            <li class="disabled">
-                <a href="#!">
-                    <span><i class="mdi mdi-chevron-left"></i></span>
-                </a>
-            </li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#!">2</a></li>
-            <li><a href="#!">3</a></li>
-            <li><a href="#!">4</a></li>
-            <li><a href="#!">5</a></li>
-            <li>
-                <a href="#!">
-                    <span><i class="mdi mdi-chevron-right"></i></span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    @@page_control.html
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">发送新消息给 @mdo</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">添加动态接口分类</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="frmEdit">
+                        <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
-                            <label for="recipient-name" class="control-label">收件人：</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="recipient-name" class="control-label">名称：</label>
+                            <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">消息内容：</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <label for="message-text" class="control-label">内容：</label>
+                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">发送消息</button>
+                    <button type="button" id="btnCloseEdit" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="addOrUpdate()" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    new Vue({
+    var vueObj = new Vue({
         el: '#apibox',
         data: {
             data: null,
-            error: null
+            error: null,
+            formData: {
+
+            }
         },
         mounted() {
-            this.fetchData();
+            this.fetchData("");
         },
         methods: {
-            fetchData(name) {
+            fetchData(append) {
+                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryList?ParentId=200" + append;
+                axios.get(url)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            onSearch: function (page) {
 
+                var urlParameters = "&Name=" + $("#txtSearch").val();
+                if (page) {
+                    urlParameters += "&PageNumber=" + page;
+                }
+                this.fetchData(urlParameters);
+            },
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteDataBaseInfo?IsDeleted=true&Id=" + localStorage.delId;
+                    axios.get(url)
+                        .then(response => {
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },
+            openEditDiv: function (item) {
+                var urlById = "/PrivateReZeroRoute/100003/GetDataBaseInfoById?id=" + item.Id;
+                if (item.Id) {
+                    axios.get(urlById)
+                        .then(response => {
+                            this.formData = response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                }
+            },
+            openAddDiv: function (item) {
+                this.formData = {};
+            },
+            addOrUpdate: function () {
+                var th = this;
+                var frmId = "frmEdit";
+                var json = this.formData;
+                var url = json.Id ?
+                    "/PrivateReZeroRoute/100003/UpdateDatabaseInfo" :
+                    "/PrivateReZeroRoute/100003/AddDatabaseInfo";
+                var urlById = "/PrivateReZeroRoute/100003/GetDatabaseInfoById";
+                this.addOrUpdateSubmit(url, json);
+            },
+            addOrUpdateSubmit: function (url, json) {
+                var th = this;
+                axios.post(url, json)
+                    .then(response => {
+                        this.error = null;
+                        this.onSearch();
+                        if (response.data == true) {
+                            frmEdit.reset();
+                            btnCloseEdit.click();
+                        }
+                        else {
+                            tools.highlightErrorFields(response.data.ErrorParameters)
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             }
         }
     });</script>
