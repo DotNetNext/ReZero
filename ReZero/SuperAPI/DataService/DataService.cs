@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
         {
             try
             {
-                var actionTypeName = GetActionTypeName(dataModel);
+                var actionTypeName = InstanceManager.GetActionTypeName(dataModel);
                 var errorParameters = ValidateParameters.Check(dataModel);
                 object? errorData = await ErrorParameterHelper.GetErrorParameters(errorParameters);
                 if (ErrorParameterHelper.IsError(errorData))
@@ -27,7 +27,7 @@ namespace ReZero.SuperAPI
                 else
                 {
                     var actionType = Type.GetType(actionTypeName);
-                    CheckActionType(dataModel, actionType);
+                    InstanceManager.CheckActionType(dataModel, actionType);
                     var actionInstance = (IDataService)Activator.CreateInstance(actionType);
                     var result = await actionInstance.ExecuteAction(dataModel);
                     return result;
@@ -39,18 +39,6 @@ namespace ReZero.SuperAPI
                 throw;
             }
         }
-         
-        private static string GetActionTypeName(DataModel dataModel)
-        {
-            return $"ReZero.SuperAPI.{dataModel.ActionType}";
-        }
-
-        private static void CheckActionType(DataModel dataModel, Type actionType)
-        {
-            if (actionType == null)
-            {
-                throw new ArgumentException($"Invalid ActionType: {dataModel.ActionType}");
-            }
-        } 
+   
     }
 }

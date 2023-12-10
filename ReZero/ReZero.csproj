@@ -18,4 +18,8 @@
     <PackageReference Include="SqlSugarCore" Version="5.1.4.127-preview02" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SuperAPI\DataService\TypeHelper\" />
+  </ItemGroup>
+
 </Project>
