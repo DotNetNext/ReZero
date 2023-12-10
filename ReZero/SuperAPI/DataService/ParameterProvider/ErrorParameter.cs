@@ -6,7 +6,7 @@ namespace ReZero.SuperAPI
 {
     public class ErrorParameter
     {
-        internal string? Name;
+        public string? Name { get; set; }
 
         public string? ErrorType { get;   set; }
         public string? Message { get;   set; }

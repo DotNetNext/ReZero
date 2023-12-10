@@ -176,7 +176,7 @@
                         }
                         else
                         {
-                            alert(this.data);
+                            tools.highlightErrorFields(response.data.ErrorParameters)
                         }
                     })
                     .catch(error => {

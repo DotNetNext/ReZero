@@ -1,14 +1,21 @@
-﻿var tools = { 
-    formToJson: function (id) {
-        var formData = {};
-        var formElements = document.getElementById(id).elements;
+﻿var tools = {
+    highlightErrorFields: function (errorArray) {
+        errorArray.forEach(function (error) {
+            // 获取 Name 属性的值
+            var fieldName = error.Name;
 
-        for (var i = 0; i < formElements.length; i++) {
-            var element = formElements[i];
-            if (element.name && element.value) {
-                formData[element.name] = element.value;
+            // 查找具有相同 name 属性值的所有元素
+            var elements = document.getElementsByName(fieldName);
+
+            // 循环遍历找到的元素，设置样式
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.border = "2px solid red";
             }
-        }
-        return formData;
-    }
+            setTimeout(function () {
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].style.border = "";
+                }
+            }, 3000);
+        });
+    } 
 }
