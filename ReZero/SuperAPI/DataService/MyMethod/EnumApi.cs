@@ -1,6 +1,7 @@
 ﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ReZero.SuperAPI 
@@ -15,7 +16,7 @@ namespace ReZero.SuperAPI
             {
                 enumItemInfos.Add(new EnumItemInfo() { Name = item.Key, Value = Convert.ToInt32(item.Value) + "" });
             }
-            return enumItemInfos;
+            return enumItemInfos.Take(7).ToList();
         }
     }
 }
