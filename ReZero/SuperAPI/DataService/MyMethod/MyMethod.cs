@@ -16,10 +16,21 @@ namespace ReZero.SuperAPI
         }
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
-            var id = dataModel.DefaultParameters.First().Value;
-            var data = await db.QueryableByObject(type).InSingleAsync(id);
-            return data;
+            if (dataModel.MyMethodInfo == null) return null;
+
+            var classType= Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
+            var methodInfo=classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
+            var classObj =  Activator.CreateInstance(classType, nonPublic: true);
+            object [] parameters = null;
+            var result = methodInfo.Invoke(classObj, parameters);
+            if (result is Task)
+            {
+                throw new NotSupportedException();
+            }
+            else
+            {
+                return await Task.FromResult(result);
+            }
         }
     }
 }
