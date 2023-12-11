@@ -1,0 +1,4 @@
+﻿iframe {
+    width: 100%;
+    border: none; /* 去除 iframe 边框 */
+}
