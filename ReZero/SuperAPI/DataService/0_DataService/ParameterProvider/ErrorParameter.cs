@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     {
         public string? Name { get; set; }
 
-        public string? ErrorType { get;   set; }
-        public string? Message { get;   set; }
+        public string? ErrorType { get; set; }
+        public string? Message { get; set; }
     }
 }

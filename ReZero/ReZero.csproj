@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SuperAPI\DataService\TypeHelper\" />
+    <Folder Include="SuperAPI\DataService\Code\" />
   </ItemGroup>
 
 </Project>

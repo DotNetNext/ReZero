@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReZero.SuperAPI
+namespace ReZero.SuperAPI 
 {
     public partial class DataService : IDataService
     {
@@ -39,6 +39,6 @@ namespace ReZero.SuperAPI
                 throw;
             }
         }
-   
+
     }
 }
