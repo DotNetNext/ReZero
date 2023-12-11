@@ -56,10 +56,11 @@
                 // 构造请求
                 var fullUrl = json.Url;
                 var postData = {}; 
-              
-                json.DataModel.DefaultParameters.forEach(function (param) {
-                    postData[param.Name] = param.Value;
-                });
+                if (json.DataModel.DefaultParameters) {
+                    json.DataModel.DefaultParameters.forEach(function (param) {
+                        postData[param.Name] = param.Value;
+                    });
+                }
                 // 发送 POST 请求
                 axios.post(fullUrl, postData)
                     .then(function (response) {

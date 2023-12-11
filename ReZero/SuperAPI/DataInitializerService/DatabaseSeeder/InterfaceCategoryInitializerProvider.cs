@@ -65,6 +65,14 @@ namespace ReZero.SuperAPI
         [TextCN("接口管理")]
         [TextEN("Interface list")]
         public const long Id100003 = 100003;
+
+
+        /// <summary>
+        /// 数据字典
+        /// </summary>
+        [TextCN("数据字典")]
+        [TextEN("Dictionary")]
+        public const long Id100004 = 100004;
         #endregion
 
 

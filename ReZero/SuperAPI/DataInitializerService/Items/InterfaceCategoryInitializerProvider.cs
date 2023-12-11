@@ -124,6 +124,13 @@ namespace ReZero.SuperAPI
                 it.ParentId = Id100;
                 it.Url = "/rezero/internal_interface.html?InterfaceCategoryId=" + Id100003;
             }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id100004;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id100004);
+                it.ParentId = Id100;
+                it.Url = "/rezero/internal_interface.html?InterfaceCategoryId=" + Id100004;
+            }));
         }
 
         private static ZeroInterfaceCategory GetNewItem(Action<ZeroInterfaceCategory> action)

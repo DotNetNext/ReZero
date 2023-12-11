@@ -98,6 +98,11 @@ namespace ReZero.SuperAPI
         [TextEN("Get category by id")]
         public const long GetCateTreeById = 10;
 
+        [TextCN("下拉列表：获取数据库类型")]
+        [TextEN("Get database type list")]
+
+        public const long GetDbTypeList = 15;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()
