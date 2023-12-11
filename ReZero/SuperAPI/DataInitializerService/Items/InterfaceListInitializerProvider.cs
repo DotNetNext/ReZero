@@ -26,7 +26,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = GetDbTypeList;
-                it.GroupName = nameof(ZeroDatabaseInfo);
+                it.GroupName = nameof(EnumApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
                 it.Name = TextHandler.GetInterfaceListText(GetDbTypeList);
                 it.Url = GetUrl(it, "GetDbTypeList"); 
