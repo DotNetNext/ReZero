@@ -142,10 +142,7 @@ namespace ReZero.SuperAPI
                          new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.DbType) ,ValueType = typeof(int).Name,ParameterValidate=new ParameterValidate(){ 
                          IsRequired=true
                          }},
-
-                         new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.Connection) ,ValueType = typeof(string).Name, ParameterValidate=new ParameterValidate(){ 
-                         IsRequired=true
-                         }},
+                          
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
                         InsertParameter=new InsertParameter(){IsUserName=true},Value="" ,ValueType = typeof(string).Name },
 
