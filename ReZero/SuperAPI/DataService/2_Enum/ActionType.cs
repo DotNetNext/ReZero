@@ -22,6 +22,9 @@ namespace ReZero.SuperAPI
         UpdateObject = 40000,
 
         //DDL
-        DllDatabaseList = 50000
+        DllDatabaseList = 50000,
+
+        //My method
+        MyMethod = 99999,
     }
 }
