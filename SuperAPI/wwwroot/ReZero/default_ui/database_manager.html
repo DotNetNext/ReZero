@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <label for="message-text" class="control-label">数据库类型：</label>
                             <select class="form-control" v-model="formData.DbType" name="DbType">
-                                
+                                <option v-for="item in dbTypeList" v-bind:value="item.Value"> {{item.Name}} </option>
                             </select>
                         </div>
                     </form>
@@ -95,6 +95,7 @@
         data: {
             data: null,
             error: null,
+            dbTypeList:[],
             formData: {
 
             }
@@ -108,6 +109,17 @@
                 axios.get(url)
                     .then(response => {
                         this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+
+
+                axios.get("/PrivateReZeroRoute/100004/GetDbTypeList")
+                    .then(response => {
+                        this.dbTypeList = response.data; 
                         this.error = null;
                     })
                     .catch(error => {
