@@ -41,6 +41,20 @@ namespace ReZero.SuperAPI
         public const long GetDbManIdById = 14;
 
         /// <summary>
+        /// 测试数据库
+        /// </summary> 
+        [TextCN("测试数据库")]
+        [TextEN("Test database")]
+        public const long TestDatabaseId=16;
+
+        /// <summary>
+        /// 创建数据库
+        /// </summary> 
+        [TextCN("创建数据库")]
+        [TextEN("Create database")]
+        public const long CreateDatabaseId = 17;
+
+        /// <summary>
         /// 内部接口
         /// </summary> 
         [TextCN("接口列表")]

@@ -115,8 +115,8 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.BizDeleteObject,
                     DefaultParameters = new List<DefaultParameter>() {
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") },
-                              new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="true", Description = TextHandler.GetCommonTexst("是否删除", "IsDeleted") }
+                             new DefaultParameter() { Name = nameof(ZeroDatabaseInfo.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") },
+                              new DefaultParameter() { Name = nameof(ZeroDatabaseInfo.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="true", Description = TextHandler.GetCommonTexst("是否删除", "IsDeleted") }
                          }
                 };
             });
@@ -144,7 +144,7 @@ namespace ReZero.SuperAPI
                          IsRequired=true
                          }},
 
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
+                        new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.Creator),
                         InsertParameter=new InsertParameter(){IsUserName=true},Value="" ,ValueType = typeof(string).Name },
 
                     }
@@ -214,11 +214,55 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.QueryByPrimaryKey,
                     DefaultParameters = new List<DefaultParameter>() {
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") }
+                             new DefaultParameter() { Name = nameof(ZeroDatabaseInfo.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") }
                          }
                 };
             });
             zeroInterfaceList.Add(data6);
+
+
+
+            //测试数据库
+            ZeroInterfaceList data7 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = TestDatabaseId;
+                it.GroupName = nameof(ZeroDatabaseInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(TestDatabaseId);
+                it.Url = GetUrl(it, "TestDatabaseInfo");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MyMethod,
+                    DefaultParameters = new List<DefaultParameter>() {
+                             new DefaultParameter() { Name = nameof(ZeroDatabaseInfo.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") }
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data7);
+
+
+            //创建数据库
+            ZeroInterfaceList data8 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = CreateDatabaseId;
+                it.GroupName = nameof(ZeroDatabaseInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(CreateDatabaseId);
+                it.Url = GetUrl(it, "CreateDatabaseInfo");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.QueryByPrimaryKey,
+                    DefaultParameters = new List<DefaultParameter>() {
+                             new DefaultParameter() { Name = "Connection",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,Value=0, Description = TextHandler.GetCommonTexst("连接字符串", "Connection string") },
+                             new DefaultParameter() { Name = "DbType",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,Value=0, Description = TextHandler.GetCommonTexst("库类型", "DbType") }
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data8);
         }
         public void GetZeroInterfaceList()
         {
