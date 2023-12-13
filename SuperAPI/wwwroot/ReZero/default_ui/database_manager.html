@@ -70,14 +70,14 @@
                             <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">字符串：</label>
-                            <textarea class="form-control" v-model="formData.Connection" name="Connection" id="message-text"></textarea>
-                        </div>
-                        <div class="form-group">
                             <label for="message-text" class="control-label">数据库类型：</label>
                             <select class="form-control" v-model="formData.DbType" name="DbType">
                                 <option v-for="item in dbTypeList" v-bind:value="item.Value"> {{item.Name}} </option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">字符串：</label>
+                            <textarea class="form-control" v-model="formData.Connection" name="Connection" id="message-text"></textarea>
                         </div>
                     </form>
                 </div>

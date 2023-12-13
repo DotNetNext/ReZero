@@ -29,15 +29,16 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(EnumApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
                 it.Name = TextHandler.GetInterfaceListText(GetDbTypeList);
-                it.Url = GetUrl(it, "GetDbTypeList"); 
+                it.Url = GetUrl(it, "GetDbTypeList");
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod, 
-                    MyMethodInfo=new MyMethodInfo() { 
-                        MethodClassFullName=typeof(EnumApi).FullName,
-                        MethodArgsCount=0,
-                        MethodName=nameof(EnumApi.GetDbTypeSelectDataSource)
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodClassFullName = typeof(EnumApi).FullName,
+                        MethodArgsCount = 0,
+                        MethodName = nameof(EnumApi.GetDbTypeSelectDataSource)
                     }
                 };
             });
@@ -86,7 +87,7 @@ namespace ReZero.SuperAPI
                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroDatabaseInfo.Connection) ,
                             Description=TextHandler.GetCommonTexst("字符串", "Connection")
-                        } 
+                        }
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.QueryCommon,
@@ -138,11 +139,11 @@ namespace ReZero.SuperAPI
                     {
                         new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.Name) ,ParameterValidate=
                         new ParameterValidate(){IsRequired=true},ValueType = typeof(string).Name }, new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.Connection), ValueType = typeof(string).Name,ParameterValidate=new ParameterValidate(){IsRequired=true}},
-                        
-                         new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.DbType) ,ValueType = typeof(int).Name,ParameterValidate=new ParameterValidate(){ 
+
+                         new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.DbType) ,ValueType = typeof(int).Name,ParameterValidate=new ParameterValidate(){
                          IsRequired=true
                          }},
-                          
+
                         new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
                         InsertParameter=new InsertParameter(){IsUserName=true},Value="" ,ValueType = typeof(string).Name },
 
@@ -167,13 +168,32 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.UpdateObject,
                     DefaultParameters = new List<DefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ValueType = typeof(long).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
-                        new ParameterValidate()
+                        new DefaultParameter() { Name=nameof(ZeroDatabaseInfo.Id),ValueType = typeof(long).Name },
+                        new DefaultParameter() { 
+                             Name=nameof(ZeroDatabaseInfo.Name) ,
+                             ParameterValidate=
+                             new ParameterValidate()
+                             {
+                                IsRequired=true
+                             } ,
+                             ValueType = typeof(string).Name },
+                        new DefaultParameter() {
+                            Name=nameof(ZeroDatabaseInfo.DbType) ,ParameterValidate=
+                            new ParameterValidate()
+                            {
+                                IsRequired=true
+                            } ,
+                            ValueType = typeof(string).Name 
+                        },
+                        new DefaultParameter()
                         {
-                            IsRequired=true
-                        } ,ValueType = typeof(string).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description),ValueType = typeof(string).Name }
+                            Name=nameof(ZeroDatabaseInfo.Connection),
+                            ParameterValidate=
+                            new ParameterValidate()
+                            {
+                                IsRequired=true
+                            } ,ValueType = typeof(string).Name
+                        }
                     }
                 };
             });
