@@ -9,6 +9,6 @@ namespace ReZero.SuperAPI
     {
         public string? Name { get; set; } 
         public string? Connection { get; set; }
-        public DbType DbType { get; set; }
+        public SqlSugar.DbType DbType { get; set; }
     }
 }

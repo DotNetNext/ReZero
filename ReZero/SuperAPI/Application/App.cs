@@ -25,6 +25,24 @@ namespace ReZero.SuperAPI
         /// </remarks>
         internal static ISqlSugarClient Db { get => ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
 
+
+        internal static SqlSugarClient? GetDbById(long dbId)
+        {
+            var rootDb = App.Db;
+            var zeroDatabaseInfo = rootDb.Queryable<ZeroDatabaseInfo>().Where(it => it.Id == dbId).First();
+            SqlSugarClient? db = null;
+            if (zeroDatabaseInfo != null)
+            {
+                db = new SqlSugarClient(new ConnectionConfig()
+                {
+                    ConnectionString = zeroDatabaseInfo.Connection,
+                    DbType = zeroDatabaseInfo.DbType,
+                    IsAutoCloseConnection = true,
+                    InitKeyType = InitKeyType.Attribute
+                });
+            } 
+            return db;
+        }
         internal static Language Language
         {
             get
