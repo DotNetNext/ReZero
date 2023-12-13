@@ -21,7 +21,13 @@ namespace ReZero.SuperAPI
             var classType= Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
             var methodInfo=classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
             var classObj =  Activator.CreateInstance(classType, nonPublic: true);
-            object [] parameters = null;
+            object [] parameters = new object[methodInfo.GetParameters().Length];
+            methodInfo.GetParameters().ToList().ForEach((p) =>
+            {
+                object? value = dataModel?.DefaultParameters?.FirstOrDefault(it => it.Name!.EqualsCase(p.Name)).Value;
+                value= UtilMethods.ChangeType2(value, p.ParameterType);
+                parameters[p.Position] = value!;
+            });
             var result = methodInfo.Invoke(classObj, parameters);
             if (result is Task)
             {

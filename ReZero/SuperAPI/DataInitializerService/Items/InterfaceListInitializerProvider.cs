@@ -234,6 +234,11 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "TestDatabaseInfo");
                 it.DataModel = new DataModel()
                 {
+                        MyMethodInfo=new MyMethodInfo() {
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodArgsCount = 1,
+                        MethodName = nameof(MethodApi.TestDb)
+                    },
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.MyMethod,
                     DefaultParameters = new List<DefaultParameter>() {

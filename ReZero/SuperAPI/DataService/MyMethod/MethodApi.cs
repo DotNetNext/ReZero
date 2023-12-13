@@ -7,9 +7,9 @@ namespace ReZero.SuperAPI
 {
     public class MethodApi
     {
-        public bool TestDb(long dbId)
+        public bool TestDb(long Id)
         {
-            SqlSugarClient? db = App.GetDbById(dbId);
+            SqlSugarClient? db = App.GetDbById(Id);
             if (db == null)
             {
                 return false;
