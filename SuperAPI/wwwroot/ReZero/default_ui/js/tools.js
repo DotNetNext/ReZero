@@ -17,5 +17,10 @@
                 }
             }, 3000);
         });
-    } 
+    },
+    alert: function (msg)
+    {
+        $(divAlertBody).html(msg);
+        btnAlert.click();
+    }
 }

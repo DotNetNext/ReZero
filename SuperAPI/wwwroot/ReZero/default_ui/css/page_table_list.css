@@ -12,6 +12,16 @@
         margin: 0 10px;
     }
 
+.table_opt2 {
+    text-align: center;
+    width: 450px;
+}
+
+    .table_opt2 button {
+        max-width: 75px;
+        margin: 0 5px;
+    }
+
 .form-group label {
     border: 0 !important;
     text-align: right
