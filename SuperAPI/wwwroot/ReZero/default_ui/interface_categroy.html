@@ -60,7 +60,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">添加动态接口分类</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
                 </div>
                 <div class="modal-body">
                     <form id="frmEdit">
@@ -89,6 +89,9 @@
         data: {
             data: null,
             error: null,
+            addTitle: "添加动态接口分类",
+            editTitle: "修改态接口分类",
+            title: "",
             formData: {
                
             }
@@ -140,6 +143,7 @@
             {
                 var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById?id="+item.Id;
                 if (item.Id) {
+                    this.title = this.editTitle;
                     axios.get(urlById)
                         .then(response => {
                             this.formData= response.data;
@@ -152,6 +156,7 @@
             },
             openAddDiv: function (item)
             {
+                this.title= this.addTitle;
                 this.formData = {};
             },
             addOrUpdate: function () { 
