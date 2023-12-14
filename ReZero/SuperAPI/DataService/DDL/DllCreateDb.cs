@@ -39,8 +39,20 @@ namespace ReZero.SuperAPI
             {
                 DbType = dbType,
                 ConnectionString = connection + "",
-                IsAutoCloseConnection = true
+                IsAutoCloseConnection = true,
+                MoreSettings = new ConnMoreSettings()
+                {
+                 
+                }
             });
+            if (App.Language == Language.CN)
+            {
+                db.CurrentConnectionConfig.LanguageType = LanguageType.Chinese;
+            }
+            else 
+            {
+                db.CurrentConnectionConfig.LanguageType = LanguageType.English;
+            }
             db.DbMaintenance.CreateDatabase();
         }
 
