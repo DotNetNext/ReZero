@@ -1,111 +1,43 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css" rel="stylesheet" />
 <div id="apibox" class="card">
-    <div class="search-bar">
+    <div class="container-fluid">
 
-        <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-1"><label class="form-control" t>名称:</label></div>
-                    <div class="col-md-3"><input class="form-control" type="text" id="example-text-input" name="example-text-input" placeholder="文本.."></div>
-                    <div class="col-md-1">
-                        <button class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
-                    </div>
-                    <div class="col-md-1">
-
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
-                    </div>
-                    <div class="col-md-4"></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header"><h4>表管理</h4></div>
+         
                 </div>
             </div>
-        </form>
 
-    </div>
-    <div class="card-body">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header"><h4>表字段维护</h4></div>
+                    <div class="card-body">
 
-        <h5> </h5>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>书籍名</th>
-                        <th>作者</th>
-                        <th>国籍</th>
-                        <th>分类</th>
-                        <th>库存</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>钦差大臣</td>
-                        <td>果戈理</td>
-                        <td>俄国</td>
-                        <td>国外名族</td>
-                        <td>sdfa</td>
-                        <td class="table_opt">
-                            <button data-toggle="modal" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
-                                <i class="mdi mdi-lead-pencil"></i> 修改
-                            </button>
-                            <button data-toggle="modal" data-target=".bs-example-modal-sm" class="btn btn-danger btn-w-md" type="button">
-                                <i class="mdi mdi-do-not-disturb"></i> 删除
-                            </button>
-                        </td>
-                    </tr>
+                        <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="example-nf-email">字段1</label>
+                                <input class="form-control" type="email" id="example-nf-email" name="example-nf-email" placeholder="请输入邮箱..">
+                            </div>
+                            <div class="form-group">
+                                <label for="example-nf-password">字段2</label>
+                                <input class="form-control" type="password" id="example-nf-password" name="example-nf-password" placeholder="请输入密码..">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">保存</button>
+                            </div>
+                        </form>
 
-                </tbody>
-            </table>
+                    </div>
+                </div>
+                 
+
+            </div> 
+
         </div>
 
-    </div>
-    <nav>
-        <ul class="pagination no-border">
-            <li class="disabled">
-                <a href="#!">
-                    <span><i class="mdi mdi-chevron-left"></i></span>
-                </a>
-            </li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#!">2</a></li>
-            <li><a href="#!">3</a></li>
-            <li><a href="#!">4</a></li>
-            <li><a href="#!">5</a></li>
-            <li>
-                <a href="#!">
-                    <span><i class="mdi mdi-chevron-right"></i></span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">发送新消息给 @mdo</h4>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">收件人：</label>
-                            <input type="text" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">消息内容：</label>
-                            <textarea class="form-control" id="message-text"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">发送消息</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script>
