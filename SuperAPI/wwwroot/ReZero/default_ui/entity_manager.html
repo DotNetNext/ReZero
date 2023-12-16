@@ -58,47 +58,7 @@
                         </div>
                     </div>
                 </div>
-            
-       
-    <div class="card-body">
-
-        <h5> </h5>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr v-if="data && data.Columns && data.Columns.length > 0">
-                        <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody v-if="data &&data.Data">
-                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
-
-                        <td v-for="column in data.Columns">
-                            {{ item[column.PropertyName] }}
-                        </td>
-
-                        <td class="table_opt2">
-                            <button data-toggle="modal" @click="testDatabase(item)" class="btn btn-dark btn-w-md" type="button">
-                                <i class="mdi mdi-test-tube"></i> 测试
-                            </button>
-                            <button data-toggle="modal" @click="createDatabase(item)" class="btn btn-dark btn-w-md" type="button">
-                                <i class="mdi mdi-cube"></i> 建库
-                            </button>
-                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
-                                <i class="mdi mdi-lead-pencil"></i> 修改
-                            </button>
-                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-danger btn-w-md" type="button">
-                                <i class="mdi mdi-do-not-disturb"></i> 删除
-                            </button>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-
-    </div>
+             
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
