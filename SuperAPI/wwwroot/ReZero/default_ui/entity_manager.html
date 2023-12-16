@@ -9,7 +9,7 @@
                     <div class="card-header"><h4>实体表管理</h4></div>
                     <div class="card">
                         <div class="input-group">
-                            <div class="input-group-btn" >
+                            <div class="input-group-btn">
                                 <input type="hidden" name="search_field" id="search-field" value="title">
                                 <button style="margin-left:28px" class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
                                     数据库 <span class="caret"></span>
@@ -26,7 +26,7 @@
                         <div class="card-toolbar clearfix">
 
                             <div class="toolbar-btn-action">
-                                <a class="btn btn-primary m-r-5" data-toggle="tooltip"  href="#!"><i class="mdi mdi-plus"></i> 新增实体</a>
+                                <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5" data-toggle="tooltip" href="#!"><i class="mdi mdi-plus"></i> 新增实体</a>
                                 <a class="btn btn-success m-r-5" data-toggle="tooltip" data-original-title="从数的表导入实体" href="#!"><i class="mdi mdi-plus"></i>导入实体</a>
                                 <a class="btn btn-success m-r-5" data-toggle="tooltip" data-original-title="根据实体配置修改数据库表结构" href="#!"><i class="mdi mdi-plus"></i>同步表结构</a>
                             </div>
@@ -42,9 +42,7 @@
                                                     <input type="checkbox" id="check-all"><span></span>
                                                 </label>
                                             </th>
-                                            <th>实体名</th>
-                                            <th>表名</th>
-                                            <th>备注</th>
+                                            <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -55,9 +53,9 @@
                                                     <input type="checkbox" name="ids[]" value="1"><span></span>
                                                 </label>
                                             </td>
-                                            <td>1</td>
-                                            <td>第01 </td>
-                                            <td>第01章  </td>
+                                            <td v-for="column in data.Columns">
+                                                {{ item[column.PropertyName] }}
+                                            </td>
                                             <td style="width:100px">
                                                 <div class="btn-group">
                                                     <a class="btn btn-xs btn-default" href="#!" title="" data-toggle="tooltip" data-original-title="编辑实体，不会修改表结构，只有点同步才会"><i class="mdi mdi-pencil"></i></a>
@@ -103,6 +101,37 @@
         </div>
 
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmEdit">
+                        <input type="hidden" v-model="formData.Id" name="Id" />
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">实体名：</label>
+                            <input type="text" v-model="formData.ClassName" name="ClassName" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">表名：</label>
+                            <input type="text" v-model="formData.DbTableName" name="DbTableName" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">备注：</label>
+                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseEdit" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="addOrUpdate()" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var vueObj = new Vue({
@@ -110,8 +139,8 @@
         data: {
             data: null,
             error: null,
-            addTitle: "添加动态接口分类",
-            editTitle: "修改态接口分类",
+            addTitle: "添加实体",
+            editTitle: "修改实体",
             title: "",
             formData: {
 
