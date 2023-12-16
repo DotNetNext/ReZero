@@ -1,11 +1,8 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css" rel="stylesheet" />
 <div id="apibox" class="card">
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-md-7">
-                <div class="card">
+     
+     <div class="card">
                     <div class="card-header"><h4>实体表管理</h4></div>
                     <div class="card">
                         <div class="input-group">
@@ -13,14 +10,14 @@
                                 <option>数据库</option>
                                 <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                             </select>
-                            <input type="text" style="width:150px;margin-left:20px; margin-right:10px"   class="form-control" value="" name="keyword" placeholder="请输入名称">
+                            <input type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
                             <a class="btn btn-group-xs m-r-5" data-toggle="tooltip" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
                         </div>
 
                         <div class="card-toolbar clearfix">
 
                             <div class="toolbar-btn-action">
-                                <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5"   href="#!"><i class="mdi mdi-plus"></i> 新增实体</a>
+                                <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增实体</a>
                                 <a class="btn btn-success m-r-5" data-toggle="tooltip" data-original-title="从数的表导入实体" href="#!"><i class="mdi mdi-plus"></i>导入实体</a>
                                 <a class="btn btn-success m-r-5" data-toggle="tooltip" data-original-title="根据实体配置修改数据库表结构" href="#!"><i class="mdi mdi-plus"></i>同步表结构</a>
                             </div>
@@ -28,70 +25,77 @@
                         <div class="card-body">
 
                             <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr  v-if="data && data.Columns && data.Columns.length > 0">
-                                            <th>
-                                                <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" id="check-all"><span></span>
-                                                </label>
-                                            </th>
-                                            <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody v-if="data &&data.Data">
-                                        <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
-                                            <td style="width:40px">
-                                                <label class="lyear-checkbox checkbox-primary">
-                                                    <input type="checkbox" name="ids[]" value="1"><span></span>
-                                                </label>
-                                            </td>
-                                            <td v-for="column in data.Data">
-                                                {{ item[column.PropertyName] }}
-                                            </td>
-                                            <td style="width:100px">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="#!" title="" data-toggle="tooltip" data-original-title="编辑实体，不会修改表结构，只有点同步才会"><i class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="" data-toggle="tooltip" data-original-title="查看详情"><i class="mdi mdi-eye"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="" data-toggle="tooltip" data-original-title="删除实体不会删除表，删了后还可以导入"><i class="mdi mdi-window-close"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr v-if="data && data.Columns && data.Columns.length > 0">
+                                                <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody v-if="data &&data.Data">
+                                            <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
+
+                                                <td v-for="column in data.Columns">
+                                                    {{ item[column.PropertyName] }}
+                                                </td>
+
+                                                <td class="table_opt">
+                                                    <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
+                                                        <i class="mdi mdi-lead-pencil"></i> 修改
+                                                    </button>
+                                                    <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-danger btn-w-md" type="button">
+                                                        <i class="mdi mdi-do-not-disturb"></i> 删除
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             @@page_control.html
                         </div>
                     </div>
                 </div>
-            </div>
+            
+       
+    <div class="card-body">
 
-            <div class="col-md-5">
-                <div class="card">
-                    <div class="card-header"><h4>表字段维护</h4></div>
-                    <div class="card-body">
+        <h5> </h5>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr v-if="data && data.Columns && data.Columns.length > 0">
+                        <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody v-if="data &&data.Data">
+                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
 
-                        <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
-                            <div class="form-group">
-                                <label for="example-nf-email">字段1</label>
-                                <input class="form-control" type="email" id="example-nf-email" name="example-nf-email" placeholder="请输入邮箱..">
-                            </div>
-                            <div class="form-group">
-                                <label for="example-nf-password">字段2</label>
-                                <input class="form-control" type="password" id="example-nf-password" name="example-nf-password" placeholder="请输入密码..">
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary" type="submit">保存</button>
-                            </div>
-                        </form>
+                        <td v-for="column in data.Columns">
+                            {{ item[column.PropertyName] }}
+                        </td>
 
-                    </div>
-                </div>
+                        <td class="table_opt2">
+                            <button data-toggle="modal" @click="testDatabase(item)" class="btn btn-dark btn-w-md" type="button">
+                                <i class="mdi mdi-test-tube"></i> 测试
+                            </button>
+                            <button data-toggle="modal" @click="createDatabase(item)" class="btn btn-dark btn-w-md" type="button">
+                                <i class="mdi mdi-cube"></i> 建库
+                            </button>
+                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
+                                <i class="mdi mdi-lead-pencil"></i> 修改
+                            </button>
+                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-danger btn-w-md" type="button">
+                                <i class="mdi mdi-do-not-disturb"></i> 删除
+                            </button>
+                        </td>
+                    </tr>
 
-
-            </div>
-
+                </tbody>
+            </table>
         </div>
 
     </div>
@@ -107,15 +111,15 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">实体名：</label>
-                            <input type="text" v-model="formData.ClassName" name="ClassName" class="form-control" >
+                            <input type="text" v-model="formData.ClassName" name="ClassName" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">表名：</label>
-                            <input type="text" v-model="formData.DbTableName" name="DbTableName" class="form-control"  >
+                            <input type="text" v-model="formData.DbTableName" name="DbTableName" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">数据库：</label>
-                            <select v-model="formData.DataBaseId" class="form-control"  >
+                            <select v-model="formData.DataBaseId" class="form-control">
                                 <option>数据库</option>
                                 <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                             </select>
