@@ -18,7 +18,22 @@ namespace ReZero.SuperAPI
             InitEntityInfo(db);
             InitInterfaceList(db);
             InitIcon();
+            InitDatabase(db);
             App.PreStartupDb!.QueryFilter.Restore();
+        }
+
+        private void InitDatabase(ISqlSugarClient? db)
+        {
+            db!.Storageable(new ZeroDatabaseInfo()
+            {
+                Connection = db.CurrentConnectionConfig.ConnectionString,
+                DbType = db.CurrentConnectionConfig.DbType,
+                IsInitialized = true,
+                Name = TextHandler.GetCommonTexst("Rezero系统数据库", "Rezero database"),
+                Creator = "admin",
+                Id = 1
+
+            }).ExecuteCommand();
         }
 
         private void InitEntityInfo(ISqlSugarClient? db)
