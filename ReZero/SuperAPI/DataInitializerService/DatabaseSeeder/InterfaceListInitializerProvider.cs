@@ -12,6 +12,16 @@ namespace ReZero.SuperAPI
         [TextCN("数据库管理")]
         [TextEN("Database management")]
         public const long DbManId = 1;
+
+
+        /// <summary>
+        /// 获取数据库管理所有
+        /// </summary> 
+        [TextCN("获取数据库管理所有")]
+        [TextEN("Database all list")]
+        public const long GetDbAllId = 23;
+
+
         /// <summary>
         /// 删除数据库
         /// </summary> 

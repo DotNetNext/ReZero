@@ -220,7 +220,26 @@ namespace ReZero.SuperAPI
 
         private void GetDatabaseList()
         {
-                it.Id = DbManId;
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetDbAllId;
+                it.GroupName = nameof(ZeroDatabaseInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.Name = TextHandler.GetInterfaceListText(GetDbAllId);
+                it.Url = GetUrl(it, "GetDatabaseInfoAllList"); 
+                it.DataModel = new DataModel()
+                { 
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.QueryCommon,
+                    DefaultParameters = new List<DefaultParameter>() 
+                    {
+                        new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("IsDeleted", "IsDeleted") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
 
 
             //获取数据库列表
