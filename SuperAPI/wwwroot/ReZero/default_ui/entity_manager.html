@@ -104,18 +104,106 @@
     </div>
 </div>
 <script>
-    new Vue({
+    var vueObj = new Vue({
         el: '#apibox',
         data: {
             data: null,
-            error: null
-        },
-        mounted() {
-            this.fetchData();
-        },
-        methods: {
-            fetchData(name) {
+            error: null,
+            addTitle: "添加动态接口分类",
+            editTitle: "修改态接口分类",
+            title: "",
+            formData: {
 
             }
+        },
+        mounted() {
+            this.fetchData("");
+        },
+        methods: {
+            fetchData(append) {
+                var url = "/PrivateReZeroRoute/100003/GetEntiyInfoList?ParentId=200" + append;
+                axios.get(url)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            onSearch: function (page) {
+
+                var urlParameters = "&Name=" + $("#txtSearch").val();
+                if (page) {
+                    urlParameters += "&PageNumber=" + page;
+                }
+                this.fetchData(urlParameters);
+            },
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteEntityInfo?IsDeleted=true&Id=" + localStorage.delId;
+                    axios.get(url)
+                        .then(response => {
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },
+            openEditDiv: function (item) {
+                var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id;
+                if (item.Id) {
+                    this.title = this.editTitle;
+                    axios.get(urlById)
+                        .then(response => {
+                            this.formData = response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                }
+            },
+            openAddDiv: function (item) {
+                this.title = this.addTitle;
+                this.formData = {};
+            },
+            addOrUpdate: function () {
+                var th = this;
+                var frmId = "frmEdit";
+                var json = this.formData;
+                var url = json.Id ?
+                    "/PrivateReZeroRoute/100003/UpdateEntityInfo" :
+                    "/PrivateReZeroRoute/100003/AddEntityInfo"; 
+                this.addOrUpdateSubmit(url, json);
+            },
+            addOrUpdateSubmit: function (url, json) {
+                var th = this;
+                axios.post(url, json)
+                    .then(response => {
+                        this.error = null;
+                        this.onSearch();
+                        if (response.data == true) {
+                            frmEdit.reset();
+                            btnCloseEdit.click();
+                        }
+                        else {
+                            tools.highlightErrorFields(response.data.ErrorParameters)
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            }
         }
-    });</script>
+    });
+</script>
