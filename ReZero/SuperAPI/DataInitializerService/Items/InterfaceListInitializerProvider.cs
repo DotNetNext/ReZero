@@ -220,6 +220,7 @@ namespace ReZero.SuperAPI
 
         private void GetDatabaseList()
         {
+                it.Id = DbManId;
 
 
             //获取数据库列表
