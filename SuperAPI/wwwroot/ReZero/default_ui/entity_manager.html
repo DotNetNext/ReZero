@@ -9,9 +9,9 @@
                     <div class="card-header"><h4>实体表管理</h4></div>
                     <div class="card">
                         <div class="input-group">
-                            <div class="input-group-btn">
+                            <div class="input-group-btn" >
                                 <input type="hidden" name="search_field" id="search-field" value="title">
-                                <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                                <button style="margin-left:28px" class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
                                     数据库 <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
@@ -19,7 +19,8 @@
                                     <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">库2</a> </li>
                                 </ul>
                             </div>
-                            <input type="text" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                            <input type="text" style="width:150px;margin-left:20px; margin-right:10px" readonly="readonly" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                            <a class="btn btn-group-xs m-r-5" data-toggle="tooltip" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
                         </div>
 
                         <div class="card-toolbar clearfix">
@@ -67,8 +68,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div> 
-                            
+                            </div>
+                            @@page_control.html
                         </div>
                     </div>
                 </div>
