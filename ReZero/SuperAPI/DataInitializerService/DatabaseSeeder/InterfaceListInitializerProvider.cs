@@ -117,6 +117,35 @@ namespace ReZero.SuperAPI
 
         public const long GetDbTypeList = 15;
 
+
+
+        [TextCN("获取实体列表")]
+        [TextEN("Get entity list")]
+
+        public const long GetEntityInfoListId = 18;
+
+
+        [TextCN("获取实体根据主键")]
+        [TextEN("Get entity by id")]
+
+        public const long GetEntityInfoById = 19;
+
+        [TextCN("删除实体")]
+        [TextEN("Delete entity")]
+
+        public const long DeleteEntityInfoById = 20;
+
+
+        [TextCN("添加实体")]
+        [TextEN("Add entity")]
+
+        public const long AddEntityInfoId = 21;
+
+        [TextCN("更新实体")]
+        [TextEN("Update entity")]
+
+        public const long UpdateEntityInfoId = 22;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()
