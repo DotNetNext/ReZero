@@ -58,12 +58,16 @@ namespace ReZero.SuperAPI
                             PropertyName= nameof(ZeroEntityInfo.DbTableName) ,
                             Description=TextHandler.GetCommonTexst("表名", "Table name")
                         },
+                         new DataColumnParameter(){
+                            PropertyName= nameof(ZeroEntityInfo.DataBaseId) ,
+                            Description=TextHandler.GetCommonTexst("数据库", "DataBase id")
+                        },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroEntityInfo.Description) ,
                             Description=TextHandler.GetCommonTexst("备注", "Description")
                         }
                     },
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
                     ActionType = ActionType.QueryCommon,
                     DefaultParameters = new List<DefaultParameter>() {
                              new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("IsDeleted", "IsDeleted") },
@@ -76,7 +80,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data2);
 
 
-            //动态接口分类删除
+            //实体删除
             ZeroInterfaceList data3 = GetNewItem(it =>
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
@@ -87,7 +91,7 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "DeleteEntityInfo");
                 it.DataModel = new DataModel()
                 {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
                     ActionType = ActionType.BizDeleteObject,
                     DefaultParameters = new List<DefaultParameter>() {
                              new DefaultParameter() { Name = nameof(ZeroEntityInfo.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") },
@@ -108,7 +112,7 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "AddEntityInfo");
                 it.DataModel = new DataModel()
                 {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
                     ActionType = ActionType.InsertObject,
                     DefaultParameters = new List<DefaultParameter>()
                     {
@@ -119,14 +123,14 @@ namespace ReZero.SuperAPI
                                                    Name=nameof(ZeroEntityInfo.DbTableName) ,
                                                    ParameterValidate=new ParameterValidate(){IsRequired=true},ValueType = typeof(string).Name },
                         new DefaultParameter() { 
-                                                  Name=nameof(ZeroEntityInfo.DbTableName) ,
+                                                  Name=nameof(ZeroEntityInfo.DataBaseId) ,
                                                   ParameterValidate=
                                                   new ParameterValidate()
                                                    {
                                                      IsRequired=true
                                                   },
-                                                  ValueType = typeof(string).Name }, 
-                                                  new DefaultParameter() {
+                                                  ValueType = typeof(long).Name }, 
+                       new DefaultParameter() {
                                                   Name=nameof(ZeroEntityInfo.Description) ,
                                                   ValueType = typeof(string).Name },
                                                   DataInitHelper.GetIsDynamicParameter(),
@@ -155,17 +159,26 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "UpdateEntityInfo");
                 it.DataModel = new DataModel()
                 {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
                     ActionType = ActionType.UpdateObject,
                     DefaultParameters = new List<DefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ValueType = typeof(long).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
+                        new DefaultParameter() { Name=nameof(ZeroEntityInfo.Id),ValueType = typeof(long).Name },
+                        new DefaultParameter() { Name=nameof(ZeroEntityInfo.ClassName) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description),ValueType = typeof(string).Name }
+                        new DefaultParameter() { Name=nameof(ZeroEntityInfo.DbTableName) ,ParameterValidate=
+                        new ParameterValidate()
+                        {
+                            IsRequired=true
+                        } ,ValueType = typeof(string).Name },
+                        new DefaultParameter() { Name=nameof(ZeroEntityInfo.DataBaseId), ParameterValidate= new ParameterValidate()
+                        {
+                            IsRequired=true
+                        },ValueType = typeof(string).Name },
+                        new DefaultParameter() { Name=nameof(ZeroEntityInfo.Description),ValueType = typeof(string).Name },
                     }
                 };
             });
@@ -183,7 +196,7 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "GetEntityInfoById");
                 it.DataModel = new DataModel()
                 {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
                     ActionType = ActionType.QueryByPrimaryKey,
                     DefaultParameters = new List<DefaultParameter>() {
                              new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") }

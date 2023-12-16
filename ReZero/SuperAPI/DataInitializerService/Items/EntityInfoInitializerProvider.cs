@@ -13,7 +13,23 @@ namespace ReZero.SuperAPI
             AddZeroInterfaceList(datas);
             AddZeroInterfaceCategory(datas);
             AddZeroDataBaseInfo(datas);
+            AddZeroEntityInfo(datas);
+            AddZeroColumn(datas);
             return datas;
+        }
+        private void AddZeroColumn(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityColumnInfo));
+            data.Id = Id_ZeroColumnInfo;
+            datas.Add(data);
+        }
+        private void AddZeroEntityInfo(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityInfo));
+            data.Id = Id_ZeroEntityInfo;
+            datas.Add(data);
         }
 
         private void AddZeroDataBaseInfo(List<ZeroEntityInfo> datas)

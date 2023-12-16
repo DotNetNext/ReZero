@@ -4,29 +4,23 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="card">
                     <div class="card-header"><h4>实体表管理</h4></div>
                     <div class="card">
                         <div class="input-group">
-                            <div class="input-group-btn">
-                                <input type="hidden" name="search_field" id="search-field" value="title">
-                                <button style="margin-left:28px" class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
-                                    数据库 <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="title">库1</a> </li>
-                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="cat_name">库2</a> </li>
-                                </ul>
-                            </div>
-                            <input type="text" style="width:150px;margin-left:20px; margin-right:10px" readonly="readonly" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                            <select v-model="formData.DataBaseId" class="form-control" style="width:150px; margin-left:28px">
+                                <option>数据库</option>
+                                <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
+                            </select>
+                            <input type="text" style="width:150px;margin-left:20px; margin-right:10px"   class="form-control" value="" name="keyword" placeholder="请输入名称">
                             <a class="btn btn-group-xs m-r-5" data-toggle="tooltip" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
                         </div>
 
                         <div class="card-toolbar clearfix">
 
                             <div class="toolbar-btn-action">
-                                <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5" data-toggle="tooltip" href="#!"><i class="mdi mdi-plus"></i> 新增实体</a>
+                                <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5"   href="#!"><i class="mdi mdi-plus"></i> 新增实体</a>
                                 <a class="btn btn-success m-r-5" data-toggle="tooltip" data-original-title="从数的表导入实体" href="#!"><i class="mdi mdi-plus"></i>导入实体</a>
                                 <a class="btn btn-success m-r-5" data-toggle="tooltip" data-original-title="根据实体配置修改数据库表结构" href="#!"><i class="mdi mdi-plus"></i>同步表结构</a>
                             </div>
@@ -36,7 +30,7 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr  v-if="data && data.Columns && data.Columns.length > 0">
                                             <th>
                                                 <label class="lyear-checkbox checkbox-primary">
                                                     <input type="checkbox" id="check-all"><span></span>
@@ -46,14 +40,14 @@
                                             <th>操作</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
+                                    <tbody v-if="data &&data.Data">
+                                        <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
                                             <td style="width:40px">
                                                 <label class="lyear-checkbox checkbox-primary">
                                                     <input type="checkbox" name="ids[]" value="1"><span></span>
                                                 </label>
                                             </td>
-                                            <td v-for="column in data.Columns">
+                                            <td v-for="column in data.Data">
                                                 {{ item[column.PropertyName] }}
                                             </td>
                                             <td style="width:100px">
@@ -73,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header"><h4>表字段维护</h4></div>
                     <div class="card-body">
@@ -113,11 +107,18 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">实体名：</label>
-                            <input type="text" v-model="formData.ClassName" name="ClassName" class="form-control" id="recipient-name">
+                            <input type="text" v-model="formData.ClassName" name="ClassName" class="form-control" >
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">表名：</label>
-                            <input type="text" v-model="formData.DbTableName" name="DbTableName" class="form-control" id="recipient-name">
+                            <input type="text" v-model="formData.DbTableName" name="DbTableName" class="form-control"  >
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">数据库：</label>
+                            <select v-model="formData.DataBaseId" class="form-control"  >
+                                <option>数据库</option>
+                                <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">备注：</label>
@@ -142,16 +143,16 @@
             addTitle: "添加实体",
             editTitle: "修改实体",
             title: "",
-            formData: {
-
-            }
+            formData: {},
+            database: []
         },
         mounted() {
             this.fetchData("");
+            this.bindDatabaseSelect();
         },
         methods: {
             fetchData(append) {
-                var url = "/PrivateReZeroRoute/100003/GetEntiyInfoList?ParentId=200" + append;
+                var url = "/PrivateReZeroRoute/100003/GetEntityInoList";
                 axios.get(url)
                     .then(response => {
                         this.data = response.data;
@@ -204,7 +205,8 @@
             },
             openAddDiv: function (item) {
                 this.title = this.addTitle;
-                this.formData = {};
+                var id = this.formData.DataBaseId;
+                this.formData = { DataBaseId:id};
             },
             addOrUpdate: function () {
                 var th = this;
@@ -228,6 +230,17 @@
                         else {
                             tools.highlightErrorFields(response.data.ErrorParameters)
                         }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            bindDatabaseSelect: function ()
+            {
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
+                    .then(response => {
+                        this.database = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;
