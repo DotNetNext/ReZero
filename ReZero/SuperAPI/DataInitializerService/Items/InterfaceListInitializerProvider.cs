@@ -34,7 +34,16 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "GetEntityInoList");
                 it.CustomResultModel = new ResultModel()
                 {
-                    ResultType = ResultType.Grid
+                    ResultType = ResultType.Grid,
+                    ResultColumnModels=new List<ResultColumnModel>() 
+                    {
+                         new ResultColumnModel()
+                         {
+                               ResultColumnType=ResultColumnType.SubqueryName,
+                               PropertyName= nameof(ZeroEntityInfo.DataBaseId),
+                                
+                         }
+                    } 
                 };
                 it.DataModel = new DataModel()
                 {
@@ -129,6 +138,7 @@ namespace ReZero.SuperAPI
                                                    {
                                                      IsRequired=true
                                                   },
+
                                                   ValueType = typeof(long).Name }, 
                        new DefaultParameter() {
                                                   Name=nameof(ZeroEntityInfo.Description) ,
