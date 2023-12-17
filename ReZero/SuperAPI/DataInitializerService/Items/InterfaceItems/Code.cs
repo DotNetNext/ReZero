@@ -8,13 +8,18 @@ namespace ReZero.SuperAPI
     { 
         private void AddInit_CodeList()
         {
+            GetDbTypeList();
+        }
+
+        private void GetDbTypeList()
+        {
             ZeroInterfaceList data = GetNewItem(it =>
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = GetDbTypeList;
+                it.Id = GetDbTypeListId;
                 it.GroupName = nameof(EnumApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
-                it.Name = TextHandler.GetInterfaceListText(GetDbTypeList);
+                it.Name = TextHandler.GetInterfaceListText(GetDbTypeListId);
                 it.Url = GetUrl(it, "GetDbTypeList");
                 it.DataModel = new DataModel()
                 {

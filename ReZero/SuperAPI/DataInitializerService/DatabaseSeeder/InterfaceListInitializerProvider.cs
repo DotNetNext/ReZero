@@ -125,7 +125,7 @@ namespace ReZero.SuperAPI
         [TextCN("下拉列表：获取数据库类型")]
         [TextEN("Get database type list")]
 
-        public const long GetDbTypeList = 15;
+        public const long GetDbTypeListId = 15;
 
 
 
