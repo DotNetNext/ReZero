@@ -6,7 +6,7 @@ namespace ReZero.SuperAPI
 {
     internal partial class InterfaceListInitializerProvider
     { 
-        private void GetCodeList()
+        private void AddInit_CodeList()
         {
             ZeroInterfaceList data = GetNewItem(it =>
             {

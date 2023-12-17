@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     {
 
 
-        private void GetDatabaseList()
+        private void AddInit_DatabaseList()
         {
             //获取数据库所有
             ZeroInterfaceList data1 = GetNewItem(it =>

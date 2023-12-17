@@ -6,7 +6,7 @@ namespace ReZero.SuperAPI
 {
     internal partial class InterfaceListInitializerProvider
     {
-        public void GetZeroInterfaceList()
+        public void AddInit_ZeroInterfaceList()
         {
             Intenal();
 

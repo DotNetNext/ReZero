@@ -7,7 +7,7 @@ namespace ReZero.SuperAPI
     internal partial class InterfaceListInitializerProvider
     {
 
-        public void GetInterfaceCategory()
+        public void AddInit_InterfaceCategory()
         {
             //接口分类树
             ZeroInterfaceList data1 = GetNewItem(it =>

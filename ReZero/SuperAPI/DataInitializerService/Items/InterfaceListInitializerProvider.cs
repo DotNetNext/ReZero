@@ -15,11 +15,11 @@ namespace ReZero.SuperAPI
       
         internal void Set()
         {
-            GetZeroInterfaceList();
-            GetInterfaceCategory();
-            GetDatabaseList();
-            GetCodeList();
-            GetEntityList();
+            AddInit_ZeroInterfaceList();
+            AddInit_InterfaceCategory();
+            AddInit_DatabaseList();
+            AddInit_CodeList();
+            AddInit_EntityList();
         } 
     }
 }
