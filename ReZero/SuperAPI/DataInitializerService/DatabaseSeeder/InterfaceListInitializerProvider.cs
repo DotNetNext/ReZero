@@ -138,7 +138,7 @@ namespace ReZero.SuperAPI
         [TextCN("获取实体根据主键")]
         [TextEN("Get entity by id")]
 
-        public const long GetEntityInfoById = 19;
+        public const long GetEntityInfoById_Id = 19;
 
         [TextCN("删除实体")]
         [TextEN("Delete entity")]
