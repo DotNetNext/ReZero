@@ -9,6 +9,5 @@ namespace ReZero.SuperAPI
         public string? PropertyName { get; set; } 
         public Type? ConvertType { get; set; }
         public   ResultColumnType ResultColumnType { get; set; }
-        public ZeroEntityInfo 
     }
 }
