@@ -8,8 +8,10 @@ namespace ReZero.SuperAPI.Items
 {
     public class Grid : IResultService
     {
+        ResultModel? _result;
         public object GetResult(object data, ResultModel result)
         {
+            _result = result;
             var dataModelOutPut = ((DataModelOutPut?)result.OutPutData);
             IEnumerable<ResultGridColumn> columns = GetGridColumn(dataModelOutPut);
             ResultPage page = GetPage(dataModelOutPut);
@@ -44,10 +46,10 @@ namespace ReZero.SuperAPI.Items
                 ColumnDescription = it.Description
             });
         }
-        private static IEnumerable<object> TransformData(IEnumerable<object> dataList, IEnumerable<ResultGridColumn> columns)
+        private  IEnumerable<object> TransformData(IEnumerable<object> dataList, IEnumerable<ResultGridColumn> columns)
         {
             var newData = new List<object>();
-
+            ResultColumnService resultColumnService = new ResultColumnService();
             foreach (var item in dataList)
             {
                 var newItem = new System.Dynamic.ExpandoObject() as IDictionary<string, Object>;
@@ -55,6 +57,11 @@ namespace ReZero.SuperAPI.Items
                 foreach (var column in columns)
                 {
                     var propertyValue = GetPropertyValue(item, column.PropertyName!);
+                    if (IsConvertColumn(column))
+                    {
+                        var resultColumnModel = _result?.ResultColumnModels?.First(it => it.PropertyName == column.PropertyName);
+                        propertyValue = resultColumnService.GetValue(propertyValue, resultColumnModel); ;
+                    }
                     newItem[column.PropertyName!] = propertyValue;
                 }
 
@@ -63,6 +70,12 @@ namespace ReZero.SuperAPI.Items
 
             return newData;
         }
+
+        private bool IsConvertColumn(ResultGridColumn column)
+        {
+            return _result?.ResultColumnModels?.Any(it => it.PropertyName == column.PropertyName) == true;
+        }
+
         private static object GetPropertyValue(object obj, string propertyName)
         {
             PropertyInfo propertyInfo = obj.GetType().GetProperty(propertyName);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -221,7 +222,11 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "GetDatabaseInfoList");
                 it.CustomResultModel = new ResultModel()
                 {
-                    ResultType = ResultType.Grid
+                    ResultType = ResultType.Grid,
+                    ResultColumnModels=new List<ResultColumnModel>() 
+                    {
+                        new ResultColumnModel(){  PropertyName= nameof(ZeroDatabaseInfo.DbType) , ConvertType=typeof(DbType),ConvertType2=typeof(string), ResultColumnType= ResultColumnType.DefaultConvert }
+                    }
                 };
                 it.DataModel = new DataModel()
                 {
