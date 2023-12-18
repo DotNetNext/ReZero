@@ -38,14 +38,14 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(ZeroDatabaseInfo);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(CreateDatabaseId);
-                it.Url = GetUrl(it, "CreateDatabaseInfo");
+                it.Url = GetUrl(it, "CreateDatabaseInfo"); 
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.DllCreateDb,
+                    ActionType = ActionType.DllCreateDb, 
                     DefaultParameters = new List<DefaultParameter>() {
                              new DefaultParameter() { Name = "Connection",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,Value=0, Description = TextHandler.GetCommonTexst("连接字符串", "Connection string") },
-                             new DefaultParameter() { Name = "DbType",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,Value=0, Description = TextHandler.GetCommonTexst("库类型", "DbType") }
+                             new DefaultParameter() { Name = "DbType",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,Value=0, Description = TextHandler.GetCommonTexst("库类型", "DbType") }
                          }
                 };
             });

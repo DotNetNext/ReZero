@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
             var DbType = dataModel.DefaultParameters.Last().Value;
             try
             {
-                var dbType = (DbType)Convert.ToInt32(DbType);
+                var dbType = (DbType)UtilMethods.ChangeType2(DbType, typeof(DbType));
                 if (IsNoSupport(dbType))
                 {
                     return GetNoSupportText();
