@@ -54,7 +54,7 @@ namespace ReZero.SuperAPI
 
         private static void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, DefaultParameter item, List<DefaultParameter> forNames)
         {
-            var colItem = new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
+            var colItem = new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
             var conditionalCollections = new ConditionalCollections()
             {
                 ConditionalList = new List<KeyValuePair<WhereType, ConditionalModel>>()
@@ -64,10 +64,15 @@ namespace ReZero.SuperAPI
             };
             foreach (var it in forNames)
             {
-                var colItemNext = new ConditionalModel() { FieldName = it.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
+                var colItemNext = new ConditionalModel() { FieldName = GetFieldName(it), ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
                 conditionalCollections.ConditionalList.Add(new KeyValuePair<WhereType, ConditionalModel>(WhereType.Or, colItemNext));
             }
             conditionalModels.Add(conditionalCollections);
+        }
+
+        private static string GetFieldName(DefaultParameter item)
+        {
+            return PubConst.TableDefaultPreName + item.TableIndex + "." + item.Name;
         }
 
         private static void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, DefaultParameter? item)
@@ -75,31 +80,31 @@ namespace ReZero.SuperAPI
             switch (item?.FieldOperator)
             {
                 case FieldOperatorType.Equal:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Equal, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName =GetFieldName(item), ConditionalType = ConditionalType.Equal, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.NoEqual:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.NoEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.NoEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.GreaterThan:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.GreaterThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.GreaterThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.GreaterThanOrEqual:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.GreaterThanOrEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.GreaterThanOrEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.LessThan:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.LessThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.LessThan, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.LessThanOrEqual:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.LessThanOrEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.LessThanOrEqual, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.Like:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.In:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.In, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.In, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 case FieldOperatorType.NotIn:
-                    conditionalModels.Add(new ConditionalModel() { FieldName = item.Name, ConditionalType = ConditionalType.NotIn, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.NotIn, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
                 default:
                     break;
