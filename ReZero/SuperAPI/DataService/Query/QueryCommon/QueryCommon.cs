@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
                 RefAsync<int> count = 0;
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
                 var queryObject = db.QueryableByObject(type, "t0");
-                queryObject = Join(dataModel, queryObject);
+                queryObject = Join(type,dataModel, queryObject);
                 queryObject = Where(dataModel, queryObject);
                 queryObject = OrderBy(dataModel, queryObject);
                 object? result = await ToList(dataModel, count, type, queryObject);

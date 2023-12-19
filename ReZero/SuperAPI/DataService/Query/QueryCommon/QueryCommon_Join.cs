@@ -10,22 +10,32 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     { 
-        private QueryMethodInfo Join(DataModel dataModel, QueryMethodInfo queryObject)
+        private QueryMethodInfo Join(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (!IsAnyJoin(dataModel)) return queryObject;
             int index = 0;
-            foreach (var item in dataModel.JoinParameters??new List<DataModelJoinParameters>())
+            var joinInfoList = dataModel.JoinParameters ?? new List<DataModelJoinParameters>();
+            foreach (var item in joinInfoList)
             {
                 index++;
+                var shortName = GetShortName(index);
                 var JoinType = EntityGeneratorManager.GetTypeAsync(item.JoinTableId).GetAwaiter().GetResult();
-                queryObject = queryObject.AddJoinInfo(JoinType,"t"+ index,"",item.JoinType);
+                var onSql = GetJoinOnSql(type,item.OnList, shortName, joinInfoList);
+                queryObject = queryObject.AddJoinInfo(JoinType, shortName, onSql, item.JoinType);
             }
             return queryObject;
         }
 
-        private static bool IsAnyJoin(DataModel dataModel)
+        private string GetJoinOnSql(Type type, List<JoinParameter>? onList, string shortName, List<DataModelJoinParameters> joinInfoList)
         {
-            return dataModel.JoinParameters?.Any() == true;
+            string onSql = string.Empty;
+            return onSql;
+        } 
+
+        private static string GetShortName(int index)
+        {
+            return "t" + index;
         }
+
     }
 }
