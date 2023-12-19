@@ -90,7 +90,7 @@ namespace ReZero.SuperAPI
         }
         private static Type GetRightType(Type type, List<DataModelJoinParameters> joinInfoList, JoinParameter item)
         {
-            return item.RightIndex == 0 ? type : EntityGeneratorManager.GetTypeAsync((joinInfoList[item.RightIndex].JoinTableId)).GetAwaiter().GetResult();
+            return item.RightIndex == 0 ? type : EntityGeneratorManager.GetTypeAsync((joinInfoList[item.RightIndex-1].JoinTableId)).GetAwaiter().GetResult();
         }
         private string GetRightName(JoinParameter item, EntityInfo rightEntity)
         {
