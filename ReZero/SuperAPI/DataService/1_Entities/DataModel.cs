@@ -20,7 +20,7 @@ namespace ReZero.SuperAPI
         public List<DefaultParameter>? DefaultParameters { get; set; }
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; }
-        public DataModelJoinParameters? JoinParameters { get; set; }
+        public List<DataModelJoinParameters>? JoinParameters { get; set; }
         #endregion
   
         #region Other

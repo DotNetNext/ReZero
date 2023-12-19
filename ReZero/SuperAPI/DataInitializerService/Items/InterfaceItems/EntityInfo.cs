@@ -186,22 +186,24 @@ namespace ReZero.SuperAPI
                         PageSize = 20,
                         PageNumber = 1
                     },
-                    JoinParameters=new DataModelJoinParameters() 
-                    {
+                    JoinParameters=new List<DataModelJoinParameters>()
+                    {  new DataModelJoinParameters()
+                      {
                         JoinType=SqlSugar.JoinType.Left,
                         JoinTableId= EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                        OnList=new List<JoinParameter>() 
+                        OnList=new List<JoinParameter>()
                         {
-                          new JoinParameter() 
-                          { 
+                          new JoinParameter()
+                          {
                                   LeftPropertyName=nameof(ZeroEntityInfo.DataBaseId),
                                   LeftIndex=0,
                                   FieldOperator=FieldOperatorType.Equal,
                                   RightPropertypeName=nameof(ZeroDatabaseInfo.Name),
                                   RightIndex=1
                           },
- 
-                        }, 
+
+                          }
+                       }, 
 
                     },
                     Columns = new List<DataColumnParameter>()
