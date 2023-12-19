@@ -17,6 +17,10 @@ namespace ReZero.SuperAPI
         private static bool IsAnyJoin(DataModel dataModel)
         {
             return dataModel.JoinParameters?.Any() == true;
+        } 
+        private static bool IsAnySelect(DataModel dataModel)
+        {
+            return dataModel.SelectParameters?.Any() == true;
         }
     }
 }

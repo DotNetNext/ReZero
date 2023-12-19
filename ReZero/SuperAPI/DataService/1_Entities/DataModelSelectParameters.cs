@@ -5,9 +5,10 @@ using System.Text;
 
 namespace ReZero.SuperAPI 
 {
-    public class DataModelOrderParemter 
+    public class DataModelSelectParameters
     {
-        public string? FieldName { get; set; }
+        public int TableIndex { get; set; }
+        public string?  Name { get; set; }
         public OrderByType OrderByType { get; set; }
-    }
+    } 
 }

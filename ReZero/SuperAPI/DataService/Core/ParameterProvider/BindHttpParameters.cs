@@ -33,14 +33,14 @@ namespace ReZero.SuperAPI
             if (dataModel!.DefaultParameters != null)
             {
                 dataModel!.DefaultParameters = dataModel?.DefaultParameters?.Where(it => NoPageParameters(it)).ToList();
-                foreach (var item in dataModel?.DefaultParameters ?? new List<DefaultParameter>())
+                foreach (var item in dataModel?.DefaultParameters ?? new List<DataModelDefaultParameter>())
                 {
                     UpdateWhereItemValue(context, formDatas, item);
                 }
             }
         }
 
-        private void UpdateWhereItemValue(HttpContext context, Dictionary<string, string> formDatas, DefaultParameter item)
+        private void UpdateWhereItemValue(HttpContext context, Dictionary<string, string> formDatas, DataModelDefaultParameter item)
         {
             item.Value = GetParameterValueFromRequest(item, context, formDatas);
             if (IsDefaultValue(item))
@@ -58,23 +58,23 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static bool NoPageParameters(DefaultParameter it)
+        private static bool NoPageParameters(DataModelDefaultParameter it)
         {
             return it.Name != nameof(DataModelPageParameter.PageNumber) &&
                         it.Name != nameof(DataModelPageParameter.PageSize);
         }
 
-        private static bool IsUserName(DefaultParameter item)
+        private static bool IsUserName(DataModelDefaultParameter item)
         {
             return item?.InsertParameter?.IsUserName == true;
         }
 
-        private static bool IsDefaultValue(DefaultParameter item)
+        private static bool IsDefaultValue(DataModelDefaultParameter item)
         {
             return item.Value == null && item.DefaultValue != null;
         }
 
-        private string GetParameterValueFromRequest(DefaultParameter parameter, HttpContext context, Dictionary<string, string> formDatas)
+        private string GetParameterValueFromRequest(DataModelDefaultParameter parameter, HttpContext context, Dictionary<string, string> formDatas)
         {
             if (parameter.ValueIsReadOnly)
             {

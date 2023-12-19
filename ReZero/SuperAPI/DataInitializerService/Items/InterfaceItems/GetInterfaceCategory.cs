@@ -37,8 +37,8 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.QueryByPrimaryKey,
-                    DefaultParameters = new List<DefaultParameter>() {
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") }
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") }
                          }
                 };
             });
@@ -60,15 +60,15 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.UpdateObject,
-                    DefaultParameters = new List<DefaultParameter>()
+                    DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ValueType = typeof(long).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id),ValueType = typeof(long).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description),ValueType = typeof(string).Name }
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description),ValueType = typeof(string).Name }
                     }
                 };
             });
@@ -90,18 +90,18 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.InsertObject,
-                    DefaultParameters = new List<DefaultParameter>()
+                    DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Name) ,ParameterValidate=
                         new ParameterValidate()
                         {
                              IsRequired=true
                         },ValueType = typeof(string).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId="+PubConst.TreeUrlFormatId,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId="+PubConst.TreeUrlFormatId,ValueType = typeof(string).Name },
                         DataInitHelper.GetIsDynamicParameter(),
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
                         InsertParameter=new InsertParameter(){
                              IsUserName=true
                         },Value="" ,ValueType = typeof(string).Name },
@@ -127,9 +127,9 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.BizDeleteObject,
-                    DefaultParameters = new List<DefaultParameter>() {
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") },
-                              new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="true", Description = TextHandler.GetCommonTexst("是否删除", "IsDeleted") }
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("主键", "Id") },
+                              new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="true", Description = TextHandler.GetCommonTexst("是否删除", "IsDeleted") }
                          }
                 };
             });
@@ -180,12 +180,12 @@ namespace ReZero.SuperAPI
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                     ActionType = ActionType.QueryCommon,
-                    DefaultParameters = new List<DefaultParameter>() {
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=200,ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("上级Id", "ParentId") },
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("IsDeleted", "IsDeleted") },
-                             new DefaultParameter() { Name = nameof(ZeroInterfaceCategory.Name),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonTexst("名称", "Name") },
-                             new DefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("第几页", "Page number") },
-                             new DefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("每页几条", "Pageize") }
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=200,ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("上级Id", "ParentId") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonTexst("IsDeleted", "IsDeleted") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Name),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonTexst("名称", "Name") },
+                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("第几页", "Page number") },
+                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("每页几条", "Pageize") }
                     }
                 };
             });
@@ -214,9 +214,9 @@ namespace ReZero.SuperAPI
                         CodePropertyName = nameof(ZeroInterfaceCategory.Id),
                         ParentCodePropertyName = nameof(ZeroInterfaceCategory.ParentId),
                     },
-                    DefaultParameters = new List<DefaultParameter>()
+                    DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,Value=InterfaceCategoryInitializerProvider.Id,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("根目录ID", "Root id") },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Id) ,Value=InterfaceCategoryInitializerProvider.Id,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonTexst("根目录ID", "Root id") },
 
                     }
                 };

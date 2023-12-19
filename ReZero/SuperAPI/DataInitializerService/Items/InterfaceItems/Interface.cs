@@ -29,8 +29,8 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryByPrimaryKey,
-                    DefaultParameters = new List<DefaultParameter>() {
-                            new DefaultParameter(){
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                            new DataModelDefaultParameter(){
                                   Name="Id",
                                   ParameterValidate=new ParameterValidate{
                                   IsRequired=true
@@ -61,11 +61,11 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryCommon,
-                    DefaultParameters = new List<DefaultParameter>() {
-                            new DefaultParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
-                            new DefaultParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
-                            new DefaultParameter() { Name = "IsInitialized",FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") },
-                            new DefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("Url","Url") },
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                            new DataModelDefaultParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("接口分类Id","Interface Category Id") },
+                            new DataModelDefaultParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("接口名称","Interface Name") },
+                            new DataModelDefaultParameter() { Name = "IsInitialized",FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonTexst("是否内置数据", "Is initialized") },
+                            new DataModelDefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonTexst("Url","Url") },
                     }
                 };
             });
@@ -84,8 +84,8 @@ namespace ReZero.SuperAPI
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryByPrimaryKey,
-                    DefaultParameters = new List<DefaultParameter>() {
-                            new DefaultParameter(){ Name="Id", ParameterValidate=new ParameterValidate{
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                            new DataModelDefaultParameter(){ Name="Id", ParameterValidate=new ParameterValidate{
                              IsRequired=true
                             },FieldOperator=FieldOperatorType.Equal,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonTexst("根据主键获取接口","Get interface detail") },
                          }

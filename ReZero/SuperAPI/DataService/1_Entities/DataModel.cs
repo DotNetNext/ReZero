@@ -16,11 +16,12 @@ namespace ReZero.SuperAPI
 
         #region Paremters
 
-        public List<OrderParemter>? OrderParemters { get; set; }
-        public List<DefaultParameter>? DefaultParameters { get; set; }
+        public List<DataModelOrderParemter>? OrderParemters { get; set; }
+        public List<DataModelDefaultParameter>? DefaultParameters { get; set; }
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; }
         public List<DataModelJoinParameters>? JoinParameters { get; set; }
+        public List<DataModelSelectParameters>? SelectParameters { get; set; }
         #endregion
   
         #region Other

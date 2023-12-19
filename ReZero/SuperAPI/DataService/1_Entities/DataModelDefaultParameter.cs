@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ReZero.SuperAPI
 {
-    public class DefaultParameter
+    public class DataModelDefaultParameter
     {
         public string? Name { get; set; }
         public string? FieldName { get; set; }  

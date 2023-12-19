@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
         public static List<ErrorParameter> Check(DataModel dataModel)
         {
             List<ErrorParameter> errorLists = new List<ErrorParameter>();
-            foreach (var item in dataModel.DefaultParameters ?? new List<DefaultParameter>())
+            foreach (var item in dataModel.DefaultParameters ?? new List<DataModelDefaultParameter>())
             {
                 if (item?.ParameterValidate?.IsRequired == true && string.IsNullOrEmpty(item.Value + ""))
                 {

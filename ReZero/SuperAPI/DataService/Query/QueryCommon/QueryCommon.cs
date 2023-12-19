@@ -25,6 +25,7 @@ namespace ReZero.SuperAPI
                 queryObject = Join(type,dataModel, queryObject);
                 queryObject = Where(dataModel, queryObject);
                 queryObject = OrderBy(dataModel, queryObject);
+                queryObject = Select(dataModel, queryObject);
                 object? result = await ToList(dataModel, count, type, queryObject);
                 return result;
             }
