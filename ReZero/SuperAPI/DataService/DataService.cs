@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI.DataService
 {
     public partial class DataService : IDataService
     {
