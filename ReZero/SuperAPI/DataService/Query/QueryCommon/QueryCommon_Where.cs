@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private static QueryMethodInfo Where(DataModel dataModel, QueryMethodInfo queryObject)
+        private static QueryMethodInfo Where(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<IConditionalModel> conditionalModels = new List<IConditionalModel>();
             List<IFuncModel> funcModels = new List<IFuncModel>();

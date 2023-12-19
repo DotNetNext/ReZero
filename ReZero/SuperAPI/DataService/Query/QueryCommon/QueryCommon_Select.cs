@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private QueryMethodInfo Select(DataModel dataModel, QueryMethodInfo queryObject)
+        private QueryMethodInfo Select(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (IsAnySelect(dataModel))
             {

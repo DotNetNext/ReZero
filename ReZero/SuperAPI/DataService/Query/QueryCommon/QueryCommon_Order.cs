@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private QueryMethodInfo OrderBy(DataModel dataModel, QueryMethodInfo queryObject)
+        private QueryMethodInfo OrderBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<OrderByModel> orderByModels = new List<OrderByModel>();
             if (dataModel.OrderParemters != null)

@@ -23,9 +23,9 @@ namespace ReZero.SuperAPI
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
                 var queryObject = _sqlSugarClient.QueryableByObject(type, PubConst.TableDefaultPreName+default(int));
                 queryObject = Join(type,dataModel, queryObject);
-                queryObject = Where(dataModel, queryObject);
-                queryObject = OrderBy(dataModel, queryObject);
-                queryObject = Select(dataModel, queryObject);
+                queryObject = Where(type,dataModel, queryObject);
+                queryObject = OrderBy(type,dataModel, queryObject);
+                queryObject = Select(type,dataModel, queryObject);
                 object? result = await ToList(dataModel, count, type, queryObject);
                 return result;
             }
