@@ -174,8 +174,7 @@ namespace ReZero.SuperAPI
                          new ResultColumnModel()
                          {
                                ResultColumnType=ResultColumnType.SubqueryName,
-                               PropertyName= nameof(ZeroEntityInfo.DataBaseId),
-
+                               PropertyName= nameof(ZeroEntityInfo.DataBaseId), 
                          }
                     }
                 };
@@ -198,13 +197,12 @@ namespace ReZero.SuperAPI
                                   LeftPropertyName=nameof(ZeroEntityInfo.DataBaseId),
                                   LeftIndex=0,
                                   FieldOperator=FieldOperatorType.Equal,
-                                  RightPropertypeName=nameof(ZeroDatabaseInfo.Name),
+                                  RightPropertypeName=nameof(ZeroDatabaseInfo.Id),
                                   RightIndex=1
                           },
 
                           }
-                       }, 
-
+                       },  
                     },
                     Columns = new List<DataColumnParameter>()
                     {

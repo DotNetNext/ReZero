@@ -43,6 +43,24 @@ namespace ReZero.SuperAPI
             } 
             return db;
         }
+        internal static SqlSugarClient? GetDbTableId(long tableId)
+        {
+            var rootDb = App.Db;
+            var dbId=rootDb.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).First()?.DataBaseId;
+            var zeroDatabaseInfo = rootDb.Queryable<ZeroDatabaseInfo>().Where(it => it.Id == dbId).First();
+            SqlSugarClient? db = null;
+            if (zeroDatabaseInfo != null)
+            {
+                db = new SqlSugarClient(new ConnectionConfig()
+                {
+                    ConnectionString = zeroDatabaseInfo.Connection,
+                    DbType = zeroDatabaseInfo.DbType,
+                    IsAutoCloseConnection = true,
+                    InitKeyType = InitKeyType.Attribute
+                });
+            }
+            return db;
+        }
         internal static Language Language
         {
             get

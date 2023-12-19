@@ -9,6 +9,6 @@ namespace ReZero.SuperAPI
     {
         public JoinType JoinType { get;  set; }
         public long JoinTableId { get;   set; }
-        public List<JoinParameter>? OnList { get; internal set; }
+        public List<JoinParameter>? OnList { get;  set; }
     }
 }

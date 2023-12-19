@@ -11,14 +11,17 @@ namespace ReZero.SuperAPI
 {
     public partial class QueryCommon : IDataService
     {
+        private ISqlSugarClient? _sqlSugarClient;
+        private ISqlBuilder? _sqlBuilder;
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
             try
             {
-                var db = App.Db;
                 RefAsync<int> count = 0;
+                _sqlSugarClient = App.GetDbTableId(dataModel.TableId)??App.Db;
+                _sqlBuilder = _sqlSugarClient.Queryable<object>().SqlBuilder;
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
-                var queryObject = db.QueryableByObject(type, "t0");
+                var queryObject = _sqlSugarClient.QueryableByObject(type, "t0");
                 queryObject = Join(type,dataModel, queryObject);
                 queryObject = Where(dataModel, queryObject);
                 queryObject = OrderBy(dataModel, queryObject);
