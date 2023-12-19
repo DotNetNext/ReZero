@@ -18,20 +18,12 @@ namespace ReZero.SuperAPI
                 var db = App.Db;
                 RefAsync<int> count = 0;
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
-                var queryObject = db.QueryableByObject(type,"t0");
+                var queryObject = db.QueryableByObject(type, "t0");
                 queryObject = Join(dataModel, queryObject);
                 queryObject = Where(dataModel, queryObject);
                 queryObject = OrderBy(dataModel, queryObject);
                 object? result = null;
-                if (IsDefault(dataModel))
-                {
-                    result = await DefaultQuery(queryObject, result);
-                }
-                else
-                {
-                    result = await PageQuery(dataModel, count, type, queryObject, result);
-
-                }
+                result = await ToList(dataModel, count, type, queryObject, result);
                 return result;
             }
             catch (Exception ex)
@@ -39,6 +31,20 @@ namespace ReZero.SuperAPI
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        private static async Task<object?> ToList(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject, object? result)
+        {
+            if (IsDefault(dataModel))
+            {
+                result = await DefaultQuery(queryObject, result);
+            }
+            else
+            {
+                result = await PageQuery(dataModel, count, type, queryObject, result);
+
+            } 
+            return result;
         }
     } 
 }
