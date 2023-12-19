@@ -22,8 +22,7 @@ namespace ReZero.SuperAPI
                 queryObject = Join(dataModel, queryObject);
                 queryObject = Where(dataModel, queryObject);
                 queryObject = OrderBy(dataModel, queryObject);
-                object? result = null;
-                result = await ToList(dataModel, count, type, queryObject, result);
+                object? result = await ToList(dataModel, count, type, queryObject);
                 return result;
             }
             catch (Exception ex)
@@ -31,20 +30,6 @@ namespace ReZero.SuperAPI
                 Console.WriteLine(ex.Message);
                 throw;
             }
-        }
-
-        private static async Task<object?> ToList(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject, object? result)
-        {
-            if (IsDefault(dataModel))
-            {
-                result = await DefaultQuery(queryObject, result);
-            }
-            else
-            {
-                result = await PageQuery(dataModel, count, type, queryObject, result);
-
-            } 
-            return result;
-        }
+        } 
     } 
 }

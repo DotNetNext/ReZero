@@ -9,9 +9,7 @@ namespace ReZero.SuperAPI
     /// Helper
     /// </summary>
     public partial class QueryCommon : IDataService
-    {
-
-
+    { 
         private QueryMethodInfo Join(DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (!IsAnyJoin(dataModel)) return queryObject;
