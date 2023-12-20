@@ -18,7 +18,7 @@ namespace ReZero.SuperAPI
             }
             else if (IsAnyJoin(dataModel))
             {
-                queryObject = queryObject.Select($"{PubConst.TableDefaultPreName}0.*");
+                queryObject = queryObject.Select($"{PubConst.TableDefaultMasterTableShortName}.*");
             }
             return queryObject;
         }

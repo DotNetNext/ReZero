@@ -69,12 +69,7 @@ namespace ReZero.SuperAPI
             }
             conditionalModels.Add(conditionalCollections);
         }
-
-        private static string GetFieldName(DataModelDefaultParameter item)
-        {
-            return PubConst.TableDefaultPreName + item.TableIndex + "." + item.Name;
-        }
-
+         
         private static void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
         {
             switch (item?.FieldOperator)
@@ -109,6 +104,12 @@ namespace ReZero.SuperAPI
                 default:
                     break;
             }
+        }
+
+
+        private static string GetFieldName(DataModelDefaultParameter item)
+        {
+            return PubConst.TableDefaultPreName + item.TableIndex + "." + item.Name;
         }
     }
 }
