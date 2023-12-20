@@ -9,5 +9,6 @@ namespace ReZero.SuperAPI
     {
         public string? FieldName { get; set; }
         public OrderByType OrderByType { get; set; }
+        public int TableIndex { get;  set; }
     }
 }

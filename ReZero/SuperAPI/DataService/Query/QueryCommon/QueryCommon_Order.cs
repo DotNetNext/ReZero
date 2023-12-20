@@ -19,13 +19,19 @@ namespace ReZero.SuperAPI
                 {
                     orderByModels.Add(new OrderByModel()
                     {
-                        FieldName = App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType),
+                        FieldName = GetFieldName(queryObject, item),
                         OrderByType = item.OrderByType
                     });
                 }
             }
             queryObject = queryObject.OrderBy(orderByModels);
             return queryObject;
+        }
+
+        private static string GetFieldName(QueryMethodInfo queryObject, DataModelOrderParemter item)
+        {
+            var name= App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
+            return PubConst.TableDefaultPreName + item.TableIndex + "." + name;
         }
     }
 }
