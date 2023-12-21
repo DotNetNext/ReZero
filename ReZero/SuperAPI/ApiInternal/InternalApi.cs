@@ -42,10 +42,11 @@ namespace ReZero.SuperAPI
                 else
                 {
                     DataService dataService = new DataService();
+                    interInfo!.DataModel!.ApiId=interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
-                    resultModel.OutPutData = interInfo.DataModel?.OutPutData;
+                    resultModel.OutPutData = interInfo.DataModel?.OutPutData; 
                     data = new ResultService().GetResult(data, resultModel);
                     await context.Response.WriteAsync(JsonHelper.SerializeObject(data));
                 }

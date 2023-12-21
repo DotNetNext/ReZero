@@ -12,6 +12,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
+        public List<ResultTypeInfo> resultTypeInfos = new List<ResultTypeInfo>(); 
         private QueryMethodInfo Select(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (IsAnySelect(dataModel))
@@ -36,12 +37,15 @@ namespace ReZero.SuperAPI
                 }
                 else if (IsSelectJoinName(item))
                 {
+                    var propertyName = _sqlBuilder!.GetTranslationColumnName(item.AsName);
                     var tableInfo = dataModel!.JoinParameters![item.TableIndex-1];
-                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName+item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {_sqlBuilder!.GetTranslationColumnName(item.AsName)} ";
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName+item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {propertyName} ";
                     selectLists.Add(name);
+                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = typeof(string) });
                 }
             }
-            queryObject = queryObject.Select(string.Join(",", selectLists),typeof(object));
+            var  resultType=new DynamicTypeBuilder(_sqlSugarClient!,"ViewModel_"+dataModel.ApiId, resultTypeInfos).BuildDynamicType();
+            queryObject = queryObject.Select(string.Join(",", selectLists), resultType);
             return queryObject;
         }
 
@@ -62,6 +66,7 @@ namespace ReZero.SuperAPI
 
         private object GetEntityColumns(EntityColumnInfo it)
         {
+          resultTypeInfos.Add(new ResultTypeInfo() { PropertyName=it.PropertyName,Type=it.PropertyInfo.PropertyType });
           return _sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultMasterTableShortName) +"."+ _sqlBuilder!.GetTranslationColumnName(it.DbColumnName) + " AS " + _sqlBuilder!.GetTranslationColumnName(it.PropertyName);
         }
     }

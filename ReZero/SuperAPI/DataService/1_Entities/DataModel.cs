@@ -28,6 +28,7 @@ namespace ReZero.SuperAPI
         [Navigate(NavigateType.OneToMany, nameof(TableId))]
         public ZeroEntityInfo? MasterEntityInfo { get; set; }
         public object? OutPutData { get; set; }
+        public long ApiId { get; set; }
         public List<DataColumnParameter>? Columns { get; set; } 
         #endregion
     }
