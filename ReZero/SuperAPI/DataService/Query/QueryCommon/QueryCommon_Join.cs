@@ -100,7 +100,7 @@ namespace ReZero.SuperAPI
 
         private string GetLeftName(JoinParameter item, EntityInfo leftEntity)
         {
-            var name = leftEntity.Columns.FirstOrDefault(it => it.PropertyName == item.RightPropertypeName).DbColumnName;
+            var name = leftEntity.Columns.FirstOrDefault(it => it.PropertyName == item.LeftPropertyName).DbColumnName;
             return _sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName + item.LeftIndex) + "." + _sqlBuilder!.GetTranslationColumnName(name);
         } 
         private static string GetShortName(int index)

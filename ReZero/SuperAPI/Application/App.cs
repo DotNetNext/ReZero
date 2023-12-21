@@ -57,6 +57,12 @@ namespace ReZero.SuperAPI
                     DbType = zeroDatabaseInfo.DbType,
                     IsAutoCloseConnection = true,
                     InitKeyType = InitKeyType.Attribute
+                },
+                db => {
+                    db.Aop.OnLogExecuting = (s, p) =>
+                    {
+                        Console.WriteLine(UtilMethods.GetNativeSql(s,p));
+                    };
                 });
             }
             return db;
