@@ -22,6 +22,7 @@ namespace ReZero.SuperAPI
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityColumnInfo));
             data.Id = Id_ZeroColumnInfo;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
             datas.Add(data);
         }
         private void AddZeroEntityInfo(List<ZeroEntityInfo> datas)
@@ -29,6 +30,7 @@ namespace ReZero.SuperAPI
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityInfo));
             data.Id = Id_ZeroEntityInfo;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
             datas.Add(data);
         }
 
@@ -37,6 +39,7 @@ namespace ReZero.SuperAPI
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroDatabaseInfo));
             data.Id = Id_ZeroDatabaseInfo;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
             datas.Add(data);
         }
 
@@ -45,6 +48,7 @@ namespace ReZero.SuperAPI
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroInterfaceList));
             data.Id = Id_ZeroInterfaceList;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
             datas.Add(data);
         }
         private static void AddZeroInterfaceCategory(List<ZeroEntityInfo> datas)
@@ -52,6 +56,7 @@ namespace ReZero.SuperAPI
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroInterfaceCategory));
             data.Id = Id_ZeroInterfaceCategory;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
             datas.Add(data);
         }
 

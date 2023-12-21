@@ -30,8 +30,8 @@ namespace ReZero.SuperAPI
                 DbType = db.CurrentConnectionConfig.DbType,
                 IsInitialized = true,
                 Name = TextHandler.GetCommonTexst("Rezero系统数据库", "Rezero database"),
-                Creator = "admin",
-                Id = 1
+                Creator = DataBaseInitializerProvider.UserName,
+                Id = DataBaseInitializerProvider.Id
 
             }).ExecuteCommand();
         }
