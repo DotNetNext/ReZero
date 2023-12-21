@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Data;
+using Microsoft.Extensions.Primitives;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -23,14 +25,23 @@ namespace ReZero.SuperAPI
             return queryObject;
         }
 
-        private static QueryMethodInfo GetSelectByParameters(Type type, DataModel dataModel, QueryMethodInfo queryObject)
+        private  QueryMethodInfo GetSelectByParameters(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
-            StringBuilder sb = new StringBuilder();
+            List<string> selectLists = new List<string>();
             foreach (var item in dataModel.SelectParameters ?? new List<DataModelSelectParameters>())
             {
-                
+                if (IsSelectMasterAll(item))
+                {
+                    selectLists.Add(GetMasterSelectAll(type));
+                }
+                else if (IsSelectJoinName(item))
+                {
+                    var tableInfo = dataModel!.JoinParameters![item.TableIndex-1];
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName+item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {_sqlBuilder!.GetTranslationColumnName(item.AsName)} ";
+                    selectLists.Add(name);
+                }
             }
-            queryObject = queryObject.Select(sb.ToString());
+            queryObject = queryObject.Select(string.Join(",", selectLists),typeof(object));
             return queryObject;
         }
 

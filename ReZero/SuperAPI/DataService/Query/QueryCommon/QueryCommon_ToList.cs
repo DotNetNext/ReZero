@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
         private static async Task<object?> ToList(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject)
         {
             object? result = null;
-            if (IsDefault(dataModel))
+            if (IsDefaultToList(dataModel))
             {
                 result = await DefaultQuery(queryObject, result);
             }
