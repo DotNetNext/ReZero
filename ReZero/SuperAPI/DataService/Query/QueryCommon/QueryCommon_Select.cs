@@ -18,10 +18,17 @@ namespace ReZero.SuperAPI
             }
             else if (IsAnyJoin(dataModel))
             {
-                queryObject = queryObject.Select($"{PubConst.TableDefaultMasterTableShortName}.*");
+                var columns = _sqlSugarClient!.EntityMaintenance.GetEntityInfo(type).Columns.Where(it => !it.IsIgnore)
+                      .Select(it => GetEntityColumns(it)).ToList();
+                var selectString = String.Join(",", columns);
+                queryObject = queryObject.Select(selectString);
             }
             return queryObject;
         }
 
+        private object GetEntityColumns(EntityColumnInfo it)
+        {
+          return _sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultMasterTableShortName) +"."+ _sqlBuilder!.GetTranslationColumnName(it.DbColumnName) + " AS " + _sqlBuilder!.GetTranslationColumnName(it.PropertyName);
+        }
     }
 }
