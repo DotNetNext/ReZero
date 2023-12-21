@@ -31,17 +31,18 @@ namespace ReZero.SuperAPI
             // Get the requested URL path from the context
             var requestedUrl = context.Request.Path;
 
-            // Check if the requested URL corresponds to Dynamic API
-            if (IsDynamicApi(requestedUrl))
-            {
-                // Handle the request using Dynamic API logic
-                await DynamicApi(context);
-            }
+          
             // Check if the requested URL corresponds to Internal API
-            else if (IsInternalApi(requestedUrl))
+            if (IsInternalApi(requestedUrl))
             {
                 // Handle the request using Internal API logic
                 await InternalApi(context);
+            }
+            // Check if the requested URL corresponds to Dynamic API
+            else if(IsDynamicApi(requestedUrl))
+            {
+                // Handle the request using Dynamic API logic
+                await DynamicApi(context);
             }
             // If the requested URL doesn't match any specific API, pass the request to the next middleware
             else
