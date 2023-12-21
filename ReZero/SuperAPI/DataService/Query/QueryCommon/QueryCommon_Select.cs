@@ -14,16 +14,39 @@ namespace ReZero.SuperAPI
         {
             if (IsAnySelect(dataModel))
             {
-
+                queryObject = GetSelectByParameters(type,dataModel, queryObject);
             }
             else if (IsAnyJoin(dataModel))
             {
-                var columns = _sqlSugarClient!.EntityMaintenance.GetEntityInfo(type).Columns.Where(it => !it.IsIgnore)
-                      .Select(it => GetEntityColumns(it)).ToList();
-                var selectString = String.Join(",", columns);
-                queryObject = queryObject.Select(selectString);
+                queryObject = GetDefaultSelect(type, queryObject);
             }
             return queryObject;
+        }
+
+        private static QueryMethodInfo GetSelectByParameters(Type type, DataModel dataModel, QueryMethodInfo queryObject)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in dataModel.SelectParameters ?? new List<DataModelSelectParameters>())
+            {
+                
+            }
+            queryObject = queryObject.Select(sb.ToString());
+            return queryObject;
+        }
+
+        private QueryMethodInfo GetDefaultSelect(Type type, QueryMethodInfo queryObject)
+        {
+            string selectString = GetMasterSelectAll(type);
+            queryObject = queryObject.Select(selectString);
+            return queryObject;
+        }
+
+        private string GetMasterSelectAll(Type type)
+        {
+            var columns = _sqlSugarClient!.EntityMaintenance.GetEntityInfo(type).Columns.Where(it => !it.IsIgnore)
+                  .Select(it => GetEntityColumns(it)).ToList();
+            var selectString = String.Join(",", columns);
+            return selectString;
         }
 
         private object GetEntityColumns(EntityColumnInfo it)

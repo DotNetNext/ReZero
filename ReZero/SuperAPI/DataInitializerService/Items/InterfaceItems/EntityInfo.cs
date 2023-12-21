@@ -185,6 +185,21 @@ namespace ReZero.SuperAPI
                         PageSize = 20,
                         PageNumber = 1
                     },
+                    SelectParameters=new List<DataModelSelectParameters>() 
+                    {
+                          new DataModelSelectParameters()
+                          {
+                              TableIndex=0,
+                              IsTableAll=true
+                          },
+                          new DataModelSelectParameters()
+                          {
+                              TableIndex=1,
+                              Name=nameof(ZeroDatabaseInfo.Name),
+                              AsName="DataBaseName",
+                              
+                          }
+                    },
                     JoinParameters=new List<DataModelJoinParameters>()
                     {  new DataModelJoinParameters()
                       {

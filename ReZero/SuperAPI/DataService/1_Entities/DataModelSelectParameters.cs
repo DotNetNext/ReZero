@@ -8,7 +8,9 @@ namespace ReZero.SuperAPI
     public class DataModelSelectParameters
     {
         public int TableIndex { get; set; }
-        public string?  Name { get; set; }
-        public OrderByType OrderByType { get; set; }
+        public string? Name { get; set; }
+        public string?  AsName { get; set; } 
+        public string? FieldName { get; set; }
+        public bool IsTableAll { get; set; }
     } 
 }
