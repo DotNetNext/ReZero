@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ReZero.SuperAPI
 {
     /// <summary>
-    /// Helper
+    /// Page
     /// </summary>
     public partial class QueryCommon : IDataService
     {

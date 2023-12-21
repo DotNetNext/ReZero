@@ -9,6 +9,9 @@ using System.Data;
 using System.Text.RegularExpressions;
 namespace ReZero.SuperAPI
 {
+    /// <summary>
+    /// ToList
+    /// </summary>
     public partial class QueryCommon : IDataService
     {
         private static async Task<object?> ToList(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject)

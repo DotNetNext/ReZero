@@ -6,7 +6,7 @@ using System.Linq;
 namespace ReZero.SuperAPI
 {
     /// <summary>
-    /// Helper
+    /// Select
     /// </summary>
     public partial class QueryCommon : IDataService
     {

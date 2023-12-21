@@ -6,7 +6,7 @@ using System.Text;
 namespace ReZero.SuperAPI 
 {
     /// <summary>
-    /// Helper
+    /// OrdeBy
     /// </summary>
     public partial class QueryCommon : IDataService
     {
