@@ -196,7 +196,7 @@ namespace ReZero.SuperAPI
                           {
                               TableIndex=1,
                               Name=nameof(ZeroDatabaseInfo.Name),
-                              AsName="DataBaseName",
+                              AsName=PubConst.DTO_DataBaseName,
                               
                           }
                     },
@@ -235,8 +235,8 @@ namespace ReZero.SuperAPI
                             Description=TextHandler.GetCommonTexst("表名", "Table name")
                         },
                          new DataColumnParameter(){
-                            PropertyName= nameof(ZeroEntityInfo.DataBaseId) ,
-                            Description=TextHandler.GetCommonTexst("数据库", "DataBase id")
+                            PropertyName=PubConst.DTO_DataBaseName ,
+                            Description=TextHandler.GetCommonTexst("数据库", "DataBase Name")
                         },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroEntityInfo.Description) ,

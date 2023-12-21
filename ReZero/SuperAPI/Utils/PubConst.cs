@@ -13,8 +13,10 @@ namespace ReZero.SuperAPI
 
         public const string NamespaceResultService = "ReZero.SuperAPI.Items.";
 
+        public const string DTO_DataBaseName = "DataBaseName";
 
         public readonly static string TableDefaultMasterTableShortName= TableDefaultPreName+0;
+
 
     }
 }
