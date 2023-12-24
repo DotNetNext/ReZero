@@ -23,14 +23,18 @@ namespace ReZero.SuperAPI
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityColumnInfo));
             data.Id = Id_ZeroColumnInfo;
             data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
             datas.Add(data);
         }
+
+
         private void AddZeroEntityInfo(List<ZeroEntityInfo> datas)
         {
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityInfo));
             data.Id = Id_ZeroEntityInfo;
             data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
             datas.Add(data);
         }
 
@@ -40,34 +44,34 @@ namespace ReZero.SuperAPI
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroDatabaseInfo));
             data.Id = Id_ZeroDatabaseInfo;
             data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
             datas.Add(data);
         }
 
-        private static void AddZeroInterfaceList(List<ZeroEntityInfo> datas)
+        private  void AddZeroInterfaceList(List<ZeroEntityInfo> datas)
         {
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroInterfaceList));
             data.Id = Id_ZeroInterfaceList;
             data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
             datas.Add(data);
         }
-        private static void AddZeroInterfaceCategory(List<ZeroEntityInfo> datas)
+        private  void AddZeroInterfaceCategory(List<ZeroEntityInfo> datas)
         {
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroInterfaceCategory));
             data.Id = Id_ZeroInterfaceCategory;
             data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
             datas.Add(data);
         }
 
-        private static ZeroEntityInfo GetNewItem(Action<ZeroEntityInfo> action)
+
+        private void CommonSetting(ZeroEntityInfo data)
         {
-            var result = new ZeroEntityInfo()
-            {
-                IsInitialized = true,
-            };
-            action(result);
-            return result;
+            data.IsInitialized = true;
+            data.IsDeleted = false;
         }
     }
 }
