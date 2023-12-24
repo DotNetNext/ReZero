@@ -21,6 +21,15 @@ namespace ReZero.SuperAPI
                     SetIsSnowFlakeSingle(entityInfo.Columns, type,dataModel, columnInfo);
                 }
             }
+        } 
+
+        internal static void CheckSystemData(DataModel dataModel, Type type, SqlSugar.EntityInfo entity)
+        {
+            var IsInitializedColumn = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsInitialized)));
+            if (IsInitializedColumn != null && Convert.ToBoolean(IsInitializedColumn.PropertyInfo.GetValue(dataModel.Data)) == true)
+            {
+                throw new Exception(TextHandler.GetCommonTexst(type.Name + "系统数据不能删除", type.Name + " system data cannot be deleted "));
+            }
         }
 
         private static void SetIsSnowFlakeSingle(List<EntityColumnInfo> columnInfos, Type type, DataModel dataModel, EntityColumnInfo columnInfo)

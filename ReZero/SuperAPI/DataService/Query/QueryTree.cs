@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var db = App.Db;
+            var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             RefAsync<int> count = 0;
             var parameter = dataModel.TreeParameter;
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);

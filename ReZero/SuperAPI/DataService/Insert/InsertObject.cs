@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var db = App.Db;
+            var db=App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitData(type,db,dataModel);
             await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();

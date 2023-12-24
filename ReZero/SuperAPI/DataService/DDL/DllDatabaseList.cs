@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var db = App.Db;
+            var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var dataBaseList=db.DbMaintenance.GetDataBaseList(); 
             return await Task.FromResult(dataBaseList);
         }
