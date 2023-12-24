@@ -27,5 +27,11 @@
     {
         $(divAlertBody).html(msg);
         btnAlert.click();
+    },
+    objectToQueryString: function (obj) {
+        return Object.keys(obj)
+            .filter(key => obj[key] !== null && obj[key] !== undefined) // Filter out null and undefined values
+            .map(key => key + '=' + encodeURIComponent(obj[key]))
+            .join('&');
     }
 }
