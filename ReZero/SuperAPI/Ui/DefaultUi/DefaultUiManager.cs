@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -13,6 +14,7 @@ namespace ReZero.SuperAPI
     public class DefaultUiManager : IUiManager
     {
         private readonly string masterPagePlaceholder = "@@master_page.html";
+        private readonly string index_url = "@@index_url";
         private readonly string masterPageFolder = "template";
         private readonly string masterPageFileName = "master_page.html";
         private readonly string layoutContentPlaceholder = "@@lyear-layout-content";
@@ -33,7 +35,7 @@ namespace ReZero.SuperAPI
         public async Task<string> GetHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content)
         {
 
-            var url = (content.Request.Path + ""+content.Request.QueryString).ToLower(); 
+            var url = (content.Request.Path + "" + content.Request.QueryString).ToLower();
             var modifiedContent = fileContent.Replace(masterPagePlaceholder, "");
             var masterPagePath = Path.Combine(Path.GetDirectoryName(filePath), masterPageFolder, masterPageFileName);
             var masterPageHtml = await File.ReadAllTextAsync(masterPagePath);
@@ -41,9 +43,9 @@ namespace ReZero.SuperAPI
             //menu html
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
             var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Url!.ToLower() == url).FirstAsync();
-            if (currentMenu == null) 
+            if (currentMenu == null)
             {
-                currentMenu=await App.Db.Queryable<ZeroInterfaceCategory>().FirstAsync();
+                currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().FirstAsync();
             }
             var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
             var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);
@@ -54,10 +56,22 @@ namespace ReZero.SuperAPI
             //Page html
             modifiedContent = await ReplacePageContext(filePath, modifiedContent);
 
+            modifiedContent = ReplceIndexSrc(modifiedContent, currentMenu);
+
             //Body context
-            masterPageHtml =ReplaceBodyContext(modifiedContent,  masterPageHtml, menuHtml);
+            masterPageHtml = ReplaceBodyContext(modifiedContent, masterPageHtml, menuHtml);
 
             return masterPageHtml;
+        }
+        
+
+        private string ReplceIndexSrc(string modifiedContent, ZeroInterfaceCategory? currentMenu)
+        {
+            if (currentMenu!.Id == InterfaceCategoryInitializerProvider.Id1)
+            {
+                modifiedContent = modifiedContent.Replace(index_url, SuperAPIModule._apiOptions!.IndexSrc);
+            } 
+            return modifiedContent;
         }
 
         private async Task<string> ReplacePageContext(string filePath,string html)
@@ -96,7 +110,8 @@ namespace ReZero.SuperAPI
         /// <returns>The HTML code for the menu.</returns>
         public async Task<string> GetMenuHtml(List<ZeroInterfaceCategory> categories,string filePath, ZeroInterfaceCategory  current)
         {
-            return await Task.FromResult(MenuBuilder.GenerateMenu(categories, current));
+            var result= await Task.FromResult(MenuBuilder.GenerateMenu(categories, current));
+            return result;
         }
 
         /// <summary>

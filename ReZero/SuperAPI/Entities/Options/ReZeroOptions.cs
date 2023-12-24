@@ -31,6 +31,11 @@ namespace ReZero.SuperAPI
         public string? DefaultUiFolderName { get; set; } = "default_ui";
 
         /// <summary>
+        /// index src
+        /// </summary>
+        public string? IndexSrc { get; set; } = "/swagger";
+
+        /// <summary>
         /// Gets or sets the initialization connection string information (default: SQLite).
         /// </summary>
         public ConnectionConfig ConnectionConfig { get; set; } = new ConnectionConfig()
