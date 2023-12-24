@@ -57,7 +57,7 @@
             fetchData(name) {
                 var urlParams = new URLSearchParams(window.location.search);
                 var idFromUrl = urlParams.get('InterfaceCategoryId');
-                var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=0';
+                var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=1';
                 var urlParameters = "&" + tools.objectToQueryString({
                     Name: txtSearch.value,
                     InterfaceCategoryId: idFromUrl
