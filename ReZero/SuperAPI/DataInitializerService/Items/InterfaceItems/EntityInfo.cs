@@ -178,7 +178,7 @@ namespace ReZero.SuperAPI
                          //},
                         new ResultColumnModel()
                          {
-                               ResultColumnType=ResultColumnType.SubqueryName,
+                               ResultColumnType=ResultColumnType.ConvertDefaultTimeString,
                                PropertyName= nameof(ZeroEntityInfo.CreateTime),
                          }
                     }
