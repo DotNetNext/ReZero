@@ -1,6 +1,11 @@
 ﻿var tools = {
-    highlightErrorFields: function (errorArray) {
-        errorArray.forEach(function (error) {
+    highlightErrorFields: function (data) {
+        if (!data.ErrorParameters)
+        {
+            tools.alert(data.message);
+            return;
+        } 
+        data.ErrorParameters.forEach(function (error) {
             // 获取 Name 属性的值
             var fieldName = error.Name;
 
