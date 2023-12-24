@@ -21,6 +21,15 @@
         max-width: 90px;
         margin: 0 5px;
     }
+.table_opt3 {
+    text-align: center;
+    width: 450px;
+}
+
+    .table_opt3 button {
+        max-width: 75px;
+        margin: 0 5px;
+    }
 
 .form-group label {
     border: 0 !important;
