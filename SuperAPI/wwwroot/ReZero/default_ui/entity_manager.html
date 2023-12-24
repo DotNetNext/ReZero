@@ -118,7 +118,7 @@
         },
         methods: {
             fetchData(append) {
-                var url = "/PrivateReZeroRoute/100003/GetEntityInoList";
+                var url = "/PrivateReZeroRoute/100003/GetEntityInoList?rand=1";
                 axios.get(url)
                     .then(response => {
                         this.data = response.data;
