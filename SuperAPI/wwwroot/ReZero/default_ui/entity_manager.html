@@ -6,9 +6,8 @@
                     <div class="card-header"><h4>实体表管理</h4></div>
                     <div class="card">
                         <form id="frmSearach" onsubmit="return false;">
-                            <div class="input-group">
-                                <select v-model="formData.DataBaseId" class="form-control" style="width:150px; margin-left:28px">
-                                    <option>数据库</option>
+                            <div class="input-group"> 
+                                <select id="selDataBaseId"   class="form-control" style="width:150px; margin-left:28px">
                                     <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                                 </select>
                                 <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
@@ -42,7 +41,10 @@
                                                     {{ item[column.PropertyName] }}
                                                 </td>
 
-                                                <td class="table_opt">
+                                                <td class="table_opt2">
+                                                    <button data-toggle="modal" @click="openColumns(item)" class="btn btn-cyan btn-w-md" type="button">
+                                                        <i class="mdi mdi-lead-pencil"></i> 配置列
+                                                    </button>
                                                     <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
                                                         <i class="mdi mdi-lead-pencil"></i> 修改
                                                     </button>
@@ -118,7 +120,7 @@
         },
         methods: {
             fetchData(append) {
-                var url = "/PrivateReZeroRoute/100003/GetEntityInoList?rand=1";
+                var url = "/PrivateReZeroRoute/100003/GetEntityInoList?random=1" + append;
                 axios.get(url)
                     .then(response => {
                         this.data = response.data;
@@ -132,8 +134,9 @@
             onSearch: function (page) {
 
                 var urlParameters = "&" + tools.objectToQueryString({
-                    Name: txtSearch.value,
-                    PageNumber: page
+                    ClassName: txtSearch.value,
+                    PageNumber: page,
+                    DataBaseId: selDataBaseId.value
                 });
                 this.fetchData(urlParameters);
             },
@@ -215,6 +218,10 @@
                         this.error = error.message;
                         this.data = null;
                     });
+            },
+            openColumns: function (item)
+            {
+
             }
         }
     });
