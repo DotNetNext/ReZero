@@ -9,8 +9,9 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var db = App.Db;
+            var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+            //CheckSystemData(db, dataModel, type, db.EntityMaintenance.GetEntityInfo(type));
             base.InitData(type,db, dataModel);
             await db.DeleteableByObject(dataModel.Data).ExecuteCommandAsync();
             return true;

@@ -23,12 +23,33 @@ namespace ReZero.SuperAPI
             }
         } 
 
-        internal static void CheckSystemData(DataModel dataModel, Type type, SqlSugar.EntityInfo entity)
+        internal static void CheckSystemData(ISqlSugarClient db,DataModel dataModel, Type type, SqlSugar.EntityInfo entity)
         {
             var IsInitializedColumn = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsInitialized)));
-            if (IsInitializedColumn != null && Convert.ToBoolean(IsInitializedColumn.PropertyInfo.GetValue(dataModel.Data)) == true)
+            var pkColumns = entity.Columns.Where(it => it.IsPrimarykey).ToList();
+            if (IsInitializedColumn != null && pkColumns.Count==1)
             {
-                throw new Exception(TextHandler.GetCommonTexst(type.Name + "系统数据不能删除", type.Name + " system data cannot be deleted "));
+                var pkValue=pkColumns.First().PropertyInfo.GetValue(dataModel.Data);
+                if (pkValue != null)
+                {
+                    var IsInitializedColumnValue = db.QueryableByObject(type)
+                                                      .Where(new List<IConditionalModel>() { 
+                                                        new ConditionalModel()
+                                                        {
+                                                            FieldName=pkColumns.First().DbColumnName,
+                                                            ConditionalType=ConditionalType.Equal,
+                                                            FieldValue=pkValue+"",
+                                                            CSharpTypeName=pkColumns.First().UnderType.Name
+                                                        }
+                                                      }).Select(new List<SelectModel>() {
+                       new SelectModel(){ FieldName=IsInitializedColumn.DbColumnName, AsName=IsInitializedColumn.DbColumnName }
+                    }).First();
+                    IsInitializedColumnValue = IsInitializedColumn.PropertyInfo.GetValue(IsInitializedColumnValue);
+                    if (Convert.ToBoolean(IsInitializedColumnValue))
+                    {
+                        throw new Exception(TextHandler.GetCommonTexst(type.Name + "系统数据不能删除", type.Name + " system data cannot be deleted "));
+                    }
+                }
             }
         }
 

@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            var db = App.Db;
+            var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitData(type, db, dataModel);
             var entity = db.EntityMaintenance.GetEntityInfo(type);
@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(TextHandler.GetCommonTexst(type.Name + "没有IsDeleted属性不能逻辑删除", type.Name + "Cannot be logically deleted without IsDeleted attribute"));
             }
-            CheckSystemData(dataModel, type, entity);
+            CheckSystemData(db,dataModel, type, entity);
             await db.UpdateableByObject(dataModel.Data)
                     .UpdateColumns("isdeleted")
                     .ExecuteCommandAsync();
