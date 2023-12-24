@@ -253,7 +253,11 @@ namespace ReZero.SuperAPI
                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroDatabaseInfo.Connection) ,
                             Description=TextHandler.GetCommonTexst("字符串", "Connection")
-                        }
+                        },
+                        new DataColumnParameter(){
+                            PropertyName=nameof(ZeroDatabaseInfo.IsInitialized) ,
+                            Description=TextHandler.GetCommonTexst("系统数据", "System data")
+                        },
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.QueryCommon,

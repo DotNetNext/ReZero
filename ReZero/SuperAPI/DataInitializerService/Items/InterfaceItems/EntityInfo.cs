@@ -239,6 +239,10 @@ namespace ReZero.SuperAPI
                             Description=TextHandler.GetCommonTexst("数据库", "DataBase Name")
                         },
                         new DataColumnParameter(){
+                            PropertyName=nameof(ZeroRoleInfo.IsInitialized) ,
+                            Description=TextHandler.GetCommonTexst("系统数据", "System data")
+                        },
+                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroEntityInfo.Description) ,
                             Description=TextHandler.GetCommonTexst("备注", "Description")
                         }
