@@ -225,7 +225,7 @@ namespace ReZero.SuperAPI
                     ResultType = ResultType.Grid,
                     ResultColumnModels=new List<ResultColumnModel>() 
                     {
-                        new ResultColumnModel(){  PropertyName= nameof(ZeroDatabaseInfo.DbType) , ConvertType=typeof(DbType),ConvertType2=typeof(string), ResultColumnType= ResultColumnType.DefaultConvert }
+                        new ResultColumnModel(){  PropertyName= nameof(ZeroDatabaseInfo.DbType) , ConvertType=typeof(DbType),ConvertType2=typeof(string), ResultColumnType= ResultColumnType.ConvertDefault }
                     }
                 };
                 it.DataModel = new DataModel()

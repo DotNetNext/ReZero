@@ -171,10 +171,15 @@ namespace ReZero.SuperAPI
                     ResultType = ResultType.Grid,
                     ResultColumnModels = new List<ResultColumnModel>()
                     {
-                         new ResultColumnModel()
+                         //new ResultColumnModel()
+                         //{
+                         //      ResultColumnType=ResultColumnType.SubqueryName,
+                         //      PropertyName= nameof(ZeroEntityInfo.DataBaseId), 
+                         //},
+                        new ResultColumnModel()
                          {
                                ResultColumnType=ResultColumnType.SubqueryName,
-                               PropertyName= nameof(ZeroEntityInfo.DataBaseId), 
+                               PropertyName= nameof(ZeroEntityInfo.CreateTime),
                          }
                     }
                 };
@@ -234,6 +239,10 @@ namespace ReZero.SuperAPI
                             PropertyName= nameof(ZeroEntityInfo.DbTableName) ,
                             Description=TextHandler.GetCommonTexst("表名", "Table name")
                         },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroEntityInfo.Description) ,
+                            Description=TextHandler.GetCommonTexst("备注", "Description")
+                        },
                          new DataColumnParameter(){
                             PropertyName=PubConst.DTO_DataBaseName ,
                             Description=TextHandler.GetCommonTexst("数据库", "DataBase Name")
@@ -242,9 +251,9 @@ namespace ReZero.SuperAPI
                             PropertyName=nameof(ZeroRoleInfo.IsInitialized) ,
                             Description=TextHandler.GetCommonTexst("系统数据", "System data")
                         },
-                        new DataColumnParameter(){
-                            PropertyName= nameof(ZeroEntityInfo.Description) ,
-                            Description=TextHandler.GetCommonTexst("备注", "Description")
+                       new DataColumnParameter(){
+                            PropertyName=nameof(ZeroRoleInfo.CreateTime) ,
+                            Description=TextHandler.GetCommonTexst("创建时间", "Create time")
                         }
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,

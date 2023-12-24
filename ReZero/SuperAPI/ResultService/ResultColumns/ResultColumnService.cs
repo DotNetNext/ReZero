@@ -11,8 +11,14 @@ namespace ReZero.SuperAPI
         {
             switch (resultColumnModel!.ResultColumnType) 
             {
-                case ResultColumnType.DefaultConvert:
+                case ResultColumnType.ConvertDefault:
                     propertyValue= UtilMethods.ChangeType2(propertyValue, resultColumnModel.ConvertType);
+                    break;
+                case ResultColumnType.ConvertDefaultTimeString:
+                    if (propertyValue is DateTime)
+                    {
+                        propertyValue = Convert.ToDateTime(propertyValue).ToString("yyyy-MM-dd");
+                    }
                     break;
             }
             if (resultColumnModel.ConvertType2 != null) 
