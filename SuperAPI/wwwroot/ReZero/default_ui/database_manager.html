@@ -149,7 +149,10 @@
                     var url = "/PrivateReZeroRoute/100003/DeleteDataBaseInfo?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url)
                         .then(response => {
-                            this.data = response.data;
+                            if (response.data.message)
+                            {
+                                tools.alert(response.data.message);
+                            }
                             this.error = null;
                             this.onSearch();
                             btnDelClose.click();
