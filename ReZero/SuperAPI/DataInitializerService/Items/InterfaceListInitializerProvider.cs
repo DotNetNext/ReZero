@@ -17,9 +17,9 @@ namespace ReZero.SuperAPI
         {
             AddInit_ZeroInterfaceList();
             AddInit_InterfaceCategory();
-            AddInit_DatabaseList();
+            AddInit_DatabaseInfo();
             AddInit_CodeList();
-            AddInit_EntityList();
+            AddInit_EntityInfo();
         } 
     }
 }

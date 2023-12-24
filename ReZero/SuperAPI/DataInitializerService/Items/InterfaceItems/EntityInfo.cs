@@ -6,7 +6,7 @@ namespace ReZero.SuperAPI
 {
     internal partial class InterfaceListInitializerProvider
     {
-        private void AddInit_EntityList()
+        private void AddInit_EntityInfo()
         {
             GetEntityInoList();
 

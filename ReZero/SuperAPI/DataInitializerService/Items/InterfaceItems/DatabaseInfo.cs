@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
     {
 
 
-        private void AddInit_DatabaseList()
+        private void AddInit_DatabaseInfo()
         {
             GetDatabaseInfoAllList();
 
