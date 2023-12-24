@@ -138,10 +138,11 @@
             },
             onSearch: function (page) {
 
-                var urlParameters = "&Name=" + $("#txtSearch").val();
-                if (page) {
-                    urlParameters += "&PageNumber=" + page;
-                }
+                var urlParameters = "&" + tools.objectToQueryString({
+                    Name: txtSearch.value,
+                    PageNumber: page
+                });
+
                 this.fetchData(urlParameters);
             },
             deleteAndConfirm: function (item) {
