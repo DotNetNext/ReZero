@@ -77,7 +77,7 @@
                 window.open('/rezero/TryApi.html?id=' + item.Id, '_blank');
             },
             onSearch: function () {
-                this.fetchData($("#txtSearch").val());
+                this.fetchData(txtSearch.value);
             },
             toggleEndpoint(event) {
                 $(event.currentTarget).parent().find(".parameter-title,.parameter").toggle(100);
