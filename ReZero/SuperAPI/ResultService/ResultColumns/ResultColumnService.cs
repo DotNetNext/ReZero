@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
                 case ResultColumnType.ConvertDefaultTimeString:
                     if (propertyValue is DateTime)
                     {
-                        propertyValue = Convert.ToDateTime(propertyValue).ToString("yyyy-MM-dd");
+                        propertyValue = Convert.ToDateTime(propertyValue).ToString("yyyy-MM-dd HH:mm:ss");
                     }
                     break;
             }
