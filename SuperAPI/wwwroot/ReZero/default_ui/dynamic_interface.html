@@ -36,6 +36,9 @@
                         <li v-for="param in item.DataModel.DefaultParameters" :key="param.Name">
                             <code>{{ param.ValueIsReadOnly ?   'Readonly:':''}}{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}  {{ param.Value  ?  ' ['+param.Name +' = ' + param.Value+']' : ''}}
                         </li>
+                        <li v-if="item.DataModel.OrderParemters">
+                            <code>OrderBy:[{FieldName:"FieldName",OrderByType:0}]  0 Asc, 1 Desc </code>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +65,7 @@
                     Name: txtSearch.value,
                     InterfaceCategoryId: idFromUrl
                 });
-                url=url+urlParameters;
+                url = url + urlParameters;
                 axios.get(url)
                     .then(response => {
                         this.data = response.data;
