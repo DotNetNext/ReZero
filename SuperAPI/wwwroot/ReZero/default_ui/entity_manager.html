@@ -8,6 +8,7 @@
                         <form id="frmSearach" onsubmit="return false;">
                             <div class="input-group"> 
                                 <select id="selDataBaseId"   class="form-control" style="width:150px; margin-left:28px">
+                                    <option value="">==数据库==</option>
                                     <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                                 </select>
                                 <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
