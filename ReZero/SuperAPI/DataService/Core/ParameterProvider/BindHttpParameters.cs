@@ -13,8 +13,23 @@ namespace ReZero.SuperAPI
             var formDatas = GetForDatams(context);
             BindPageParameters(dataModel, context, formDatas);
             BindDefaultParameters(dataModel, context, formDatas);
+            BindOrderByParameters(dataModel, context, formDatas);
         }
 
+        private void BindOrderByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, string> formDatas)
+        {
+            if (dataModel?.OrderParemters != null) {
+                //var data = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModel.OrderParemters)) == true);
+                //if (data != null)
+                //{
+                    var orderDatas = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.OrderParemters)));
+                    if (orderDatas.Value != null)
+                    {
+                        dataModel!.OrderParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelOrderParemter>>(orderDatas.Value + "");
+                    }
+                //}
+            }
+        } 
         private void BindPageParameters(DataModel? dataModel, HttpContext context, Dictionary<string, string> formDatas)
         {
             if (dataModel?.CommonPage != null)
