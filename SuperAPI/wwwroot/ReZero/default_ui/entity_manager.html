@@ -5,15 +5,17 @@
      <div class="card">
                     <div class="card-header"><h4>实体表管理</h4></div>
                     <div class="card">
-                        <div class="input-group">
-                            <select v-model="formData.DataBaseId" class="form-control" style="width:150px; margin-left:28px">
-                                <option>数据库</option>
-                                <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
-                            </select>
-                            <input type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
-                            <a class="btn btn-group-xs m-r-5" data-toggle="tooltip" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
-                        </div>
-
+                        <form id="frmSearach">
+                            <div class="input-group">
+                                <select v-model="formData.DataBaseId" class="form-control" style="width:150px; margin-left:28px">
+                                    <option>数据库</option>
+                                    <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
+                                </select>
+                                <input type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                                <a class="btn btn-warning btn-w-md  m-r-5" data-toggle="tooltip" @click="onSearch()" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
+                                <button onclick="frmSearach.reset()" type="submit" class="btn btn-close">清空</button>
+                            </div>
+                        </form>
                         <div class="card-toolbar clearfix">
 
                             <div class="toolbar-btn-action">

@@ -3,14 +3,14 @@
 <div id="apibox" class="card">
     <div class="search-bar">
 
-        <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
+        <form id="frmSearach" action="lyear_forms_elements.html" method="post" onsubmit="return false;">
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-1"><label class="form-control" t>库备注:</label></div>
                     <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="数据库备注"></div>
                     <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-warning btn-w-md"><i class="mdi mdi-magnify"></i>搜索</button>
-                        <button onclick="$('#txtSearch').val('')" id="btnSearch" class="btn btn-close" type="submit">清空</button>
+                        <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close" type="submit">清空</button>
                     </div>
                     <div class="col-md-1">
                         <button @click="openAddDiv()" class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
