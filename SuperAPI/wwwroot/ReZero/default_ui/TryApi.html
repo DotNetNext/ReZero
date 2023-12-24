@@ -18,9 +18,15 @@
 
                 <div v-if="param.ValueIsReadOnly==true">
                     <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
-                </div>
-
+                </div> 
             </div>
+        </div>
+        
+        <div class="parameter" v-if="data.DataModel.OrderParemters">
+            <label>
+                排序:
+            </label>
+            <textarea placeholder="格式：[{FieldName:FieldName,OrderByType:0}] ，其中： 0 升序, 1 倒序，FieldName是列表中的列">  </textarea>
         </div>
 
         <button class="btn btn-success" v-on:click="submitRequest">提交</button>
