@@ -160,7 +160,11 @@
                             <tr  v-for="item in columns">
                                 <td scope="row"><input class="form-control" placeholder="必填" type="text" /></td>
                                 <td><input class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
-                                <td class="width100"><select class="form-control"></select></td>
+                                <td class="width100">
+                                    <select class="form-control">
+                                        <option v-for="item in  nativeTypes" v-bind:value="item.Id"> {{item.Name}} </option>
+                                    </select>
+                                </td>
                                 <td><input class="form-control" placeholder="可空:默认C#类型自动匹配" type="text" /></td>
                                 <td><input class="form-control" placeholder="" type="text" /></td>
                                 <td><input type="checkbox"  class="form-control"/></td>
@@ -216,6 +220,7 @@
         mounted() {
             this.fetchData("");
             this.bindDatabaseSelect();
+            this.bindNativeTypeSelect();
         },
         methods: {
             fetchData(append) {

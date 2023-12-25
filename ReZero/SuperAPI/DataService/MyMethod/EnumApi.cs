@@ -26,7 +26,7 @@ namespace ReZero.SuperAPI
             {
                 enumItemInfos.Add(new EnumItemInfo() { Name = item.Key, Value = Convert.ToInt32(item.Value) + "" });
             }
-            return enumItemInfos.Take(7).ToList();
+            return enumItemInfos.ToList();
         }
     }
 }
