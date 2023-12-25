@@ -33,5 +33,15 @@ namespace ReZero.SuperAPI
                 return ex.Message;
             }
         }
+
+        public object CompareDatabaseStructure(int [] entityIds) 
+        {
+            return "";
+        }
+
+        public object SyncDatabaseStructure()
+        {
+            return "";
+        }
     }
 }
