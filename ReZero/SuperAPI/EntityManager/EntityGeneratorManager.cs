@@ -23,7 +23,7 @@ namespace ReZero.SuperAPI
                 var column = new SugarColumn()
                 {
                     ColumnName = item.DbCoumnName,
-                    IsJson = item.PropertyType == NativeTypes.Json,
+                    IsJson = item.PropertyType == NativeType.Json,
                     IsIdentity = item.IsIdentity,
                     IsPrimaryKey = item.IsPrimarykey
                 };
@@ -37,94 +37,94 @@ namespace ReZero.SuperAPI
             var type = builder.BuilderType();
             return type;
         } 
-        public static Type GetTypeByNativeTypes(NativeTypes nativeTypes)
+        public static Type GetTypeByNativeTypes(NativeType nativeTypes)
         {
             switch (nativeTypes)
             {
-                case NativeTypes.Int:
+                case NativeType.Int:
                     return typeof(int);
-                case NativeTypes.UInt:
+                case NativeType.UInt:
                     return typeof(uint);
-                case NativeTypes.Short:
+                case NativeType.Short:
                     return typeof(short);
-                case NativeTypes.UShort:
+                case NativeType.UShort:
                     return typeof(ushort);
-                case NativeTypes.Long:
+                case NativeType.Long:
                     return typeof(long);
-                case NativeTypes.ULong:
+                case NativeType.ULong:
                     return typeof(ulong);
-                case NativeTypes.Byte:
+                case NativeType.Byte:
                     return typeof(byte);
-                case NativeTypes.SByte:
+                case NativeType.SByte:
                     return typeof(sbyte);
-                case NativeTypes.Float:
+                case NativeType.Float:
                     return typeof(float);
-                case NativeTypes.Double:
+                case NativeType.Double:
                     return typeof(double);
-                case NativeTypes.Decimal:
+                case NativeType.Decimal:
                     return typeof(decimal);
-                case NativeTypes.Char:
+                case NativeType.Char:
                     return typeof(char);
-                case NativeTypes.Bool:
+                case NativeType.Bool:
                     return typeof(bool);
-                case NativeTypes.String:
+                case NativeType.String:
                     return typeof(string);
-                case NativeTypes.DateTime:
+                case NativeType.DateTime:
                     return typeof(DateTime);
-                case NativeTypes.TimeSpan:
+                case NativeType.TimeSpan:
                     return typeof(TimeSpan);
-                case NativeTypes.Guid:
+                case NativeType.Guid:
                     return typeof(Guid);
-                case NativeTypes.ByteArray:
+                case NativeType.ByteArray:
                     return typeof(byte[]);
-                case NativeTypes.Json:
+                case NativeType.Json:
                     return typeof(object); // Assuming Json is a placeholder for any JSON-related type
                 default:
                     throw new ArgumentException("Unsupported NativeType");
             }
         }
-        public static NativeTypes GetNativeTypeByType(Type type)
+        public static NativeType GetNativeTypeByType(Type type)
         {
             if (type == typeof(int))
-                return NativeTypes.Int;
+                return NativeType.Int;
             else if (type == typeof(uint))
-                return NativeTypes.UInt;
+                return NativeType.UInt;
             else if (type == typeof(short))
-                return NativeTypes.Short;
+                return NativeType.Short;
             else if (type == typeof(ushort))
-                return NativeTypes.UShort;
+                return NativeType.UShort;
             else if (type == typeof(long))
-                return NativeTypes.Long;
+                return NativeType.Long;
             else if (type == typeof(ulong))
-                return NativeTypes.ULong;
+                return NativeType.ULong;
             else if (type == typeof(byte))
-                return NativeTypes.Byte;
+                return NativeType.Byte;
             else if (type == typeof(sbyte))
-                return NativeTypes.SByte;
+                return NativeType.SByte;
             else if (type == typeof(float))
-                return NativeTypes.Float;
+                return NativeType.Float;
             else if (type == typeof(double))
-                return NativeTypes.Double;
+                return NativeType.Double;
             else if (type == typeof(decimal))
-                return NativeTypes.Decimal;
+                return NativeType.Decimal;
             else if (type == typeof(char))
-                return NativeTypes.Char;
+                return NativeType.Char;
             else if (type == typeof(bool))
-                return NativeTypes.Bool;
+                return NativeType.Bool;
             else if (type == typeof(string))
-                return NativeTypes.String;
+                return NativeType.String;
             else if (type == typeof(DateTime))
-                return NativeTypes.DateTime;
+                return NativeType.DateTime;
             else if (type == typeof(TimeSpan))
-                return NativeTypes.TimeSpan;
+                return NativeType.TimeSpan;
             else if (type == typeof(Guid))
-                return NativeTypes.Guid;
+                return NativeType.Guid;
             else if (type == typeof(byte[]))
-                return NativeTypes.ByteArray;
+                return NativeType.ByteArray;
             else if (typeof(JToken).IsAssignableFrom(type))
-                return NativeTypes.Json;
+                return NativeType.Json;
             else if (type.IsEnum)
-                return NativeTypes.Int;
+                return NativeType.Int;
             // Check if the type is nullable and get the underlying type
             Type underlyingType = Nullable.GetUnderlyingType(type);
             if (underlyingType != null)
@@ -132,12 +132,12 @@ namespace ReZero.SuperAPI
                 return GetNativeTypeByType(underlyingType);
             }
 
-            return NativeTypes.Json;
+            return NativeType.Json;
         }
 
-        internal static NativeTypes GetNativeTypeByDataType(string dataType)
+        internal static NativeType GetNativeTypeByDataType(string dataType)
         {
-            return NativeTypes.Int;
+            return NativeType.Int;
         }
     }
 }

@@ -18,5 +18,15 @@ namespace ReZero.SuperAPI
             }
             return enumItemInfos.Take(7).ToList();
         }
+        public List<EnumItemInfo> GetNativeTypeSelectDataSource()
+        {
+            List<EnumItemInfo> enumItemInfos = new List<EnumItemInfo>();
+            var dts = UtilMethods.EnumToDictionary<NativeType>();
+            foreach (var item in dts)
+            {
+                enumItemInfos.Add(new EnumItemInfo() { Name = item.Key, Value = Convert.ToInt32(item.Value) + "" });
+            }
+            return enumItemInfos.Take(7).ToList();
+        }
     }
 }

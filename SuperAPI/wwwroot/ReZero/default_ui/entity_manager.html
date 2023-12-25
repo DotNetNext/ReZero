@@ -209,6 +209,7 @@
             editTable:"",
             formData: {},
             database: [],
+            nativeTypes:[],
             selectedItems: [],
             columns:[{}],
         },
@@ -311,6 +312,17 @@
                 axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
                     .then(response => {
                         this.database = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            bindNativeTypeSelect: function ()
+            {
+                axios.get("/PrivateReZeroRoute/100004/GetNativeTypeList")
+                    .then(response => {
+                        this.nativeTypes = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;

@@ -127,6 +127,11 @@ namespace ReZero.SuperAPI
 
         public const long GetDbTypeListId = 15;
 
+        [TextCN("下拉列表：获取c#类型")]
+        [TextEN("Get c# type")]
+
+        public const long GetNativeTypeId = 24;
+
 
 
         [TextCN("获取实体列表")]

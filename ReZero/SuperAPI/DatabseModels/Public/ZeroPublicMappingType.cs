@@ -9,9 +9,9 @@ namespace ReZero.SuperAPI
         public SqlSugar.DbType DbType { get; set; }
         [SqlSugar.SugarColumn(IsNullable =true)]
         public string? DbTypeDescription { get; set; }
-        public  NativeTypes NativeTypes { get; set; }
+        public  NativeType NativeTypes { get; set; }
         [SqlSugar.SugarColumn(IsNullable = true)]
-        public  NativeTypes NativeTypesDescription { get; set; }
+        public  NativeType NativeTypesDescription { get; set; }
         public string? DataType { get; set; }
 
     }
