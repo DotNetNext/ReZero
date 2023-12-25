@@ -9,11 +9,11 @@
                     <div class="col-md-1"><label class="form-control" t>名称:</label></div>
                     <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="分类名称"></div>
                     <div class="col-md-2">
-                        <button @click="onSearch()" class="btn btn-warning"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close" type="submit">清空</button>
                     </div>
                     <div class="col-md-1">
-                        <button @click="openAddDiv()" class="btn btn-w-xs btn-primary" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 添加</button>
+                        <button @click="openAddDiv()" class="btn btn-primary " data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus-circle-outline"></i> 新增</button>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -40,10 +40,10 @@
                         </td>
 
                         <td class="table_opt">
-                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-cyan btn-w-md" type="button">
+                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-link" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
                             </button>
-                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-danger btn-w-md" type="button">
+                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
                                 <i class="mdi mdi-do-not-disturb"></i> 删除
                             </button>
                         </td>
