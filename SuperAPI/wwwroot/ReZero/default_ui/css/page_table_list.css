@@ -44,6 +44,9 @@
     margin-left:20px;
     margin-top:-20px;
 }
+.width100 {
+    width:100px
+}
 .width50 {
   width:50px
 }
@@ -52,4 +55,7 @@
 }
 .lyear-checkbox {
     padding-left: 10px;
+}
+.pointer {
+    cursor: pointer
 }

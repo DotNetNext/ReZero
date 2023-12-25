@@ -139,10 +139,37 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="myLargeModalLabel">{{editTable}}配置列</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">{{editTable}} 配置列 </h4>
                 </div>
                 <div class="modal-body">
-                    您的内容ddddddd...
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>实体属性</th>
+                                <th>列名</th>
+                                <th>C#类型</th>
+                                <th>数据库类型</th>
+                                <th>备注</th>
+                                <th>必填</th>
+                                <th>主键</th>
+                                <th>自增</th>
+                                <th class="width100"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <th scope="row"><input class="form-control" placeholder="必填" type="text" /></th>
+                                <td><input class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
+                                <td class="width100"><select class="form-control"></select></td>
+                                <td><input class="form-control" placeholder="可空:默认C#类型自动匹配" type="text" /></td>
+                                <td><input class="form-control" placeholder="" type="text" /></td>
+                                <td><input type="checkbox"  class="form-control"/></td>
+                                <td><input type="checkbox" class="form-control" /></td>
+                                <td><input type="checkbox" class="form-control" /></td>
+                                <td><span class="pointer"><i class="mdi mdi-plus"></i>添加</span></td>
+                            </tr> 
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -292,6 +319,7 @@
             openColumns: function (item)
             {
                 btnEditColumns.click();
+                this.editTable = item.ClassName;
             },
             openCompareDatabaseStructure: function ()
             {
