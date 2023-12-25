@@ -53,7 +53,7 @@
                                     </td>
                                     <template v-for="column in data.Columns" v-if="column.PropertyName !== 'Id'">
                                         <td>
-                                            {{ data.Data[0][column.PropertyName] }}
+                                            {{ item[column.PropertyName] }}
                                         </td>
                                     </template>
                                     <td class="table_opt2">
