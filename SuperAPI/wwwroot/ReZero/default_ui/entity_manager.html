@@ -12,7 +12,7 @@
                         <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                     </select>
                     <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
-                    <a class="btn btn-warning btn-w-md  m-r-5" data-toggle="tooltip" @click="onSearch()" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
+                    <a class="btn btn-warning    m-r-5" data-toggle="tooltip" @click="onSearch()" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
                     <button onclick="frmSearach.reset()" type="submit" class="btn btn-close">清空</button>
                 </div>
             </form>
