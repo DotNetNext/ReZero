@@ -6,14 +6,20 @@
         <div class="card-header"> </div>
         <div class="card">
             <form id="frmSearach" onsubmit="return false;">
-                <div class="input-group">
-                    <select id="selDataBaseId" class="form-control" style="width:150px; margin-left:28px">
-                        <option value="">==数据库==</option>
-                        <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
-                    </select>
-                    <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
-                    <a class="btn btn-secondary    m-r-5" data-toggle="tooltip" @click="onSearch()" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
-                    <button onclick="frmSearach.reset()" type="submit" class="btn btn-close">清空</button>
+                <div class="row ">
+                    <div class="form-group">
+                        <div class="col-md-1"><label class="form-control">数据库:</label></div>
+                        <div class="col-md-11">
+                            <div class="input-group">
+                                <select id="selDataBaseId" class="form-control" style="width:150px;">
+                                    <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
+                                </select>
+                                <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
+                                <a class="btn btn-secondary    m-r-5" data-toggle="tooltip" @click="onSearch()" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
+                                <button onclick="frmSearach.reset()" type="submit" class="btn btn-close">清空</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class="card-toolbar clearfix">
@@ -157,7 +163,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr  v-for="item in columns">
+                            <tr v-for="item in columns">
                                 <td scope="row"><input class="form-control" placeholder="必填" type="text" /></td>
                                 <td><input class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
                                 <td class="width100">
@@ -167,11 +173,11 @@
                                 </td>
                                 <td><input class="form-control" placeholder="可空:默认C#类型自动匹配" type="text" /></td>
                                 <td><input class="form-control" placeholder="" type="text" /></td>
-                                <td><input type="checkbox"  class="form-control"/></td>
+                                <td><input type="checkbox" class="form-control" /></td>
                                 <td><input type="checkbox" class="form-control" /></td>
                                 <td><input type="checkbox" class="form-control" /></td>
                                 <td><span @click="pushColumns()" class="pointer"><i class="mdi mdi-plus"></i>添加</span></td>
-                            </tr> 
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -210,12 +216,12 @@
             addTitle: "添加实体",
             editTitle: "修改实体",
             title: "",
-            editTable:"",
+            editTable: "",
             formData: {},
             database: [],
-            nativeTypes:[],
+            nativeTypes: [],
             selectedItems: [],
-            columns:[{}],
+            columns: [{}],
         },
         mounted() {
             this.fetchData("");
@@ -249,8 +255,7 @@
                     var url = "/PrivateReZeroRoute/100003/DeleteEntityInfo?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url)
                         .then(response => {
-                            if (response.data.message)
-                            {
+                            if (response.data.message) {
                                 tools.alert(response.data.message);
                             }
                             this.error = null;
@@ -282,7 +287,7 @@
             openAddDiv: function (item) {
                 this.title = this.addTitle;
                 var id = this.formData.DataBaseId;
-                this.formData = { DataBaseId:id};
+                this.formData = { DataBaseId: id };
             },
             addOrUpdate: function () {
                 var th = this;
@@ -290,7 +295,7 @@
                 var json = this.formData;
                 var url = json.Id ?
                     "/PrivateReZeroRoute/100003/UpdateEntityInfo" :
-                    "/PrivateReZeroRoute/100003/AddEntityInfo"; 
+                    "/PrivateReZeroRoute/100003/AddEntityInfo";
                 this.addOrUpdateSubmit(url, json);
             },
             addOrUpdateSubmit: function (url, json) {
@@ -312,8 +317,7 @@
                         this.data = null;
                     });
             },
-            bindDatabaseSelect: function ()
-            {
+            bindDatabaseSelect: function () {
                 axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
                     .then(response => {
                         this.database = response.data;
@@ -323,8 +327,7 @@
                         this.data = null;
                     });
             },
-            bindNativeTypeSelect: function ()
-            {
+            bindNativeTypeSelect: function () {
                 axios.get("/PrivateReZeroRoute/100004/GetNativeTypeList")
                     .then(response => {
                         this.nativeTypes = response.data;
@@ -334,16 +337,14 @@
                         this.data = null;
                     });
             },
-            openColumns: function (item)
-            {
+            openColumns: function (item) {
                 btnEditColumns.click();
-                this.editTable = "库:"+item.DataBaseName+" 表:"+item.ClassName  ;
+                this.editTable = "库:" + item.DataBaseName + " 表:" + item.ClassName;
             },
             pushColumns: function () {
                 this.columns.push({});
             },
-            openCompareDatabaseStructure: function ()
-            {
+            openCompareDatabaseStructure: function () {
                 btnCompareDatabaseStructure.click();
             },
             openImportEntity: function () {
