@@ -1,5 +1,6 @@
 ﻿#apibox {
     padding: 10px;
+    background:#fff
 }
 
 section {
@@ -99,7 +100,4 @@ section {
 .reduction {
     margin-top: -15px;
     padding:0 20px;
-}
-body {
-  background:#fff
 }
