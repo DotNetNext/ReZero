@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ReZero.SuperAPI 
 {
-    internal partial class InterfaceListInitializerProvider
+    public class EntityColumnInitializerProvider
     {
-
+         
     }
 }

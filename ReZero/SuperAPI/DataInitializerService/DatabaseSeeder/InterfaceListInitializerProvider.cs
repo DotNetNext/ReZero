@@ -161,6 +161,11 @@ namespace ReZero.SuperAPI
 
         public const long UpdateEntityInfoId = 22;
 
+
+        [TextCN("获取属性根据实体ID")]
+        [TextEN("Get entity properies")]
+        public const long GetEntityPropertiesByEntityId_Id = 25;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()
