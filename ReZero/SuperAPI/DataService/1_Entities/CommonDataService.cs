@@ -47,7 +47,7 @@ namespace ReZero.SuperAPI
                     IsInitializedColumnValue = IsInitializedColumn.PropertyInfo.GetValue(IsInitializedColumnValue);
                     if (Convert.ToBoolean(IsInitializedColumnValue))
                     {
-                        throw new Exception(TextHandler.GetCommonTexst(type.Name + "系统数据不能删除", type.Name + " system data cannot be deleted "));
+                        throw new Exception(TextHandler.GetCommonTexst(type.Name + "系统数据不能修改", type.Name + " system data cannot be updated "));
                     }
                 }
             }
