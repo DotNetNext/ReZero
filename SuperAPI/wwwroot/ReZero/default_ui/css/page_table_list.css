@@ -44,14 +44,17 @@
     margin-left:20px;
     margin-top:-20px;
 }
+.width1200 {
+    width: 1200px !important
+}
 .width100 {
-    width:100px
+    width: 100px !important
 }
 .width50 {
-  width:50px
+  width:50px !important
 }
 .width30 {
-    width: 30px
+    width: 30px !important
 }
 .lyear-checkbox {
     padding-left: 10px;
