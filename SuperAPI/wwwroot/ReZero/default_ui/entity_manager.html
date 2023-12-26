@@ -157,7 +157,7 @@
                                 <th>C#类型</th>
                                 <th>数据库类型</th>
                                 <th>备注</th>
-                                <th>必填</th>
+                                <th>可空</th>
                                 <th>主键</th>
                                 <th>自增</th>
                                 <th class="width100"></th>
@@ -165,18 +165,20 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in columns">
-                                <td scope="row"><input v-model="item.PropertyName" class="form-control" placeholder="必填" type="text" /></td>
+                                <td scope="row">
+                                <input v-model="item.Id" type="hidden" />
+                                <input v-model="item.PropertyName" class="form-control" placeholder="必填" type="text" /></td>
                                 <td><input  v-model="item.DbColumnName"  class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
                                 <td class="width100">
-                                    <select class="form-control">
+                                    <select v-model="item.PropertyType" class="form-control">
                                         <option v-for="item in  nativeTypes" v-bind:value="item.Id"> {{item.Name}} </option>
                                     </select>
                                 </td>
-                                <td><input class="form-control" placeholder="可空:默认C#类型自动匹配" type="text" /></td>
-                                <td><input class="form-control" placeholder="" type="text" /></td>
-                                <td><input type="checkbox" class="form-control" /></td>
-                                <td><input type="checkbox" class="form-control" /></td>
-                                <td><input type="checkbox" class="form-control" /></td>
+                                <td><input v-model="item.DataType" class="form-control" placeholder="可空:默认C#类型自动匹配" type="text" /></td>
+                                <td><input v-model="item.Description" class="form-control" placeholder="" type="text" /></td>
+                                <td><input v-model="item.IsNullable" type="checkbox" class="form-control" /></td>
+                                <td><input v-model="item.IsPrimarykey"  type="checkbox" class="form-control" /></td>
+                                <td><input v-model="item.IsIdentity" type="checkbox" class="form-control" /></td>
                                 <td><span @click="pushColumns()" class="pointer"><i class="mdi mdi-plus"></i>添加</span></td>
                             </tr>
                         </tbody>
