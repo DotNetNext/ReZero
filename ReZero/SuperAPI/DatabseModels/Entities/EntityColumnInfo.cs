@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     public class ZeroEntityColumnInfo : DbBase
     {
         public long TableId { get; set; }
-        public string? DbCoumnName { get; set; }
+        public string? DbColumnName { get; set; }
         public string? PropertyName { get; set; } 
         public int Length { get; set; }
         public int? DecimalDigits { get; set; }

@@ -53,7 +53,7 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.Id),ValueType = typeof(long).Name },
-                        new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.DbCoumnName) ,ParameterValidate=new ParameterValidate(){IsRequired=true} ,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.DbColumnName) ,ParameterValidate=new ParameterValidate(){IsRequired=true} ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.PropertyName) ,ParameterValidate=new ParameterValidate(){IsRequired=true} ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.PropertyType), ParameterValidate= new ParameterValidate(){IsRequired=true},ValueType = typeof(NativeType).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.DataType),ValueType = typeof(string).Name },
@@ -84,7 +84,7 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.Id),ValueType = typeof(long).Name },
-                        new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.DbCoumnName) ,ParameterValidate=new ParameterValidate(){IsRequired=true} ,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.DbColumnName) ,ParameterValidate=new ParameterValidate(){IsRequired=true} ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.PropertyName) ,ParameterValidate=new ParameterValidate(){IsRequired=true} ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.PropertyType), ParameterValidate= new ParameterValidate(){IsRequired=true},ValueType = typeof(NativeType).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityColumnInfo.DataType),ValueType = typeof(string).Name },

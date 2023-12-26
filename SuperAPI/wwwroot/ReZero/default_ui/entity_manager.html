@@ -165,8 +165,8 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in columns">
-                                <td scope="row"><input class="form-control" placeholder="必填" type="text" /></td>
-                                <td><input class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
+                                <td scope="row"><input v-model="item.PropertyName" class="form-control" placeholder="必填" type="text" /></td>
+                                <td><input  v-model="item.DbColumnName"  class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
                                 <td class="width100">
                                     <select class="form-control">
                                         <option v-for="item in  nativeTypes" v-bind:value="item.Id"> {{item.Name}} </option>
@@ -340,7 +340,15 @@
             },
             openColumns: function (item) {
                 btnEditColumns.click();
-                this.editTable = "库:" + item.DataBaseName + " 表:" + item.ClassName;
+                this.editTable = item.ClassName + " -  " + item.DataBaseName;
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId="+item.Id;
+                axios.get(url)
+                    .then(response => {
+                        this.columns = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message; 
+                    });
             },
             pushColumns: function () {
                 this.columns.push({});

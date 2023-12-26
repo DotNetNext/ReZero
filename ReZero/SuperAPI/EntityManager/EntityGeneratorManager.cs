@@ -22,7 +22,7 @@ namespace ReZero.SuperAPI
                 var propertyType = GetTypeByNativeTypes(item.PropertyType);
                 var column = new SugarColumn()
                 {
-                    ColumnName = item.DbCoumnName,
+                    ColumnName = item.DbColumnName,
                     IsJson = item.PropertyType == NativeType.Json,
                     IsIdentity = item.IsIdentity,
                     IsPrimaryKey = item.IsPrimarykey

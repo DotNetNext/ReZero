@@ -34,7 +34,7 @@ namespace ReZero.SuperAPI
                 {
                     Description = propertyInfo.ColumnDescription??"",
                     DataType = it.DataType,
-                    DbCoumnName = propertyInfo.DbColumnName,
+                    DbColumnName = propertyInfo.DbColumnName,
                     DecimalDigits = propertyInfo.DecimalDigits,
                     IsIdentity = propertyInfo.IsIdentity,
                     Length = propertyInfo.Length,
@@ -57,7 +57,7 @@ namespace ReZero.SuperAPI
                 {
                     Description = item.ColumnDescription ?? "",
                     DataType = item.DataType??"",
-                    DbCoumnName = item.DbColumnName??"",
+                    DbColumnName = item.DbColumnName??"",
                     DecimalDigits = item.DecimalDigits,
                     IsIdentity = item.IsIdentity,
                     Length = item.Length,
