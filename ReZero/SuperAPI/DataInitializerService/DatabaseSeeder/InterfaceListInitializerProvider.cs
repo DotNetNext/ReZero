@@ -163,8 +163,21 @@ namespace ReZero.SuperAPI
 
 
         [TextCN("获取属性根据实体ID")]
-        [TextEN("Get entity properies")]
-        public const long GetEntityPropertiesByEntityId_Id = 25;
+        [TextEN("Get entity columns")]
+        public const long GetEntityColumnsByEntityId_Id = 25;
+
+        [TextCN("更新实体属性")]
+        [TextEN("Update entity column")]
+        public const long UpdateEntityColumnInfoId = 26;
+
+        [TextCN("添加实体属性")]
+        [TextEN("Add entity column")]
+        public const long AddEntityColumnInfoId = 27;
+
+
+        [TextCN("删除实体属性")]
+        [TextEN("Delete entity column")]
+        public const long DeleteEntityColumnInfoId = 28;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
