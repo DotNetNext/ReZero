@@ -186,7 +186,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">点击保存</button>
+                    <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
                 </div>
             </div>
         </div>
@@ -204,7 +204,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">点击保存</button>
+                    <button type="button"  class="btn btn-primary">点击保存</button>
                 </div>
             </div>
         </div>
@@ -224,7 +224,7 @@
             database: [],
             nativeTypes: [],
             selectedItems: [],
-            columns: [{}],
+            columns: [{}] 
         },
         mounted() {
             this.fetchData("");
@@ -347,6 +347,18 @@
                 axios.get(url)
                     .then(response => {
                         this.columns = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message; 
+                    });
+            },
+            addOrUpdateColumnInfoSubmit: function () {
+                var url ="/PrivateReZeroRoute/100003/AddOrUpdateEntityColumnInfos"
+                var th = this;
+                axios.post(url, { columns: this.columns })
+                    .then(response => {
+                        this.error = null;
+                        alert(1)
                     })
                     .catch(error => {
                         this.error = error.message; 
