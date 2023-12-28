@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
             }
             else if (tableInfo.IsInitialized)
             {
-                throw new Exception((TextHandler.GetCommonTexst("系统表不能修改", "The system table cannot be modified"));
+                throw new Exception((TextHandler.GetCommonTexst("系统表不能修改", "The system table cannot be modified")));
             }
         }
         private void CheckTtem(ZeroEntityColumnInfo? item)
