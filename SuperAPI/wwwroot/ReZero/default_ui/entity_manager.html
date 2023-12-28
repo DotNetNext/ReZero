@@ -148,48 +148,53 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myLargeModalLabel">{{editTable}} </h4>
                 </div>
+         
                 <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>实体属性</th>
-                                <th>列名</th>
-                                <th width="200">C#类型</th> 
-                                <th>备注</th>
-                                <th>可空</th>
-                                <th>主键</th>
-                                <th>自增</th>
-                                <th width="200"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item,index) in columns" :key="index">
-                                <td scope="row">
-                                <input v-model="item.Id" type="hidden" />
-                                <input v-model="item.PropertyName" class="form-control" placeholder="必填" type="text" /></td>
-                                <td><input  v-model="item.DbColumnName"  class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
-                                <td>
-                                   <div class="row">
-                                       <div class="col-md-6">
-                                           <select v-model="item.PropertyType" class="form-control width100">
-                                               <option v-for="item in  nativeTypes" :value="item.Value"> {{item.Name}} </option>
-                                           </select>
-                                       </div>
-                                       <div class="col-md-6">
-                                           <a class="btn btn-link" >+配置</a>
-                                       </div>
-                                   </div>
-                                </td>
-                                <td><input v-model="item.Description" class="form-control" placeholder="" type="text" /></td>
-                                <td><input v-model="item.IsNullable" type="checkbox" class="form-control" /></td>
-                                <td><input v-model="item.IsPrimarykey"  type="checkbox" class="form-control" /></td>
-                                <td><input v-model="item.IsIdentity" type="checkbox" class="form-control" /></td>
-                                <td>
-                                   <span @click="pushColumns()" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
-                                   <span @click="removeColumns(index)" class="pointer"><i class="mdi  mdi-window-close"></i>删除</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>实体属性</th>
+                                    <th>列名</th>
+                                    <th width="200">C#类型</th>
+                                    <th>备注</th>
+                                    <th>可空</th>
+                                    <th>主键</th>
+                                    <th>自增</th>
+                                    <th width="200"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,index) in columns" :key="index">
+                                    <td scope="row">
+                                        <input v-model="item.Id" type="hidden" />
+                                        <input v-model="item.PropertyName" class="form-control" placeholder="必填" type="text" />
+                                    </td>
+                                    <td><input v-model="item.DbColumnName" class="form-control" placeholder="可空:默认取属性名" type="text" /></td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <select v-model="item.PropertyType" class="form-control width100">
+                                                    <option v-for="item in  nativeTypes" :value="item.Value"> {{item.Name}} </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a class="btn btn-link">+配置</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><input v-model="item.Description" class="form-control" placeholder="" type="text" /></td>
+                                    <td><input v-model="item.IsNullable" type="checkbox" class="form-control" /></td>
+                                    <td><input v-model="item.IsPrimarykey" type="checkbox" class="form-control" /></td>
+                                    <td><input v-model="item.IsIdentity" type="checkbox" class="form-control" /></td>
+                                    <td>
+                                        <span @click="pushColumns()" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
+                                        <span @click="removeColumns(index)" class="pointer"><i class="mdi  mdi-window-close"></i>删除</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
