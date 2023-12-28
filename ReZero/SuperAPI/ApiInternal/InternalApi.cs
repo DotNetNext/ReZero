@@ -37,6 +37,7 @@ namespace ReZero.SuperAPI
                 if (interInfo == null)
                 {
                     var message = TextHandler.GetCommonTexst($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
+                    context.Response.StatusCode = 500;
                     await context.Response.WriteAsync(message);
                 }
                 else
@@ -52,7 +53,7 @@ namespace ReZero.SuperAPI
                 }
             }
             catch (Exception ex)
-            {
+            { 
                 await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
             }
         }

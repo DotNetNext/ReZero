@@ -10,8 +10,8 @@ namespace ReZero.SuperAPI
     {
         public List<EnumItemInfo> GetDbTypeSelectDataSource()
         {
-            List<EnumItemInfo> enumItemInfos= new List<EnumItemInfo>();
-            var dts=UtilMethods.EnumToDictionary<DbType>();
+            List<EnumItemInfo> enumItemInfos = new List<EnumItemInfo>();
+            var dts = UtilMethods.EnumToDictionary<DbType>();
             foreach (var item in dts)
             {
                 enumItemInfos.Add(new EnumItemInfo() { Name = item.Key, Value = Convert.ToInt32(item.Value) + "" });

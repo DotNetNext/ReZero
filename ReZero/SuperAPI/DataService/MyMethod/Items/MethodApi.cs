@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero.SuperAPI 
 {
-    public class MethodApi
+    public partial class MethodApi
     {
         public bool TestDb(long Id)
         {
@@ -14,7 +14,7 @@ namespace ReZero.SuperAPI
             {
                 return false;
             }
-            else 
+            else
             {
                 return db.Ado.IsValidConnection();
             }
@@ -34,14 +34,17 @@ namespace ReZero.SuperAPI
             }
         }
 
-        public object CompareDatabaseStructure(int [] entityIds) 
+        public object CompareDatabaseStructure(int[] entityIds)
         {
             return "";
         }
 
-        public object SyncDatabaseStructure()
+        public object AddOrUpdateEntityColumninfos(string json)
         {
+            
             return "";
         }
+
+        //public object  Save
     }
 }
