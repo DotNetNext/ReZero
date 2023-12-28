@@ -11,8 +11,7 @@ namespace ReZero.SuperAPI
         public object AddOrUpdateEntityColumninfos(string columns)
         {
             try
-            {
-
+            { 
                 List<ZeroEntityColumnInfo> zeroEntityColumns = App.Db.Utilities.DeserializeObject<List<ZeroEntityColumnInfo>>(columns);
                 var tableId = zeroEntityColumns.GroupBy(it => it.TableId).Select(it => it.Key).Single();
                 var tableInfo = App.Db.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).Single();
