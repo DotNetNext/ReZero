@@ -368,9 +368,9 @@
                 this.columns.splice(index, 1);
             },
             addOrUpdateColumnInfoSubmit: function () {
-                var url ="/PrivateReZeroRoute/100003/AddOrUpdateEntityColumnInfos"
+                var url ="/PrivateReZeroRoute/100003/SaveEntityColumnInfos"
                 var th = this;
-                axios.post(url, { columns: this.columns })
+                axios.post(url, { Columns: this.columns })
                     .then(response => {
                         this.error = null;
                         alert(1)

@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
             BindOrderByParameters(dataModel, context, formDatas);
         }
 
-        private void BindOrderByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, string> formDatas)
+        private void BindOrderByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
             if (dataModel?.OrderParemters != null) {
                 //var data = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModel.OrderParemters)) == true);
@@ -30,7 +30,7 @@ namespace ReZero.SuperAPI
                 //}
             }
         } 
-        private void BindPageParameters(DataModel? dataModel, HttpContext context, Dictionary<string, string> formDatas)
+        private void BindPageParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
             if (dataModel?.CommonPage != null)
             {
@@ -43,7 +43,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private void BindDefaultParameters(DataModel? dataModel, HttpContext context, Dictionary<string, string> formDatas)
+        private void BindDefaultParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
             if (dataModel!.DefaultParameters != null)
             {
@@ -55,7 +55,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private void UpdateWhereItemValue(HttpContext context, Dictionary<string, string> formDatas, DataModelDefaultParameter item)
+        private void UpdateWhereItemValue(HttpContext context, Dictionary<string, object> formDatas, DataModelDefaultParameter item)
         {
             item.Value = GetParameterValueFromRequest(item, context, formDatas);
             if (IsDefaultValue(item))
@@ -89,7 +89,7 @@ namespace ReZero.SuperAPI
             return item.Value == null && item.DefaultValue != null;
         }
 
-        private string GetParameterValueFromRequest(DataModelDefaultParameter parameter, HttpContext context, Dictionary<string, string> formDatas)
+        private string GetParameterValueFromRequest(DataModelDefaultParameter parameter, HttpContext context, Dictionary<string, object> formDatas)
         {
             if (parameter.ValueIsReadOnly)
             {
@@ -98,15 +98,15 @@ namespace ReZero.SuperAPI
             // 假设你希望获取名为 "parameterName" 的查询字符串参数
             string parameterValue = context.Request.Query[parameter.Name];
             if (formDatas.ContainsKey(parameter.Name ?? ""))
-                parameterValue = formDatas[parameter.Name ?? ""];
+                parameterValue = formDatas[parameter.Name ?? ""]+"";
             parameter.Value = parameterValue;
 
             return parameterValue;
         }
 
-        private static Dictionary<string, string> GetForDatams(HttpContext context)
+        private static Dictionary<string, object> GetForDatams(HttpContext context)
         {
-            Dictionary<string, string> formDatas = new Dictionary<string, string>();
+            Dictionary<string, object> formDatas = new Dictionary<string, object>();
             if (context.Request.Body != null)
             {
                 // 从请求正文中读取参数值
@@ -114,11 +114,11 @@ namespace ReZero.SuperAPI
                 var body = reader.ReadToEndAsync().Result;
                 if (!string.IsNullOrEmpty(body))
                 {
-                    formDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(body) ?? new Dictionary<string, string>();
+                    formDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body) ?? new Dictionary<string, object>();
 
                 }
             }
-            return formDatas ?? new Dictionary<string, string>();
+            return formDatas ?? new Dictionary<string, object>();
         }
 
     }
