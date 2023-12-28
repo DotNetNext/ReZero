@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -27,6 +28,12 @@ namespace ReZero.SuperAPI
                 }
             }
             return derivedTypes;
+        }
+
+
+        public static bool CheckIsPropertyName(string str)
+        {
+            return Regex.IsMatch(str, @"^[a-z,A-Z,_]\w*$");
         }
     }
 }

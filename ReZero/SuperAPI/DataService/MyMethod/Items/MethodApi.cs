@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
@@ -39,41 +40,6 @@ namespace ReZero.SuperAPI
         {
             return "";
         }
-
-        public object AddOrUpdateEntityColumninfos(string columns)
-        {
-            try
-            {
-
-                List<ZeroEntityColumnInfo> zeroEntityColumns = App.Db.Utilities.DeserializeObject<List<ZeroEntityColumnInfo>>(columns);
-                var tableId=zeroEntityColumns.GroupBy(it => it.TableId).Select(it=>it.Key).Single();
-                var tableInfo= App.Db.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).Single();
-                if (tableInfo == null) 
-                {
-                    return TextHandler.GetCommonTexst("不能保存", "Cannot save");
-                }
-                else if (tableInfo.IsInitialized) 
-                {
-                   return TextHandler.GetCommonTexst("系统表不能修改", "The system table cannot be modified");
-                }
-                App.Db.Deleteable<ZeroEntityColumnInfo>().Where(it=>it.TableId==tableId).ExecuteCommand();
-                foreach (var item in zeroEntityColumns.Where(it=>!string.IsNullOrEmpty(it.PropertyName)))
-                {
-                    if (string.IsNullOrEmpty(item.DbColumnName) ) 
-                    {
-                        item.DbColumnName = item.PropertyName;
-                    }
-                }
-                App.Db.Insertable(zeroEntityColumns).ExecuteReturnSnowflakeId();
-                return true;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        //public object  Save
+         
     }
 }
