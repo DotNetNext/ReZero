@@ -12,8 +12,7 @@ namespace ReZero.SuperAPI
             List<string> tableDifferences = new List<string>();
             var result = string.Empty; 
             var dbRoot = App.Db;
-            var entities=dbRoot.Queryable<ZeroEntityInfo>().In(ids).ToList();
-            var types = new Type[] { };
+            var entities=dbRoot.Queryable<ZeroEntityInfo>().In(ids).ToList(); 
             foreach (var entity in entities)
             {
                 var codeFirstDb =App.GetDbById(entity.DataBaseId) ?? App.Db;
@@ -29,7 +28,7 @@ namespace ReZero.SuperAPI
             }
             if (tableDifferences.Count == 0)
             {
-                result = $"<span class='diff_bule diff_success'>{TextHandler.GetCommonTexst("此操作没有风险，可以继续！！", "This operation is not risky and can continue!!")}</span>";
+                result = $"<span class='diff_bule diff_success'>{TextHandler.GetCommonText("此操作没有风险，可以继续！！", "This operation is not risky and can continue!!")}</span>";
             }
             else
             {
@@ -37,10 +36,10 @@ namespace ReZero.SuperAPI
             }
             result = result.Replace("<br>----", "<h3 class='diff_h3'>");
             result = result.Replace("----", "</h3>");
-            result = result.Replace("Table:", $"{TextHandler.GetCommonTexst("表名","Table")}:");
-            result = result.Replace("Add column", $"<span class='diff_bule'>{TextHandler.GetCommonTexst("添加列", "Add column")}</span>");
-            result = result.Replace("Update column", $"<span class='diff_yellow'>{TextHandler.GetCommonTexst("更新列", "Update column")}</span>");
-            result = result.Replace("Delete column", $"<span class='diff_red'>{TextHandler.GetCommonTexst("删除列", "Delete column")}</span>");
+            result = result.Replace("Table:", $"{TextHandler.GetCommonText("表名","Table")}:");
+            result = result.Replace("Add column", $"<span class='diff_bule'>{TextHandler.GetCommonText("添加列", "Add column")}</span>");
+            result = result.Replace("Update column", $"<span class='diff_yellow'>{TextHandler.GetCommonText("更新列", "Update column")}</span>");
+            result = result.Replace("Delete column", $"<span class='diff_red'>{TextHandler.GetCommonText("删除列", "Delete column")}</span>");
             return result;
         }
     }

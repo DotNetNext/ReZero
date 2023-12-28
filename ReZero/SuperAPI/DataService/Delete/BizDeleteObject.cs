@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
             var entity = db.EntityMaintenance.GetEntityInfo(type);
             if (!entity.Columns.Any(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted))))
             {
-                throw new Exception(TextHandler.GetCommonTexst(type.Name + "没有IsDeleted属性不能逻辑删除", type.Name + "Cannot be logically deleted without IsDeleted attribute"));
+                throw new Exception(TextHandler.GetCommonText(type.Name + "没有IsDeleted属性不能逻辑删除", type.Name + "Cannot be logically deleted without IsDeleted attribute"));
             }
             CheckSystemData(db,dataModel, type, entity);
             await db.UpdateableByObject(dataModel.Data)

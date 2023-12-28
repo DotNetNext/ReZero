@@ -97,7 +97,7 @@ namespace ReZero.SuperAPI
             var navTitle = parentMenu?.Name + "->" + currentMenu.Name;
             if (parentMenu == null) 
             {
-                navTitle=TextHandler.GetCommonTexst("详情页","Detail");
+                navTitle=TextHandler.GetCommonText("详情页","Detail");
             }
             masterPageHtml = masterPageHtml.Replace(mastreNavNamePlaceholder, navTitle);
             return masterPageHtml;

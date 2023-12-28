@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
             }
             else if (tableInfo.IsInitialized)
             {
-                throw new Exception((TextHandler.GetCommonTexst("系统表不能修改", "The system table cannot be modified")));
+                throw new Exception((TextHandler.GetCommonText("系统表不能修改", "The system table cannot be modified")));
             }
         }
         private void CheckTtem(ZeroEntityColumnInfo? item)
@@ -60,16 +60,16 @@ namespace ReZero.SuperAPI
             }
             if (string.IsNullOrEmpty(item?.PropertyName ?? ""))
             {
-                throw new Exception(TextHandler.GetCommonTexst("属性不能为空", "PropertyName is required"));
+                throw new Exception(TextHandler.GetCommonText("属性不能为空", "PropertyName is required"));
             }
             if (!PubMethod.CheckIsPropertyName(item?.PropertyName ?? ""))
             {
-                throw new Exception(TextHandler.GetCommonTexst("【" + item!.PropertyName + "】开头必须是字母并且不能有特殊字符", "[" + item!.PropertyName + "]  must start with a letter and cannot have special characters"));
+                throw new Exception(TextHandler.GetCommonText("【" + item!.PropertyName + "】开头必须是字母并且不能有特殊字符", "[" + item!.PropertyName + "]  must start with a letter and cannot have special characters"));
             }
         }
         private string DefaultResult()
         {
-            return TextHandler.GetCommonTexst("不能保存", "Cannot save");
+            return TextHandler.GetCommonText("不能保存", "Cannot save");
         }
     }
 }

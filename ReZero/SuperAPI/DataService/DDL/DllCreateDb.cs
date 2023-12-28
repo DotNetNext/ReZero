@@ -58,7 +58,7 @@ namespace ReZero.SuperAPI
 
         private static string GetNoSupportText()
         {
-            return TextHandler.GetCommonTexst($" dm or oracle no support ", "达梦或者Oracle不支持建库");
+            return TextHandler.GetCommonText($" dm or oracle no support ", "达梦或者Oracle不支持建库");
         }
 
         private static bool IsNoSupport(DbType dbType)

@@ -26,7 +26,7 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroColumnInfo,
                     ActionType = ActionType.QueryCommon,
                     DefaultParameters = new List<DataModelDefaultParameter>() {
-                             new DataModelDefaultParameter() { Name = nameof(ZeroEntityColumnInfo.TableId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonTexst("实体Id", "Entity id") }
+                             new DataModelDefaultParameter() { Name = nameof(ZeroEntityColumnInfo.TableId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonText("实体Id", "Entity id") }
                     }
                 };
             });

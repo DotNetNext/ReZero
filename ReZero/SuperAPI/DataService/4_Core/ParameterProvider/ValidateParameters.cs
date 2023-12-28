@@ -13,7 +13,7 @@ namespace ReZero.SuperAPI
             {
                 if (item?.ParameterValidate?.IsRequired == true && string.IsNullOrEmpty(item.Value + ""))
                 {
-                    errorLists.Add(new ErrorParameter() { Name = item.Name, ErrorType = "IsRequired", Message = TextHandler.GetCommonTexst("必填", "Required") });
+                    errorLists.Add(new ErrorParameter() { Name = item.Name, ErrorType = "IsRequired", Message = TextHandler.GetCommonText("必填", "Required") });
                 }
             }
             return errorLists;

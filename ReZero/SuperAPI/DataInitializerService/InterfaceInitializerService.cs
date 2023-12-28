@@ -29,7 +29,7 @@ namespace ReZero.SuperAPI
                 Connection = db.CurrentConnectionConfig.ConnectionString,
                 DbType = db.CurrentConnectionConfig.DbType,
                 IsInitialized = true,
-                Name = TextHandler.GetCommonTexst("Rezero", "Rezero database"),
+                Name = TextHandler.GetCommonText("Rezero", "Rezero database"),
                 Creator = DataBaseInitializerProvider.UserName,
                 Id = DataBaseInitializerProvider.Id
 

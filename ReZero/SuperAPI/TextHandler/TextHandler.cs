@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
 {
     internal class TextHandler
     {
-        public static string GetCommonTexst(string cn, string en) 
+        public static string GetCommonText(string cn, string en) 
         {
             var language = App.Language;
             switch (language)
