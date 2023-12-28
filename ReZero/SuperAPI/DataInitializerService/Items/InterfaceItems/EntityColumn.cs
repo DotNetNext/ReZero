@@ -51,8 +51,8 @@ namespace ReZero.SuperAPI
                     MyMethodInfo=new MyMethodInfo()
                     {
                         MethodArgsCount = 1,
-                        MethodClassFullName = typeof(MethodApi).FullName,
-                        MethodName = nameof(MethodApi.AddOrUpdateEntityColumninfos)
+                        MethodClassFullName = typeof(MethodApi_Easy).FullName,
+                        MethodName = nameof(MethodApi_Easy.AddOrUpdateEntityColumninfos)
 
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()

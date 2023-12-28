@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero.SuperAPI
 {
-    public partial class MethodApi
+    public partial class MethodApi_Easy
     {
 
         public object AddOrUpdateEntityColumninfos(string columns)

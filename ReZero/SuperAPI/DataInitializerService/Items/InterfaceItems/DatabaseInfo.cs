@@ -68,9 +68,9 @@ namespace ReZero.SuperAPI
                 {
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodClassFullName = typeof(MethodApi_Easy).FullName,
                         MethodArgsCount = 1,
-                        MethodName = nameof(MethodApi.TestDb)
+                        MethodName = nameof(MethodApi_Easy.TestDb)
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.MyMethod,

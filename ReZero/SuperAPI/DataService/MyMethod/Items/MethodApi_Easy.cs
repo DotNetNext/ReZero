@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace ReZero.SuperAPI
 {
-    public partial class MethodApi
+    public partial class MethodApi 
     {
         public bool TestDb(long Id)
         {
@@ -34,12 +34,7 @@ namespace ReZero.SuperAPI
             {
                 return ex.Message;
             }
-        }
-
-        public object CompareDatabaseStructure(int[] entityIds)
-        {
-            return "";
-        }
+        } 
          
     }
 }
