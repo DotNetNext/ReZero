@@ -359,6 +359,10 @@
                 axios.get(url)
                     .then(response => {
                         this.columns = response.data;
+                        if (this.columns.length == 0)
+                        {
+                            this.columns.push({TableId:item.Id});
+                        }
                     })
                     .catch(error => {
                         this.error = error.message; 
@@ -373,7 +377,14 @@
                 axios.post(url, { Columns: this.columns })
                     .then(response => {
                         this.error = null;
-                        alert(1)
+                        if (response.data == true)
+                        {
+                            tools.alert("保存成功");
+                        }
+                        else
+                        {
+                            tools.alert(response.data);
+                        }
                     })
                     .catch(error => {
                         this.error = error.message; 

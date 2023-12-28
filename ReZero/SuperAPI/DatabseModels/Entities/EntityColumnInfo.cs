@@ -11,8 +11,8 @@ namespace ReZero.SuperAPI
         public string? DbColumnName { get; set; }
         public string? PropertyName { get; set; } 
         public int Length { get; set; }
-        public int? DecimalDigits { get; set; }
-
+        public int DecimalDigits { get; set; }
+        [SugarColumn(IsNullable = true)]
         public string? Description { get; set; }
         public bool IsIdentity { get; set; }
         public bool IsPrimarykey { get; set; }
@@ -20,8 +20,9 @@ namespace ReZero.SuperAPI
         public bool IsJson { get; set; }
         public bool IsNullable { get; set; }
         public int Scale { get; set; }
-        public bool? IsUnsigned { get; set; }
+        public bool IsUnsigned { get; set; }
         public NativeType PropertyType { get; set; }
+        [SugarColumn(IsNullable=true)]
         public string? DataType { get; set; }
         [SugarColumn(IsNullable=true)]
         public object? ExtendedAttribute { get;  set; }

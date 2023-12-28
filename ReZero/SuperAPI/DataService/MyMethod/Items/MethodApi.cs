@@ -48,9 +48,13 @@ namespace ReZero.SuperAPI
                 List<ZeroEntityColumnInfo> zeroEntityColumns = App.Db.Utilities.DeserializeObject<List<ZeroEntityColumnInfo>>(columns);
                 var tableId=zeroEntityColumns.GroupBy(it => it.TableId).Select(it=>it.Key).Single();
                 var tableInfo= App.Db.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).Single();
-                if (tableInfo.IsInitialized) 
+                if (tableInfo == null) 
                 {
-                    throw new Exception(TextHandler.GetCommonTexst("系统表不能修改", "The system table cannot be modified"));
+                    return TextHandler.GetCommonTexst("不能保存", "Cannot save");
+                }
+                else if (tableInfo.IsInitialized) 
+                {
+                   return TextHandler.GetCommonTexst("系统表不能修改", "The system table cannot be modified");
                 }
                 App.Db.Deleteable<ZeroEntityColumnInfo>().Where(it=>it.TableId==tableId).ExecuteCommand();
                 foreach (var item in zeroEntityColumns.Where(it=>!string.IsNullOrEmpty(it.PropertyName)))
@@ -60,7 +64,7 @@ namespace ReZero.SuperAPI
                         item.DbColumnName = item.PropertyName;
                     }
                 }
-                App.Db.Insertable(zeroEntityColumns).ExecuteCommand();
+                App.Db.Insertable(zeroEntityColumns).ExecuteReturnSnowflakeId();
                 return true;
             }
             catch (Exception ex)
