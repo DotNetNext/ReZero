@@ -123,7 +123,7 @@
             </div>
         </div>
     </div>
-
+    <!--表结构对比-->
     <div id="divCompareDatabaseStructure" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnCompareDatabaseStructure" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divCompareDatabaseStructure"></button>
         <div class="modal-dialog  " role="document">
@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-
+    <!--编辑列-->
     <div id="divEditColumns" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnEditColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divEditColumns"></button>
         <div class="modal-dialog modal-lg  width1200" role="document">
@@ -206,8 +206,9 @@
             </div>
         </div>
     </div>
-    <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
+    <!--导入实体-->
     <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -400,6 +401,19 @@
                     return;
                 }
                 btnCompareDatabaseStructure.click();
+                var url = " /PrivateReZeroRoute/100003/CompareDatabaseStructure";
+                axios.post(url, { ids: this.selectedItems })
+                    .then(response => {
+                        this.columnsCompareResult = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            createTables: function ()
+            {
                 var url = " /PrivateReZeroRoute/100003/CompareDatabaseStructure";
                 axios.post(url, { ids: this.selectedItems })
                     .then(response => {
