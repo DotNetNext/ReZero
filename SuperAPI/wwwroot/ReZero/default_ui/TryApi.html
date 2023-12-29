@@ -92,7 +92,7 @@
                     .then(function (response) {
                         this.data = response.data;
                         this.error = null; 
-                        $("body").addClass("lyear-layout-sidebar-close");
+                        document.body.classList.add("lyear-layout-sidebar-close");
                     }.bind(this))
                     .catch(function (error) {
                         // 处理错误
