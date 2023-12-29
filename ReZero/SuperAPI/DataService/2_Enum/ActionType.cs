@@ -23,7 +23,8 @@ namespace ReZero.SuperAPI
 
         //DDL
         DllDatabaseList = 50000,
-        DllCreateDb = 50001,
+        DllCreateDb = 50001, 
+        DllCreateTables = 50002,
 
         //My method
         MyMethod = 99999,

@@ -175,6 +175,11 @@ namespace ReZero.SuperAPI
         public const long CompareDatabaseStructureId = 27;
 
 
+        [TextCN("创建表")]
+        [TextEN("Create table")]
+        public const long CreateTablesId = 28;
+         
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

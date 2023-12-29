@@ -89,7 +89,39 @@ namespace ReZero.SuperAPI
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DataModelDefaultParameter() { Name="Ids", Description="格式：[1,2,3] 表实体Id数组字符串",ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name="ids", Description="格式：[1,2,3] 表实体Id数组字符串",ValueType = typeof(string).Name },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data5);
+        }
+
+
+        private void CreateTable()
+        {
+            //修改实体
+            ZeroInterfaceList data5 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.POST.ToString();
+                it.Id = CreateTablesId;
+                it.GroupName = nameof(ZeroEntityColumnInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(CreateTablesId);
+                it.Url = GetUrl(it, "CreateTables");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroColumnInfo,
+                    ActionType = ActionType.DllCreateTables,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 1,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.CompareDatabaseStructure),
+                        ArgsTypes = new Type[] { typeof(List<string>) }
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name="ids", Description="格式：[1,2,3] 表实体Id数组字符串",ValueType = typeof(string).Name },
                     }
                 };
             });
