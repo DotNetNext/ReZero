@@ -9,7 +9,8 @@ namespace ReZero.SuperAPI
         private void AddInit_EntityColumnInfo()
         {
             GetEntityColuminsByEntityId();
-            SaveEntityColumnInfos(); 
+            SaveEntityColumnInfos();
+            CompareDatabaseStructure();
         }
         private void GetEntityColuminsByEntityId()
         { 
@@ -62,6 +63,37 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data5);
-        } 
+        }
+
+        private void CompareDatabaseStructure()
+        {
+            //修改实体
+            ZeroInterfaceList data5 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.POST.ToString();
+                it.Id = CompareDatabaseStructureId;
+                it.GroupName = nameof(ZeroEntityColumnInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(CompareDatabaseStructureId);
+                it.Url = GetUrl(it, "CompareDatabaseStructure");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroColumnInfo,
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 1,
+                        MethodClassFullName = typeof(MethodApi_Easy).FullName,
+                        MethodName = nameof(MethodApi_Easy.AddOrUpdateEntityColumninfos)
+
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name="Ids", Description="List<ZeroEntityColumnInfo>序列化的Json格式",ValueType = typeof(string).Name },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data5);
+        }
     }
 }

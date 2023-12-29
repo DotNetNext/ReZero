@@ -169,7 +169,11 @@ namespace ReZero.SuperAPI
         [TextCN("更新实体属性")]
         [TextEN("Update entity columns")]
         public const long UpdateEntityColumnInfosId= 26;
-         
+
+        [TextCN("表结构对比")]
+        [TextEN("Compare database dtructure")]
+        public const long CompareDatabaseStructureId = 27;
+
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
