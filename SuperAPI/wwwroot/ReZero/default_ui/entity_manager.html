@@ -191,7 +191,7 @@
                                     <td><input v-model="item.IsPrimarykey" type="checkbox" class="form-control" /></td>
                                     <td><input v-model="item.IsIdentity" type="checkbox" class="form-control" /></td>
                                     <td>
-                                        <span @click="pushColumns()" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
+                                        <span @click="pushColumns(item)" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
                                         <span @click="removeColumns(index)" class="pointer"><i class="mdi  mdi-window-close"></i>删除</span>
                                     </td>
                                 </tr>
@@ -391,8 +391,8 @@
                         this.error = error.message;
                     });
             },
-            pushColumns: function () {
-                this.columns.push({});
+            pushColumns: function (item) {
+                this.columns.push({ TableId: item.TableId });
             },
             openCompareDatabaseStructure: function () {
                 if (!this.selectedItems || this.selectedItems.length == 0) {
