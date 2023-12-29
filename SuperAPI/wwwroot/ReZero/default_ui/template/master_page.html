@@ -219,6 +219,7 @@
     <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript" src="js/main.min.js"></script>
 
+    <!--删除提醒-->
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="divDelBox" style="display: none;">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -236,8 +237,10 @@
             </div>
         </div>
     </div>
-    <button id="btnAlert" type="button" style="display:none" class="btn btn-primary" data-toggle="modal" data-target="#divAlertRoot">小模态框</button>
+
+    <!--alert弹出框-->
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="divAlertRoot" style="display: none;">
+        <button id="btnAlert" type="button" style="display:none" class="btn btn-primary" data-toggle="modal" data-target="#divAlertRoot"></button>
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -245,7 +248,7 @@
                     <h4 class="modal-title" id="myLargeModalLabel">提示</h4>
                 </div>
                 <div id="divAlertBody" class="modal-body">
-                  
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
