@@ -11,6 +11,7 @@ namespace ReZero.SuperAPI
             GetEntityColuminsByEntityId();
             SaveEntityColumnInfos();
             CompareDatabaseStructure();
+            CreateTable();
         }
         private void GetEntityColuminsByEntityId()
         { 
