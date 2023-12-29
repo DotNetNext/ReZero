@@ -83,17 +83,13 @@
                 this.fetchData(txtSearch.value);
             },
             toggleEndpoint(event) {
-                $(event.currentTarget).parent().find(".parameter-title,.parameter").toggle(100);
-                var textEle = $(event.currentTarget).find(".openapi");
-                var text = textEle.text();
-                if (text == "+") {
-                    textEle.text("-");
-                    textEle.addClass("reduction");
-                }
-                else {
-                    textEle.text("+");
-                    textEle.removeClass("reduction");
-                }
+                var $currentTarget = $(event.currentTarget);
+                var $parent = $currentTarget.parent();
+                var $parameterElements = $parent.find(".parameter-title, .parameter");
+                var $textEle = $currentTarget.find(".openapi");
+                var isTextPlus = $textEle.text() === "+";
+                $parameterElements.toggle(100);
+                $textEle.text(isTextPlus ? "-" : "+").toggleClass("reduction", isTextPlus);
             },
         }
     });
