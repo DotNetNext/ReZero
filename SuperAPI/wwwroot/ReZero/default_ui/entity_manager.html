@@ -125,18 +125,18 @@
 
     <div id="divCompareDatabaseStructure" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnCompareDatabaseStructure" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divCompareDatabaseStructure"></button>
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog  " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myLargeModalLabel">同步表结构</h4>
                 </div>
-                <div class="modal-body">
-                    您的内容...
+                <div class="modal-body" v-html="columnsCompareResult">
+             
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">点击保存</button>
+                    <button type="button" class="btn btn-primary">同步表结构</button>
                 </div>
             </div>
         </div>
@@ -238,7 +238,8 @@
             database: [],
             nativeTypes: [],
             selectedItems: [],
-            columns: [{}] 
+            columns: [{}],
+            columnsCompareResult: null
         },
         mounted() {
             this.fetchData("");
@@ -396,7 +397,22 @@
                 this.columns.push({});
             },
             openCompareDatabaseStructure: function () {
+                if (!this.selectedItems || this.selectedItems.length==0)
+                {
+                    tools.alert("请选择实体");
+                    return;
+                }
                 btnCompareDatabaseStructure.click();
+                var url = " /PrivateReZeroRoute/100003/CompareDatabaseStructure";
+                axios.post(url, { ids: this.selectedItems })
+                    .then(response => {
+                        this.columnsCompareResult = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             },
             openImportEntity: function () {
                 btnImportEntity.click();

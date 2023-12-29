@@ -97,8 +97,11 @@ namespace ReZero.SuperAPI
             }
             // 假设你希望获取名为 "parameterName" 的查询字符串参数
             string parameterValue = context.Request.Query[parameter.Name];
-            if (formDatas.ContainsKey(parameter.Name ?? ""))
-                parameterValue = formDatas[parameter.Name ?? ""]+"";
+            var formData = formDatas.FirstOrDefault(it => it.Key.EqualsCase(parameter.Name ?? ""));
+            if (formData.Key!=null)
+            {
+                parameterValue = formData.Value + "";
+            }
             parameter.Value = parameterValue;
 
             return parameterValue;
