@@ -10,29 +10,31 @@
     padding: 0;
     font-size: 15px;
     display: block;
-    background: #673ab7;
+    background: #15c377;
     color: white;
-    padding: 3px;
+    padding: 5px;
     margin-left: -3px;
 }
 
 .diff_bule {
     color: #009688;
     font-size: 14px;
+    padding-bottom: 3px;
 }
 
 .diff_yellow {
     color: red;
     font-size: 14px;
+    padding-bottom: 3px;
 }
 
 .diff_red {
     color: red;
     font-size: 14px;
+    padding-bottom:3px;
 }
 
-.diff_success {
-    margin-top: 150px;
+.diff_success { 
     display: block;
     text-align: center;
     font-size: 16px;
