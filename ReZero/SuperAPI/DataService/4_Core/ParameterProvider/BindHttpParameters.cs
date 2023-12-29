@@ -94,16 +94,14 @@ namespace ReZero.SuperAPI
             if (parameter.ValueIsReadOnly)
             {
                 return parameter.Value + "";
-            }
-            // 假设你希望获取名为 "parameterName" 的查询字符串参数
+            } 
             string parameterValue = context.Request.Query[parameter.Name];
             var formData = formDatas.FirstOrDefault(it => it.Key.EqualsCase(parameter.Name ?? ""));
             if (formData.Key!=null)
             {
                 parameterValue = formData.Value + "";
             }
-            parameter.Value = parameterValue;
-
+            parameter.Value = parameterValue; 
             return parameterValue;
         }
 
