@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Newtonsoft.Json;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,22 @@ namespace ReZero.SuperAPI
             var methodInfo=classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
             var classObj =  Activator.CreateInstance(classType, nonPublic: true);
             object [] parameters = new object[methodInfo.GetParameters().Length];
-            methodInfo.GetParameters().ToList().ForEach((p) =>
+            var argsTypes=dataModel.MyMethodInfo.ArgsTypes;
+            var index = 0;
+            methodInfo.GetParameters().ToList<System.Reflection.ParameterInfo>().ForEach((p) =>
             {
                 object? value = dataModel?.DefaultParameters?.FirstOrDefault(it => it.Name!.EqualsCase(p.Name)).Value;
-                value= UtilMethods.ChangeType2(value, p.ParameterType);
+                if (argsTypes?.Length - 1 >= index)
+                {
+                    var type = argsTypes![index];
+                    if (IsObject(value, type))
+                    {
+                        value = JsonConvert.DeserializeObject(value + "", type);
+                    }
+                }
+                value = UtilMethods.ChangeType2(value, p.ParameterType);
                 parameters[p.Position] = value!;
+                index++;
             });
             var result = methodInfo.Invoke(classObj, parameters);
             if (result is Task)
@@ -37,6 +49,11 @@ namespace ReZero.SuperAPI
             {
                 return await Task.FromResult(result);
             }
+        }
+
+        private static bool IsObject(object? value, Type type)
+        {
+            return (type.IsArray || type.FullName.StartsWith("System.Collections.Generic.List")) && value != null;
         }
     }
 }

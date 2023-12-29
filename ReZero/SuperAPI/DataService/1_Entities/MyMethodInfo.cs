@@ -9,5 +9,6 @@ namespace ReZero.SuperAPI
         public string? MethodClassFullName { get; set; }
         public string? MethodName { get; set; }
         public int MethodArgsCount { get; set; }
+        public Type[]? ArgsTypes { get; set; }
     }
 }

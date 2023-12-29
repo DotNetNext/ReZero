@@ -52,8 +52,8 @@ namespace ReZero.SuperAPI
                     MyMethodInfo=new MyMethodInfo()
                     {
                         MethodArgsCount = 1,
-                        MethodClassFullName = typeof(MethodApi_Easy).FullName,
-                        MethodName = nameof(MethodApi_Easy.AddOrUpdateEntityColumninfos)
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.AddOrUpdateEntityColumninfos)
 
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
@@ -83,13 +83,13 @@ namespace ReZero.SuperAPI
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 1,
-                        MethodClassFullName = typeof(MethodApi_Easy).FullName,
-                        MethodName = nameof(MethodApi_Easy.AddOrUpdateEntityColumninfos)
-
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.CompareDatabaseStructure),
+                        ArgsTypes=new Type[] { typeof(List<string>) } 
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DataModelDefaultParameter() { Name="Ids", Description="List<ZeroEntityColumnInfo>序列化的Json格式",ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name="Ids", Description="格式：[1,2,3] 表实体Id数组字符串",ValueType = typeof(string).Name },
                     }
                 };
             });

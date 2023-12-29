@@ -7,7 +7,7 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     { 
-        public object CompareDatabaseStructure(string [] ids)
+        public object CompareDatabaseStructure(List<string> ids)
         {
             List<string> tableDifferences = new List<string>();
             var result = string.Empty; 
