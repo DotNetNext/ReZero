@@ -21,6 +21,7 @@
         max-width: 90px;
         margin: 0 5px;
     }
+
 .table_opt3 {
     text-align: center;
     width: 450px;
@@ -61,19 +62,4 @@
 }
 .pointer {
     cursor: pointer
-}
-
-.table-container {
-    height: 70vh; /* 将表格容器的高度设置为当前窗口高度的80% */
-    max-height: 70vh; /* 设置表格容器的最大高度，防止内容过多时出现滚动条 */
-    overflow-y: auto; /* 启用垂直滚动条 */
-}
-
-.table thead th {
-    position: -webkit-sticky; /* 兼容性写法 */
-    position: sticky;
-    top: 0;
-    background-color: #fff; /* 可以根据需要设置表头的背景色 */
-    z-index: 2; /* 确保表头在上方 */
-}
- 
+} 

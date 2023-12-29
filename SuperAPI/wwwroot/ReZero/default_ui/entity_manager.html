@@ -1,5 +1,6 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css" rel="stylesheet" />
+<link href="css/page_entity_manager.css" rel="stylesheet" />
 <div id="apibox" class="card">
 
     <div class="card">
@@ -132,7 +133,7 @@
                     <h4 class="modal-title" id="myLargeModalLabel">同步表结构</h4>
                 </div>
                 <div class="modal-body" v-html="columnsCompareResult">
-             
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -141,7 +142,7 @@
             </div>
         </div>
     </div>
-   
+
     <div id="divEditColumns" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnEditColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divEditColumns"></button>
         <div class="modal-dialog modal-lg  width1200" role="document">
@@ -218,7 +219,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button"  class="btn btn-primary">点击保存</button>
+                    <button type="button" class="btn btn-primary">点击保存</button>
                 </div>
             </div>
         </div>
@@ -358,47 +359,43 @@
             openColumns: function (item) {
                 btnEditColumns.click();
                 this.editTable = item.ClassName + " -  " + item.DataBaseName;
-                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId="+item.Id;
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + item.Id;
                 axios.get(url)
                     .then(response => {
                         this.columns = response.data;
-                        if (this.columns.length == 0)
-                        {
-                            this.columns.push({TableId:item.Id});
+                        if (this.columns.length == 0) {
+                            this.columns.push({ TableId: item.Id });
                         }
                     })
                     .catch(error => {
-                        this.error = error.message; 
+                        this.error = error.message;
                     });
             },
             removeColumns: function (index) {
                 this.columns.splice(index, 1);
             },
             addOrUpdateColumnInfoSubmit: function () {
-                var url ="/PrivateReZeroRoute/100003/SaveEntityColumnInfos"
+                var url = "/PrivateReZeroRoute/100003/SaveEntityColumnInfos"
                 var th = this;
                 axios.post(url, { Columns: this.columns })
                     .then(response => {
                         this.error = null;
-                        if (response.data == true)
-                        {
+                        if (response.data == true) {
                             tools.alert("保存成功");
                         }
-                        else
-                        {
+                        else {
                             tools.alert(response.data);
                         }
                     })
                     .catch(error => {
-                        this.error = error.message; 
+                        this.error = error.message;
                     });
             },
             pushColumns: function () {
                 this.columns.push({});
             },
             openCompareDatabaseStructure: function () {
-                if (!this.selectedItems || this.selectedItems.length==0)
-                {
+                if (!this.selectedItems || this.selectedItems.length == 0) {
                     tools.alert("请选择实体");
                     return;
                 }
