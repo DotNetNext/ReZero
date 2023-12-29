@@ -137,7 +137,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">同步表结构</button>
+                    <button type="button" @click="createTables()" class="btn btn-primary">同步表结构</button>
                 </div>
             </div>
         </div>
@@ -414,10 +414,10 @@
             },
             createTables: function ()
             {
-                var url = " /PrivateReZeroRoute/100003/CompareDatabaseStructure";
+                var url = "/PrivateReZeroRoute/100003/CreateTables";
                 axios.post(url, { ids: this.selectedItems })
                     .then(response => {
-                        this.columnsCompareResult = response.data;
+                        this.columnsCompareResult = response.data == true ? "同步成功" : response.data;
                         this.error = null;
                     })
                     .catch(error => {
