@@ -263,6 +263,7 @@ namespace ReZero.SuperAPI
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>() {
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.IsInitialized),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("是否系统数据", "IsInitialized") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.DataBaseId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name , Description = TextHandler.GetCommonText("数据库ID", "Database id") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.ClassName),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonText("名称", "class Name") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.DbTableName),MergeForName=nameof(ZeroEntityInfo.ClassName)  },
