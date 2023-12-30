@@ -28,7 +28,7 @@
 
                 <div class="toolbar-btn-action">
                     <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
-                    <a class="btn btn-success m-r-5" @click="openImportEntity()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
+                    <a class="btn btn-success m-r-5" @click="openImportEntitySelectDatabase()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
                     <a class="btn btn-warning m-r-5" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
                 </div>
             </div>
@@ -206,7 +206,27 @@
             </div>
         </div>
     </div>
-    <!--导入实体-->
+    <!--导入实体--> 
+    <div id="divImportEntitySelectDatabase" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <button id="btnImportEntitySelectDatabase" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntitySelectDatabase">小模态框</button>
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">选择库</h4>
+                </div>
+                <div class="modal-body">
+                    <select id="selImportDatabaseId" class="form-control">
+                        <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseImportEntity" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="openImportEntity()" class="btn btn-primary">下一步</button>
+                </div>
+            </div>
+        </div> 
+    </div>
     <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
         <div class="modal-dialog modal-lg" role="document">
@@ -216,7 +236,28 @@
                     <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
                 </div>
                 <div class="modal-body">
-                    您的内容ddddddd...
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr >
+                                <th > 
+                                     表名 
+                                </th> 
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="tables">
+                            <tr v-for="item in tables">
+
+                                <td>
+                                    {{ item.Name }}
+                                </td>
+                                <td>
+                                    {{ item.Name  }}
+                                </td> 
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -241,7 +282,8 @@
             nativeTypes: [],
             selectedItems: [],
             columns: [{}],
-            columnsCompareResult: null
+            columnsCompareResult: null,
+            tables:[]
         },
         mounted() {
             this.fetchData("");
@@ -426,8 +468,21 @@
                         this.data = null;
                     });
             },
+            openImportEntitySelectDatabase: function () {
+                btnImportEntitySelectDatabase.click();
+            },
             openImportEntity: function () {
+                btnCloseImportEntity.click();
                 btnImportEntity.click();
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + selImportDatabaseId.value;
+                axios.get(url)
+                    .then(response => {
+                        this.tables = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message; 
+                    });
             },
             selectAll(event) {
                 if (event.target.checked) {
