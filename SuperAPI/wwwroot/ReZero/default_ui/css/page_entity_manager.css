@@ -52,4 +52,23 @@
     background-color: #fff; /* 可以根据需要设置表头的背景色 */
     z-index: 2; /* 确保表头在上方 */
 }
+.table-container2 {
+    height: 65vh; /* 将表格容器的高度设置为当前窗口高度的80% */
+    max-height: 65vh; /* 设置表格容器的最大高度，防止内容过多时出现滚动条 */
+    overflow-y: auto; /* 启用垂直滚动条 */
+}
  
+.tablebox
+{
+    padding:10px 0;
+}
+.tablebox .btn{
+    margin-top:-7px;
+    cursor:pointer !important
+}
+.tablebox input {
+    width: 100px;
+    display: inline;
+    height: 25px;
+    margin-left: 10px;
+} 
