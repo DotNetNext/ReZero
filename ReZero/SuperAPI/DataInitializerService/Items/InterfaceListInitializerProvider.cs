@@ -21,6 +21,7 @@ namespace ReZero.SuperAPI
             AddInit_CodeList();
             AddInit_EntityInfo();
             AddInit_EntityColumnInfo();
+            AddInit_Other();
         } 
     }
 }
