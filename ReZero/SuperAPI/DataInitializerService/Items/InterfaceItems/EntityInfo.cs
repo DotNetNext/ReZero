@@ -63,12 +63,14 @@ namespace ReZero.SuperAPI
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityInfo.ClassName) ,ParameterValidate=
                         new ParameterValidate()
                         {
-                            IsRequired=true
+                            IsRequired=true,
+                            IsUnique=true
                         } ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityInfo.DbTableName) ,ParameterValidate=
                         new ParameterValidate()
                         {
-                            IsRequired=true
+                            IsRequired=true,
+                            IsUnique=true
                         } ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroEntityInfo.DataBaseId), ParameterValidate= new ParameterValidate()
                         {
@@ -100,10 +102,10 @@ namespace ReZero.SuperAPI
                     {
                         new DataModelDefaultParameter() {
                                                    Name=nameof(ZeroEntityInfo.ClassName) ,
-                                                   ParameterValidate=new ParameterValidate(){IsRequired=true},ValueType = typeof(string).Name },
+                                                   ParameterValidate=new ParameterValidate(){IsRequired=true,IsUnique=true},ValueType = typeof(string).Name },
                          new DataModelDefaultParameter() {
                                                    Name=nameof(ZeroEntityInfo.DbTableName) ,
-                                                   ParameterValidate=new ParameterValidate(){IsRequired=true},ValueType = typeof(string).Name },
+                                                   ParameterValidate=new ParameterValidate(){IsRequired=true,IsUnique=true},ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() {
                                                   Name=nameof(ZeroEntityInfo.DataBaseId) ,
                                                   ParameterValidate=

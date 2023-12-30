@@ -27,6 +27,7 @@ namespace ReZero.SuperAPI
     public class ParameterValidate
     {
         public bool IsRequired { get; set; }
+        public bool IsUnique{ get; set; }
     }
     public class UpdateParemeter 
     {
