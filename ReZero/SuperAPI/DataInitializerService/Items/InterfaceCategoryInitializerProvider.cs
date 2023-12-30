@@ -86,6 +86,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id200;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200);
                 it.ParentId = Id;
+                it.Icon = "mdi mdi-palette";
 
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -103,6 +104,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id100;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100);
                 it.ParentId = Id;
+                it.Icon = "mdi mdi-file-outline";
             }));
             //zeroInterfaceCategory.Add(GetNewItem(it =>
             //{

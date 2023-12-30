@@ -22,7 +22,7 @@ namespace ReZero.SuperAPI
                     if (active != null)
                         active = $" {active} open ";
                     htmlBuilder.AppendLine("<li class=\" " + active + " nav-item nav-item-has-subnav\">");
-                    htmlBuilder.AppendLine($"  <a href=\"{tree.Url}\"><i class=\"mdi mdi-menu\"></i> {tree.Name}</a>");
+                    htmlBuilder.AppendLine($"  <a href=\"{tree.Url}\"><i class=\""+(!string.IsNullOrEmpty(tree.Icon) ?tree.Icon: "mdi mdi-menu" )+ $"\"></i> {tree.Name}</a>");
                     htmlBuilder.AppendLine("  <ul class=\"nav nav-subnav\">");
                     GenerateSubMenu(tree.SubInterfaceCategories, htmlBuilder, current);
                     htmlBuilder.AppendLine("  </ul>");
@@ -31,7 +31,7 @@ namespace ReZero.SuperAPI
                 else
                 {
                     htmlBuilder.AppendLine("<li class=\"  " + active + " nav-item-no-subnav\">");
-                    htmlBuilder.AppendLine($"  <a href=\"{tree.Url}\"><i class=\"mdi mdi-menu\"></i> {tree.Name}</a>");
+                    htmlBuilder.AppendLine($"  <a href=\"{tree.Url}\"><i class=\""+(!string.IsNullOrEmpty(tree.Icon) ? tree.Icon : "mdi mdi-menu")+$"\"></i> {tree.Name}</a>");
                     htmlBuilder.AppendLine("</li>");
                 }
                 ++i;
