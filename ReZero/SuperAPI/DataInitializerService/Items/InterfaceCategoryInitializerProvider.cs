@@ -35,6 +35,7 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id1);
                 it.ParentId = Id;
                 it.Url = "/rezero/index.html";
+                it.Icon = "mdi mdi-home";
             }));
         }
 

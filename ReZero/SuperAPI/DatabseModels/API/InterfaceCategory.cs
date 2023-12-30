@@ -15,6 +15,7 @@ namespace ReZero.SuperAPI
         public string? Url { get; set; } = "#";
         [SugarColumn(IsIgnore = true,ExtendedAttribute =PubConst.TreeChild)]
         public List<ZeroInterfaceCategory>? SubInterfaceCategories { get; set; }
-
+        [SugarColumn(IsNullable =true)]
+        public string? Icon { get;  set; }
     }
 }
