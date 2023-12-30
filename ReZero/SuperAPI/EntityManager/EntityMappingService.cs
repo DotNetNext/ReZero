@@ -66,7 +66,7 @@ namespace ReZero.SuperAPI
                     IsJson = item.IsJson,
                     IsNullable = item.IsNullable, 
                     PropertyName = item?.PropertyName, 
-                    ExtendedAttribute = item?.ExtendedAttribute,
+                    ExtendedAttribute = item?.ExtendedAttribute+"",
                     IsInitialized=true,
                     IsUnsigned=false 
                 };

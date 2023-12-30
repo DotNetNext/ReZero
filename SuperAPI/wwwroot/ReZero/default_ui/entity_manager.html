@@ -415,13 +415,14 @@
             createTables: function ()
             {
                 var url = "/PrivateReZeroRoute/100003/CreateTables";
+                this.columnsCompareResult = "同步中....";
                 axios.post(url, { ids: this.selectedItems })
                     .then(response => {
                         this.columnsCompareResult = response.data == true ? "同步成功" : response.data;
                         this.error = null;
                     })
                     .catch(error => {
-                        this.error = error.message;
+                        this.error = error.message; 
                         this.data = null;
                     });
             },
