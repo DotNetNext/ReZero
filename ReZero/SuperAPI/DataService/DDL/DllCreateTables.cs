@@ -19,6 +19,10 @@ namespace ReZero.SuperAPI
             var entities = dbRoot.Queryable<ZeroEntityInfo>().In(ids).ToList();
             foreach (var entity in entities)
             {
+                if (entity.IsInitialized) 
+                {
+                    throw new Exception(TextHandler.GetCommonText("系统表不能修改", "The system table cannot be modified"));
+                }
                 var codeFirstDb = App.GetDbById(entity.DataBaseId) ?? App.Db;
                 var type = EntityGeneratorManager.GetTypeAsync(entity.Id).GetAwaiter().GetResult();
                  codeFirstDb.CodeFirst.InitTables(type);
