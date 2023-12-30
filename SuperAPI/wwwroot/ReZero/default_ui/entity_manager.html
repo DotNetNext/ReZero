@@ -206,7 +206,7 @@
             </div>
         </div>
     </div>
-    <!--导入实体--> 
+    <!--导入实体-->
     <div id="divImportEntitySelectDatabase" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <button id="btnImportEntitySelectDatabase" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntitySelectDatabase">小模态框</button>
         <div class="modal-dialog modal-sm" role="document">
@@ -225,7 +225,7 @@
                     <button type="button" @click="openImportEntity()" class="btn btn-primary">下一步</button>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
     <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
@@ -236,10 +236,28 @@
                     <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="tablebox">
+                        <div>
+                            <label>名称:</label>
+                            <input type="text" /> 
+                            <select>
+                                <option>存在</option>
+                                <option>不存在</option>
+                            </select>
+                            <button data-toggle="modal" type="button" class="btn btn-red">
+                               搜索
+                            </button>
+                        </div>
+                    </div>
                     <div class="table-container">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th class="width30">
+                                        <label class="lyear-checkbox checkbox-primary">
+                                            <input type="checkbox" @change="selectAll2" id="check-all2"><span></span>
+                                        </label>
+                                    </th>
                                     <th>
                                         表名
                                     </th>
@@ -248,12 +266,14 @@
                             </thead>
                             <tbody v-if="tables">
                                 <tr v-for="item in tables">
-
+                                    <td>
+                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item.Name">
+                                    </td>
                                     <td>
                                         {{ item.Name }}
                                     </td>
                                     <td>
-                                        {{ item.Name  }}
+                                        {{ item.Description  }}
                                     </td>
                                 </tr>
 
@@ -283,9 +303,10 @@
             database: [],
             nativeTypes: [],
             selectedItems: [],
+            selectedTables: [],
             columns: [{}],
             columnsCompareResult: null,
-            tables:[]
+            tables: []
         },
         mounted() {
             this.fetchData("");
@@ -456,8 +477,7 @@
                         this.data = null;
                     });
             },
-            createTables: function ()
-            {
+            createTables: function () {
                 var url = "/PrivateReZeroRoute/100003/CreateTables";
                 this.columnsCompareResult = "同步中....";
                 axios.post(url, { ids: this.selectedItems })
@@ -466,7 +486,7 @@
                         this.error = null;
                     })
                     .catch(error => {
-                        this.error = error.message; 
+                        this.error = error.message;
                         this.data = null;
                     });
             },
@@ -483,7 +503,7 @@
                         this.error = null;
                     })
                     .catch(error => {
-                        this.error = error.message; 
+                        this.error = error.message;
                     });
             },
             selectAll(event) {
@@ -493,6 +513,15 @@
                 } else {
                     // 全不选
                     this.selectedItems = [];
+                }
+            },
+            selectAll2(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedTables = this.tables.map(item => item.Name);
+                } else {
+                    // 全不选
+                    this.selectedTables = [];
                 }
             },
         }
