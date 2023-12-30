@@ -236,32 +236,34 @@
                     <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr >
-                                <th > 
-                                     表名 
-                                </th> 
-                                <th>描述</th>
-                            </tr>
-                        </thead>
-                        <tbody v-if="tables">
-                            <tr v-for="item in tables">
+                    <div class="table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        表名
+                                    </th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="tables">
+                                <tr v-for="item in tables">
 
-                                <td>
-                                    {{ item.Name }}
-                                </td>
-                                <td>
-                                    {{ item.Name  }}
-                                </td> 
-                            </tr>
+                                    <td>
+                                        {{ item.Name }}
+                                    </td>
+                                    <td>
+                                        {{ item.Name  }}
+                                    </td>
+                                </tr>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">点击保存</button>
+                    <button type="button" class="btn btn-primary">导入表</button>
                 </div>
             </div>
         </div>
