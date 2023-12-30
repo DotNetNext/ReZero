@@ -18,7 +18,7 @@ namespace ReZero.SuperAPI
             try
             {
                 var actionTypeName = InstanceManager.GetActionTypeName(dataModel);
-                var errorParameters =await ValidateParameters.Check(dataModel);
+                var errorParameters =await ValidateParameters.CheckAsync(dataModel);
                 object? errorData = await ErrorParameterHelper.GetErrorParameters(errorParameters);
                 if (ErrorParameterHelper.IsError(errorData))
                 {
