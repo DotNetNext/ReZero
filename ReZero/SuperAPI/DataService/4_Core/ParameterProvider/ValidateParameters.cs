@@ -37,7 +37,8 @@ namespace ReZero.SuperAPI
             var db = App.GetDbTableId(dataModel.TableId);
             var entityInfo = db!.EntityMaintenance.GetEntityInfo(type);
             var dbColumnInfo = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(item.Name!));
-            bool isAny = await IsAnyValue(item, type, db, dbColumnInfo);
+            var isDeleteIdColumn = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted)));
+            bool isAny = await IsAnyValue(item, type, db, dbColumnInfo, isDeleteIdColumn);
             if (isAny)
             {
                 errorLists.Add(new ErrorParameter() { Name = item.Name, ErrorType = "IsUnique", Message = TextHandler.GetCommonText("唯一", "Unique") });
@@ -59,7 +60,7 @@ namespace ReZero.SuperAPI
         {
             return item?.ParameterValidate?.IsRequired == true && string.IsNullOrEmpty(item.Value + "");
         }
-        private static async Task<bool> IsAnyValue(DataModelDefaultParameter? item, Type type, SqlSugarClient? db, EntityColumnInfo dbColumnInfo)
+        private static async Task<bool> IsAnyValue(DataModelDefaultParameter? item, Type type, SqlSugarClient? db, EntityColumnInfo dbColumnInfo, EntityColumnInfo isDeleteIdColumn)
         {
             var condition = new ConditionalModel()
             {
@@ -69,8 +70,20 @@ namespace ReZero.SuperAPI
                 FieldName = dbColumnInfo.DbColumnName
 
             };
+            var whereColumns= new List<IConditionalModel>() { condition };
+            if (isDeleteIdColumn != null)
+            {
+                var condition2 = new ConditionalModel()
+                {
+                    ConditionalType = ConditionalType.Equal,
+                    CSharpTypeName = typeof(bool).Name,
+                    FieldValue = false.ToString().ToLower(),
+                    FieldName = isDeleteIdColumn.DbColumnName
+                };
+                whereColumns.Add(condition2);
+            }
             return await db!.QueryableByObject(type)
-                            .Where(new List<IConditionalModel>() { condition })
+                            .Where(whereColumns)
                             .AnyAsync();
         } 
         #endregion 
