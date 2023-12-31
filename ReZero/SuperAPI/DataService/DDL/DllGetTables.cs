@@ -9,9 +9,10 @@ namespace ReZero.SuperAPI
     public class DllGetTables : IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
-        {
-            var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
-            var dataBaseList = db.DbMaintenance.GetTableInfoList(false).Where(it=>!it.Name.ToLower().StartsWith("zero_"));
+        { 
+            var dbId =Convert.ToInt32(dataModel.DefaultParameters.First().Value);
+            var db = App.GetDbById(dbId);
+            var dataBaseList = db!.DbMaintenance.GetTableInfoList(false).Where(it=>!it.Name.ToLower().StartsWith("zero_"));
             return await Task.FromResult(dataBaseList);
         }
     }
