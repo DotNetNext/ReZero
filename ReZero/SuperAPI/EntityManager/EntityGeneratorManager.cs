@@ -22,36 +22,60 @@ namespace ReZero.SuperAPI
             {
 
                 var typeName = item.PropertyType.ToString();
-                if (typeName.StartsWith("String")&& ExtractNumericPart(typeName)>0)
+                if (StringHasLength(typeName))
                 {
                     item.Length = ExtractNumericPart(typeName);
                     item.PropertyType = NativeType.String;
                 }
-                else if (typeName.StartsWith("Decimal")&&ExtractNumericPart(typeName) > 0)
+                else if (DecimalHasLength(typeName))
                 {
                     var typeInfo = ExtractTypeInformation(typeName);
                     item.Length = item.Length;
                     item.DecimalDigits = item.DecimalDigits;
                     item.PropertyType = NativeType.Decimal;
                 }
-                var propertyType = GetTypeByNativeTypes(item.PropertyType); 
+                var propertyType = GetTypeByNativeTypes(item.PropertyType);
                 var column = new SugarColumn()
                 {
                     ColumnName = item.DbColumnName,
                     IsJson = item.PropertyType == NativeType.Json,
                     IsIdentity = item.IsIdentity,
-                    IsPrimaryKey = item.IsPrimarykey
+                    IsPrimaryKey = item.IsPrimarykey,
+                    DecimalDigits = item.DecimalDigits,
+                    Length = item.Length,
+                    ColumnDataType = item.DataType
                 };
-                if (item.ExtendedAttribute?.ToString() == PubConst.TreeChild) 
-                { 
+                if (DataTypeHasLength(column))
+                {
+                    item.Length = 0;
+                    item.DecimalDigits = 0;
+                }
+                if (item.ExtendedAttribute?.ToString() == PubConst.TreeChild)
+                {
                     propertyType = typeof(DynamicOneselfTypeList);
                     column.IsIgnore = true;
                 }
-                builder.CreateProperty(item.PropertyName, propertyType, column); 
+                builder.CreateProperty(item.PropertyName, propertyType, column);
             }
             var type = builder.BuilderType();
             return type;
         }
+
+        private static bool DecimalHasLength(string typeName)
+        {
+            return typeName.StartsWith("Decimal") && ExtractNumericPart(typeName) > 0;
+        }
+
+        private static bool StringHasLength(string typeName)
+        {
+            return typeName.StartsWith("String") && ExtractNumericPart(typeName) > 0;
+        }
+
+        private static bool DataTypeHasLength(SugarColumn column)
+        {
+            return ExtractNumericPart(column.ColumnDataType ?? "") > 0 && (column.ColumnDataType ?? "").Contains("(") && (column.ColumnDataType ?? "").Contains(")");
+        }
+
         public static DbColumnInfo ExtractTypeInformation(string typeName)
         {
             // 使用正则表达式匹配数字部分
