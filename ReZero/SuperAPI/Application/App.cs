@@ -62,7 +62,13 @@ namespace ReZero.SuperAPI
                     ConnectionString = zeroDatabaseInfo.Connection,
                     DbType = zeroDatabaseInfo.DbType,
                     IsAutoCloseConnection = true,
-                    InitKeyType = InitKeyType.Attribute
+                    InitKeyType = InitKeyType.Attribute,
+                    MoreSettings = new ConnMoreSettings
+                    {
+                        SqlServerCodeFirstNvarchar = true,
+                        SqliteCodeFirstEnableDropColumn = true,
+                        EnableCodeFirstUpdatePrecision = true
+                    }
                 },
                 db => {
                     db.Aop.OnLogExecuting = (s, p) =>
