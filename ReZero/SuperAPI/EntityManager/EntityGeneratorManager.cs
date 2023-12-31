@@ -53,6 +53,8 @@ namespace ReZero.SuperAPI
                 if (column.Length == int.MaxValue) 
                 {
                     column.ColumnDataType = StaticConfig.CodeFirst_BigString;
+                    column.Length = 0;
+                    column.DecimalDigits = 0;
                 }
                 if (DataTypeHasLength(column))
                 {
