@@ -294,8 +294,8 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = ImportEntitiesId;
-                it.GroupName = nameof(DbTableInfo);
-                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(ImportEntitiesId);
                 it.Url = GetUrl(it, "ImportEntities");
                 it.DataModel = new DataModel()
@@ -304,14 +304,15 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.MyMethod,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodArgsCount = 1,
-                        ArgsTypes = new Type[] { typeof(List<string>) },
+                        MethodArgsCount = 2,
+                        ArgsTypes = new Type[] {typeof(long), typeof(List<string>) },
                         MethodClassFullName = typeof(MethodApi).FullName,
                         MethodName = nameof(MethodApi.ImportEntities)
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DataModelDefaultParameter() { Name ="tableNames",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("库ID", "DatabaseId") },
+                        new DataModelDefaultParameter() { Name ="databasdeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("数据库Id", "Database id") },
+                        new DataModelDefaultParameter() { Name ="tableNames",   FieldOperator=FieldOperatorType.Equal,  ValueType = PubConst.ApiParameter_JsonArray,  Description = TextHandler.GetCommonText("List<string> 如：[表名1,表名2]", "List<string> [tableName1,tableName2]") },
                     }
                 };
             });

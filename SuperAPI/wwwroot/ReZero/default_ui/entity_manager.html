@@ -279,7 +279,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">导入表</button>
+                    <button type="button" @click="importEntitySubmit()" class="btn btn-primary">导入表</button>
                 </div>
             </div>
         </div>
@@ -492,6 +492,26 @@
             openImportEntity: function () {
                 btnCloseImportEntity.click();
                 btnImportEntity.click();
+                this.bindImportTables();
+            },
+            importEntitySubmit: function ()
+            {
+                var url = " /PrivateReZeroRoute/100003/ImportEntities";
+                axios.post(url, { databasdeId: selImportDatabaseId.value, tableNames: this.selectedTables })
+                    .then(response => { 
+                        this.error = null;
+                        if (response.data == true)
+                        {
+                            tools.alert("导入成功!！!删除实体可以重新导入");
+                            this.bindImportTables();
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+
+            bindImportTables: function () {
                 var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + selImportDatabaseId.value;
                 axios.get(url)
                     .then(response => {

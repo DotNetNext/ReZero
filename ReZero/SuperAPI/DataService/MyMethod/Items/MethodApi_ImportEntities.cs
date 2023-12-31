@@ -6,7 +6,7 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
-        public object ImportEntities(List<string> tableNames)
+        public object ImportEntities(long databasdeId, List<string> tableNames)
         {
 
             return true;
