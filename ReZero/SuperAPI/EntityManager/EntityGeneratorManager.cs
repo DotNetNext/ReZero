@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text.RegularExpressions;
 namespace ReZero.SuperAPI
 {
     public class EntityGeneratorManager
@@ -18,8 +19,22 @@ namespace ReZero.SuperAPI
                 TableName = tableInfo.DbTableName
             }); 
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
-            { 
-                var propertyType = GetTypeByNativeTypes(item.PropertyType);
+            {
+
+                var typeName = item.PropertyType.ToString();
+                if (typeName.StartsWith("String")&& ExtractNumericPart(typeName)>0)
+                {
+                    item.Length = ExtractNumericPart(typeName);
+                    item.PropertyType = NativeType.String;
+                }
+                else if (typeName.StartsWith("Decimal")&&ExtractNumericPart(typeName) > 0)
+                {
+                    var typeInfo = ExtractTypeInformation(typeName);
+                    item.Length = item.Length;
+                    item.DecimalDigits = item.DecimalDigits;
+                    item.PropertyType = NativeType.Decimal;
+                }
+                var propertyType = GetTypeByNativeTypes(item.PropertyType); 
                 var column = new SugarColumn()
                 {
                     ColumnName = item.DbColumnName,
@@ -36,7 +51,31 @@ namespace ReZero.SuperAPI
             }
             var type = builder.BuilderType();
             return type;
-        } 
+        }
+        public static DbColumnInfo ExtractTypeInformation(string typeName)
+        {
+            // 使用正则表达式匹配数字部分
+            Match match = Regex.Match(typeName, @"_(\d+)_(\d+)$");
+
+            if (match.Success && match.Groups.Count == 3)
+            {
+                int length = int.Parse(match.Groups[1].Value);
+                int precision = int.Parse(match.Groups[2].Value);
+
+                return new DbColumnInfo { Length = length, DecimalDigits = precision };
+            }
+
+            throw new FormatException($"Invalid type format: {typeName}");
+        }
+        public static int ExtractNumericPart(string input)
+        {
+            Match match = Regex.Match(input, @"\d+");
+            if (match.Success)
+            {
+                return int.Parse(match.Value);
+            }
+            return 0; // 默认值，如果未找到数字部分
+        }
         public static Type GetTypeByNativeTypes(NativeType nativeTypes)
         {
             switch (nativeTypes)
