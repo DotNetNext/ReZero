@@ -23,7 +23,7 @@ namespace ReZero.SuperAPI
                 {
                     throw new Exception(TextHandler.GetCommonText("系统表不能修改", "The system table cannot be modified"));
                 }
-                var codeFirstDb = App.GetDbById(entity.DataBaseId) ?? App.Db;
+                var codeFirstDb = App.GetDbTableId(entity.Id)!;
                 var type = EntityGeneratorManager.GetTypeAsync(entity.Id).GetAwaiter().GetResult();
                  codeFirstDb.CodeFirst.InitTables(type);
             }

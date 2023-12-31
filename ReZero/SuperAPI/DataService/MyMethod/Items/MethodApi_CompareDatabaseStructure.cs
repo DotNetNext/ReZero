@@ -15,7 +15,7 @@ namespace ReZero.SuperAPI
             var entities=dbRoot.Queryable<ZeroEntityInfo>().In(ids).ToList(); 
             foreach (var entity in entities)
             {
-                var codeFirstDb =App.GetDbById(entity.DataBaseId) ?? App.Db;
+                var codeFirstDb =App.GetDbTableId(entity.Id)!;
                 var type = EntityGeneratorManager.GetTypeAsync(entity.Id).GetAwaiter().GetResult();
                 if (codeFirstDb.DbMaintenance.IsAnyTable(codeFirstDb.EntityMaintenance.GetTableName(type),false))
                 {
