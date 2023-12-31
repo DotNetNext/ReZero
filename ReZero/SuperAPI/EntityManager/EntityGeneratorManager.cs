@@ -205,14 +205,8 @@ namespace ReZero.SuperAPI
             if (underlyingType != null)
             {
                 return GetNativeTypeByType(underlyingType);
-            }
-
+            } 
             return NativeType.Json;
-        }
-
-        internal static NativeType GetNativeTypeByDataType(string dataType)
-        {
-            return NativeType.Int;
-        }
+        } 
     }
 }

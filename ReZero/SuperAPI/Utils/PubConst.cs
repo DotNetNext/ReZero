@@ -18,5 +18,6 @@ namespace ReZero.SuperAPI
         public readonly static string TableDefaultMasterTableShortName= TableDefaultPreName+0;
 
         public const string ApiParameter_JsonArray = "json array";
+        public readonly static Random Random = new Random();
     }
 }
