@@ -12,50 +12,63 @@ namespace ReZero.SuperAPI
         public object ImportEntities(long databasdeId, List<string> tableNames)
         {
             var db = App.GetDbById(databasdeId)!;
-            List<EntityInfo> entityInfos = new List<EntityInfo>();
+            List<ZeroEntityInfo> entityInfos = new List<ZeroEntityInfo>();
+            var tableInfos = db.DbMaintenance.GetTableInfoList(false);
             foreach (var tableName in tableNames)
             {
-                EntityInfo entityInfo = CreateEntityInfo(db, tableName); 
+                ZeroEntityInfo entityInfo = CreateEntityInfo(db, tableName,tableInfos); 
                 entityInfos.Add(entityInfo);
             }
+            db.InsertNav(entityInfos).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
             return true;
         }
 
-        private static EntityInfo CreateEntityInfo(SqlSugarClient db, string tableName)
+        private  ZeroEntityInfo CreateEntityInfo(SqlSugarClient db, string tableName, List<SqlSugar.DbTableInfo> tableInfos)
         {
-            EntityInfo entityInfo = new EntityInfo();
+            ZeroEntityInfo entityInfo = new ZeroEntityInfo();
+            entityInfo.ClassName= CapitalizeFirstLetter(tableName);
+            entityInfo.DbTableName = tableName;
+            entityInfo.Description= tableInfos.FirstOrDefault(it => it.Name == tableName)?.Description;
+            entityInfo.CreateTime = DateTime.Now; 
             var columns = db.DbMaintenance.GetColumnInfosByTableName(tableName, false);
             var dataTable = db.Queryable<object>().AS(tableName).Where(GetWhereFalse()).ToDataTable();
             var dtColumns = dataTable.Columns.Cast<DataColumn>().ToList();
             var joinedColumns = columns.
                 Join(dtColumns, c =>
-                c.TableName,
-                dtc => dtc.ColumnName, (c, dtc) =>
-                new
+                c.DbColumnName.ToLower(),
+                dtc => (dtc.ColumnName?.ToLower()), (c, dtc) =>
+                new ZeroEntityColumnInfo
                 {
-                    ColumnName = c.TableName,
+                    DbColumnName = c.TableName,
                     DataType = c.DataType,
-                    PropetyInfo = dtc.DataType,
-                    IsNullable = c.IsNullable
-                });
-            List<ZeroEntityColumnInfo> zeroEntityColumns = new List<ZeroEntityColumnInfo>();
-            foreach (var item in joinedColumns)
-            {
-                ZeroEntityColumnInfo zeroEntityColumnInfo = CreateEntityColumn(item);
-                zeroEntityColumns.Add(zeroEntityColumnInfo);
-            }
+                    PropertyName= CapitalizeFirstLetter(c.DbColumnName),
+                    PropertyType = EntityGeneratorManager.GetNativeTypeByType(GetType(c, dtc)),
+                    IsNullable = c.IsNullable,
+                    IsPrimarykey = c.IsPrimarykey,
+                    IsIdentity = c.IsIdentity,
+                    Description = c.ColumnDescription,
+                    CreateTime=DateTime.Now
+                }).ToList();
+            entityInfo.ZeroEntityColumnInfos = joinedColumns;
             return entityInfo;
         }
-        private static ZeroEntityColumnInfo CreateEntityColumn(object item)
-        {
-            ZeroEntityColumnInfo zeroEntityColumnInfo = new ZeroEntityColumnInfo();
-            return zeroEntityColumnInfo;
-        }
 
+        private static Type GetType(SqlSugar.DbColumnInfo c, DataColumn dtc)
+        {
+            return c.IsNullable ? typeof(Nullable<>).MakeGenericType(dtc.DataType) : dtc.DataType;
+        } 
         #region Helper
         private static string GetWhereFalse()
         {
             return "0=" + PubConst.Random.Next(1, 9999999);
+        }
+        public string CapitalizeFirstLetter(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+            return char.ToUpper(input[0]) + input.Substring(1);
         }
 
         #endregion
