@@ -42,7 +42,8 @@ namespace ReZero.SuperAPI
                     MoreSettings=new ConnMoreSettings 
                     {
                         SqlServerCodeFirstNvarchar=true,
-                        SqliteCodeFirstEnableDropColumn=true 
+                        SqliteCodeFirstEnableDropColumn=true ,
+                        EnableCodeFirstUpdatePrecision=true
                     }
                 });
             } 
