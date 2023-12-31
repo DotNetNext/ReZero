@@ -33,58 +33,47 @@ namespace ReZero.SuperAPI
             SqlSugarClient? db = null;
             if (zeroDatabaseInfo != null)
             {
-                db = new SqlSugarClient(new ConnectionConfig()
-                {
-                    ConnectionString = zeroDatabaseInfo.Connection,
-                    DbType = zeroDatabaseInfo.DbType,
-                    IsAutoCloseConnection = true,
-                    InitKeyType = InitKeyType.Attribute,
-                    MoreSettings=new ConnMoreSettings 
-                    {
-                        SqlServerCodeFirstNvarchar=true,
-                        SqliteCodeFirstEnableDropColumn=true ,
-                        EnableCodeFirstUpdatePrecision=true
-                    }
-                },
-                db => {
-                    db.Aop.OnLogExecuting = (s, p) =>
-                    {
-                        Console.WriteLine(UtilMethods.GetNativeSql(s, p));
-                    };
-                });
-            } 
+                db = GetSqlSugarClientByBaseInfo(zeroDatabaseInfo);
+            }
             return db;
         }
+
         internal static SqlSugarClient? GetDbTableId(long tableId)
         {
             var rootDb = App.Db;
-            var dbId=rootDb.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).First()?.DataBaseId;
+            var dbId = rootDb.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).First()?.DataBaseId;
             var zeroDatabaseInfo = rootDb.Queryable<ZeroDatabaseInfo>().Where(it => it.Id == dbId).First();
             SqlSugarClient? db = null;
             if (zeroDatabaseInfo != null)
             {
-                db = new SqlSugarClient(new ConnectionConfig()
-                {
-                    ConnectionString = zeroDatabaseInfo.Connection,
-                    DbType = zeroDatabaseInfo.DbType,
-                    IsAutoCloseConnection = true,
-                    InitKeyType = InitKeyType.Attribute,
-                    MoreSettings = new ConnMoreSettings
-                    {
-                        SqlServerCodeFirstNvarchar = true,
-                        SqliteCodeFirstEnableDropColumn = true,
-                        EnableCodeFirstUpdatePrecision = true
-                    }
-                },
-                db => {
-                    db.Aop.OnLogExecuting = (s, p) =>
-                    {
-                        Console.WriteLine(UtilMethods.GetNativeSql(s,p));
-                    };
-                });
+                db = GetSqlSugarClientByBaseInfo(zeroDatabaseInfo);
             }
             return db;
         }
+        private static SqlSugarClient GetSqlSugarClientByBaseInfo(ZeroDatabaseInfo zeroDatabaseInfo)
+        {
+            return new SqlSugarClient(new ConnectionConfig()
+            {
+                ConnectionString = zeroDatabaseInfo.Connection,
+                DbType = zeroDatabaseInfo.DbType,
+                IsAutoCloseConnection = true,
+                InitKeyType = InitKeyType.Attribute,
+                MoreSettings = new ConnMoreSettings
+                {
+                    SqlServerCodeFirstNvarchar = true,
+                    SqliteCodeFirstEnableDropColumn = true,
+                    EnableCodeFirstUpdatePrecision = true
+                }
+            },
+            db =>
+            {
+                db.Aop.OnLogExecuting = (s, p) =>
+                {
+                    Console.WriteLine(UtilMethods.GetNativeSql(s, p));
+                };
+            });
+        }
+
         internal static Language Language
         {
             get
