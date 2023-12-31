@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
@@ -34,7 +35,17 @@ namespace ReZero.SuperAPI
             {
                 return ex.Message;
             }
-        } 
-         
+        }
+        public async Task<object> GetTables(long databaseId)
+        { 
+            var db = App.GetDbById(databaseId);
+            var entitys = App.Db.Queryable<ZeroEntityInfo>()
+                .Where(it=>it.IsDeleted==false)
+                .Where(it => it.DataBaseId == databaseId);
+            var result = db!.DbMaintenance
+                .GetTableInfoList(false).Where(it => !it.Name.ToLower().StartsWith("zero_"))
+                .Where(it=> entitys.Any(s=>!s.DbTableName!.EqualsCase(it.Name)));
+            return await Task.FromResult(result);
+        }
     }
 }

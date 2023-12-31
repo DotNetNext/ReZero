@@ -48,7 +48,8 @@ namespace ReZero.SuperAPI
                     IsPrimaryKey = item.IsPrimarykey,
                     DecimalDigits = item.DecimalDigits,
                     Length = item.Length,
-                    ColumnDataType = item.DataType
+                    ColumnDataType = item.DataType,
+                    ColumnDescription=item.Description
                 };
                 if (column.Length == int.MaxValue) 
                 {

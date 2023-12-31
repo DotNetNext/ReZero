@@ -24,7 +24,12 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.DllGetTables,
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo=new MyMethodInfo() {  
+                         MethodArgsCount=1,
+                          MethodClassFullName=typeof(MethodApi).FullName,
+                           MethodName= nameof(MethodApi.GetTables)
+                    },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                         new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("库ID", "DatabaseId") },
