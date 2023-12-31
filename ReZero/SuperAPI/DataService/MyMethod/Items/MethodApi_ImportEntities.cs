@@ -6,10 +6,10 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
-        public object ImportEntities(List<string> ids)
+        public object ImportEntities(List<string> tableNames)
         {
 
-            return null;
+            return true;
         }
     }
 }

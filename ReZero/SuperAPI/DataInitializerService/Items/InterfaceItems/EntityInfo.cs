@@ -17,6 +17,8 @@ namespace ReZero.SuperAPI
             UpdateEntityInfo();
 
             GetEntityInfoById();
+
+            ImportEntities();
         }
 
         private void GetEntityInfoById()
@@ -283,6 +285,37 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data2);
+        }
+
+        private void ImportEntities()
+        {
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = ImportEntitiesId;
+                it.GroupName = nameof(DbTableInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.Name = TextHandler.GetInterfaceListText(ImportEntitiesId);
+                it.Url = GetUrl(it, "ImportEntities");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 1,
+                        ArgsTypes = new Type[] { typeof(List<string>) },
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.ImportEntities)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="tableNames",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("库ID", "DatabaseId") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
         }
     }
 }

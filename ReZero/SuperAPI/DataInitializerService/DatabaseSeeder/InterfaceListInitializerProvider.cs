@@ -179,13 +179,15 @@ namespace ReZero.SuperAPI
         [TextEN("Create table")]
         public const long CreateTablesId = 28;
 
-
-        /// <summary>
-        /// 获取数据库管理所有
-        /// </summary> 
+         
         [TextCN("获取库里面所有表")]
         [TextEN("Get all tables ")]
         public const long GetTableAllId = 29;
+
+
+        [TextCN("导入实体")]
+        [TextEN("Import entities")]
+        public const long ImportEntitiesId = 30;
 
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
