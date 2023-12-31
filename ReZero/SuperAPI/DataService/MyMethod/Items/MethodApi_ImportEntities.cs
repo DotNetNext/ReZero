@@ -39,7 +39,7 @@ namespace ReZero.SuperAPI
                 dtc => (dtc.ColumnName?.ToLower()), (c, dtc) =>
                 new ZeroEntityColumnInfo
                 {
-                    DbColumnName = c.TableName,
+                    DbColumnName = c.DbColumnName,
                     DataType = c.DataType,
                     PropertyName= CapitalizeFirstLetter(c.DbColumnName),
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(GetType(c, dtc)),
@@ -55,6 +55,10 @@ namespace ReZero.SuperAPI
 
         private static Type GetType(SqlSugar.DbColumnInfo c, DataColumn dtc)
         {
+            if (dtc.DataType == typeof(string)) 
+            {
+                return dtc.DataType;
+            }
             return c.IsNullable ? typeof(Nullable<>).MakeGenericType(dtc.DataType) : dtc.DataType;
         } 
         #region Helper
