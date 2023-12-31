@@ -36,6 +36,7 @@ namespace ReZero.SuperAPI
     public class InsertParameter
     {
         public bool IsUserName { get; set; }
+        public bool IsDateTimeNow { get; set; }
     }
     public class QueryParameter
     {

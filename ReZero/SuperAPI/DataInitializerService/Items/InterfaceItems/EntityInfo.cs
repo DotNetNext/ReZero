@@ -126,6 +126,13 @@ namespace ReZero.SuperAPI
                                                 },
                                                  Value="" ,
                                                  ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() {
+                                                Name=nameof(ZeroEntityInfo.CreateTime),
+                                                InsertParameter=new InsertParameter(){
+                                                     IsDateTimeNow=true
+                                                },
+                                                 Value="" ,
+                                                 ValueType = typeof(string).Name },
 
                     }
                 };

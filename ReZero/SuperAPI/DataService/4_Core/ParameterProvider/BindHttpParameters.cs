@@ -67,6 +67,11 @@ namespace ReZero.SuperAPI
                 var options = SuperAPIModule._apiOptions;
                 item.Value = options?.GetCurrentUserCallback().UserName;
             }
+            else if (IsDateTimeNow(item))
+            {
+                var options = SuperAPIModule._apiOptions;
+                item.Value =DateTime.Now;
+            }
             if (!string.IsNullOrEmpty(item?.FieldName))
             {
                 item.Name = item.FieldName;
@@ -82,6 +87,10 @@ namespace ReZero.SuperAPI
         private static bool IsUserName(DataModelDefaultParameter item)
         {
             return item?.InsertParameter?.IsUserName == true;
+        }
+        private static bool IsDateTimeNow(DataModelDefaultParameter item)
+        {
+            return item?.InsertParameter?.IsDateTimeNow == true;
         }
 
         private static bool IsDefaultValue(DataModelDefaultParameter item)
