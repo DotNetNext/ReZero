@@ -45,6 +45,12 @@ namespace ReZero.SuperAPI
                         SqliteCodeFirstEnableDropColumn=true ,
                         EnableCodeFirstUpdatePrecision=true
                     }
+                },
+                db => {
+                    db.Aop.OnLogExecuting = (s, p) =>
+                    {
+                        Console.WriteLine(UtilMethods.GetNativeSql(s, p));
+                    };
                 });
             } 
             return db;
