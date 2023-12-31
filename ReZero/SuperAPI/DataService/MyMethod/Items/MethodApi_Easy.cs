@@ -36,16 +36,16 @@ namespace ReZero.SuperAPI
                 return ex.Message;
             }
         }
-        public async Task<object> GetTables(long databaseId)
+        public  object  GetTables(long databaseId)
         { 
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
                 .Where(it=>it.IsDeleted==false)
-                .Where(it => it.DataBaseId == databaseId);
+                .Where(it => it.DataBaseId == databaseId).ToList();
             var result = db!.DbMaintenance
                 .GetTableInfoList(false).Where(it => !it.Name.ToLower().StartsWith("zero_"))
-                .Where(it=> entitys.Any(s=>!s.DbTableName!.EqualsCase(it.Name)));
-            return await Task.FromResult(result);
+                .Where(it=> entitys.Any(s=>!s.DbTableName!.EqualsCase(it.Name))).ToList(); 
+            return  result ;
         }
     }
 }
