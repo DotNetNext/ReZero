@@ -454,7 +454,7 @@
                     });
             },
             pushColumns: function (item) {
-                this.columns.push({ TableId: item.TableId });
+                this.columns.push({ TableId: item.TableId, IsNullable: true });
             },
             openCompareDatabaseStructure: function () {
                 if (!this.selectedItems || this.selectedItems.length == 0) {
