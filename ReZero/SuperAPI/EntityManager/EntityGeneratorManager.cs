@@ -34,6 +34,11 @@ namespace ReZero.SuperAPI
                     item.DecimalDigits = typeInfo.DecimalDigits;
                     item.PropertyType = NativeType.Decimal;
                 }
+                else if (typeName==NativeType.StringMax+"")
+                {
+                     item.PropertyType=NativeType.String;
+                    item.Length = int.MaxValue;
+                }
                 var propertyType = GetTypeByNativeTypes(item.PropertyType);
                 var column = new SugarColumn()
                 {
@@ -45,6 +50,10 @@ namespace ReZero.SuperAPI
                     Length = item.Length,
                     ColumnDataType = item.DataType
                 };
+                if (column.Length == int.MaxValue) 
+                {
+                    column.ColumnDataType = StaticConfig.CodeFirst_BigString;
+                }
                 if (DataTypeHasLength(column))
                 {
                     item.Length = 0;
