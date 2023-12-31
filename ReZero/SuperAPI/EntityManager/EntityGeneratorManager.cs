@@ -30,8 +30,8 @@ namespace ReZero.SuperAPI
                 else if (DecimalHasLength(typeName))
                 {
                     var typeInfo = ExtractTypeInformation(typeName);
-                    item.Length = item.Length;
-                    item.DecimalDigits = item.DecimalDigits;
+                    item.Length = typeInfo.Length;
+                    item.DecimalDigits = typeInfo.DecimalDigits;
                     item.PropertyType = NativeType.Decimal;
                 }
                 var propertyType = GetTypeByNativeTypes(item.PropertyType);
