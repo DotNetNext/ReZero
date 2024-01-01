@@ -12,8 +12,7 @@
                         <div class="col-md-1"><label class="form-control m-l-15">数据库:</label></div>
                         <div class="col-md-11">
                             <div class="input-group">
-                                <select id="selDataBaseId" class="form-control" style="width:150px;">
-                                    <option value=""></option>
+                                <select v-model="databaseId" @change="changeDatabase()" id="selDataBaseId" class="form-control" style="width:150px;">
                                     <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                                 </select>
                                 <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入名称">
@@ -28,7 +27,7 @@
 
                 <div class="toolbar-btn-action">
                     <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
-                    <a class="btn btn-success m-r-5" @click="openImportEntitySelectDatabase()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
+                    <a class="btn btn-success m-r-5" @click="openImportEntity()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
                     <a class="btn btn-warning m-r-5" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
                 </div>
             </div>
@@ -106,7 +105,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">数据库：</label>
-                            <select v-model="formData.DataBaseId" name="DataBaseId" class="form-control">
+                            <select readonly v-model="formData.DataBaseId" name="DataBaseId" class="form-control">
                                 <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
                             </select>
                         </div>
@@ -206,27 +205,7 @@
             </div>
         </div>
     </div>
-    <!--导入实体-->
-    <div id="divImportEntitySelectDatabase" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <button id="btnImportEntitySelectDatabase" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntitySelectDatabase">小模态框</button>
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="myLargeModalLabel">选择库</h4>
-                </div>
-                <div class="modal-body">
-                    <select id="selImportDatabaseId" class="form-control">
-                        <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnCloseImportEntity" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="openImportEntity()" class="btn btn-primary">下一步</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!--导入实体--> 
     <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
         <div class="modal-dialog modal-lg" role="document">
@@ -289,6 +268,7 @@
     var vueObj = new Vue({
         el: '#apibox',
         data: {
+            databaseId:0,
             data: null,
             error: null,
             addTitle: "添加实体",
@@ -305,7 +285,6 @@
             tables: []
         },
         mounted() {
-            this.fetchData("");
             this.bindDatabaseSelect();
             this.bindNativeTypeSelect();
         },
@@ -366,9 +345,8 @@
                 }
             },
             openAddDiv: function (item) {
-                this.title = this.addTitle;
-                var id = this.formData.DataBaseId;
-                this.formData = { DataBaseId: id };
+                this.title = this.addTitle; 
+                this.formData = { DataBaseId: this.databaseId };
             },
             addOrUpdate: function () {
                 var th = this;
@@ -402,6 +380,11 @@
                 axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
                     .then(response => {
                         this.database = response.data;
+                        this.databaseId = this.database[0].Id;
+                        var th = this;
+                        setTimeout(function () { 
+                            th.onSearch();
+                        }, 50);
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -485,12 +468,8 @@
                         this.error = error.message;
                         this.data = null;
                     });
-            },
-            openImportEntitySelectDatabase: function () {
-                btnImportEntitySelectDatabase.click();
-            },
-            openImportEntity: function () {
-                btnCloseImportEntity.click();
+            }, 
+            openImportEntity: function () { 
                 btnImportEntity.click();
                 this.bindImportTables();
             },
@@ -514,9 +493,11 @@
                         this.error = error.message;
                     });
             },
-
+            changeDatabase: function () {
+                this.onSearch();
+            },
             bindImportTables: function () {
-                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + selImportDatabaseId.value;
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId;
                 axios.get(url)
                     .then(response => {
                         this.tables = response.data;
