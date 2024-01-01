@@ -476,7 +476,7 @@
             importEntitySubmit: function ()
             {
                 var url = " /PrivateReZeroRoute/100003/ImportEntities";
-                axios.post(url, { databasdeId: selImportDatabaseId.value, tableNames: this.selectedTables })
+                axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables })
                     .then(response => { 
                         this.error = null;
                         if (response.data == true) {
