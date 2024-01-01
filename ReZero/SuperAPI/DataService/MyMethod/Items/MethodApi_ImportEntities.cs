@@ -20,7 +20,7 @@ namespace ReZero.SuperAPI
                 entityInfo.DataBaseId = databasdeId;
                 entityInfos.Add(entityInfo);
             }
-            db.InsertNav(entityInfos).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
+            App.Db.InsertNav(entityInfos).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
             return true;
         }
 

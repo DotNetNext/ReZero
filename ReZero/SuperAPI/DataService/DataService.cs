@@ -34,9 +34,17 @@ namespace ReZero.SuperAPI
                 }
             }
             catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
+            { 
+                if (ex.InnerException != null) 
+                {
+                    Console.WriteLine(ex.InnerException.Message);
+                    throw ex.InnerException;
+                } 
+                else
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                } 
             }
         }
 
