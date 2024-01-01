@@ -461,7 +461,7 @@
                 this.columnsCompareResult = "同步中....";
                 axios.post(url, { ids: this.selectedItems })
                     .then(response => {
-                        this.columnsCompareResult = response.data == true ? "同步成功" : response.data;
+                        this.columnsCompareResult = response.data == true ? "同步成功" : response.data.message;
                         this.error = null;
                     })
                     .catch(error => {
