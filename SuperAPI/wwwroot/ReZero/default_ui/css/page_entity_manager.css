@@ -62,9 +62,13 @@
 {
     padding:10px 0;
 }
-.tablebox .btn{
-    margin-top:-7px;
-    cursor:pointer !important
+.tablebox label {
+   font-weight:100;
+   margin-top:-2px;
+}
+.tablebox .btn {
+    margin-top: -7px;
+    cursor: pointer !important
 }
 .tablebox input {
     width: 100px;

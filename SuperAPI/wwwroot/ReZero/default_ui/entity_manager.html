@@ -218,9 +218,12 @@
                     <div class="tablebox">
                         <div>
                             <label>名称:</label>
-                            <input class="form-control" type="text" />  
-                            <button data-toggle="modal" type="button" class="btn btn-red">
-                               搜索
+                            <input id="txtTableName" class="form-control" type="text" />
+                            <button @click="bindImportTables()" data-toggle="modal" type="button" class="btn btn-red">
+                                搜索
+                            </button>
+                            <button onclick="txtTableName.value=''" data-toggle="modal" type="button" class="btn btn-red">
+                                清空
                             </button>
                         </div>
                     </div>
@@ -497,7 +500,7 @@
                 this.onSearch();
             },
             bindImportTables: function () {
-                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId;
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
                 axios.get(url)
                     .then(response => {
                         this.tables = response.data;

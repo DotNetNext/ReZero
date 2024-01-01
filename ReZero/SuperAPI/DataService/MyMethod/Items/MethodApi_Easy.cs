@@ -36,7 +36,7 @@ namespace ReZero.SuperAPI
                 return ex.Message;
             }
         }
-        public  object  GetTables(long databaseId)
+        public  object  GetTables(long databaseId,string tableName)
         { 
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
@@ -45,7 +45,11 @@ namespace ReZero.SuperAPI
                 .Where(it => it.DataBaseId == databaseId).ToList();
             var tables = db!.DbMaintenance.GetTableInfoList(false).Where(it => !it.Name.ToLower().StartsWith("zero_")).ToList(); 
             var result = tables
-                            .Where(it=> !entitys.Any(s=>s.DbTableName!.EqualsCase(it.Name))).ToList(); 
+                            .Where(it=> !entitys.Any(s=>s.DbTableName!.EqualsCase(it.Name))).ToList();
+            if (!string.IsNullOrEmpty(tableName)) 
+            {
+                result=result.Where(it => it.Name.ToLower().Contains(tableName.ToLower())).ToList();
+            }
             return  result ;
         }
     }

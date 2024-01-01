@@ -26,13 +26,14 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.MyMethod,
                     MyMethodInfo=new MyMethodInfo() {  
-                         MethodArgsCount=1,
+                         MethodArgsCount=2,
                           MethodClassFullName=typeof(MethodApi).FullName,
                            MethodName= nameof(MethodApi.GetTables)
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                         new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("库ID", "DatabaseId") },
+                         new DataModelDefaultParameter() { Name ="tableName",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("表名", "Table name") }
                     }
                 };
             });
