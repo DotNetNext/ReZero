@@ -14,6 +14,7 @@ namespace ReZero.SuperAPI
             { 
                 List<ZeroEntityColumnInfo> zeroEntityColumns = App.Db.Utilities.DeserializeObject<List<ZeroEntityColumnInfo>>(columns);
                 var tableId = zeroEntityColumns.GroupBy(it => it.TableId).Select(it => it.Key).Single();
+                EntityGeneratorManager.RemoveTypeCacheByTypeId(tableId);
                 var tableInfo = App.Db.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).Single();
                 this.CheckTableInfo(tableInfo);
                 App.Db.Deleteable<ZeroEntityColumnInfo>().Where(it => it.TableId == tableId).ExecuteCommand();

@@ -12,9 +12,30 @@ namespace ReZero.SuperAPI
     {
         public async static Task<Type> GetTypeAsync(long tableId)
         {
-            return await GetType(tableId);
-        }
+            var cacheManage = SqlSugar.ReflectionInoCore<Type>.GetInstance();
+            var key = GetTypeCacheKey(tableId);
+            if (cacheManage.ContainsKey(key))
+            {
+                return cacheManage[key];
+            }
+            else
+            {
+                var result = await GetType(tableId);
+                cacheManage.Add(key, result);
+                return result;
+            }
+        } 
 
+        public static void RemoveTypeCacheByTypeId(long tableId) 
+        {
+            var cacheManage = SqlSugar.ReflectionInoCore<Type>.GetInstance();
+            var key = GetTypeCacheKey(tableId);
+            cacheManage.Remove(key);
+        } 
+        private static string GetTypeCacheKey(long tableId)
+        {
+            return string.Format(PubConst.CacheKey_Type, tableId);
+        }
         private static async Task<Type> GetType(long tableId)
         {
             var db = App.Db;

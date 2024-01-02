@@ -19,5 +19,7 @@ namespace ReZero.SuperAPI
 
         public const string ApiParameter_JsonArray = "json array";
         public readonly static Random Random = new Random();
+
+        public const string CacheKey_Type = "ReZero_Type_{0}";
     }
 }
