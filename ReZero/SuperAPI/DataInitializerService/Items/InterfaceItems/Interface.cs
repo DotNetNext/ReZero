@@ -49,11 +49,11 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList data = GetNewItem(it =>
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = IntIntPageListId;
+                it.Id = DynamicIntPageListId;
                 it.CustomResultModel = new ResultModel() { ResultType = ResultType.Grid  };
                 it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
-                it.Name = TextHandler.GetInterfaceListText(IntIntPageListId);
+                it.Name = TextHandler.GetInterfaceListText(DynamicIntPageListId);
                 it.Url = GetUrl(it, "GetDynamicInterfacePageList");
                 it.DataModel = new DataModel()
                 {
@@ -91,11 +91,34 @@ namespace ReZero.SuperAPI
                             new DataModelDefaultParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonText("接口分类Id","Interface Category Id") },
                             new DataModelDefaultParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("接口名称","Interface Name") }, 
                             new DataModelDefaultParameter() { Name = "IsInitialized",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否内置数据", "Is initialized") },
+                            new DataModelDefaultParameter() { Name = "IsDeleted",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否删除", "Is deleted") },
                             new DataModelDefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("Url","Url") },
                     }
                 };
             });
             zeroInterfaceList.Add(data);
+
+
+            //动态接口分类删除
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = DeleteDynamicIntId;
+                it.GroupName = nameof(ZeroInterfaceList);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(DeleteDynamicIntId);
+                it.Url = GetUrl(it, "DeleteDynamicInterface");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList, 
+                    ActionType = ActionType.BizDeleteObject,
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonText("主键", "Id") },
+                              new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="true", Description = TextHandler.GetCommonText("是否删除", "IsDeleted") }
+                         }
+                };
+            });
+            zeroInterfaceList.Add(data2);
         }
 
         private void Intenal()

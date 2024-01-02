@@ -192,7 +192,12 @@ namespace ReZero.SuperAPI
          
         [TextCN("接口列表分页")]
         [TextEN("dynamic interface page list")]
-        public const long IntIntPageListId = 31;
+        public const long DynamicIntPageListId = 31;
+
+
+        [TextCN("删除动态接口")]
+        [TextEN("Delete dynamic interface")]
+        public const long DeleteDynamicIntId = 32;
 
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
