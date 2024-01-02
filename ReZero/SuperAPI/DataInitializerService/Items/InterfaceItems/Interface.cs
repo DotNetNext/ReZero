@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntIntPageListId;
-                it.CustomResultModel = new ResultModel() { ResultType = ResultType.Group, GroupName = nameof(ZeroInterfaceList.GroupName) };
+                it.CustomResultModel = new ResultModel() { ResultType = ResultType.Grid  };
                 it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntIntPageListId);
@@ -60,6 +60,30 @@ namespace ReZero.SuperAPI
                     CommonPage=new DataModelPageParameter() { 
                        PageNumber=1,
                        PageSize=20 
+                    },
+                    Columns = new List<DataColumnParameter>()
+                    {
+
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceList.Id) ,
+                            Description=TextHandler.GetCommonText("ID", "Primary key")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceList.Name) ,
+                            Description=TextHandler.GetCommonText("名称", "Name")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceList.GroupName) ,
+                            Description=TextHandler.GetCommonText("分组", "Group")
+                        },
+                       new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceList.InterfaceCategoryId) ,
+                            Description=TextHandler.GetCommonText("分类", "InterfaceCategoryId")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceList.Url) ,
+                            Description=TextHandler.GetCommonText("接口地址", "Url")
+                        }
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryCommon,

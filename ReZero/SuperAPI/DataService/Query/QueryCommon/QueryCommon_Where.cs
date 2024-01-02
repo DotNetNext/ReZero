@@ -23,7 +23,7 @@ namespace ReZero.SuperAPI
                     {
                         if (item.ValueType == typeof(bool).Name)
                         {
-                            if (item.Value?.ToString() == "true" || item.Value?.ToString() == "false")
+                            if (item.Value?.ToString().EqualsCase( "true" )==true|| item.Value?.ToString().EqualsCase("false")==true)
                             {
                                 item.Value = Convert.ToBoolean(item.Value);
                             }
