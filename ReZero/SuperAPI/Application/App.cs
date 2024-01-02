@@ -62,7 +62,10 @@ namespace ReZero.SuperAPI
                 {
                     SqlServerCodeFirstNvarchar = true,
                     SqliteCodeFirstEnableDropColumn = true,
-                    EnableCodeFirstUpdatePrecision = true
+                    EnableCodeFirstUpdatePrecision = true,
+                    IsAutoToUpper=false,
+                    PgSqlIsAutoToLower=false,
+                    PgSqlIsAutoToLowerCodeFirst=false,
                 }
             },
             db =>
