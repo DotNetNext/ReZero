@@ -189,6 +189,11 @@ namespace ReZero.SuperAPI
         [TextEN("Import entities")]
         public const long ImportEntitiesId = 30;
 
+         
+        [TextCN("接口列表分页")]
+        [TextEN("dynamic interface page list")]
+        public const long IntIntPageListId = 31;
+
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
