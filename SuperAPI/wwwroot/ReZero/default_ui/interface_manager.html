@@ -12,13 +12,21 @@
                     <div class="col-md-3"><select class="form-control"></select></div>
                     <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
-                        <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button> 
+                        <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
             </div>
         </form>
 
+    </div>
+    <div class="card-toolbar clearfix"> 
+        <div class="toolbar-btn-action">
+            <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+            <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
+            <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
+            <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>
+        </div>
     </div>
     <div class="card-body">
 
