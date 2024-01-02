@@ -6,14 +6,15 @@
         <form id="frmSearach" action="lyear_forms_elements.html" method="post" onsubmit="return false;">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-1"><label class="form-control" t>名称:</label></div>
+                    <div class="col-md-1"><label class="form-control">名称:</label></div>
                     <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="分类名称"></div>
-                    <div class="col-md-3">
+                    <div class="col-md-1"><label class="form-control">分类:</label></div>
+                    <div class="col-md-3"><select class="form-control"></select></div>
+                    <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
-                        <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
-                        <button @click="openAddDiv()" class="btn btn-primary m-l-15 " data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus"></i> 新增</button>
+                        <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button> 
                     </div>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
         </form>
