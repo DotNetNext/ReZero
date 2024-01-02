@@ -12,12 +12,17 @@ namespace ReZero.SuperAPI
     {
         public async static Task<Type> GetTypeAsync(long tableId)
         {
-            var db = App.Db; 
+            return await GetType(tableId);
+        }
+
+        private static async Task<Type> GetType(long tableId)
+        {
+            var db = App.Db;
             var tableInfo = await db.Queryable<ZeroEntityInfo>().Includes(x => x.ZeroEntityColumnInfos).InSingleAsync(tableId);
-             var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
+            var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
             {
                 TableName = tableInfo.DbTableName
-            }); 
+            });
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
             {
 
@@ -34,9 +39,9 @@ namespace ReZero.SuperAPI
                     item.DecimalDigits = typeInfo.DecimalDigits;
                     item.PropertyType = NativeType.Decimal;
                 }
-                else if (typeName==NativeType.StringMax+"")
+                else if (typeName == NativeType.StringMax + "")
                 {
-                     item.PropertyType=NativeType.String;
+                    item.PropertyType = NativeType.String;
                     item.Length = int.MaxValue;
                 }
                 var propertyType = GetTypeByNativeTypes(item.PropertyType);
@@ -49,9 +54,9 @@ namespace ReZero.SuperAPI
                     DecimalDigits = item.DecimalDigits,
                     Length = item.Length,
                     ColumnDataType = item.DataType,
-                    ColumnDescription=item.Description
+                    ColumnDescription = item.Description
                 };
-                if (column.Length == int.MaxValue) 
+                if (column.Length == int.MaxValue)
                 {
                     column.ColumnDataType = StaticConfig.CodeFirst_BigString;
                     column.Length = 0;
