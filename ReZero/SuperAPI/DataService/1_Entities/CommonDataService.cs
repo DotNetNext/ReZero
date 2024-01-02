@@ -53,6 +53,13 @@ namespace ReZero.SuperAPI
             }
         }
 
+        internal  void RemoveTypeCache(DataModel dataModel)
+        {
+            if (dataModel.TableId == EntityInfoInitializerProvider.Id_ZeroEntityInfo)
+            {
+                EntityGeneratorManager.RemoveTypeCacheByTypeId(dataModel.TableId);
+            }
+        }
         private static void SetIsSnowFlakeSingle(List<EntityColumnInfo> columnInfos, Type type, DataModel dataModel, EntityColumnInfo columnInfo)
         {
             var value = Convert.ToInt64(columnInfo.PropertyInfo.GetValue(dataModel.Data));
