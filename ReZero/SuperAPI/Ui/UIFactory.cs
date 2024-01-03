@@ -5,11 +5,11 @@ using System.Text;
 namespace ReZero.SuperAPI
 {
     /// <summary>
-    /// 默认UI使用，如果是Vue前后分离不会使用该类
+    /// Default UI usage, not used for Vue front-end and back-end separation
     /// </summary>
     public class UIFactory
-    { 
-        //虽然VUE等不会用这个方法但是为了兼容其他用户等二次开发，所以还是保留足够扩展
-        public  static  IUiManager uiManager = new DefaultUiManager();
+    {
+        // Although this method is not used for VUE, it is retained for compatibility with other users and secondary development
+        public static IUiManager uiManager = new DefaultUiManager();
     }
 }
