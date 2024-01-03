@@ -5,9 +5,9 @@ using System.Text;
 namespace ReZero.SuperAPI
 {
     [AttributeUsage(AttributeTargets.All )]
-    public class ChineseText : Attribute
+    public class ChineseTextAttribute : Attribute
     {
-        public ChineseText(string text) 
+        public ChineseTextAttribute(string text) 
         {
             this.Text = text;
         }
