@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters; 
+
 
 namespace ReZero.SuperAPI 
-{
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System;
-    using System.Collections.Generic;
-
+{ 
     public static class JsonHelper
     {
         private static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings
