@@ -30,7 +30,7 @@ namespace ReZero.SuperAPI
 
         private static IResultService GetActionInstance(ResultModel model)
         {
-            var actionType = Type.GetType(PubConst.NamespaceResultService + model?.ResultType);
+            var actionType = Type.GetType(PubConst.Namespace_ResultService + model?.ResultType);
             var actionInstance = (IResultService)Activator.CreateInstance(actionType);
             return actionInstance;
         }

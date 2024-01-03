@@ -88,7 +88,7 @@ namespace ReZero.SuperAPI
                     item.Length = 0;
                     item.DecimalDigits = 0;
                 }
-                if (item.ExtendedAttribute?.ToString() == PubConst.TreeChild)
+                if (item.ExtendedAttribute?.ToString() == PubConst.Ui_TreeChild)
                 {
                     propertyType = typeof(DynamicOneselfTypeList);
                     column.IsIgnore = true;

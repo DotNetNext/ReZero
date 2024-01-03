@@ -39,7 +39,7 @@ namespace ReZero.SuperAPI
                 {
                     var propertyName = _sqlBuilder!.GetTranslationColumnName(item.AsName);
                     var tableInfo = dataModel!.JoinParameters![item.TableIndex-1];
-                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName+item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {propertyName} ";
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName+item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {propertyName} ";
                     selectLists.Add(name);
                     resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = typeof(string) });
                 }
@@ -67,7 +67,7 @@ namespace ReZero.SuperAPI
         private object GetEntityColumns(EntityColumnInfo it)
         {
           resultTypeInfos.Add(new ResultTypeInfo() { PropertyName=it.PropertyName,Type=it.PropertyInfo.PropertyType });
-          return _sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultMasterTableShortName) +"."+ _sqlBuilder!.GetTranslationColumnName(it.DbColumnName) + " AS " + _sqlBuilder!.GetTranslationColumnName(it.PropertyName);
+          return _sqlBuilder!.GetTranslationColumnName(PubConst.Orm_TableDefaultMasterTableShortName) +"."+ _sqlBuilder!.GetTranslationColumnName(it.DbColumnName) + " AS " + _sqlBuilder!.GetTranslationColumnName(it.PropertyName);
         }
     }
 }

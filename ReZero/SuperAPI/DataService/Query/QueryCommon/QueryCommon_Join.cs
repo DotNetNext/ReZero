@@ -95,17 +95,17 @@ namespace ReZero.SuperAPI
         private string GetRightName(JoinParameter item, EntityInfo rightEntity)
         {
             var name=rightEntity.Columns.FirstOrDefault(it => it.PropertyName == item.RightPropertypeName).DbColumnName;
-            return _sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName + item.RightIndex) + "." + _sqlBuilder!.GetTranslationColumnName(name);
+            return _sqlBuilder!.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName + item.RightIndex) + "." + _sqlBuilder!.GetTranslationColumnName(name);
         }
 
         private string GetLeftName(JoinParameter item, EntityInfo leftEntity)
         {
             var name = leftEntity.Columns.FirstOrDefault(it => it.PropertyName == item.LeftPropertyName).DbColumnName;
-            return _sqlBuilder!.GetTranslationColumnName(PubConst.TableDefaultPreName + item.LeftIndex) + "." + _sqlBuilder!.GetTranslationColumnName(name);
+            return _sqlBuilder!.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName + item.LeftIndex) + "." + _sqlBuilder!.GetTranslationColumnName(name);
         } 
         private static string GetShortName(int index)
         { 
-            return PubConst.TableDefaultPreName+ index;
+            return PubConst.Orm_TableDefaultPreName+ index;
         }
 
     }

@@ -212,7 +212,7 @@ namespace ReZero.SuperAPI
                           {
                               TableIndex=1,
                               Name=nameof(ZeroDatabaseInfo.Name),
-                              AsName=PubConst.DTO_DataBaseName,
+                              AsName=PubConst.Orm_DataBaseNameDTO,
                               
                           }
                     },
@@ -255,7 +255,7 @@ namespace ReZero.SuperAPI
                             Description=TextHandler.GetCommonText("备注", "Description")
                         },
                          new DataColumnParameter(){
-                            PropertyName=PubConst.DTO_DataBaseName ,
+                            PropertyName=PubConst.Orm_DataBaseNameDTO ,
                             Description=TextHandler.GetCommonText("数据库", "DataBase Name")
                         },
                         new DataColumnParameter(){
@@ -312,7 +312,7 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                         new DataModelDefaultParameter() { Name ="databasdeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("数据库Id", "Database id") },
-                        new DataModelDefaultParameter() { Name ="tableNames",   FieldOperator=FieldOperatorType.Equal,  ValueType = PubConst.ApiParameter_JsonArray,  Description = TextHandler.GetCommonText("List<string> 如：[表名1,表名2]", "List<string> [tableName1,tableName2]") },
+                        new DataModelDefaultParameter() { Name ="tableNames",   FieldOperator=FieldOperatorType.Equal,  ValueType = PubConst.Orm_ApiParameterJsonArray,  Description = TextHandler.GetCommonText("List<string> 如：[表名1,表名2]", "List<string> [tableName1,tableName2]") },
                     }
                 };
             });

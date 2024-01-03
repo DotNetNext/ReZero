@@ -6,19 +6,17 @@ namespace ReZero.SuperAPI
 {
     public class PubConst
     {
-        public const string TreeChild = "TreeChild";
-        public const string TreeUrlFormatId = "{Id}";
+        public const string Ui_TreeChild = "TreeChild";
+        public const string Ui_TreeUrlFormatId = "{Id}";
 
-        public const string TableDefaultPreName = "t";
+        public const string Orm_TableDefaultPreName = "t"; 
+        public const string Orm_DataBaseNameDTO = "DataBaseName";
+        public readonly static string Orm_TableDefaultMasterTableShortName = Orm_TableDefaultPreName + 0;
+        public const string Orm_ApiParameterJsonArray = "json array";
 
-        public const string NamespaceResultService = "ReZero.SuperAPI.Items.";
-
-        public const string DTO_DataBaseName = "DataBaseName";
-
-        public readonly static string TableDefaultMasterTableShortName= TableDefaultPreName+0;
-
-        public const string ApiParameter_JsonArray = "json array";
-        public readonly static Random Random = new Random();
+        public const string Namespace_ResultService = "ReZero.SuperAPI.Items.";
+          
+        public readonly static Random Common_Random = new Random();
 
         public const string CacheKey_Type = "ReZero_Type_{0}";
     }

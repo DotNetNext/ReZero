@@ -65,7 +65,7 @@ namespace ReZero.SuperAPI
         #region Helper
         private static string GetWhereFalse()
         {
-            return "0=" + PubConst.Random.Next(1, 9999999);
+            return "0=" + PubConst.Common_Random.Next(1, 9999999);
         }
         public string CapitalizeFirstLetter(string input)
         {

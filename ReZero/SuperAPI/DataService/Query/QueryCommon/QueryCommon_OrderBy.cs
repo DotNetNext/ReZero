@@ -31,7 +31,7 @@ namespace ReZero.SuperAPI
         private static string GetFieldName(QueryMethodInfo queryObject, DataModelOrderParemter item)
         {
             var name= App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
-            return PubConst.TableDefaultPreName + item.TableIndex + "." + name;
+            return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
         }
     }
 }

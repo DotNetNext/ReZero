@@ -13,7 +13,7 @@ namespace ReZero.SuperAPI
         [SugarColumn(IsNullable =true)]
         public string? Description { get; set; }
         public string? Url { get; set; } = "#";
-        [SugarColumn(IsIgnore = true,ExtendedAttribute =PubConst.TreeChild)]
+        [SugarColumn(IsIgnore = true,ExtendedAttribute =PubConst.Ui_TreeChild)]
         public List<ZeroInterfaceCategory>? SubInterfaceCategories { get; set; }
         [SugarColumn(IsNullable =true)]
         public string? Icon { get;  set; }

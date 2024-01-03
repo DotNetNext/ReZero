@@ -109,7 +109,7 @@ namespace ReZero.SuperAPI
 
         private static string GetFieldName(DataModelDefaultParameter item)
         {
-            return PubConst.TableDefaultPreName + item.TableIndex + "." + item.Name;
+            return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + item.Name;
         }
     }
 }

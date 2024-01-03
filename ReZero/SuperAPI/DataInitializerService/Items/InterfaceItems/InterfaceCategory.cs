@@ -99,7 +99,7 @@ namespace ReZero.SuperAPI
                         },ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.ParentId),Value=InterfaceCategoryInitializerProvider.Id200,ValueIsReadOnly=true,ValueType = typeof(long).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Description) ,ValueType = typeof(string).Name },
-                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId="+PubConst.TreeUrlFormatId,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Url),ValueIsReadOnly=true,Value= "/rezero/dynamic_interface.html?InterfaceCategoryId="+PubConst.Ui_TreeUrlFormatId,ValueType = typeof(string).Name },
                         DataInitHelper.GetIsDynamicParameter(),
                         new DataModelDefaultParameter() { Name=nameof(ZeroInterfaceCategory.Creator),
                         InsertParameter=new InsertParameter(){

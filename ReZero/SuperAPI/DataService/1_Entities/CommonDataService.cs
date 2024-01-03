@@ -72,7 +72,7 @@ namespace ReZero.SuperAPI
             {
                 var urlColumnInfo = columnInfos.First(it => it.PropertyName == nameof(ZeroInterfaceCategory.Url));
                 var url = urlColumnInfo.PropertyInfo.GetValue(dataModel.Data)+"";
-                urlColumnInfo.PropertyInfo.SetValue(dataModel.Data, url.Replace(PubConst.TreeUrlFormatId, value+""));
+                urlColumnInfo.PropertyInfo.SetValue(dataModel.Data, url.Replace(PubConst.Ui_TreeUrlFormatId, value+""));
             }
         }
 
