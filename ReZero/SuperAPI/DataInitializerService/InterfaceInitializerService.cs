@@ -5,6 +5,9 @@ using System.Text;
 
 namespace ReZero.SuperAPI
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DataInitializerService
     {
         List<ZeroInterfaceList> zeroInterfaceList = new List<ZeroInterfaceList>() { };
@@ -22,6 +25,10 @@ namespace ReZero.SuperAPI
             App.PreStartupDb!.QueryFilter.Restore();
         }
 
+        /// <summary>
+        /// Initializes the database.
+        /// </summary>
+        /// <param name="db">The database client.</param>
         private void InitDatabase(ISqlSugarClient? db)
         {
             db!.Storageable(new ZeroDatabaseInfo()
@@ -36,18 +43,29 @@ namespace ReZero.SuperAPI
             }).ExecuteCommand();
         }
 
+        /// <summary>
+        /// Initializes the entity information.
+        /// </summary>
+        /// <param name="db">The database client.</param>
         private void InitEntityInfo(ISqlSugarClient? db)
         {
-            var entity =new  EntityInfoInitializerProvider();
+            var entity = new EntityInfoInitializerProvider();
             var datas = entity.GetDatas();
-            db!.UpdateNav(datas,new UpdateNavRootOptions() { IsInsertRoot=true }).Include(x=>x.ZeroEntityColumnInfos).ExecuteCommand();
+            db!.UpdateNav(datas, new UpdateNavRootOptions() { IsInsertRoot = true }).Include(x => x.ZeroEntityColumnInfos).ExecuteCommand();
         }
 
+        /// <summary>
+        /// Initializes the icon.
+        /// </summary>
         private static void InitIcon()
         {
             var icon = new IconInitializerProvider();
         }
 
+        /// <summary>
+        /// Initializes the interface list.
+        /// </summary>
+        /// <param name="db">The database client.</param>
         private void InitInterfaceList(ISqlSugarClient? db)
         {
             db!.Deleteable<ZeroInterfaceList>().Where(it => it.IsInitialized).ExecuteCommand();
@@ -56,6 +74,10 @@ namespace ReZero.SuperAPI
             db!.Storageable(zeroInterfaceList).ExecuteCommand();
         }
 
+        /// <summary>
+        /// Initializes the interface category.
+        /// </summary>
+        /// <param name="db">The database client.</param>
         private void InitInterfaceCategory(ISqlSugarClient? db)
         {
             db!.Deleteable<ZeroInterfaceCategory>().Where(it => it.IsInitialized).ExecuteCommand();
@@ -64,6 +86,10 @@ namespace ReZero.SuperAPI
             db!.Storageable(zeroInterfaceCategory).ExecuteCommand();
         }
 
+        /// <summary>
+        /// Initializes the user.
+        /// </summary>
+        /// <param name="options">The SuperAPI options.</param>
         private static void InitUser(SuperAPIOptions options)
         {
             UserInitializerProvider userInitializerProvider = new UserInitializerProvider();
