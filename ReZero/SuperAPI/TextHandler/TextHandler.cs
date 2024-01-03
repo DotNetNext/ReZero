@@ -9,7 +9,13 @@ namespace ReZero.SuperAPI
 {
     internal class TextHandler
     {
-        public static string GetCommonText(string cn, string en) 
+        /// <summary>
+        /// Get the common text based on the language.
+        /// </summary>
+        /// <param name="cn">The Chinese text.</param>
+        /// <param name="en">The English text.</param>
+        /// <returns>The common text.</returns>
+        public static string GetCommonText(string cn, string en)
         {
             var language = App.Language;
             switch (language)
@@ -20,30 +26,47 @@ namespace ReZero.SuperAPI
                     return en;
             }
         }
-        public static string? GetInterfaceCategoryText(object value) 
+
+        /// <summary>
+        /// Get the interface category text based on the value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The interface category text.</returns>
+        public static string? GetInterfaceCategoryText(object value)
         {
             return GetText(typeof(InterfaceCategoryInitializerProvider), value);
         }
+
+        /// <summary>
+        /// Get the interface list text based on the value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The interface list text.</returns>
         public static string? GetInterfaceListText(object value)
         {
             return GetText(typeof(InterfaceListInitializerProvider), value);
         }
+
+        /// <summary>
+        /// Get the text based on the type and value.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The text.</returns>
         public static string? GetText(Type type, object value)
         {
             var language = App.Language;
-            var fieldInfo=type.GetFields()
-                .Where(it=>it.GetCustomAttribute<TextCN>()!=null)
-                .Where(it=>it.GetValue(null)?.ToString()==value?.ToString())
-                .FirstOrDefault(); 
+            var fieldInfo = type.GetFields()
+                .Where(it => it.GetCustomAttribute<TextCN>() != null)
+                .Where(it => it.GetValue(null)?.ToString() == value?.ToString())
+                .FirstOrDefault();
             switch (language)
             {
                 case Language.CN:
                     return fieldInfo?.GetCustomAttribute<TextCN>()?.Text;
                 default:
-                    return fieldInfo?.GetCustomAttribute<TextEN>()?.Text; 
-            } 
+                    return fieldInfo?.GetCustomAttribute<TextEN>()?.Text;
+            }
         }
-
-       
     }
 }
