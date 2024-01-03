@@ -9,6 +9,12 @@ namespace ReZero.SuperAPI
 {
     public class MenuBuilder
     {
+        /// <summary>
+        /// Generate the menu based on the provided tree list and current category.
+        /// </summary>
+        /// <param name="treeList">The list of interface categories.</param>
+        /// <param name="current">The current interface category.</param>
+        /// <returns>The generated menu HTML.</returns>
         public static string GenerateMenu(List<ZeroInterfaceCategory> treeList, ZeroInterfaceCategory current)
         {
             StringBuilder htmlBuilder = new StringBuilder();
