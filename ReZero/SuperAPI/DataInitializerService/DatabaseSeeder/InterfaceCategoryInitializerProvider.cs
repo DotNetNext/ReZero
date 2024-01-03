@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         /// 根目录
         /// </summary>
         [ChineseTextAttribute("根目录")]
-        [TextEN("Root")]
+        [EnglishTextAttribute("Root")]
         public const long Id = 0;
         #endregion
 
@@ -20,7 +20,7 @@ namespace ReZero.SuperAPI
         /// Swagger
         /// </summary>
         [ChineseTextAttribute("原生接口")]
-        [TextEN("Swagger")]
+        [EnglishTextAttribute("Swagger")]
         public const long Id1 = 1;
         #endregion
 
@@ -30,14 +30,14 @@ namespace ReZero.SuperAPI
         /// 自定义接口
         /// </summary>
         [ChineseTextAttribute("动态接口")]
-        [TextEN("Dynamic interface")]
+        [EnglishTextAttribute("Dynamic interface")]
         public const long Id200 = 200;
 
         /// <summary>
         /// 测试分类1
         /// </summary>
         [ChineseTextAttribute("测试分类1")]
-        [TextEN("Test 01")]
+        [EnglishTextAttribute("Test 01")]
         public const long Id200100 = 200100;
 
         #endregion
@@ -48,7 +48,7 @@ namespace ReZero.SuperAPI
         /// 内置接口
         /// </summary>
         [ChineseTextAttribute("系统接口")]
-        [TextEN("Internal interface")]
+        [EnglishTextAttribute("Internal interface")]
         public const long Id100 = 100;
          
 
@@ -56,14 +56,14 @@ namespace ReZero.SuperAPI
         /// 页面布局
         /// </summary>
         [ChineseTextAttribute("页面布局")]
-        [TextEN("Page layout")]
+        [EnglishTextAttribute("Page layout")]
         public const long Id100002 = 100002;
 
         /// <summary>
         /// 接口管理
         /// </summary>
         [ChineseTextAttribute("接口管理")]
-        [TextEN("Interface list")]
+        [EnglishTextAttribute("Interface list")]
         public const long Id100003 = 100003;
 
 
@@ -71,7 +71,7 @@ namespace ReZero.SuperAPI
         /// 数据字典
         /// </summary>
         [ChineseTextAttribute("数据字典")]
-        [TextEN("Dictionary")]
+        [EnglishTextAttribute("Dictionary")]
         public const long Id100004 = 100004;
         #endregion
 
@@ -81,35 +81,35 @@ namespace ReZero.SuperAPI
         /// 接口管理
         /// </summary>
         [ChineseTextAttribute("接口管理")]
-        [TextEN("Api management")]
+        [EnglishTextAttribute("Api management")]
         public const long Id300 = 300;
 
         /// <summary>
         /// 实体表管理
         /// </summary>
         [ChineseTextAttribute("实体表维护")]
-        [TextEN("Entity and table management")]
+        [EnglishTextAttribute("Entity and table management")]
         public const long Id300001 = 300001;
 
         /// <summary>
         /// 数据库管理
         /// </summary>
         [ChineseTextAttribute("数据库维护")]
-        [TextEN("Database management")]
+        [EnglishTextAttribute("Database management")]
         public const long Id300003 = 300002;
 
         /// <summary>
         /// 接口分类管理
         /// </summary>
         [ChineseTextAttribute("分类维护")]
-        [TextEN("InterfaceCategory")]
+        [EnglishTextAttribute("InterfaceCategory")]
         public const long Id300002 = 300003;
          
         /// <summary>
         /// 接口管理
         /// </summary>
         [ChineseTextAttribute("接口维护")]
-        [TextEN("Api management")]
+        [EnglishTextAttribute("Api management")]
         public const long Id300006 = 300006;
         #endregion
 

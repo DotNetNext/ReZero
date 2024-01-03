@@ -15,9 +15,9 @@ namespace ReZero.SuperAPI
      
     }
     [AttributeUsage(AttributeTargets.All )]
-    public class TextEN : Attribute
+    public class EnglishTextAttribute : Attribute
     {
-        public TextEN(string text)
+        public EnglishTextAttribute(string text)
         {
             this.Text = text;
         }

@@ -65,7 +65,7 @@ namespace ReZero.SuperAPI
                 case Language.CN:
                     return fieldInfo?.GetCustomAttribute<ChineseTextAttribute>()?.Text;
                 default:
-                    return fieldInfo?.GetCustomAttribute<TextEN>()?.Text;
+                    return fieldInfo?.GetCustomAttribute<EnglishTextAttribute>()?.Text;
             }
         }
     }
