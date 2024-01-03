@@ -57,13 +57,13 @@ namespace ReZero.SuperAPI
         {
             var language = App.Language;
             var fieldInfo = type.GetFields()
-                .Where(it => it.GetCustomAttribute<TextCN>() != null)
+                .Where(it => it.GetCustomAttribute<ChineseText>() != null)
                 .Where(it => it.GetValue(null)?.ToString() == value?.ToString())
                 .FirstOrDefault();
             switch (language)
             {
                 case Language.CN:
-                    return fieldInfo?.GetCustomAttribute<TextCN>()?.Text;
+                    return fieldInfo?.GetCustomAttribute<ChineseText>()?.Text;
                 default:
                     return fieldInfo?.GetCustomAttribute<TextEN>()?.Text;
             }
