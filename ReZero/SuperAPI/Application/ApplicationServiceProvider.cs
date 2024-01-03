@@ -6,32 +6,32 @@ namespace ReZero.SuperAPI
 {
 
     /// <summary>
-    /// 应用程序的主要类，用于管理依赖注入和服务定位。
+    /// The main class of the application, used for managing dependency injection and service location.
     /// </summary>
     public class ApplicationServiceProvider
     {
         private readonly IApplicationBuilder _app;
 
         /// <summary>
-        /// 构造函数，接受一个 <see cref="IServiceProvider"/> 实例。
+        /// Constructor that accepts an <see cref="IServiceProvider"/> instance.
         /// </summary>
-        /// <param name="serviceProvider">依赖注入容器。</param>
+        /// <param name="serviceProvider">The dependency injection container.</param>
         public ApplicationServiceProvider(IApplicationBuilder serviceProvider)
         {
             _app = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
         }
 
         /// <summary>
-        /// 获取指定类型的服务实例。
+        /// Gets an instance of the specified service type.
         /// </summary>
-        /// <typeparam name="T">要获取的服务类型。</typeparam>
-        /// <returns>指定类型的服务实例。</returns>
+        /// <typeparam name="T">The type of service to retrieve.</typeparam>
+        /// <returns>An instance of the specified service type.</returns>
         public T GetService<T>() where T : class
         {
-            // 获取IOC容器（服务提供程序）
+            // Get the IOC container (service provider)
             var serviceProvider = _app.ApplicationServices;
 
-            // 使用IOC容器执行操作
+            // Perform the operation using the IOC container
             var myService = serviceProvider!.GetRequiredService<T>();
             return myService;
         }
