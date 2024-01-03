@@ -25,32 +25,43 @@ namespace ReZero.SuperAPI
         /// </remarks>
         internal static ISqlSugarClient Db { get => ServiceProvider!.GetService<DatabaseContext>().SugarClient; }
 
-
+        /// <summary>
+        /// Obtain the database operation object based on the database ID
+        /// </summary>
+        /// <param name="dbId"></param>
+        /// <returns></returns>
         internal static SqlSugarClient? GetDbById(long dbId)
         {
             var rootDb = App.Db;
             var zeroDatabaseInfo = rootDb.Queryable<ZeroDatabaseInfo>().Where(it => it.Id == dbId).First();
             SqlSugarClient? db = null;
-            if (zeroDatabaseInfo != null)
-            {
-                db = GetSqlSugarClientByBaseInfo(zeroDatabaseInfo);
-            }
+            if (zeroDatabaseInfo != null) 
+                db = GetSqlSugarClientByDatabaseInfo(zeroDatabaseInfo); 
             return db;
         }
 
+        /// <summary>
+        /// Obtain the database operation object based on the table ID
+        /// </summary>
+        /// <param name="tableId"></param>
+        /// <returns></returns>
         internal static SqlSugarClient? GetDbTableId(long tableId)
         {
             var rootDb = App.Db;
             var dbId = rootDb.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).First()?.DataBaseId;
             var zeroDatabaseInfo = rootDb.Queryable<ZeroDatabaseInfo>().Where(it => it.Id == dbId).First();
             SqlSugarClient? db = null;
-            if (zeroDatabaseInfo != null)
-            {
-                db = GetSqlSugarClientByBaseInfo(zeroDatabaseInfo);
-            }
+            if (zeroDatabaseInfo != null) 
+                db = GetSqlSugarClientByDatabaseInfo(zeroDatabaseInfo); 
             return db;
         }
-        private static SqlSugarClient GetSqlSugarClientByBaseInfo(ZeroDatabaseInfo zeroDatabaseInfo)
+
+        /// <summary>
+        /// Obtain the database operation object based on the ZeroDatabaseInfo
+        /// </summary>
+        /// <param name="zeroDatabaseInfo"></param>
+        /// <returns></returns>
+        private static SqlSugarClient GetSqlSugarClientByDatabaseInfo(ZeroDatabaseInfo zeroDatabaseInfo)
         {
             return new SqlSugarClient(new ConnectionConfig()
             {
@@ -76,7 +87,10 @@ namespace ReZero.SuperAPI
                 };
             });
         }
-
+        /// <summary>
+        /// Gets the language used by the SuperAPI module.
+        /// </summary>
+        /// <returns>The language.</returns>
         internal static Language Language
         {
             get
