@@ -6,7 +6,7 @@ using System.Text;
 namespace ReZero.SuperAPI
 {
     /// <summary>
-    /// 
+    /// Initialize system data
     /// </summary>
     public class DataInitializerService
     {
