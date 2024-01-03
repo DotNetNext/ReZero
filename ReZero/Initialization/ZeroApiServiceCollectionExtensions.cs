@@ -8,13 +8,19 @@ namespace ReZero
     
     public static partial class ReZeroServiceCollectionExtensions
     {
-    
+
+        /// <summary>
+        /// Adds ReZero services to the specified <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+        /// <param name="options">The <see cref="ReZeroOptions"/> to configure the services.</param>
+        /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
         {
-            SuperAPIModule.Init(services, options); 
+            SuperAPIModule.Init(services, options);
 
             return services;
         }
-         
+
     }
 }

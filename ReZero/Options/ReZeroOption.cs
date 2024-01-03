@@ -5,8 +5,14 @@ using System.Text;
 
 namespace ReZero
 {
+    /// <summary>
+    /// Represents the options for the ReZero class.
+    /// </summary>
     public class ReZeroOptions
     {
-        public  SuperAPIOptions?  SuperApiOptions { get; set; }
+        /// <summary>
+        /// Gets or sets the options for the SuperAPI.
+        /// </summary>
+        public SuperAPIOptions? SuperApiOptions { get; set; }
     }
 }
