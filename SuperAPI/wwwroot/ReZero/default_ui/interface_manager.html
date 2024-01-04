@@ -7,11 +7,11 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-1"><label class="form-control">名称:</label></div>
-                    <div class="col-md-2"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="分类名称"></div>
+                    <div class="col-md-2"><input class="form-control" type="text" id="txtName" name="example-text-input" placeholder="接口名 或者 URL"></div>
                     <div class="col-md-1"><label class="form-control">分组:</label></div>
-                    <div class="col-md-2"><select class="form-control"><option></option> <option v-for="item in groupList"  >{{item.GroupName}}</option></select></div>
+                    <div class="col-md-2"><select id="selGroupName" class="form-control"><option></option> <option v-for="item in groupList"  >{{item.GroupName}}</option></select></div>
                     <div class="col-md-1"><label class="form-control">分类:</label></div>
-                    <div class="col-md-2"><select class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
+                    <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
@@ -112,7 +112,7 @@
         },
         methods: {
             fetchData(append) {
-                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList";
+                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList" + append;
                 axios.get(url)
                     .then(response => {
                         this.data = response.data;
@@ -125,9 +125,11 @@
             },
             onSearch: function (page) {
 
-                var urlParameters = "&" + tools.objectToQueryString({
-                    Name: txtSearch.value,
-                    PageNumber: page
+                var urlParameters = "?" + tools.objectToQueryString({ 
+                    PageNumber: page,
+                    Name: txtName.value,
+                    GroupName: selGroupName.value,
+                    InterfaceCategoryId: selInterfaceCategoryId.value,
                 });
                 this.fetchData(urlParameters);
             },
