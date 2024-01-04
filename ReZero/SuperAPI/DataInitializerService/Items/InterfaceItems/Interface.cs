@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -57,13 +58,44 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "GetDynamicInterfacePageList");
                 it.DataModel = new DataModel()
                 {
+                    JoinParameters=new List<DataModelJoinParameters>() {
+                      new DataModelJoinParameters(){
+                       JoinTableId=EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                       JoinType=JoinType.Left,
+                        OnList=new List<JoinParameter>()
+                        {
+                            new JoinParameter(){
+                                 LeftIndex=0,
+                                 LeftPropertyName=nameof(ZeroInterfaceList.InterfaceCategoryId),
+                                 RightIndex=1,
+                                 RightPropertyName=nameof(ZeroInterfaceCategory.Id),
+                                 FieldOperator=FieldOperatorType.Equal
+                            }
+                        }
+                      }
+                    },
                     CommonPage=new DataModelPageParameter() { 
                        PageNumber=1,
                        PageSize=20 
                     },
+                    SelectParameters = new List<DataModelSelectParameters>()
+                    {
+                          new DataModelSelectParameters()
+                          {
+                              TableIndex=0,
+                              IsTableAll=true
+                          },
+                          new DataModelSelectParameters()
+                          {
+                              TableIndex=1,
+                              Name=nameof(ZeroInterfaceCategory.Name),
+                              AsName=PubConst.Orm_InterfaceCategroyNameDTO,
+
+                          }
+                    },
                     Columns = new List<DataColumnParameter>()
                     {
-
+                        
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceList.Id) ,
                             Description=TextHandler.GetCommonText("ID", "Primary key")
@@ -76,10 +108,10 @@ namespace ReZero.SuperAPI
                             PropertyName= nameof(ZeroInterfaceList.GroupName) ,
                             Description=TextHandler.GetCommonText("分组", "Group")
                         },
-                       new DataColumnParameter(){
-                            PropertyName= nameof(ZeroInterfaceList.InterfaceCategoryId) ,
-                            Description=TextHandler.GetCommonText("分类", "InterfaceCategoryId")
-                        },
+                      new DataColumnParameter(){
+                            PropertyName=PubConst.Orm_InterfaceCategroyNameDTO ,
+                            Description=TextHandler.GetCommonText("分类", "Interface categroy")
+                        }, 
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceList.Url) ,
                             Description=TextHandler.GetCommonText("接口地址", "Url")

@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     {
         public string? LeftPropertyName { get;   set; }
         public FieldOperatorType FieldOperator { get;   set; }
-        public string? RightPropertypeName { get;   set; }
+        public string? RightPropertyName { get;   set; }
         public int LeftIndex { get;   set; }
         public int RightIndex { get;   set; }
     }

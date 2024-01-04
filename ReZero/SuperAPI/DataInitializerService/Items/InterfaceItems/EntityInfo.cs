@@ -228,7 +228,7 @@ namespace ReZero.SuperAPI
                                   LeftPropertyName=nameof(ZeroEntityInfo.DataBaseId),
                                   LeftIndex=0,
                                   FieldOperator=FieldOperatorType.Equal,
-                                  RightPropertypeName=nameof(ZeroDatabaseInfo.Id),
+                                  RightPropertyName=nameof(ZeroDatabaseInfo.Id),
                                   RightIndex=1
                           },
 

@@ -11,6 +11,7 @@ namespace ReZero.SuperAPI
 
         public const string Orm_TableDefaultPreName = "t"; 
         public const string Orm_DataBaseNameDTO = "DataBaseName";
+        public const string Orm_InterfaceCategroyNameDTO = "InterfaceCategroyName";
         public readonly static string Orm_TableDefaultMasterTableShortName = Orm_TableDefaultPreName + 0;
         public const string Orm_ApiParameterJsonArray = "json array";
 
