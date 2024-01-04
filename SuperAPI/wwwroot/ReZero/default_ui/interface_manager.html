@@ -9,9 +9,9 @@
                     <div class="col-md-1"><label class="form-control">名称:</label></div>
                     <div class="col-md-2"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="分类名称"></div>
                     <div class="col-md-1"><label class="form-control">分组:</label></div>
-                    <div class="col-md-2"><select class="form-control"></select></div>
+                    <div class="col-md-2"><select class="form-control"><option></option> <option v-for="item in groupList"  >{{item.GroupName}}</option></select></div>
                     <div class="col-md-1"><label class="form-control">分类:</label></div>
-                    <div class="col-md-2"><select class="form-control"></select></div>
+                    <div class="col-md-2"><select class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2">
                         <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
@@ -101,12 +101,14 @@
             addTitle: "添加动态接口分类",
             editTitle: "修改态接口分类",
             title: "",
-            formData: {
-
-            }
+            formData: {},
+            groupList: [],
+            interfaceCategroyList: []
         },
         mounted() {
             this.fetchData("");
+            this.bindGroupListSelect();
+            this.bindInterfaceCategroySelect();
         },
         methods: {
             fetchData(append) {
@@ -147,51 +149,25 @@
                     localStorage.delId = item.Id;
                 }
             },
-            openEditDiv: function (item) {
-                var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById?id=" + item.Id;
-                if (item.Id) {
-                    this.title = this.editTitle;
-                    axios.get(urlById)
-                        .then(response => {
-                            this.formData = response.data;
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                            this.data = null;
-                        });
-                }
-            },
-            openAddDiv: function (item) {
-                this.title = this.addTitle;
-                this.formData = {};
-            },
-            addOrUpdate: function () {
-                var th = this;
-                var frmId = "frmEdit";
-                var json = this.formData;
-                var url = json.Id ?
-                    "/PrivateReZeroRoute/100003/UpdateDynamicInterfaceCategory" :
-                    "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
-                this.addOrUpdateSubmit(url, json);
-            },
-            addOrUpdateSubmit: function (url, json) {
-                var th = this;
-                axios.post(url, json)
+            bindGroupListSelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
                     .then(response => {
-                        this.error = null;
-                        this.onSearch();
-                        if (response.data == true) {
-                            frmEdit.reset();
-                            btnCloseEdit.click();
-                        }
-                        else {
-                            tools.highlightErrorFields(response.data)
-                        }
+                        this.groupList = response.data; 
                     })
                     .catch(error => {
                         this.error = error.message;
                         this.data = null;
                     });
-            }
+            },
+            bindInterfaceCategroySelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDynamicInterfaceCategoryList")
+                    .then(response => {
+                        this.interfaceCategroyList = response.data; 
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
         }
     });</script>
