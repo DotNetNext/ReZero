@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         {
             GetInterfaceCategoryTree();
 
-            GetDynamicInterfaceCategoryList();
+            GetDynamicInterfaceCategoryPageList();
 
             DeleteDynamicInterfaceCategory();
 
@@ -136,7 +136,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data3);
         }
 
-        private void GetDynamicInterfaceCategoryList()
+        private void GetDynamicInterfaceCategoryPageList()
         {
             //获取动态接口分类
             ZeroInterfaceList data2 = GetNewItem(it =>
