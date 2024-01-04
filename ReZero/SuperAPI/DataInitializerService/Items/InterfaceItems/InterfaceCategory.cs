@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
 
         public void AddInit_InterfaceCategory()
         {
-            GetInterfaceCategoryList();
+            GetInterfaceCategoryTree();
 
             GetDynamicInterfaceCategoryList();
 
@@ -192,7 +192,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data2);
         }
 
-        private void GetInterfaceCategoryList()
+        private void GetInterfaceCategoryTree()
         {
             //接口分类树
             ZeroInterfaceList data1 = GetNewItem(it =>
