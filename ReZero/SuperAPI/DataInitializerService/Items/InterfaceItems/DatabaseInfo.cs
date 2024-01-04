@@ -218,7 +218,7 @@ namespace ReZero.SuperAPI
                 it.Id = DbManId;
                 it.GroupName = nameof(ZeroDatabaseInfo);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
-                it.Name = TextHandler.GetInterfaceListText(IntCateListId);
+                it.Name = TextHandler.GetInterfaceListText(IntCatePageListId);
                 it.Url = GetUrl(it, "GetDatabaseInfoList");
                 it.CustomResultModel = new ResultModel()
                 {

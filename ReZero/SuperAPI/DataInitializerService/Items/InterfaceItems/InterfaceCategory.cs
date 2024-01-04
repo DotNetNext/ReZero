@@ -20,6 +20,8 @@ namespace ReZero.SuperAPI
             UpdateDynamicInterfaceCategory();
 
             GetDynamicInterfaceCategoryById();
+
+            GetDynamicInterfaceCategoryList();
         }
 
         private void GetDynamicInterfaceCategoryById()
@@ -142,10 +144,10 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList data2 = GetNewItem(it =>
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = IntCateListId;
+                it.Id = IntCatePageListId;
                 it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
-                it.Name = TextHandler.GetInterfaceListText(IntCateListId);
+                it.Name = TextHandler.GetInterfaceListText(IntCatePageListId);
                 it.Url = GetUrl(it, "GetDynamicInterfaceCategoryPageList");
                 it.CustomResultModel = new ResultModel()
                 {
@@ -186,6 +188,44 @@ namespace ReZero.SuperAPI
                              new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Name),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonText("名称", "Name") },
                              new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
                              new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data2);
+        }
+
+
+        private void GetDynamicInterfaceCategoryList()
+        {
+            //获取动态接口分类
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = IntCateListId;
+                it.GroupName = nameof(ZeroInterfaceCategory);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.Name = TextHandler.GetInterfaceListText(IntCateListId);
+                it.Url = GetUrl(it, "GetDynamicInterfaceCategoryList"); 
+                it.DataModel = new DataModel()
+                { 
+                    Columns = new List<DataColumnParameter>()
+                    {
+
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Id) ,
+                            Description=TextHandler.GetCommonText("ID", "Primary key")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Name) ,
+                            Description=TextHandler.GetCommonText("名称", "Name")
+                        } 
+                    },
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryCommon,
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.ParentId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=200,ValueIsReadOnly=true, Description = TextHandler.GetCommonText("上级Id", "ParentId") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Name),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonText("名称", "Name") } 
                     }
                 };
             });

@@ -75,7 +75,7 @@ namespace ReZero.SuperAPI
         /// </summary> 
         [ChineseTextAttribute("动态分类列表")]
         [EnglishTextAttribute("Dynamic category list")]
-        public const long IntCateListId = 3;
+        public const long IntCatePageListId = 3;
 
         /// <summary>
         /// 接口详情
@@ -198,6 +198,11 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("删除动态接口")]
         [EnglishTextAttribute("Delete dynamic interface")]
         public const long DeleteDynamicIntId = 32;
+
+         
+        [ChineseTextAttribute("下拉列表：动态分类数据源")]
+        [EnglishTextAttribute("Dynamic category datasource")]
+        public const long IntCateListId = 33;
 
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
