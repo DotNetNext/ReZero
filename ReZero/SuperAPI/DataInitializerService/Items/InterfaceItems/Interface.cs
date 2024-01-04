@@ -13,8 +13,48 @@ namespace ReZero.SuperAPI
 
             Dynamic();
 
+            GetDynamicGroupNameList();
+
         }
 
+        private void GetDynamicGroupNameList()
+        {
+
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = IntCateGroupNameListId;
+                it.GroupName = nameof(zeroInterfaceList);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.Name = TextHandler.GetInterfaceListText(IntCateGroupNameListId);
+                it.Url = GetUrl(it, "GetDynamicGroupNameList");
+                it.DataModel = new DataModel()
+                {
+                    Columns = new List<DataColumnParameter>()
+                    {
+                         
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroInterfaceCategory.Name) ,
+                            Description=TextHandler.GetCommonText("名称", "GroupName")
+                        }
+                    },
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    ActionType = ActionType.QueryCommon,
+                    GroupParemters=new List<DataModelGroupParameter>()
+                    {
+                        new DataModelGroupParameter()
+                        {
+                            GroupName="GroupName", 
+                        }
+                    },  
+                    DefaultParameters = new List<DataModelDefaultParameter>() { 
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsInitialized),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsInitialized", "IsInitialized") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data2);
+        }
         private void Dynamic()
         {
             //动态测试接口

@@ -205,6 +205,11 @@ namespace ReZero.SuperAPI
         public const long IntCateListId = 33;
 
 
+        [ChineseTextAttribute("下拉列表：动态分类中的分组集合")]
+        [EnglishTextAttribute("Dynamic group name datasource")]
+        public const long IntCateGroupNameListId = 34;
+
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

@@ -22,14 +22,15 @@ namespace ReZero.SuperAPI
         public DataModelTreeParameter? TreeParameter { get; set; }
         public List<DataModelJoinParameters>? JoinParameters { get; set; }
         public List<DataModelSelectParameters>? SelectParameters { get; set; }
+        public List<DataModelGroupParameter>? GroupParemters { get; set; }
         #endregion
-  
+
         #region Other
         [Navigate(NavigateType.OneToMany, nameof(TableId))]
         public ZeroEntityInfo? MasterEntityInfo { get; set; }
         public object? OutPutData { get; set; }
         public long ApiId { get; set; }
-        public List<DataColumnParameter>? Columns { get; set; } 
+        public List<DataColumnParameter>? Columns { get; set; }
         #endregion
     }
 }
