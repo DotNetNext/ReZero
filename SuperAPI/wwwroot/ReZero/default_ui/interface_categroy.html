@@ -99,7 +99,7 @@
         },
         methods: {
             fetchData(append) {
-                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryList?ParentId=200" + append;
+                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryPageList?ParentId=200" + append;
                 axios.get(url)
                     .then(response => {
                         this.data = response.data; 

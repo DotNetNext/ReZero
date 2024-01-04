@@ -146,7 +146,7 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(ZeroInterfaceCategory);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(IntCateListId);
-                it.Url = GetUrl(it, "GetDynamicInterfaceCategoryList");
+                it.Url = GetUrl(it, "GetDynamicInterfaceCategoryPageList");
                 it.CustomResultModel = new ResultModel()
                 {
                     ResultType = ResultType.Grid
