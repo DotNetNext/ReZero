@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     internal partial class InterfaceListInitializerProvider
     {
@@ -32,22 +32,30 @@ namespace ReZero.SuperAPI
                 {
                     Columns = new List<DataColumnParameter>()
                     {
-                         
+
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceCategory.Name) ,
                             Description=TextHandler.GetCommonText("名称", "GroupName")
                         }
                     },
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
+                    SelectParameters = new List<DataModelSelectParameters>()
+                    {
+                        new DataModelSelectParameters()
+                        {
+                          Name=nameof(ZeroInterfaceList.GroupName),
+                          AsName=nameof(ZeroInterfaceList.GroupName)
+                        }
+                    },
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryCommon,
-                    GroupParemters=new List<DataModelGroupParameter>()
+                    GroupParemters = new List<DataModelGroupParameter>()
                     {
                         new DataModelGroupParameter()
                         {
-                            GroupName="GroupName", 
+                            FieldName="GroupName",
                         }
-                    },  
-                    DefaultParameters = new List<DataModelDefaultParameter>() { 
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
                              new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsInitialized),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsInitialized", "IsInitialized") },
                     }
@@ -91,14 +99,14 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = DynamicIntPageListId;
-                it.CustomResultModel = new ResultModel() { ResultType = ResultType.Grid  };
+                it.CustomResultModel = new ResultModel() { ResultType = ResultType.Grid };
                 it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(DynamicIntPageListId);
                 it.Url = GetUrl(it, "GetDynamicInterfacePageList");
                 it.DataModel = new DataModel()
                 {
-                    JoinParameters=new List<DataModelJoinParameters>() {
+                    JoinParameters = new List<DataModelJoinParameters>() {
                       new DataModelJoinParameters(){
                        JoinTableId=EntityInfoInitializerProvider.Id_ZeroInterfaceCategory,
                        JoinType=JoinType.Left,
@@ -114,9 +122,10 @@ namespace ReZero.SuperAPI
                         }
                       }
                     },
-                    CommonPage=new DataModelPageParameter() { 
-                       PageNumber=1,
-                       PageSize=20 
+                    CommonPage = new DataModelPageParameter()
+                    {
+                        PageNumber = 1,
+                        PageSize = 20
                     },
                     SelectParameters = new List<DataModelSelectParameters>()
                     {
@@ -135,7 +144,7 @@ namespace ReZero.SuperAPI
                     },
                     Columns = new List<DataColumnParameter>()
                     {
-                        
+
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceList.Id) ,
                             Description=TextHandler.GetCommonText("ID", "Primary key")
@@ -151,7 +160,7 @@ namespace ReZero.SuperAPI
                       new DataColumnParameter(){
                             PropertyName=PubConst.Orm_InterfaceCategroyNameDTO ,
                             Description=TextHandler.GetCommonText("分类", "Interface categroy")
-                        }, 
+                        },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceList.Url) ,
                             Description=TextHandler.GetCommonText("接口地址", "Url")
@@ -161,7 +170,7 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.QueryCommon,
                     DefaultParameters = new List<DataModelDefaultParameter>() {
                             new DataModelDefaultParameter(){ Name="InterfaceCategoryId",FieldOperator=FieldOperatorType.In,  ValueType=typeof(long).Name, Description=TextHandler.GetCommonText("接口分类Id","Interface Category Id") },
-                            new DataModelDefaultParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("接口名称","Interface Name") }, 
+                            new DataModelDefaultParameter(){ Name="Name", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("接口名称","Interface Name") },
                             new DataModelDefaultParameter() { Name = "IsInitialized",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否内置数据", "Is initialized") },
                             new DataModelDefaultParameter() { Name = "IsDeleted",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否删除", "Is deleted") },
                             new DataModelDefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("Url","Url") },
@@ -182,7 +191,7 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "DeleteDynamicInterface");
                 it.DataModel = new DataModel()
                 {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList, 
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.BizDeleteObject,
                     DefaultParameters = new List<DataModelDefaultParameter>() {
                              new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonText("主键", "Id") },

@@ -14,6 +14,19 @@ namespace ReZero.SuperAPI
             BindPageParameters(dataModel, context, formDatas);
             BindDefaultParameters(dataModel, context, formDatas);
             BindOrderByParameters(dataModel, context, formDatas);
+            BindGroupByParameters(dataModel, context, formDatas);
+        }
+
+        private void BindGroupByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
+        {
+            if (dataModel?.GroupParemters != null)
+            { 
+                var groupBys = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.GroupParemters)));
+                if (groupBys.Value != null)
+                {
+                    dataModel!.GroupParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelGroupParameter>>(groupBys.Value + "");
+                } 
+            }
         }
 
         private void BindOrderByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)

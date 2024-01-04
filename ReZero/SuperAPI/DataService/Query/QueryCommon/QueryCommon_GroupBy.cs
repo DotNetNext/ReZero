@@ -12,19 +12,24 @@ namespace ReZero.SuperAPI
     {
         private QueryMethodInfo GroupBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
-            List<GroupByModel> orderByModels = new List<GroupByModel>();
-            if (dataModel.OrderParemters != null)
+            List<GroupByModel> groupByModels = new List<GroupByModel>();
+            if (dataModel.GroupParemters != null)
             {
-                foreach (var item in dataModel.OrderParemters)
+                foreach (var item in dataModel.GroupParemters!)
                 {
-                    orderByModels.Add(new GroupByModel()
+                    groupByModels.Add(new GroupByModel()
                     {
-                        FieldName = GetFieldName(queryObject, item) 
+                        FieldName = GetGroupByFieldName(queryObject,item)  
                     });
                 }
             }
-            queryObject = queryObject.GroupBy(orderByModels);
+            queryObject = queryObject.GroupBy(groupByModels);
             return queryObject;
-        } 
+        }
+        private string GetGroupByFieldName(QueryMethodInfo queryObject, DataModelGroupParameter item)
+        {
+            var name = App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
+            return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
+        }
     }
 }

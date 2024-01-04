@@ -6,6 +6,7 @@ namespace ReZero.SuperAPI
 {
     public class DataModelGroupParameter
     {
-        public string? GroupName { get;   set; }
+        public string? FieldName { get;   set; }
+        public int TableIndex { get;   set; }
     }
 }

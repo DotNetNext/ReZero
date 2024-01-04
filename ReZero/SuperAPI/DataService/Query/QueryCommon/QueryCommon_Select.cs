@@ -5,6 +5,7 @@ using System.Text;
 using System.Linq;
 using System.Data;
 using Microsoft.Extensions.Primitives;
+using System.Xml.Linq;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -43,12 +44,30 @@ namespace ReZero.SuperAPI
                     selectLists.Add(name);
                     resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = typeof(string) });
                 }
+                else if(!string.IsNullOrEmpty(item.Name))
+                {
+                    if (string.IsNullOrEmpty(item.AsName))  
+                        item.AsName = item.Name; 
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(GetSelectFieldName(queryObject,item))} AS {item.AsName} ";
+                    selectLists.Add(name);
+                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type,item).PropertyInfo.PropertyType });
+                }
             }
             var  resultType=new DynamicTypeBuilder(_sqlSugarClient!,"ViewModel_"+dataModel.ApiId, resultTypeInfos).BuildDynamicType();
             queryObject = queryObject.Select(string.Join(",", selectLists), resultType);
             return queryObject;
         }
 
+        private string GetSelectFieldName(QueryMethodInfo queryObject, DataModelSelectParameters item)
+        {
+            var name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
+            return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
+        }
+        private EntityColumnInfo GetColumnInfo(Type type, DataModelSelectParameters item)
+        {
+            var collumnInfo = App.Db.EntityMaintenance.GetEntityInfo(type).Columns.FirstOrDefault(it=>it.PropertyName.EqualsCase(item.AsName!));
+            return collumnInfo;
+        }
         private QueryMethodInfo GetDefaultSelect(Type type, QueryMethodInfo queryObject)
         {
             string selectString = GetMasterSelectAll(type);
