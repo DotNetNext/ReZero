@@ -76,7 +76,37 @@
 
                 <div class="modal-body">
                     <div class="table-container">
-                       
+                        <div class="card">
+                            <ul class="nav nav-tabs page-tabs">
+                                <li v-for="item in actionList"> <a href="#!">{{item.TextGroup}}</a> </li> 
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+
+                                    <form action="#!" method="post" name="edit-form" class="edit-form">
+                                        <div class="form-group">
+                                            <label for="web_site_title">网站标题</label>
+                                            <input class="form-control" type="text" id="web_site_title" name="web_site_title" value="光年后台管理系统HTML模板" placeholder="请输入站点标题">
+                                            <small class="help-block">调用方式：<code>config('web_site_title')</code></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="web_site_logo">LOGO图片</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="web_site_logo" id="web_site_logo" value="/home/images/logo.png">
+                                                <div class="input-group-btn"><button class="btn btn-default" type="button">上传图片</button></div>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary m-r-5">确 定</button>
+                                            <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -98,12 +128,14 @@
             title: "",
             formData: {},
             groupList: [],
-            interfaceCategroyList: []
+            interfaceCategroyList: [],
+            actionList:[]
         },
         mounted() {
             this.fetchData("");
             this.bindGroupListSelect();
             this.bindInterfaceCategroySelect();
+            this.bindActionLists();
         },
         methods: {
             fetchData(append) {
@@ -174,5 +206,14 @@
                         this.data = null;
                     });
             },
+            bindActionLists: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetActionType")
+                    .then(response => {
+                        this.actionList = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message; 
+                    });
+            }
         }
     });</script>
