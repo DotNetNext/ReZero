@@ -1,6 +1,7 @@
 ﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -55,7 +56,13 @@ namespace ReZero.SuperAPI
 
         public object GetActionType() 
         {
-            return EnumAttributeExtractor.GetEnumAttributeValues<ActionType>();
+            var items = EnumAttributeExtractor.GetEnumAttributeValues<ActionType>();
+            var result = items.GroupBy(it => it.TextGroup).Select(it => new
+            {
+                TextGroup = it.Key,
+                Items = it.ToList()
+            }).ToList();
+            return result;
         }
     }
 }
