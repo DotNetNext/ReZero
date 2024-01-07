@@ -93,8 +93,8 @@
         data: {
             data: null,
             error: null,
-            addTitle: "添加动态接口分类",
-            editTitle: "修改态接口分类",
+            addTitle: "添加接口",
+            editTitle: "修改接口",
             title: "",
             formData: {},
             groupList: [],
@@ -129,9 +129,11 @@
                 this.fetchData(urlParameters);
             },
             openAdd: function () {
+                this.title = this.addTitle;
                 btnSave.click();
             },
             openEdit: function (item) {
+                this.title = this.editTitle;
                 btnSave.click();
             },
             deleteAndConfirm: function (item) {
