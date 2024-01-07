@@ -9,7 +9,7 @@
                     <div class="col-md-1"><label class="form-control">名称:</label></div>
                     <div class="col-md-2"><input class="form-control" type="text" id="txtName" name="example-text-input" placeholder="接口名 或者 URL"></div>
                     <div class="col-md-1"><label class="form-control">分组:</label></div>
-                    <div class="col-md-2"><select id="selGroupName" class="form-control"><option></option> <option v-for="item in groupList"  >{{item.GroupName}}</option></select></div>
+                    <div class="col-md-2"><select id="selGroupName" class="form-control"><option></option> <option v-for="item in groupList">{{item.GroupName}}</option></select></div>
                     <div class="col-md-1"><label class="form-control">分类:</label></div>
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2">
@@ -22,9 +22,9 @@
         </form>
 
     </div>
-    <div class="card-toolbar clearfix"> 
+    <div class="card-toolbar clearfix">
         <div class="toolbar-btn-action">
-            <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+            <a class="btn btn-primary m-r-5" @click="openAdd()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
             <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
             <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
             <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -64,29 +64,24 @@
 
     </div>
     @@page_control.html
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
-        <div class="modal-dialog" role="document">
+    <!--编辑列-->
+    <div id="divSave" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnSave" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divSave"></button>
+        <div class="modal-dialog modal-lg  width1200" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">{{title}} </h4>
                 </div>
+
                 <div class="modal-body">
-                    <form id="frmEdit">
-                        <input type="hidden" v-model="formData.Id" name="Id" />
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">名称：</label>
-                            <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">内容：</label>
-                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
-                        </div>
-                    </form>
+                    <div class="table-container">
+                       
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCloseEdit" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="addOrUpdate()" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
                 </div>
             </div>
         </div>
@@ -132,6 +127,12 @@
                     InterfaceCategoryId: selInterfaceCategoryId.value,
                 });
                 this.fetchData(urlParameters);
+            },
+            openAdd: function () {
+                btnSave.click();
+            },
+            openEdit: function () {
+                btnSave.click();
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
