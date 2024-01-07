@@ -20,5 +20,18 @@ namespace ReZero.SuperAPI
         public readonly static Random Common_Random = new Random();
 
         public const string CacheKey_Type = "ReZero_Type_{0}";
+
+        public const string DataSource_ActionTypeGroupName_QueryCN = "查询";
+        public const string DataSource_ActionTypeGroupName_QueryEN = "Query";
+        public const string DataSource_ActionTypeGroupName_InsertCN = "插入";
+        public const string DataSource_ActionTypeGroupName_InsertEN = "Insert";
+        public const string DataSource_ActionTypeGroupName_UpdateCN = "更新";
+        public const string DataSource_ActionTypeGroupName_UpdateEN = "Update";
+        public const string DataSource_ActionTypeGroupName_DeleteCN = "删除";
+        public const string DataSource_ActionTypeGroupName_DeleteEN = "Delete";
+        public const string DataSource_ActionTypeGroupName_DDLCN = "库表维护";
+        public const string DataSource_ActionTypeGroupName_DDLEN = "DLL";
+        public const string DataSource_ActionTypeGroupName_MyMethodCN = "自定义方法";
+        public const string DataSource_ActionTypeGroupName_MyMethodEN = "My method";
     }
 }

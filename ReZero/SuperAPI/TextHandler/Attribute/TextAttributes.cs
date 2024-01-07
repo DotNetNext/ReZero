@@ -45,4 +45,19 @@ namespace ReZero.SuperAPI
         /// </summary>
         public string? Text { get; set; }
     }
+
+
+ 
+    [AttributeUsage(AttributeTargets.All)]
+    public class TextGroupAttribute : Attribute
+    {
+        public string? cnText { get; set; }
+        private string? enText { get; set; }
+
+        public TextGroupAttribute(string cnText,string enText)
+        {
+            this.cnText = cnText;
+            this.enText = cnText;
+        } 
+    }
 }
