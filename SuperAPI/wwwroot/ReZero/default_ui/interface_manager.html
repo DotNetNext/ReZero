@@ -49,7 +49,7 @@
                         </td>
 
                         <td class="table_opt">
-                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-link" type="button">
+                            <button data-toggle="modal" @click="openEdit(item)"   class="btn btn-link" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
                             </button>
                             <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
@@ -131,7 +131,7 @@
             openAdd: function () {
                 btnSave.click();
             },
-            openEdit: function () {
+            openEdit: function (item) {
                 btnSave.click();
             },
             deleteAndConfirm: function (item) {
