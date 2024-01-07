@@ -24,10 +24,9 @@
     </div>
     <div class="card-toolbar clearfix">
         <div class="toolbar-btn-action">
-            <a class="btn btn-primary m-r-5" @click="openAdd()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+            <a class="btn btn-primary m-r-5" @click="openEditBefore()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
             <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
             <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
-            <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>
         </div>
     </div>
     <div class="card-body">
@@ -49,7 +48,7 @@
                         </td>
 
                         <td class="table_opt">
-                            <button data-toggle="modal" @click="openEdit(item)"   class="btn btn-link" type="button">
+                            <button data-toggle="modal" @click="openEdit(item)" class="btn btn-link" type="button">
                                 <i class="mdi mdi-lead-pencil"></i> 修改
                             </button>
                             <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
@@ -64,7 +63,33 @@
 
     </div>
     @@page_control.html
-    <!--编辑列-->
+    <!--保存前选分类-->
+    <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divBefore" style="display: none;">
+        <button id="btnBefore" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divBefore"></button>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">接口类型</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmEdit">
+                        <input type="hidden" v-model="formData.Id" name="Id" />
+                        <div class="form-group"> 
+                            <select v-model="currentGroup" id="selTextGroup" class="form-control">
+                                <option v-for="item in actionList" :value="item">{{item.TextGroup}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnBeforeClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="openEdit()" class="btn btn-primary">下一步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--保存接口-->
     <div id="divSave" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnSave" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divSave"></button>
         <div class="modal-dialog modal-lg  width1200" role="document">
@@ -78,28 +103,21 @@
                     <div class="table-container">
                         <div class="card">
                             <ul class="nav nav-tabs page-tabs">
-                                <li v-for="item in actionList"> <a href="#!">{{item.TextGroup}}</a> </li> 
+                                <li v-for="item in currentGroup.Items"> <a href="#!">{{item.Text}}</a> </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active">
 
                                     <form action="#!" method="post" name="edit-form" class="edit-form">
                                         <div class="form-group">
-                                            <label for="web_site_title">网站标题</label>
-                                            <input class="form-control" type="text" id="web_site_title" name="web_site_title" value="光年后台管理系统HTML模板" placeholder="请输入站点标题">
-                                            <small class="help-block">调用方式：<code>config('web_site_title')</code></small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="web_site_logo">LOGO图片</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="web_site_logo" id="web_site_logo" value="/home/images/logo.png">
-                                                <div class="input-group-btn"><button class="btn btn-default" type="button">上传图片</button></div>
+                                            <div class="col-md-2">
+                                                <label class="control-label" for="web_site_title">分类</label>
                                             </div>
-                                        </div>
-                                      
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary m-r-5">确 定</button>
-                                            <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
+                                            <div class="col-md-10">
+                                                <select class="form-control">
+                                                    <option v-for="child in actionList[0].Items">{{child.Text}}</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </form>
 
@@ -129,7 +147,8 @@
             formData: {},
             groupList: [],
             interfaceCategroyList: [],
-            actionList:[]
+            actionList: [],
+            currentGroup:[]
         },
         mounted() {
             this.fetchData("");
@@ -152,7 +171,7 @@
             },
             onSearch: function (page) {
 
-                var urlParameters = "?" + tools.objectToQueryString({ 
+                var urlParameters = "?" + tools.objectToQueryString({
                     PageNumber: page,
                     Name: txtName.value,
                     GroupName: selGroupName.value,
@@ -164,9 +183,14 @@
                 this.title = this.addTitle;
                 btnSave.click();
             },
+            openEditBefore: function () {
+                btnBefore.click();
+            },
             openEdit: function (item) {
                 this.title = this.editTitle;
+                btnBeforeClose.click();
                 btnSave.click();
+                this.currentGroup.Items;
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
@@ -189,7 +213,7 @@
             bindGroupListSelect: function () {
                 axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
                     .then(response => {
-                        this.groupList = response.data; 
+                        this.groupList = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -199,7 +223,7 @@
             bindInterfaceCategroySelect: function () {
                 axios.get("/PrivateReZeroRoute/100004/GetDynamicInterfaceCategoryList")
                     .then(response => {
-                        this.interfaceCategroyList = response.data; 
+                        this.interfaceCategroyList = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -212,7 +236,7 @@
                         this.actionList = response.data;
                     })
                     .catch(error => {
-                        this.error = error.message; 
+                        this.error = error.message;
                     });
             }
         }
