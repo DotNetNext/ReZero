@@ -35,20 +35,38 @@ namespace ReZero.SuperAPI
         DeleteObject = 30000,  
 
         [ChineseText("逻辑删除根据实体")]
-        [EnglishText("biz Delete by entity")]
-        BizDeleteObject = 30001, 
+        [EnglishText("logic delete by entity")]
+        BizDeleteObject = 30001,
         #endregion
 
-        //Update
+
+        #region  Update
+        [ChineseText("更新根据实体")]
+        [EnglishText("Update by entity")]
         UpdateObject = 40000,
+        #endregion
 
-        //DDL
+
+        #region DDL
+        [ChineseText("获取数据库")]
+        [EnglishText("Get database list")]
         DllDatabaseList = 50000,
-        DllCreateDb = 50001, 
+        [ChineseText("创建数据库")]
+        [EnglishText("Create database")]
+        DllCreateDb = 50001,
+        [ChineseText("创建表")]
+        [EnglishText("Create tables")]
         DllCreateTables = 50002,
-        DllGetTables=50003,
+        [ChineseText("获取表")]
+        [EnglishText("Get tables")]
+        DllGetTables = 50003,
+        #endregion
 
-        //My method
-        MyMethod = 99999,
+
+        #region 自定义方法
+        [ChineseText("自定义方法")]
+        [EnglishText("My method")]
+        MyMethod = 99999, 
+        #endregion
     }
 }
