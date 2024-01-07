@@ -52,5 +52,10 @@ namespace ReZero.SuperAPI
             }
             return  result ;
         }
+
+        public object GetActionType() 
+        {
+            return EnumAttributeExtractor.GetEnumAttributeValues<ActionType>();
+        }
     }
 }

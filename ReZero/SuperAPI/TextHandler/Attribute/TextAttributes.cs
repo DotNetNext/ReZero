@@ -52,7 +52,7 @@ namespace ReZero.SuperAPI
     public class TextGroupAttribute : Attribute
     {
         public string? cnText { get; set; }
-        private string? enText { get; set; }
+        public string? enText { get; set; }
 
         public TextGroupAttribute(string cnText,string enText)
         {

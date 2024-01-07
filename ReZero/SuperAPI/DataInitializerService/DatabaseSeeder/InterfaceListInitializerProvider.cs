@@ -210,6 +210,11 @@ namespace ReZero.SuperAPI
         public const long IntCateGroupNameListId = 34;
 
 
+        [ChineseTextAttribute("下拉列表：获接口操作方式集合")]
+        [EnglishTextAttribute("Get interface action list ")]
+        public const long GetActionTypeId = 35;
+
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

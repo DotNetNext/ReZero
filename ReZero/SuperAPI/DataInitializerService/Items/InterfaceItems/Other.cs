@@ -9,6 +9,7 @@ namespace ReZero.SuperAPI
         private void AddInit_Other()
         {
             GetAllTables();
+            GetActionType();
         }
         private void GetAllTables()
         {
@@ -34,6 +35,35 @@ namespace ReZero.SuperAPI
                     {
                         new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("库ID", "DatabaseId") },
                          new DataModelDefaultParameter() { Name ="tableName",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("表名", "Table name") }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void GetActionType()
+        {
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetActionTypeId;
+                it.GroupName = nameof(MethodApi);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.Name = TextHandler.GetInterfaceListText(GetTableAllId);
+                it.Url = GetUrl(it, "GetActionType");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 0,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetActionType)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                       
                     }
                 };
             });
