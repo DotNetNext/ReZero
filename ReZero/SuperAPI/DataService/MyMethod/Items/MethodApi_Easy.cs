@@ -41,8 +41,7 @@ namespace ReZero.SuperAPI
         { 
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
-                .Where(it=>it.IsDeleted==false)
-                //.Where(it=>it.IsInitialized==false)
+                .Where(it=>it.IsDeleted==false) 
                 .Where(it => it.DataBaseId == databaseId).ToList();
             var tables = db!.DbMaintenance.GetTableInfoList(false).Where(it => !it.Name.ToLower().StartsWith("zero_")).ToList(); 
             var result = tables
@@ -52,17 +51,6 @@ namespace ReZero.SuperAPI
                 result=result.Where(it => it.Name.ToLower().Contains(tableName.ToLower())).ToList();
             }
             return  result ;
-        }
-
-        public object GetActionType() 
-        {
-            var items = EnumAttributeExtractor.GetEnumAttributeValues<ActionType>();
-            var result = items.GroupBy(it => it.TextGroup).Select(it => new
-            {
-                TextGroup = it.Key,
-                Items = it.ToList()
-            }).ToList();
-            return result;
         }
     }
 }
