@@ -37,13 +37,22 @@
             <table class="table table-bordered">
                 <thead>
                     <tr v-if="data && data.Columns && data.Columns.length > 0">
+                        <th class="width30">
+                            <label class="lyear-checkbox checkbox-primary">
+                                <input type="checkbox" @change="selectAll" id="check-all"><span></span>
+                            </label>
+                        </th>
                         <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody v-if="data &&data.Data">
                     <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
-
+                        <td>
+                            <label class="lyear-checkbox checkbox-primary">
+                                <input type="checkbox" name="ids[]" v-model="selectedItems" :alt="item.Id" :value="item.Id"><span></span>
+                            </label>
+                        </td>
                         <td v-for="column in data.Columns">
                             {{ item[column.PropertyName] }}
                         </td>
@@ -158,6 +167,7 @@
             title: "",
             tabIndex: 0,
             formData: {},
+            selectedItems:[],
             groupList: [],
             interfaceCategroyList: [],
             actionList: [],
@@ -201,6 +211,15 @@
             },
             disable: function () {
                 alert("开发中");
+            },
+            selectAll(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedItems = this.data.Data.map(item => item.Id);
+                } else {
+                    // 全不选
+                    this.selectedItems = [];
+                }
             },
             openEditBefore: function () {
                 btnBefore.click();
@@ -258,5 +277,6 @@
             tabClick: function (index) {
                 this.tabIndex = index;
             },
+
         }
     });</script>
