@@ -138,8 +138,8 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="seo_description">表名</label>
-                                            <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" value="" placeholder=" ">
-                                        </div> 
+                                            <input type="text" class="form-control" @click="openImportEntity()" id="seo_keywords" name="seo_keywords" value="" placeholder=" ">
+                                        </div>
                                     </form>
 
                                 </div>
@@ -151,6 +151,67 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--导入实体-->
+    <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">选择表</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="tablebox">
+                        <div>
+                            <label>名称:</label>
+                            <input id="txtTableName" class="form-control" type="text" />
+                            <button @click="bindImportTables()" data-toggle="modal" type="button" class="btn btn-red">
+                                搜索
+                            </button>
+                            <button onclick="txtTableName.value=''" data-toggle="modal" type="button" class="btn btn-red">
+                                清空
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container2">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="width30">
+                                        <label class="lyear-checkbox checkbox-primary">
+                                            <input type="checkbox" @change="selectAll2" id="check-all2"><span></span>
+                                        </label>
+                                    </th>
+                                    <th>
+                                        表名
+                                    </th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="tables">
+                                <tr v-for="item in tables">
+                                    <td>
+                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item.Name">
+                                    </td>
+                                    <td>
+                                        {{ item.Name }}
+                                    </td>
+                                    <td>
+                                        {{ item.Description  }}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnImportEntityClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="importEntitySubmit()" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -171,7 +232,8 @@
             groupList: [],
             interfaceCategroyList: [],
             actionList: [],
-            currentGroup: []
+            currentGroup: [],
+            tables:[]
         },
         mounted() {
             this.fetchData("");
@@ -288,5 +350,47 @@
                 this.tabIndex = index;
             },
 
+            openImportEntity: function () {
+                btnImportEntity.click();
+                this.bindImportTables();
+            },
+            importEntitySubmit: function () {
+                var url = " /PrivateReZeroRoute/100003/ImportEntities";
+                axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables })
+                    .then(response => {
+                        this.error = null;
+                        if (response.data == true) {
+                            btnImportEntityClose.click();
+                            this.onSearch(1);
+                            tools.alert("导入成功，删除实体可以重新导入。");
+                        }
+                        else {
+                            tools.alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+            bindImportTables: function () {
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
+                axios.get(url)
+                    .then(response => {
+                        this.tables = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+            selectAll2(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedTables = this.tables.map(item => item.Name);
+                } else {
+                    // 全不选
+                    this.selectedTables = [];
+                }
+            },
         }
     });</script>

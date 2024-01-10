@@ -3,3 +3,26 @@
     max-height: 60vh; /* 设置表格容器的最大高度，防止内容过多时出现滚动条 */
     overflow-y: auto; /* 启用垂直滚动条 */
 }
+.tablebox {
+    padding: 10px 0;
+}
+
+    .tablebox label {
+        font-weight: 100;
+        margin-top: -2px;
+    }
+
+    .tablebox .btn {
+        margin-top: -7px;
+        cursor: pointer !important
+    }
+
+    .tablebox input {
+        width: 100px;
+        display: inline;
+        height: 25px;
+        margin-left: 10px;
+    }
+#divImportEntity .modal-dialog {
+    border: 3px solid #ccc;
+}
