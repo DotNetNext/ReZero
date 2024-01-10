@@ -103,7 +103,7 @@
                     <div class="table-container">
                         <div class="card">
                             <ul class="nav nav-tabs page-tabs">
-                                <li v-for="item in currentGroup.Items"> <a href="#!">{{item.Text}}</a> </li>
+                                <li v-for="(item,index) in currentGroup.Items" @click="tabClick(index,item)" :class="index==tabIndex?'active':''"> <a  href="#!">{{item.Text}}</a> </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active">
@@ -144,6 +144,7 @@
             addTitle: "添加接口",
             editTitle: "修改接口",
             title: "",
+            tabIndex:0,
             formData: {},
             groupList: [],
             interfaceCategroyList: [],
@@ -238,6 +239,9 @@
                     .catch(error => {
                         this.error = error.message;
                     });
-            }
+            },
+            tabClick: function (index) {
+                this.tabIndex = index; 
+            },
         }
     });</script>
