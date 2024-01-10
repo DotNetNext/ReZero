@@ -1,5 +1,6 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css" rel="stylesheet" />
+<link href="css/page_interface_manager.css" rel="stylesheet" />
 <div id="apibox" class="card">
     <div class="search-bar">
 
@@ -75,7 +76,7 @@
                 <div class="modal-body">
                     <form id="frmEdit">
                         <input type="hidden" v-model="formData.Id" name="Id" />
-                        <div class="form-group"> 
+                        <div class="form-group">
                             <select v-model="currentGroup" id="selTextGroup" class="form-control">
                                 <option v-for="item in actionList" :value="item">{{item.TextGroup}}</option>
                             </select>
@@ -103,22 +104,33 @@
                     <div class="table-container">
                         <div class="card">
                             <ul class="nav nav-tabs page-tabs">
-                                <li v-for="(item,index) in currentGroup.Items" @click="tabClick(index,item)" :class="index==tabIndex?'active':''"> <a  href="#!">{{item.Text}}</a> </li>
+                                <li v-for="(item,index) in currentGroup.Items" @click="tabClick(index,item)" :class="index==tabIndex?'active':''"> <a href="#!">{{item.Text}}</a> </li>
                             </ul>
-                            <div class="tab-content">
+                            <div class="tab-content tabbox">
                                 <div class="tab-pane active">
 
                                     <form action="#!" method="post" name="edit-form" class="edit-form">
-                                        <div class="form-group">
-                                            <div class="col-md-2">
-                                                <label class="control-label" for="web_site_title">分类</label>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <select class="form-control">
-                                                    <option v-for="child in actionList[0].Items">{{child.Text}}</option>
+
+                                        <div class="form-group col-md-12">
+                                            <label for="type">菜单分类</label>
+                                            <div class="form-controls">
+                                                <select name="type" class="form-control" id="type">
+                                                    <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="title">接口名</label>
+                                            <input type="text" class="form-control" id="title" name="title" value="" placeholder=" ">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="seo_keywords">分组单词</label>
+                                            <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" value="" placeholder=" ">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="seo_description">表名</label>
+                                            <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" value="" placeholder=" ">
+                                        </div> 
                                     </form>
 
                                 </div>
@@ -144,12 +156,12 @@
             addTitle: "添加接口",
             editTitle: "修改接口",
             title: "",
-            tabIndex:0,
+            tabIndex: 0,
             formData: {},
             groupList: [],
             interfaceCategroyList: [],
             actionList: [],
-            currentGroup:[]
+            currentGroup: []
         },
         mounted() {
             this.fetchData("");
@@ -181,14 +193,13 @@
                 this.fetchData(urlParameters);
             },
             openAdd: function () {
-                this.title = this.addTitle;
+                this.title = this.addTitle; 
                 btnSave.click();
             },
             openEditBefore: function () {
                 btnBefore.click();
             },
-            openEdit: function (item) {
-                this.title = this.editTitle;
+            openEdit: function (item) { 
                 btnBeforeClose.click();
                 btnSave.click();
                 this.currentGroup.Items;
@@ -241,7 +252,7 @@
                     });
             },
             tabClick: function (index) {
-                this.tabIndex = index; 
+                this.tabIndex = index;
             },
         }
     });</script>
