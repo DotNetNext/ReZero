@@ -26,8 +26,8 @@
     <div class="card-toolbar clearfix">
         <div class="toolbar-btn-action">
             <a class="btn btn-primary m-r-5" @click="openEditBefore()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
-            <!--<a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
-            <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>-->
+            <a class="btn btn-success m-r-5" @click="enable()" href="#!"><i class="mdi mdi-check"></i> 启用</a>
+            <a class="btn btn-warning m-r-5" @click="disable()" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
         </div>
     </div>
     <div class="card-body">
@@ -196,18 +196,17 @@
                 this.title = this.addTitle; 
                 btnSave.click();
             },
+            enable: function () {
+                alert("开发中");
+            },
+            disable: function () {
+                alert("开发中");
+            },
             openEditBefore: function () {
                 btnBefore.click();
             },
-            openEdit: function (item) { 
-                if (this.currentGroup.length==0)
-                {
-                    tools.alert("请选择类型");
-                    return;
-                }
-                btnBeforeClose.click();
-                btnSave.click();
-                this.currentGroup.Items;
+            openEdit: function (item) {
+                alert("开发中");
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
