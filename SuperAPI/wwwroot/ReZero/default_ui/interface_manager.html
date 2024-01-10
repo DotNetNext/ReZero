@@ -25,7 +25,7 @@
     </div>
     <div class="card-toolbar clearfix">
         <div class="toolbar-btn-action">
-            <a class="btn btn-primary m-r-5" @click="openEditBefore()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+            <a class="btn btn-primary m-r-5" @click="openNext()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
             <a class="btn btn-success m-r-5" @click="enable()" href="#!"><i class="mdi mdi-check"></i> 启用</a>
             <a class="btn btn-warning m-r-5" @click="disable()" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
         </div>
@@ -75,7 +75,7 @@
     @@page_control.html
     <!--保存前选分类-->
     <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divBefore" style="display: none;">
-        <button id="btnBefore" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divBefore"></button>
+        <button id="btnNext" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divBefore"></button>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -93,8 +93,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnBeforeClose" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="openEdit()" class="btn btn-primary">下一步</button>
+                    <button type="button" id="btnNextClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="openAdd()" class="btn btn-primary">下一步</button>
                 </div>
             </div>
         </div>
@@ -202,10 +202,6 @@
                 });
                 this.fetchData(urlParameters);
             },
-            openAdd: function () {
-                this.title = this.addTitle; 
-                btnSave.click();
-            },
             enable: function () {
                 alert("开发中");
             },
@@ -220,11 +216,25 @@
                     // 全不选
                     this.selectedItems = [];
                 }
+            },  
+            openNext: function () {
+                this.title = this.addTitle;
+                btnNext.click();
             },
-            openEditBefore: function () {
-                btnBefore.click();
+            openAdd: function (item) {
+                if (this.currentGroup.length == 0) {
+                    tools.alert("请选择类型");
+                    return;
+                } 
+                btnNextClose.click();
+                btnSave.click();
+                this.currentGroup.Items;
             },
-            openEdit: function (item) {
+            openEdit: function () {
+                alert("开发中");
+            },
+            addOrUpdateColumnInfoSubmit: function ()
+            {
                 alert("开发中");
             },
             deleteAndConfirm: function (item) {
