@@ -26,7 +26,7 @@ namespace ReZero.SuperAPI
         [ChineseText("全表查询")]
         [EnglishText("Query all")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_QueryCN, PubConst.DataSource_ActionTypeGroupName_QueryEN)]
-        QueryByGetAll = 10003,
+        QueryAll = 10003,
         #endregion
 
 
