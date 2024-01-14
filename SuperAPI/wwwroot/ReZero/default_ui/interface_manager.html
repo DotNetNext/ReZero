@@ -86,7 +86,7 @@
                     <form id="frmEdit">
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
-                            <select v-model="currentGroup" id="selTextGroup" class="form-control">
+                            <select v-model="currentActionType" id="selTextGroup" class="form-control">
                                 <option v-for="item in actionList" :value="item">{{item.TextGroup}}</option>
                             </select>
                         </div>
@@ -113,7 +113,7 @@
                     <div class="table-container">
                         <div class="card">
                             <ul class="nav nav-tabs page-tabs">
-                                <li v-for="(item,index) in currentGroup.Items" @click="tabClick(index,item)" :class="index==tabIndex?'active':''"> <a href="#!">{{item.Text}}</a> </li>
+                                <li v-for="(item,index) in currentActionType.Items" @click="tabClick(index,item)" :class="index==tabIndex?'active':''"> <a href="#!">{{item.Text}}</a> </li>
                             </ul>
                             <div class="tab-content tabbox">
                                 <div class="tab-pane active">
@@ -232,7 +232,7 @@
             groupList: [],
             interfaceCategroyList: [],
             actionList: [],
-            currentGroup: [],
+            currentActionType: [],
             tables:[]
         },
         mounted() {
@@ -284,13 +284,13 @@
                 btnNext.click();
             },
             openAdd: function (item) {
-                if (this.currentGroup.length == 0) {
+                if (this.currentActionType.length == 0) {
                     tools.alert("请选择类型");
                     return;
                 } 
                 btnNextClose.click();
                 btnSave.click();
-                this.currentGroup.Items;
+                this.currentActionType.Items;
             },
             openEdit: function () {
                 alert("开发中");
