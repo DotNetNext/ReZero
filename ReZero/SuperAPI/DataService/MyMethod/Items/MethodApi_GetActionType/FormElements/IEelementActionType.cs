@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ReZero.SuperAPI 
 {
-    public class ActionTypeFormElementModel
+    public interface IEelementActionType
     {
+        List<ActionTypeFormElementModel> GetModels();
     }
 }

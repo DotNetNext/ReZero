@@ -44,7 +44,12 @@ namespace ReZero.SuperAPI
 
         private static List<ActionTypeFormElementModel> GetFormElements(EnumAttributeExtractor.EnumAttributeValues item)
         {
-            List<ActionTypeFormElementModel> result=new List<ActionTypeFormElementModel>();
+            var actionType = (ActionType)item.Value;
+            var fullName = InstanceManager.GetActionTypeElementName(actionType);
+            var type = Type.GetType(fullName);
+            if (type == null) return new List<ActionTypeFormElementModel>();
+            var actionInstance = (IEelementActionType)Activator.CreateInstance(type); 
+            var result=actionInstance.GetModels();
             return result;
         }
     }

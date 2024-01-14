@@ -29,6 +29,7 @@ namespace ReZero.SuperAPI
 
                 var attributeValues = new EnumAttributeValues
                 { 
+                    Value=Convert.ToInt64(value),
                     Text = App.Language == Language.CN ?  chineseTextAttribute?.Text:englishTextAttribute?.Text,
                     TextGroup = App.Language == Language.CN ? textGroupAttribute?.cnText : textGroupAttribute?.enText
                 };
@@ -58,6 +59,11 @@ namespace ReZero.SuperAPI
             /// Gets or sets the text group.
             /// </summary>
             public string? TextGroup { get; set; }
+            /// <summary>
+            /// Enum value
+            /// </summary>
+
+            public long Value { get;   set; }
         }
     }
 }

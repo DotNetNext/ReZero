@@ -18,8 +18,4 @@
     <PackageReference Include="SqlSugarCore" Version="5.1.4.131-preview01" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SuperAPI\DataService\MyMethod\Items\MethodApi_GetActionType\FormElements\" />
-  </ItemGroup>
-
 </Project>
