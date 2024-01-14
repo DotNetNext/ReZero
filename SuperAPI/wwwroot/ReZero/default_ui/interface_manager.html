@@ -122,7 +122,27 @@
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
                                             <label for="type">{{item.Text}}<span class="red" v-if="item.IsRequired" >*</span></label>
                                             <div class="form-controls">
-                                                <input class="form-control" />
+                                                <template v-if="item.ElementType==0">
+                                                    <!--text-->
+                                                    <input :name="item.Name" class="form-control" />
+                                                </template>
+                                                <template v-if="item.ElementType==1">
+                                                    <!--table-->
+                                                    <div class="input-group">
+                                                        <input  :name="item.Name" type="text" readonly="readonly" class="form-control" >
+                                                        <span class="input-group-btn">
+                                                            <button @click="openImportEntity(item)" class="btn btn-default" type="button">选择表</button>
+                                                        </span>
+                                                    </div>
+                                                </template>
+                                                <template v-if="item.ElementType==2">
+                                                    <!--group-->
+                                                    <input class="form-control" />
+                                                </template>
+                                                <template v-if="item.ElementType==3">
+                                                    <!--Columns-->
+                                                    <input class="form-control" />
+                                                </template>
                                             </div>
                                         </div> 
                                     </form>
@@ -140,7 +160,7 @@
             </div>
         </div>
     </div>
-    <!--导入实体-->
+    <!--选择表-->
     <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
         <div class="modal-dialog modal-lg" role="document">
@@ -335,8 +355,7 @@
             tabClick: function (index) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
-            },
-
+            }, 
             openImportEntity: function () {
                 btnImportEntity.click();
                 this.bindImportTables();
@@ -369,7 +388,7 @@
                     .catch(error => {
                         this.error = error.message;
                     });
-            },
+            }, 
             selectAll2(event) {
                 if (event.target.checked) {
                     // 全选

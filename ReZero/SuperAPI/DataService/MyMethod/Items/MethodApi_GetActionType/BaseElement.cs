@@ -33,7 +33,7 @@ namespace ReZero.SuperAPI
             {
                 Name = nameof(DataModel.TableId),
                 Text = TextHandler.GetCommonText("表名", "Table name"),
-                ElementType = ElementType.Text,
+                ElementType = ElementType.Table,
                 IsRequired = true
             });
         }

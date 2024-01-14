@@ -6,10 +6,10 @@ namespace ReZero.SuperAPI
 {
     public enum ElementType
     {
-        Text, 
-        Table,
-        Group,
-        Columns
+        Text=0, 
+        Table=1,
+        Group=2,
+        Columns=3
         
     }
 }
