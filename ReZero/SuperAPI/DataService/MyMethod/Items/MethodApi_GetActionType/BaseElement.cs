@@ -13,7 +13,7 @@ namespace ReZero.SuperAPI
                 Name = nameof(ZeroInterfaceList.Url),
                 Text = TextHandler.GetCommonText("Url", "Url"),
                 ElementType = ElementType.Text,
-                IsRequiRed = true
+                IsRequired = true
             });
         }
 
@@ -24,7 +24,7 @@ namespace ReZero.SuperAPI
                 Name = nameof(ZeroInterfaceList.Name),
                 Text= TextHandler.GetCommonText("接口名称","Interface name"),
                 ElementType = ElementType.Text,
-                IsRequiRed = true
+                IsRequired = true
             });
         }
 
@@ -45,7 +45,7 @@ namespace ReZero.SuperAPI
                 Name = nameof(ZeroInterfaceList.GroupName),
                 Text = TextHandler.GetCommonText("分组名", "Group name"),
                 ElementType = ElementType.Text,
-                IsRequiRed = true
+                IsRequired = true
             });
         }
     }
