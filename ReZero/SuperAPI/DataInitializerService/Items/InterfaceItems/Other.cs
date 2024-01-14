@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
                 it.Id = GetActionTypeId;
                 it.GroupName = nameof(MethodApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
-                it.Name = TextHandler.GetInterfaceListText(GetTableAllId);
+                it.Name = TextHandler.GetInterfaceListText(GetActionTypeId);
                 it.Url = GetUrl(it, "GetActionType");
                 it.DataModel = new DataModel()
                 {
