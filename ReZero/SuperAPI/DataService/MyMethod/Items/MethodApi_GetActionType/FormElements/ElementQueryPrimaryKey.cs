@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 using ReZero.SuperAPI;
 
 namespace ReZero.SuperAPI
 {
-    public class ElementQueryByPrimaryKey : IEelementActionType
+    public class ElementQueryByPrimaryKey : BaseElement,IEelementActionType
     {
         public List<ActionTypeFormElementModel> GetModels()
         {
-            ActionTypeFormElementModel model = new ActionTypeFormElementModel()
-            {
-                Name = nameof(DataModel.TableId), 
-                ElementType = ElementType.Table,
-            };
-            return new List<ActionTypeFormElementModel>();
-        }
+            var result = new List<ActionTypeFormElementModel>();
+            AddInterfaceName(result);
+            AddInterfacUrl(result);
+            AddGroup(result);
+            AddTable(result);
+            return result;
+        } 
     }
 }
