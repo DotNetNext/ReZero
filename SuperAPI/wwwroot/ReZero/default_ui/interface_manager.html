@@ -86,6 +86,11 @@
                     <form id="frmEdit">
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
+                            <label class="control-label">数据库</label>
+                            <select v-model="databaseId" id="selDataBaseId" class="form-control">
+                                <option v-for="item in  database" v-bind:value="item.Id"> {{item.Name}} </option>
+                            </select>
+                            <label class="control-label">分类</label>
                             <select v-model="currentActionType" id="selTextGroup" class="form-control">
                                 <option v-for="item in actionList" :value="item">{{item.TextGroup}}</option>
                             </select>
@@ -234,13 +239,16 @@
             currentActionType: [],
             currentActionTypeContext: [],
             tables: [],
-            selectedTables:[]
+            selectedTables: [],
+            databaseId: 0,
+            database: []
         },
         mounted() {
             this.fetchData("");
             this.bindGroupListSelect();
             this.bindInterfaceCategroySelect();
             this.bindActionLists();
+            this.bindDatabaseSelect();
         },
         methods: {
             fetchData(append) {
@@ -345,6 +353,21 @@
                     })
                     .catch(error => {
                         this.error = error.message;
+                    });
+            },
+            bindDatabaseSelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
+                    .then(response => {
+                        this.database = response.data;
+                        this.databaseId = this.database[0].Id;
+                        var th = this;
+                        setTimeout(function () {
+                            th.onSearch();
+                        }, 50);
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
                     });
             },
             tabClick: function (index) {
