@@ -120,7 +120,7 @@
 
                                     <form action="#!" method="post" name="edit-form" class="edit-form">
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
-                                            <label for="type">{{item.Text}}<span class="red" v-if="item.IsRequired" >*</span></label>
+                                            <label for="type">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
                                             <div class="form-controls">
                                                 <template v-if="item.ElementType==0">
                                                     <!--text-->
@@ -129,7 +129,7 @@
                                                 <template v-if="item.ElementType==1">
                                                     <!--table-->
                                                     <div class="input-group">
-                                                        <input  :name="item.Name" type="text" readonly="readonly" class="form-control" >
+                                                        <input :name="item.Name" type="text" readonly="readonly" class="form-control">
                                                         <span class="input-group-btn">
                                                             <button @click="openImportEntity(item)" class="btn btn-default" type="button">选择表</button>
                                                         </span>
@@ -144,7 +144,7 @@
                                                     <input class="form-control" />
                                                 </template>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </form>
 
                                 </div>
@@ -170,17 +170,11 @@
                     <h4 class="modal-title" id="myLargeModalLabel">选择表</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="tablebox">
-                        <div>
-                            <label>名称:</label>
-                            <input id="txtTableName" class="form-control" type="text" />
-                            <button @click="bindImportTables()" data-toggle="modal" type="button" class="btn btn-red">
-                                搜索
-                            </button>
-                            <button onclick="txtTableName.value=''" data-toggle="modal" type="button" class="btn btn-red">
-                                清空
-                            </button>
-                        </div>
+                    <div class="input-group width200  m-b-10">
+                        <input id="txtTableName" type="text" class="form-control"> <span class="input-group-btn">
+                            <button type="button" @click="bindImportTables()" class="btn btn-default">搜索</button>
+                            <button type="button" onclick="txtTableName.value=''" class="btn btn-default">清空</button>
+                        </span>
                     </div>
                     <div class="table-container2">
                         <table class="table table-bordered">
@@ -233,13 +227,13 @@
             title: "",
             tabIndex: 0,
             formData: {},
-            selectedItems:[],
+            selectedItems: [],
             groupList: [],
             interfaceCategroyList: [],
             actionList: [],
             currentActionType: [],
-            currentActionTypeContext:[],
-            tables:[]
+            currentActionTypeContext: [],
+            tables: []
         },
         mounted() {
             this.fetchData("");
@@ -284,7 +278,7 @@
                     // 全不选
                     this.selectedItems = [];
                 }
-            },  
+            },
             openNext: function () {
                 this.title = this.addTitle;
                 btnNext.click();
@@ -293,16 +287,15 @@
                 if (this.currentActionType.length == 0) {
                     tools.alert("请选择类型");
                     return;
-                } 
+                }
                 btnNextClose.click();
                 btnSave.click();
-                this.currentActionTypeContext=this.currentActionType.Items[0];
+                this.currentActionTypeContext = this.currentActionType.Items[0];
             },
             openEdit: function () {
                 alert("开发中");
             },
-            addOrUpdateColumnInfoSubmit: function ()
-            {
+            addOrUpdateColumnInfoSubmit: function () {
                 alert("开发中");
             },
             deleteAndConfirm: function (item) {
@@ -355,7 +348,7 @@
             tabClick: function (index) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
-            }, 
+            },
             openImportEntity: function () {
                 btnImportEntity.click();
                 this.bindImportTables();
@@ -388,7 +381,7 @@
                     .catch(error => {
                         this.error = error.message;
                     });
-            }, 
+            },
             selectAll2(event) {
                 if (event.target.checked) {
                     // 全选
