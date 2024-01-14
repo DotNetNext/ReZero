@@ -33,7 +33,7 @@ namespace ReZero.SuperAPI
             result.Add(new ActionTypeFormElementModel()
             {
                 Name = nameof(DataModel.TableId),
-                Text = TextHandler.GetCommonText("Url", "Url"),
+                Text = TextHandler.GetCommonText("表名", "Table name"),
                 ElementType = ElementType.Text 
             });
         }
