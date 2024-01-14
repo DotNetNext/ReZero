@@ -22,6 +22,11 @@ namespace ReZero.SuperAPI
         [EnglishText("Common tree")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_QueryCN, PubConst.DataSource_ActionTypeGroupName_QueryEN)]
         QueryTree = 10002,
+
+        [ChineseText("全表查询")]
+        [EnglishText("Query all")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_QueryCN, PubConst.DataSource_ActionTypeGroupName_QueryEN)]
+        QueryByGetAll = 10003,
         #endregion
 
 
