@@ -12,8 +12,7 @@ namespace ReZero.SuperAPI
             {
                 Name = nameof(ZeroInterfaceList.Url),
                 Text = TextHandler.GetCommonText("Url", "Url"),
-                ElementType = ElementType.Text,
-                IsRequired = true
+                ElementType = ElementType.Text 
             });
         }
 
@@ -34,7 +33,8 @@ namespace ReZero.SuperAPI
             {
                 Name = nameof(DataModel.TableId),
                 Text = TextHandler.GetCommonText("表名", "Table name"),
-                ElementType = ElementType.Text 
+                ElementType = ElementType.Text,
+                IsRequired = true
             });
         }
 
