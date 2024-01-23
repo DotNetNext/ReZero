@@ -59,10 +59,12 @@ namespace ReZero.SuperAPI
                 .Where(it => it.IsDeleted == false)
                 .Where(it => it.DataBaseId == databaseId).ToList()
                 .Where(it => !it.DbTableName!.ToLower().StartsWith("zero_"));
-            var tables = db!.DbMaintenance.GetTableInfoList(false).ToList();
-            var result = tables
-                            .WhereIF(!string.IsNullOrEmpty(tableName),it => it.Name.ToLower().Contains(tableName.ToLower()))
-                            .Where(it => !entitys.Any(s => s.DbTableName!.EqualsCase(it.Name))).ToList(); 
+            var result = entitys.Select(it => new DbTableInfo()
+            {
+                Id = it.Id,
+                Name=it.ClassName,
+                Description=it.Description
+            }).ToList();
             return result;
         }
     }
