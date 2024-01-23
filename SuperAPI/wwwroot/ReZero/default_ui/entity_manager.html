@@ -500,7 +500,7 @@
                 this.onSearch();
             },
             bindImportTables: function () {
-                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
+                var url = "/PrivateReZeroRoute/100004/GetImportTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
                 axios.get(url)
                     .then(response => {
                         this.tables = response.data;

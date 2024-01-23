@@ -37,7 +37,7 @@ namespace ReZero.SuperAPI
                 return ex.Message;
             }
         }
-        public  object  GetTables(long databaseId,string tableName)
+        public  object GetImportTables(long databaseId,string tableName)
         { 
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
@@ -51,6 +51,19 @@ namespace ReZero.SuperAPI
                 result=result.Where(it => it.Name.ToLower().Contains(tableName.ToLower())).ToList();
             }
             return  result ;
+        }
+        public object GetTables(long databaseId,string tableName)
+        {
+            var db = App.GetDbById(databaseId);
+            var entitys = App.Db.Queryable<ZeroEntityInfo>()
+                .Where(it => it.IsDeleted == false)
+                .Where(it => it.DataBaseId == databaseId).ToList()
+                .Where(it => !it.DbTableName!.ToLower().StartsWith("zero_"));
+            var tables = db!.DbMaintenance.GetTableInfoList(false).ToList();
+            var result = tables
+                            .WhereIF(!string.IsNullOrEmpty(tableName),it => it.Name.ToLower().Contains(tableName.ToLower()))
+                            .Where(it => !entitys.Any(s => s.DbTableName!.EqualsCase(it.Name))).ToList(); 
+            return result;
         }
     }
 }

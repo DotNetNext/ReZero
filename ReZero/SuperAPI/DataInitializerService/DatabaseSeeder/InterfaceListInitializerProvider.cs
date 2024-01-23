@@ -180,9 +180,9 @@ namespace ReZero.SuperAPI
         public const long CreateTablesId = 28;
 
          
-        [ChineseTextAttribute("获取库里面所有表")]
-        [EnglishTextAttribute("Get all tables ")]
-        public const long GetTableAllId = 29;
+        [ChineseTextAttribute("获取导入的表")]
+        [EnglishTextAttribute("Get import tables ")]
+        public const long GetImportTablesId = 29;
 
 
         [ChineseTextAttribute("导入实体")]
@@ -213,6 +213,10 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("下拉列表：获接口操作方式集合")]
         [EnglishTextAttribute("Get interface action list ")]
         public const long GetActionTypeId = 35;
+
+        [ChineseTextAttribute("获取所有表")]
+        [EnglishTextAttribute("Get all tables ")]
+        public const long GetAllTablesId = 36;
 
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
