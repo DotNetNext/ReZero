@@ -129,12 +129,12 @@
                                             <div class="form-controls">
                                                 <template v-if="item.ElementType==0">
                                                     <!--text-->
-                                                    <input :name="item.Name" class="form-control" />
+                                                    <input :name="item.Name"  :value="item.Value" class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==1">
                                                     <!--table-->
-                                                    <div class="input-group">
-                                                        <input :name="item.Name" type="text" readonly="readonly" class="form-control">
+                                                    <div class="input-group"> 
+                                                        <input :name="item.Name"  :value="item.Value" type="text" readonly="readonly" class="form-control">
                                                         <span class="input-group-btn">
                                                             <button @click="openImportEntity(item)" class="btn btn-default" type="button">选择表</button>
                                                         </span>
@@ -142,11 +142,11 @@
                                                 </template>
                                                 <template v-if="item.ElementType==2">
                                                     <!--group-->
-                                                    <input class="form-control" />
+                                                    <input :name="item.Name"  :value="item.Value" class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==3">
                                                     <!--Columns-->
-                                                    <input class="form-control" />
+                                                    <input :name="item.Name"  :value="item.Value" class="form-control" />
                                                 </template>
                                             </div>
                                         </div>
@@ -159,7 +159,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="btnAddOrUpdateColse" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
                 </div>
             </div>
@@ -379,22 +379,15 @@
                 this.bindImportTables();
             },
             importEntitySubmit: function () {
-                var url = " /PrivateReZeroRoute/100003/ImportEntities";
-                axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables })
-                    .then(response => {
-                        this.error = null;
-                        if (response.data == true) {
-                            btnImportEntityClose.click();
-                            this.onSearch(1);
-                            tools.alert("导入成功，删除实体可以重新导入。");
-                        }
-                        else {
-                            tools.alert(response.data.message);
-                        }
-                    })
-                    .catch(error => {
-                        this.error = error.message;
+                var th = this; 
+                this.currentActionType.Items.forEach((item) => {
+                    item.FormElements.forEach((element) => { 
+                        element.Value = (element.ElementType == "1")
+                                    ? this.selectedTables[0] : element.Value;
                     });
+                });
+                 
+                btnImportEntityClose.click();
             },
             bindImportTables: function () {
                 var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
