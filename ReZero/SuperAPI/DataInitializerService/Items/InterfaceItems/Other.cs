@@ -10,6 +10,7 @@ namespace ReZero.SuperAPI
         {
             GetImportTables();
             GetActionType();
+            GetAllTables();
         }
         private void GetImportTables()
         {
