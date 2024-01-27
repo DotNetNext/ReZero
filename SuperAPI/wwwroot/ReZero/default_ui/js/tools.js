@@ -56,6 +56,10 @@
         });
 
         return jsonData;
+    },
+    isValidURLPattern: function (inputString) {
+        var patternRegex = /^(\/[^\/]+)*\/[^\/]+\.\w+$/;
+        return patternRegex.test(inputString);
     }
 
 }
