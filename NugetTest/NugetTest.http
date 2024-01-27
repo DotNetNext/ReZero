@@ -1,0 +1,6 @@
+@NugetTest_HostAddress = http://localhost:5094
+
+GET {{NugetTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReZero", "ReZero\ReZero.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperAPITest", "SuperAPI\SuperAPITest.csproj", "{A04287D1-F1AF-4102-924A-A9EB3B9B7A66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NugetTest", "NugetTest\NugetTest.csproj", "{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{A04287D1-F1AF-4102-924A-A9EB3B9B7A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A04287D1-F1AF-4102-924A-A9EB3B9B7A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A04287D1-F1AF-4102-924A-A9EB3B9B7A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
