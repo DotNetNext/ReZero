@@ -15,8 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rezero" Version="1.0.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReZero\ReZero.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
  
 

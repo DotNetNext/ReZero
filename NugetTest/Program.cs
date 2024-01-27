@@ -14,11 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi(it => {
-        //配置超级API的UI文件包（NUGET的真实路径）
-        it.UiOptions.NugetPackagesPath =
-         "C:\\Users\\Administrator\\.nuget\\packages";
-    });
+    api.EnableSuperApi(it => { });
 
 });
 

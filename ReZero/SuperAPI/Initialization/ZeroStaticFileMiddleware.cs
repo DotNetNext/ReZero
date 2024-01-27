@@ -44,19 +44,29 @@ namespace ReZero.SuperAPI
             }
             // Check if the request is for a ReZero static file
             else if (IsRezeroFileUrl(path))
-            {
-                // Get the full path of the requested file
-                var filePath = GetFilePath(path);
+            { 
 
-                // Check if the file exists
-                if (FileExistsAndIsNotHtml(filePath))
+                var filePathByCurrentDirectory = GetFilePathByCurrentDirectory(path);
+                var filePathByBaseDirectory = GetFilePathByBaseDirectory(path);
+       
+                if (FileExistsAndIsNotHtml(filePathByCurrentDirectory))
                 {
-                    await CopyToFile(context, filePath);
+                    await CopyToFile(context, filePathByCurrentDirectory);
                     return;
                 }
-                else if (FileExistsHtml(filePath))
+                else if (FileExistsHtml(filePathByCurrentDirectory))
                 {
-                    await CopyToHtml(context, filePath);
+                    await CopyToHtml(context, filePathByCurrentDirectory);
+                    return;
+                }
+                else if (FileExistsAndIsNotHtml(filePathByBaseDirectory))
+                {
+                    await CopyToFile(context, filePathByBaseDirectory);
+                    return;
+                }
+                else if (FileExistsHtml(filePathByBaseDirectory))
+                {
+                    await CopyToHtml(context, filePathByBaseDirectory);
                     return;
                 }
                 else
@@ -149,15 +159,17 @@ namespace ReZero.SuperAPI
             return path.TrimEnd('/') == RezeroRootPath;
         }
 
-        /// <summary>
-        /// Gets the full path of the requested ReZero static file.
-        /// </summary>
-        /// <param name="path">The path of the requested URL.</param>
-        /// <returns>The full path of the requested ReZero static file.</returns>
-        private static string GetFilePath(string path)
+    
+        private static string GetFilePathByCurrentDirectory(string path)
         {
             var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
             var fullPath = Path.Combine(Directory.GetCurrentDirectory(), WwwRootPath, UiFolderPath, relativePath);
+            return Path.GetFullPath(fullPath);
+        }
+        private static string GetFilePathByBaseDirectory(string path)
+        {
+            var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
+            var fullPath = Path.Combine(AppContext.BaseDirectory, WwwRootPath, UiFolderPath, relativePath);
             return Path.GetFullPath(fullPath);
         }
     }
