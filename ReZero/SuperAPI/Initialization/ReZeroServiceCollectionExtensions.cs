@@ -109,7 +109,7 @@ namespace ReZero.SuperAPI
          
         private static bool IsInitSupperApi(ReZeroOptions options)
         {
-            return options.SuperApiOptions != null;
+            return options.SuperApiOptions.IsEnableSuperAPI;
         }
 
     }
