@@ -15,6 +15,9 @@ namespace ReZero.SuperAPI
         /// </summary>
         public bool InitTable { get; set; } = true;
 
+        /// <summary>
+        /// Language
+        /// </summary>
         public Language Language { get; set; } 
         
         /// <summary>
