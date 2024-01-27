@@ -21,10 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ReZero\ReZero.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
  
 
 </Project>
