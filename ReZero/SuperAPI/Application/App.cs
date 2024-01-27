@@ -95,7 +95,7 @@ namespace ReZero.SuperAPI
         {
             get
             {
-                return SuperAPIModule._apiOptions!.UiOptions!.Language;
+                return SuperAPIModule._apiOptions!.UiOptions!.UiLanguage;
             }
         }
     }

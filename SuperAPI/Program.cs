@@ -11,10 +11,10 @@ builder.Services.AddSwaggerGen();
 //×¢²á£º×¢²á³¬¼¶API·þÎñ
 builder.Services.AddReZeroServices(new ReZeroOptions()
 {
-    SuperApiOptions = new SuperAPIOptions() 
-    {
-         
-    }
+     SuperApiOptions=new SuperAPIOptions() 
+     {
+       
+     }
 }); 
 
 var app = builder.Build(); 
