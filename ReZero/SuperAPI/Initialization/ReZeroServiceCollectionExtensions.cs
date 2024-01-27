@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;  
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -28,7 +29,17 @@ namespace ReZero.SuperAPI
 
         private static void InitUi(ReZeroOptions options)
         {
-           var path=options.SuperApiOptions.UiOptions.NugetPackagesPath
+            var path = Path.Combine(options.SuperApiOptions.UiOptions.NugetPackagesPath, "rezero", "1.0.4","wwwroot","rezero");
+            if (Directory.Exists(path))
+            {
+                var destDir= Path.Combine(AppContext.BaseDirectory, "wwwroot", "rezero");
+                PubMethod.CopyDirectory(path,destDir);
+            }
+            else 
+            {
+                throw new Exception(TextHandler.GetCommonText("没有找到路径:"+ path+"需要自已配置。右键DLL查看引用", "path not found :" + path + " needs to be configured by itself. Right-click DLL to view reference"));
+            }
+
         }
 
 

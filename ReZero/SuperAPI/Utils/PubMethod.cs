@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -53,6 +54,30 @@ namespace ReZero.SuperAPI
         public static bool CheckIsPropertyName(string str)
         {
             return Regex.IsMatch(str, @"^[a-z,A-Z,_]\w*$");
+        }
+
+        public static void CopyDirectory(string sourceDir, string destDir)
+        {
+            if (!Directory.Exists(destDir))
+            {
+                Directory.CreateDirectory(destDir);
+            }
+
+            string[] files = Directory.GetFiles(sourceDir);
+
+            foreach (string file in files)
+            {
+                string destFile = Path.Combine(destDir, Path.GetFileName(file));
+                File.Copy(file, destFile, true); // 设置为 true 表示覆盖已存在的文件
+            }
+
+            string[] dirs = Directory.GetDirectories(sourceDir);
+
+            foreach (string dir in dirs)
+            {
+                string destSubDir = Path.Combine(destDir, Path.GetFileName(dir));
+                CopyDirectory(dir, destSubDir);
+            }
         }
     }
 }
