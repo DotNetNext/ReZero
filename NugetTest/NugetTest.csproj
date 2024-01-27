@@ -8,18 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="content\**" />
+    <Content Remove="content\**" />
+    <EmbeddedResource Remove="content\**" />
+    <None Remove="content\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Rezero" Version="1.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
-
 <ItemGroup>
-    <None Update="content\rezero\**\*.*">
+    <None Update="wwwroot\rezero\**\*.*">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="content\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

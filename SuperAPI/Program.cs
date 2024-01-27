@@ -12,8 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddReZeroServices(new ReZeroOptions()
 {
     SuperApiOptions = new SuperAPIOptions()
-});
-
+}); 
 
 var app = builder.Build(); 
 if (app.Environment.IsDevelopment())

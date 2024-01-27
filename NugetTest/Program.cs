@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 //×¢²á£º×¢²á³¬¼¶API·þÎñ
 builder.Services.AddReZeroServices(new ReZeroOptions()
 {
-    SuperApiOptions = new ReZero.SuperAPI.SuperAPIOptions()
+    SuperApiOptions = new ReZero.SuperAPI.SuperAPIOptions() 
 });
 
 var app = builder.Build();
