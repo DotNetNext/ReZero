@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0"?>
 <package >
-  <metadata>
-    <id>Rezero</id>
-    <version>1.0.2</version>
-    <authors>sunkaixuan</authors>
-    <owners>果糖大数据科技</owners>
-    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
-    <projectUrl>https://github.com/sunkaixuan/Rezero</projectUrl>
-    <iconUrl>https://secure.gravatar.com/avatar/a82c03402497b2e58fd65038a3699b30</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description> 从零开始 </description>
-    <copyright>Copyright 2016</copyright>
-    <tags>rezero 零 低代码 zero</tags>
-    <dependencies>
-		<dependency id="SqlSugarCore" version="5.1.4.137" />
-    </dependencies>
-  </metadata>
-  <files>
-	<file src="G:\Git\ReZero\ReZero\bin\Debug\netstandard2.1\ReZero.dll" target="lib\netstandard2.1" />
-    <file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\**\**\**\**\**\**\**\**\**\*" target="content\rezero" />
-  </files> 
+	<metadata>
+		<id>Rezero</id>
+		<version>1.0.3</version>
+		<authors>sunkaixuan</authors>
+		<owners>果糖大数据科技</owners>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+		<projectUrl>https://github.com/sunkaixuan/Rezero</projectUrl>
+		<iconUrl>https://secure.gravatar.com/avatar/a82c03402497b2e58fd65038a3699b30</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description> 从零开始 </description>
+		<copyright>Copyright 2016</copyright>
+		<tags>rezero 零 低代码 zero</tags>
+		<dependencies>
+			<dependency id="SqlSugarCore" version="5.1.4.137" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="G:\Git\ReZero\ReZero\bin\Debug\netstandard2.1\ReZero.dll" target="lib\netstandard2.1" />
+		<file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\*.*" target="content\rezero" />
+	</files>
 </package>

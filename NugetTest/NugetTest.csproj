@@ -8,16 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rezero" Version="1.0.2" />
+    <PackageReference Include="Rezero" Version="1.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
+
 <ItemGroup>
-  <None Update="content\rezero\**\*">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-  </None>
+    <None Update="content\rezero\**\*.*">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
 </ItemGroup>
-<ItemGroup>
-  <Folder Include="wwwroot\" />
-</ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="content\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 
 </Project>
