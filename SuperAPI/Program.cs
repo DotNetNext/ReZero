@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components.Forms;
 using ReZero;
 using ReZero.SuperAPI;
 
@@ -9,10 +10,15 @@ builder.Services.AddSwaggerGen();
 
 //Register: Register the super API service
 //注册：注册超级API服务
-builder.Services.AddReZeroServices(it => 
+builder.Services.AddReZeroServices(api => 
 {
-    it.SuperApiOptions.UiOptions.NugetPackagesPath=
-    "C:\\Users\\Administrator\\.nuget\\packages";
+    //启用超级API
+    api.EnableSuperApi(it => {
+        //配置超级API的UI文件包（NUGET的真实路径）
+        it.UiOptions.NugetPackagesPath =
+         "C:\\Users\\Administrator\\.nuget\\packages";
+     });
+   
 }); 
 
 var app = builder.Build(); 

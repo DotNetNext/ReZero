@@ -8,6 +8,17 @@ namespace ReZero.SuperAPI
     /// </summary>
     public class SuperAPIOptions
     {
+        public void EnableSuperApi(Action<SuperAPIOptions> func) 
+        {
+            _EnableSuperAPI = true;
+            func(this);
+        }
+
+        /// <summary>
+        /// Enable super api
+        /// </summary>
+        internal bool _EnableSuperAPI = false;
+
         /// <summary>
         /// Gets or sets the database configuration options.
         /// </summary>

@@ -22,10 +22,10 @@ namespace ReZero
         }
 
        
-        public static IServiceCollection AddReZeroServices(this IServiceCollection services,Action<ReZeroOptions> func)
+        public static IServiceCollection AddReZeroServices(this IServiceCollection services,Action<SuperAPIOptions> superAPIOptions)
         {
-            var options = new ReZeroOptions(); 
-            func(options);
+            var options = new ReZeroOptions();
+            superAPIOptions(options.SuperApiOptions);
             return AddReZeroServices(services, options);
         }
     }
