@@ -78,7 +78,7 @@ namespace ReZero.SuperAPI
             if (IsUserName(item))
             {
                 var options = SuperAPIModule._apiOptions;
-                item.Value = options?.GetCurrentUserCallback().UserName;
+                item.Value = options?.DatabaseOptions!.GetCurrentUserCallback().UserName;
             }
             else if (IsDateTimeNow(item))
             {

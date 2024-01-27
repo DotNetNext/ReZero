@@ -31,7 +31,7 @@ namespace ReZero.SuperAPI
         /// </summary>
         private static void InitZeroStaticFileMiddleware()
         {
-            _apiOptions!.DefaultUiFolderName = ZeroStaticFileMiddleware.DefaultUiFolderName;
+            _apiOptions!.UiOptions!.DefaultUiFolderName = ZeroStaticFileMiddleware.DefaultUiFolderName;
         }
 
 
@@ -41,12 +41,12 @@ namespace ReZero.SuperAPI
         /// <param name="options">ReZero options.</param>
         private static void InitializeDataBase(SuperAPIOptions options)
         {
-            if (options.InitTable == false)
+            if (options.DatabaseOptions!.InitTable == false)
             {
                 return;
             }
             var types = PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
-            var db = new DatabaseContext(options.ConnectionConfig).SugarClient;
+            var db = new DatabaseContext(options.DatabaseOptions!.ConnectionConfig).SugarClient;
             App.PreStartupDb = db;
             db.DbMaintenance.CreateDatabase();
             db.CodeFirst.InitTables(types?.ToArray());
@@ -66,7 +66,7 @@ namespace ReZero.SuperAPI
             services.AddTransient<IStartupFilter, ZeroApiRequestSetOptionsStartupFilter>();
 
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
-            services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.ConnectionConfig));
+            services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.DatabaseOptions!.ConnectionConfig));
         }
 
         /// <summary>

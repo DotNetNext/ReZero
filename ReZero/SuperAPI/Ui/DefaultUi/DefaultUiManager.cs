@@ -69,7 +69,7 @@ namespace ReZero.SuperAPI
         {
             if (currentMenu!.Id == InterfaceCategoryInitializerProvider.Id1)
             {
-                modifiedContent = modifiedContent.Replace(index_url, SuperAPIModule._apiOptions!.IndexSrc);
+                modifiedContent = modifiedContent.Replace(index_url, SuperAPIModule._apiOptions!.UiOptions!.IndexSrc);
             } 
             return modifiedContent;
         }
