@@ -1,1 +1,1 @@
-%~dp0nuget.exe pack %~dp0SqlSugarForCore.nuspec -OutputDirectory %~dp0
+%~dp0nuget.exe pack %~dp0Rezero.nuspec -OutputDirectory %~dp0
