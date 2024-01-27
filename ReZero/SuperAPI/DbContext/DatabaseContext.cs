@@ -17,8 +17,15 @@ namespace ReZero.SuperAPI
         /// Initializes a new instance of the DatabaseContext class with the provided database connection configuration.
         /// </summary>
         /// <param name="connectionConfig">Database connection configuration.</param>
-        public DatabaseContext(ConnectionConfig connectionConfig)
+        public DatabaseContext(ReZeroConnectionConfig rezeroConnectionConfig)
         {
+            var connectionConfig = new ConnectionConfig()
+            {
+                 DbType=rezeroConnectionConfig.DbType,
+                 ConnectionString=rezeroConnectionConfig.ConnectionString,
+                 IsAutoCloseConnection=true
+            };
+
             InitializeExternalServices(connectionConfig);
 
             ConfigureExternalServices(connectionConfig);

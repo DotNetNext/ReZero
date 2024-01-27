@@ -38,16 +38,15 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Gets or sets the initialization connection string information (default: SQLite).
         /// </summary>
-        public ConnectionConfig ConnectionConfig { get; set; } = new ConnectionConfig()
+        public ReZeroConnectionConfig ConnectionConfig { get; set; } = new ReZeroConnectionConfig()
         {
-            DbType = DbType.Sqlite,                  // Default to SQLite database type
-            IsAutoCloseConnection = true,            // Automatically close the connection after operation
-            ConnectionString = "datasource=ReZero.db"           // Default database file name: ReZero.db
+            DbType = DbType.Sqlite,                
+            ConnectionString = "datasource=ReZero.db"       
         };
 
         /// <summary>
         /// Callback function to get the current user information.
         /// </summary>
         public Func<CallBackUserInfo> GetCurrentUserCallback { get; set; } = () => new CallBackUserInfo { UserId="1", UserName="Admin" };
-    }
+    } 
 }
