@@ -17,10 +17,16 @@ namespace ReZero
         /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
         {
-            SuperAPIModule.Init(services, options);
-
+            SuperAPIModule.Init(services, options); 
             return services;
         }
 
+       
+        public static IServiceCollection AddReZeroServices(this IServiceCollection services,Action<ReZeroOptions> func)
+        {
+            var options = new ReZeroOptions(); 
+            func(options);
+            return AddReZeroServices(services, options);
+        }
     }
 }
