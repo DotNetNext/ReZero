@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -28,8 +29,10 @@ namespace ReZero.SuperAPI
         }
 
         private static void InitUi(ReZeroOptions options)
-        {
-            var path = Path.Combine(options.SuperApiOptions.UiOptions.NugetPackagesPath, "rezero", "1.0.4","wwwroot","rezero");
+        { 
+            Assembly assembly = Assembly.GetExecutingAssembly(); 
+            Version version = assembly.GetName().Version;
+            var path = Path.Combine(options.SuperApiOptions.UiOptions.NugetPackagesPath, "rezero", version+"", "wwwroot","rezero");
             if (Directory.Exists(path))
             {
                 var destDir= Path.Combine(AppContext.BaseDirectory, "wwwroot", "rezero");
