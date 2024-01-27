@@ -58,8 +58,9 @@
         return jsonData;
     },
     isValidURLPattern: function (inputString) {
-        var patternRegex = /^(\/[^\/]+)*\/[^\/]+\.\w+$/;
-        return patternRegex.test(inputString);
+        var url = "https://www.rezero.com" + inputString;
+        var pattern = /^((http|https|ftp):\/\/)?([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,6}(\/[a-zA-Z0-9_.-]*)*\/?$/;
+        return (pattern.test(url));
     }
 
 }
