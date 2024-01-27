@@ -129,12 +129,12 @@
                                             <div class="form-controls">
                                                 <template v-if="item.ElementType==0">
                                                     <!--text-->
-                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)"  :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==1">
                                                     <!--table-->
-                                                    <div class="input-group"> 
-                                                        <input :name="item.Name"  :validate-data="JSON.stringify(item)" :value="item.Value" type="text" readonly="readonly" class="form-control">
+                                                    <div class="input-group">
+                                                        <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" type="text" readonly="readonly" class="form-control">
                                                         <span class="input-group-btn">
                                                             <button @click="openImportEntity(item)" class="btn btn-default" type="button">选择表</button>
                                                         </span>
@@ -142,11 +142,11 @@
                                                 </template>
                                                 <template v-if="item.ElementType==2">
                                                     <!--group-->
-                                                    <input :name="item.Name"  :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==3">
                                                     <!--Columns-->
-                                                    <input :name="item.Name"  :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
                                                 </template>
                                             </div>
                                         </div>
@@ -309,24 +309,19 @@
 
                 var elementsWithValidateData = document.querySelectorAll('[validate-data]');
                 var isSuccess = true;
+                var th = this;
                 elementsWithValidateData.forEach(function (element) {
                     var attributeName = 'validate-data';
                     var attributeValue = JSON.parse(element.getAttribute(attributeName));
-                    if (isSuccess&&attributeValue.IsRequired && !element.value)
-                    {
-                        isSuccess = false;
-                        tools.alert(attributeValue.Text + "不能为空");
+
+                    if (isSuccess) {
+                        isSuccess = th.validateElement(element, attributeValue);
                     }
-                    else if (isSuccess && attributeValue.Name == "Url" && element.value && !tools.isValidURLPattern(element.value)) {
-                        isSuccess = false;
-                        tools.alert("Url格式不应，应该是/xxx/yyy 或者 /xx.xx");
-                    } 
                 });
-                if (isSuccess)
-                {
-                    var formData = tools.formToJson("frmSave");
-                } 
-                console.log(formData);
+
+                if (isSuccess) {
+                    var formData = tools.formToJson("frmSave"); 
+                }
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
@@ -399,14 +394,14 @@
                 this.bindImportTables();
             },
             importEntitySubmit: function () {
-                var th = this; 
+                var th = this;
                 this.currentActionType.Items.forEach((item) => {
-                    item.FormElements.forEach((element) => { 
+                    item.FormElements.forEach((element) => {
                         element.Value = (element.ElementType == "1")
-                                    ? this.selectedTables[0] : element.Value;
+                            ? this.selectedTables[0] : element.Value;
                     });
                 });
-                 
+
                 btnImportEntityClose.click();
             },
             bindImportTables: function () {
@@ -429,5 +424,16 @@
                     this.selectedTables = [];
                 }
             },
+            validateElement: function (element, attributeValue) {
+                if (attributeValue.IsRequired && !element.value) {
+                    tools.alert(attributeValue.Text + "不能为空");
+                    return false;
+                } 
+                if (attributeValue.Name === "Url" && element.value && !tools.isValidURLPattern(element.value)) {
+                    tools.alert("Url格式不正确，应该是/xxx/yyy 或者 /xx.xx");
+                    return false;
+                } 
+                return true;
+            }
         }
     });</script>
