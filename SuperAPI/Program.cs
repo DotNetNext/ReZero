@@ -9,12 +9,10 @@ builder.Services.AddSwaggerGen();
 
 //Register: Register the super API service
 //×¢²á£º×¢²á³¬¼¶API·þÎñ
-builder.Services.AddReZeroServices(new ReZeroOptions()
+builder.Services.AddReZeroServices(it => 
 {
-     SuperApiOptions=new SuperAPIOptions() 
-     {
-       
-     }
+    it.SuperApiOptions!.UiOptions!.NugetPackagesPath=
+    "C:\\Users\\Administrator\\.nuget\\packages";
 }); 
 
 var app = builder.Build(); 

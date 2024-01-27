@@ -11,12 +11,12 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Gets or sets the database configuration options.
         /// </summary>
-        public DatabaseOptions? DatabaseOptions { get; set; } = new DatabaseOptions();
+        public DatabaseOptions DatabaseOptions { get; set; } = new DatabaseOptions();
 
         /// <summary>
         /// Gets or sets the UI configuration options.
         /// </summary>
-        public UiOptions? UiOptions { get; set; } = new UiOptions();
+        public UiOptions UiOptions { get; set; } = new UiOptions();
     }
 
     /// <summary>

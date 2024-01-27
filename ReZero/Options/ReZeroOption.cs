@@ -13,6 +13,6 @@ namespace ReZero
         /// <summary>
         /// Gets or sets the options for the SuperAPI.
         /// </summary>
-        public SuperAPIOptions? SuperApiOptions { get; set; } = new SuperAPIOptions();
+        public SuperAPIOptions SuperApiOptions { get; set; } = new SuperAPIOptions();
     }
 }

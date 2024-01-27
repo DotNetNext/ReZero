@@ -18,11 +18,17 @@ namespace ReZero.SuperAPI
             {
                 var apiOptions = options.SuperApiOptions;
                 _apiOptions = InitializeOptions(apiOptions);
+                InitUi(options);
                 InitZeroStaticFileMiddleware();
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
                 AddTransientServices(services, _apiOptions);
             }
+        }
+
+        private static void InitUi(ReZeroOptions options)
+        {
+           var path=options.SuperApiOptions.UiOptions.NugetPackagesPath
         }
 
 
