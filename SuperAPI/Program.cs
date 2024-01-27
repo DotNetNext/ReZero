@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 //×¢²á£º×¢²á³¬¼¶API·þÎñ
 builder.Services.AddReZeroServices(it => 
 {
-    it.SuperApiOptions!.UiOptions!.NugetPackagesPath=
+    it.SuperApiOptions.UiOptions.NugetPackagesPath=
     "C:\\Users\\Administrator\\.nuget\\packages";
 }); 
 
