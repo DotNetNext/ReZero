@@ -129,12 +129,12 @@
                                             <div class="form-controls">
                                                 <template v-if="item.ElementType==0">
                                                     <!--text-->
-                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==1">
                                                     <!--table-->
                                                     <div class="input-group">
-                                                        <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" type="text" readonly="readonly" class="form-control">
+                                                        <input :name="item.Name" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" type="text" readonly="readonly" class="form-control">
                                                         <span class="input-group-btn">
                                                             <button @click="openImportEntity(item)" class="btn btn-default" type="button">选择表</button>
                                                         </span>
@@ -142,11 +142,11 @@
                                                 </template>
                                                 <template v-if="item.ElementType==2">
                                                     <!--group-->
-                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==3">
                                                     <!--Columns-->
-                                                    <input :name="item.Name" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
                                                 </template>
                                             </div>
                                         </div>
