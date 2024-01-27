@@ -15,16 +15,8 @@ namespace ReZero.SuperAPI
         /// </summary>
         public bool InitTable { get; set; } = true;
 
-        public Language Language { get; set; }
-
-        /// <summary>
-        /// WwwRootPath\ReZeroDirName\DefaultUiFolderName
-        /// </summary>
-        public string? WwwRootPath { get; set; } = "wwwroot";
-        /// <summary>
-        ///  WwwRootPath\ReZeroDirName\DefaultUiFolderName
-        /// </summary>
-        public string? ReZeroDirName { get; set; } = "rezero";
+        public Language Language { get; set; } 
+        
         /// <summary>
         ///  WwwRootPath\ReZeroDirName\DefaultUiFolderName
         /// </summary>
