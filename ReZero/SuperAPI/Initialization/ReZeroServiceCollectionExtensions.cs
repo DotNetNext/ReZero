@@ -38,11 +38,10 @@ namespace ReZero.SuperAPI
                 var destDir= Path.Combine(AppContext.BaseDirectory, "wwwroot", "rezero");
                 PubMethod.CopyDirectory(path,destDir);
             }
-            else 
+            else if(!Directory.Exists(path))  
             {
-                throw new Exception(TextHandler.GetCommonText("没有找到路径:"+ path+"需要自已配置。右键DLL查看引用", "path not found :" + path + " needs to be configured by itself. Right-click DLL to view reference"));
-            }
-
+                throw new Exception(TextHandler.GetCommonText("初始化UI失败，可以手动将NGUET包中的wwwroot文件夹手动复制到API,没找到路径"+ path, "Failed to initialize UI, you can manually copy the wwwroot folder in the NGUET package to the API manually. no found "+path));
+            } 
         }
 
 
