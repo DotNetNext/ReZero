@@ -6,32 +6,36 @@ using System.Text;
 namespace ReZero.SuperAPI 
 {
     public class BaseSaveInterfaceList
-    {
+    { 
         internal void SetCommonProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
+            // Set default values for ZeroInterfaceList
             zeroInterfaceList.IsInitialized = false;
             zeroInterfaceList.IsDeleted = false;
             zeroInterfaceList.Name = saveInterfaceListModel.Name;
-            zeroInterfaceList.Url = saveInterfaceListModel.Url;
-            zeroInterfaceList.GroupName = saveInterfaceListModel?.GroupName ?? saveInterfaceListModel?.TableId!;
             zeroInterfaceList.Url = GetUrl(saveInterfaceListModel);
-            zeroInterfaceList.InterfaceCategoryId =Convert.ToInt64(saveInterfaceListModel?.InterfaceCategoryId);
+            zeroInterfaceList.GroupName = saveInterfaceListModel?.GroupName ?? saveInterfaceListModel?.TableId!;
+            zeroInterfaceList.InterfaceCategoryId = Convert.ToInt64(saveInterfaceListModel?.InterfaceCategoryId);
+
+            // Set creator information
             var options = SuperAPIModule._apiOptions;
             var userInfo = options?.DatabaseOptions!.GetCurrentUserCallback();
             zeroInterfaceList.Creator = userInfo?.UserName;
-            zeroInterfaceList.CreateTime =DateTime.Now;
-            if (zeroInterfaceList.HttpMethod == null) 
+            zeroInterfaceList.CreateTime = DateTime.Now;
+
+            // Set default HttpMethod if not specified
+            if (zeroInterfaceList.HttpMethod == null)
             {
-                zeroInterfaceList.HttpMethod = HttpRequestMethod.All+"";
+                zeroInterfaceList.HttpMethod = HttpRequestMethod.All.ToString();
             }
+
+            // Set DataModel for ZeroInterfaceList
             zeroInterfaceList.DataModel = new DataModel()
             {
-                 ActionType = saveInterfaceListModel!.ActionType!.Value,
-                 TableId=GetTableId(saveInterfaceListModel.TableId)
+                ActionType = saveInterfaceListModel!.ActionType!.Value,
+                TableId = GetTableId(saveInterfaceListModel.TableId)
             };
-            var type = EntityGeneratorManager.GetTypeAsync(zeroInterfaceList.DataModel.TableId)
-                .GetAwaiter().GetResult();
-            var entityInfo = App.Db.EntityMaintenance.GetEntityInfo(type); 
+
         }
 
         private long GetTableId(string? tableId)
