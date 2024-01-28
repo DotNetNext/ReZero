@@ -10,6 +10,7 @@ namespace ReZero.SuperAPI
         {
             AddInterfaceName(result);
             AddTable(result);
+            AddInterfaceCategroy(result);
             AddInterfacUrl(result);
             AddGroup(result);
         }
@@ -31,6 +32,17 @@ namespace ReZero.SuperAPI
                 Name = nameof(ZeroInterfaceList.Name),
                 Text= TextHandler.GetCommonText("接口名称","Interface name"),
                 ElementType = ElementType.Text,
+                IsRequired = true
+            });
+        }
+
+        private void AddInterfaceCategroy(List<ActionTypeFormElementModel> result)
+        {
+            result.Add(new ActionTypeFormElementModel()
+            {
+                Name = nameof(ZeroInterfaceList.InterfaceCategoryId),
+                Text = TextHandler.GetCommonText("所属菜单", "Interface categroy"),
+                ElementType = ElementType.Select,
                 IsRequired = true
             });
         }

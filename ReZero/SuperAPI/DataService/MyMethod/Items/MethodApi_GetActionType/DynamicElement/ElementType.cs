@@ -9,7 +9,8 @@ namespace ReZero.SuperAPI
         Text=0, 
         Table=1,
         Group=2,
-        Columns=3
-        
+        Columns=3, 
+        Select = 4
+
     }
 }
