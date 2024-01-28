@@ -65,6 +65,7 @@ namespace ReZero.SuperAPI
         {
             return new SqlSugarClient(new ConnectionConfig()
             {
+                ConfigId=int.MaxValue,
                 ConnectionString = zeroDatabaseInfo.Connection,
                 DbType = zeroDatabaseInfo.DbType,
                 IsAutoCloseConnection = true,
