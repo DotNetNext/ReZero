@@ -19,8 +19,9 @@ namespace ReZero.SuperAPI
             {
                 Name = nameof(ZeroInterfaceList.Url),
                 Text = TextHandler.GetCommonText("Url", "Url"),
-                ElementType = ElementType.Text 
-            });
+                ElementType = ElementType.Text,
+                Placeholder = TextHandler.GetCommonText("默认自动", "Default is auto")
+            }); ;
         }
 
         private void AddInterfaceName(List<ActionTypeFormElementModel> result)
@@ -39,7 +40,7 @@ namespace ReZero.SuperAPI
             result.Add(new ActionTypeFormElementModel()
             {
                 Name = nameof(DataModel.TableId),
-                Text = TextHandler.GetCommonText("表名", "Table name"),
+                Text = TextHandler.GetCommonText("实体/表", "Entity/Table name"),
                 ElementType = ElementType.Table,
                 IsRequired = true
             });
@@ -51,7 +52,8 @@ namespace ReZero.SuperAPI
             {
                 Name = nameof(ZeroInterfaceList.GroupName),
                 Text = TextHandler.GetCommonText("分组名", "Group name"),
-                ElementType = ElementType.Text 
+                ElementType = ElementType.Text ,
+                Placeholder= TextHandler.GetCommonText("默认为实体名","Default is entity name")
             });
         }
     }

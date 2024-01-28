@@ -12,6 +12,7 @@ namespace ReZero.SuperAPI
         public string? Value { get; set; }
         public bool IsRequired { get; set; }
         public List<ActionTypeFormElementModel>? Items { get; set; }
+        public string? Placeholder { get; set; }
 
     }
 }
