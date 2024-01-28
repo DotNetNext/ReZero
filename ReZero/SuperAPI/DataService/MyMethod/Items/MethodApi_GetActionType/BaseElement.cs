@@ -6,7 +6,14 @@ namespace ReZero.SuperAPI
 {
     public class BaseElement
     {
-        protected void AddInterfacUrl(List<ActionTypeFormElementModel> result)
+        protected void AddActionTypeFormElementModels(List<ActionTypeFormElementModel> result) 
+        {
+            AddInterfaceName(result);
+            AddTable(result);
+            AddInterfacUrl(result);
+            AddGroup(result);
+        }
+        private void AddInterfacUrl(List<ActionTypeFormElementModel> result)
         {
             result.Add(new ActionTypeFormElementModel()
             {
@@ -16,7 +23,7 @@ namespace ReZero.SuperAPI
             });
         }
 
-        protected void AddInterfaceName(List<ActionTypeFormElementModel> result)
+        private void AddInterfaceName(List<ActionTypeFormElementModel> result)
         {
             result.Add(new ActionTypeFormElementModel()
             {
@@ -27,7 +34,7 @@ namespace ReZero.SuperAPI
             });
         }
 
-        protected void AddTable(List<ActionTypeFormElementModel> result)
+        private void AddTable(List<ActionTypeFormElementModel> result)
         {
             result.Add(new ActionTypeFormElementModel()
             {
@@ -38,14 +45,13 @@ namespace ReZero.SuperAPI
             });
         }
 
-        protected void AddGroup(List<ActionTypeFormElementModel> result)
+        private void AddGroup(List<ActionTypeFormElementModel> result)
         {
             result.Add(new ActionTypeFormElementModel()
             {
                 Name = nameof(ZeroInterfaceList.GroupName),
                 Text = TextHandler.GetCommonText("分组名", "Group name"),
-                ElementType = ElementType.Text,
-                IsRequired = true
+                ElementType = ElementType.Text 
             });
         }
     }

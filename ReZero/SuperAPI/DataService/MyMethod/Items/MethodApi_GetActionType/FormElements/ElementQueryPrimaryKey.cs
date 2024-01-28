@@ -11,10 +11,7 @@ namespace ReZero.SuperAPI
         public List<ActionTypeFormElementModel> GetModels()
         {
             var result = new List<ActionTypeFormElementModel>();
-            AddInterfaceName(result);
-            AddInterfacUrl(result);
-            AddGroup(result);
-            AddTable(result);
+            base.AddActionTypeFormElementModels(result);
             return result;
         } 
     }
