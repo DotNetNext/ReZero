@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     public class DataModelDefaultParameter
     {
         public string? Name { get; set; }
-        public string? FieldName { get; set; }  
+        //public string? FieldName { get; set; }  
         public object? Value { get; set; }
         public bool ValueIsReadOnly { get; set; }
         public string? MergeForName { get; set; }

@@ -100,10 +100,10 @@ namespace ReZero.SuperAPI
                 var options = SuperAPIModule._apiOptions;
                 item.Value =DateTime.Now;
             }
-            if (!string.IsNullOrEmpty(item?.FieldName))
-            {
-                item.Name = item.FieldName;
-            }
+            //if (!string.IsNullOrEmpty(item?.FieldName))
+            //{
+            //    item.Name = item.FieldName;
+            //}
         }
 
         private static bool NoPageParameters(DataModelDefaultParameter it)

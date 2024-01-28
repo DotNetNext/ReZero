@@ -24,7 +24,13 @@ namespace ReZero.SuperAPI
             Check(pk);
             zeroInterfaceList.DataModel.DefaultParameters = new List<DataModelDefaultParameter>()
             {
-                new DataModelDefaultParameter(){ FieldName=pk.PropertyName,ParameterValidate=new ParameterValidate(){ IsRequired=true } }
+                new DataModelDefaultParameter(){ 
+                    FieldOperator=FieldOperatorType.Equal, 
+                    Name=pk.PropertyName,
+                    ParameterValidate=new ParameterValidate(){ IsRequired=true },
+                    Description=pk.ColumnDescription,
+                    ValueType=pk.UnderType.Name
+                }
             };
         }
 
