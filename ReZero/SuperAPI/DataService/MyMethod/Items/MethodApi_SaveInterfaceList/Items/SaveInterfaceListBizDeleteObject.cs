@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using SqlSugar;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     public class SaveInterfaceListBizDeleteObject : BaseSaveInterfaceList, ISaveInterfaceList
     {
@@ -32,3 +32,4 @@ namespace ReZero.SuperAPI
             };
         }
     }
+}
