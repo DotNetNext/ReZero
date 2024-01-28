@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
         {
             var entityInfo = base.GetEntityInfo(zeroInterfaceList!.DataModel!.TableId!);
             zeroInterfaceList.DataModel.DefaultParameters = new List<DataModelDefaultParameter>();
-            foreach (var item in entityInfo.Columns.Where(it=>it.IsIdentity==false&&it.IsOnlyIgnoreInsert==false))
+            foreach (var item in entityInfo.Columns.Where(it=>it.IsIdentity==false&&it.IsOnlyIgnoreInsert==false && it.IsIgnore == false))
             {
                 zeroInterfaceList.DataModel.DefaultParameters.Add(new DataModelDefaultParameter()
                 {
