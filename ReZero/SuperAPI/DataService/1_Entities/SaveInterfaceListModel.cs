@@ -10,5 +10,6 @@ namespace ReZero.SuperAPI
         public string? GroupName { get; set; }
         public string? TableId { get; set; }
         public string? Name { get; set; }
+        public ActionType? ActionType { get; set; }
     }
 }

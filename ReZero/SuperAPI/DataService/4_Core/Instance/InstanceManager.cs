@@ -14,6 +14,11 @@ namespace ReZero.SuperAPI
         {
             return $"ReZero.SuperAPI.Element{actionType}";
         }
+
+        public static string GetSaveInterfaceType(ActionType actionType)
+        {
+            return $"ReZero.SuperAPI.SaveInterfaceList{actionType}";
+        }
         public static void CheckActionType(DataModel dataModel, Type actionType)
         {
             if (actionType == null)
