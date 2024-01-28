@@ -129,12 +129,12 @@
                                             <div class="form-controls">
                                                 <template v-if="item.ElementType==0">
                                                     <!--text-->
-                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)"   class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==1">
                                                     <!--table-->
                                                     <div class="input-group">
-                                                        <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" type="text" readonly="readonly" class="form-control">
+                                                        <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)"   type="text" readonly="readonly" class="form-control">
                                                         <span class="input-group-btn">
                                                             <button @click="openImportEntity(item)" class="btn btn-default" type="button">选择表</button>
                                                         </span>
@@ -142,11 +142,11 @@
                                                 </template>
                                                 <template v-if="item.ElementType==2">
                                                     <!--group-->
-                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)"   class="form-control" />
                                                 </template>
                                                 <template v-if="item.ElementType==3">
                                                     <!--Columns-->
-                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" :value="item.Value" class="form-control" />
+                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)"   class="form-control" />
                                                 </template>
                                             </div>
                                         </div>
@@ -321,6 +321,17 @@
 
                 if (isSuccess) {
                     var formData = tools.formToJson("frmSave"); 
+                    var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
+                    axios.post(url, formData)
+                        .then(response => {
+                            tools.alert("添加成功");
+                            btnAddOrUpdateColse.click();
+                            this.error = null;
+                           
+                        })
+                        .catch(error => {
+                            this.error = error.message; 
+                        });
                 }
             },
             deleteAndConfirm: function (item) {

@@ -219,6 +219,10 @@ namespace ReZero.SuperAPI
         public const long GetAllTablesId = 36;
 
 
+        [ChineseTextAttribute("保存接口")]
+        [EnglishTextAttribute("Save interface")]
+        public const long SaveInterfaceListId = 37;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

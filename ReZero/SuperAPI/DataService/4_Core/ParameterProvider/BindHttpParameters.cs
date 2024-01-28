@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,15 @@ namespace ReZero.SuperAPI
 
         private void BindDefaultParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
-            if (dataModel!.DefaultParameters != null)
+            if (IsJObjct(dataModel, formDatas))
+            {
+                var data = dataModel?.DefaultParameters?.FirstOrDefault();
+                if (data != null)
+                {
+                    data.Value = App.Db.Utilities.SerializeObject(formDatas);
+                }
+            }
+            else if (dataModel!.DefaultParameters != null)
             {
                 dataModel!.DefaultParameters = dataModel?.DefaultParameters?.Where(it => NoPageParameters(it)).ToList();
                 foreach (var item in dataModel?.DefaultParameters ?? new List<DataModelDefaultParameter>())
@@ -66,6 +75,12 @@ namespace ReZero.SuperAPI
                     UpdateWhereItemValue(context, formDatas, item);
                 }
             }
+        }
+
+        private static bool IsJObjct(DataModel? dataModel, Dictionary<string, object> formDatas)
+        {
+            var isJObject= dataModel?.DefaultParameters?.Count == 1 && dataModel!.DefaultParameters!.First().ValueType == nameof(JObject) && dataModel!.DefaultParameters!.First().IsSingleParameter==true;
+            return isJObject;
         }
 
         private void UpdateWhereItemValue(HttpContext context, Dictionary<string, object> formDatas, DataModelDefaultParameter item)

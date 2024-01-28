@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace ReZero.SuperAPI 
 {
@@ -11,7 +13,39 @@ namespace ReZero.SuperAPI
             GetImportTables();
             GetActionType();
             GetAllTables();
+            SaveInterfaceList();
         }
+
+        private void SaveInterfaceList()
+        {
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = SaveInterfaceListId;
+                it.GroupName = nameof(ZeroInterfaceList);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(SaveInterfaceListId);
+                it.Url = GetUrl(it, "SaveInterfaceList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 1,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.SaveInterfaceList)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { IsSingleParameter=true, Name ="model",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JObject).Name,  Description = TextHandler.GetCommonText("动态json", "json parameter") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+
         private void GetImportTables()
         {
             //获取导入的表

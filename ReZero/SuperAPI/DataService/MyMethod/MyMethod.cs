@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,11 +21,47 @@ namespace ReZero.SuperAPI
         {
             if (dataModel.MyMethodInfo == null) return null;
 
-            var classType= Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
-            var methodInfo=classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
-            var classObj =  Activator.CreateInstance(classType, nonPublic: true);
-            object [] parameters = new object[methodInfo.GetParameters().Length];
-            var argsTypes=dataModel.MyMethodInfo.ArgsTypes;
+            var classType = Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
+            var methodInfo = classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
+            var classObj = Activator.CreateInstance(classType, nonPublic: true);
+            object[] parameters = new object[methodInfo.GetParameters().Length];
+            var argsTypes = dataModel.MyMethodInfo.ArgsTypes;
+            if (IsJObject(dataModel, parameters))
+            {
+                FillJObjectParameters(dataModel, methodInfo, parameters, argsTypes);
+            }
+            else
+            {
+                FillDefaultParameters(dataModel, methodInfo, parameters, argsTypes);
+            }
+            var result = methodInfo.Invoke(classObj, parameters);
+            if (result is Task)
+            {
+                throw new NotSupportedException();
+            }
+            else
+            {
+                return await Task.FromResult(result);
+            }
+        }
+
+        private void FillJObjectParameters(DataModel dataModel, MethodInfo methodInfo, object[] parameters, Type[]? argsTypes)
+        {
+            var value = dataModel?.DefaultParameters?.FirstOrDefault()?.Value! + "";
+            var type = methodInfo.GetParameters().First().ParameterType;
+            if (!string.IsNullOrEmpty(value))
+            {
+                parameters[0] = JsonConvert.DeserializeObject(value, type)!;
+            }
+        }
+
+        private static bool IsJObject(DataModel dataModel, object[] parameters)
+        {
+            return parameters.Count() == 1 && dataModel.DefaultParameters.First().ValueType == nameof(JObject)&& dataModel.DefaultParameters.First().IsSingleParameter==true;
+        }
+
+        private static int FillDefaultParameters(DataModel dataModel, MethodInfo methodInfo, object[] parameters, Type[]? argsTypes)
+        {
             var index = 0;
             methodInfo.GetParameters().ToList<System.Reflection.ParameterInfo>().ForEach((p) =>
             {
@@ -40,15 +78,7 @@ namespace ReZero.SuperAPI
                 parameters[p.Position] = value!;
                 index++;
             });
-            var result = methodInfo.Invoke(classObj, parameters);
-            if (result is Task)
-            {
-                throw new NotSupportedException();
-            }
-            else
-            {
-                return await Task.FromResult(result);
-            }
+            return index;
         }
 
         private static bool IsObject(object? value, Type type)

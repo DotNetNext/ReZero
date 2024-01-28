@@ -14,6 +14,7 @@ namespace ReZero.SuperAPI
         public string? MergeForName { get; set; }
         public string? Description { get; set; }
         public string? ValueType { get; set; }  
+        public bool IsSingleParameter { get; set; }
         public FieldOperatorType? FieldOperator { get; set; }
         public string? FieldOperatorString { get { return FieldOperator?.ToString(); } }
         public UpdateParemeter? UpdateParemeter { get; set; }
