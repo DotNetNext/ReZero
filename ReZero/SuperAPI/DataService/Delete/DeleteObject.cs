@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
-    internal class Delete_Object : CommonDataService,IDataService
+    internal class DeleteObject : CommonDataService,IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
