@@ -43,7 +43,13 @@ namespace ReZero.SuperAPI
                 Name = nameof(ZeroInterfaceList.InterfaceCategoryId),
                 Text = TextHandler.GetCommonText("所属菜单", "Interface categroy"),
                 ElementType = ElementType.Select,
-                IsRequired = true
+                IsRequired = true,
+                SelectDataSource=App.Db.Queryable<ZeroInterfaceCategory>()
+                .Where(it=>it.ParentId== InterfaceCategoryInitializerProvider.Id200)
+                .Select(it=>new ActionTypeFormElementSelectDataSourceModel { 
+                 Key=it.Id+"",
+                 Value=it.Name
+                }).ToList()
             });
         }
 

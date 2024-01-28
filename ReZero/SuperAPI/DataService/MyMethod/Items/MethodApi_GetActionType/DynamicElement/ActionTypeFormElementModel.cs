@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace ReZero.SuperAPI
         public bool IsRequired { get; set; }
         public List<ActionTypeFormElementModel>? Items { get; set; }
         public string? Placeholder { get; set; }
+        public List<ActionTypeFormElementSelectDataSourceModel>? SelectDataSource { get; set; }
 
     }
 }

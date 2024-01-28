@@ -151,7 +151,7 @@
                                                 <template v-if="item.ElementType==4">
                                                     <!--Columns-->
                                                     <select :name="item.Name"  v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" >
-                                                        <option v-if="item.SelectDataSource" v-for="item in item.SelectDataSource" :value="item.Key">{{item.Value}}</option>
+                                                        <option v-if="item.SelectDataSource" v-for="o in item.SelectDataSource" :value="o.Key">{{o.Value}}</option>
                                                     </select>
                                                 </template>
                                             </div>
