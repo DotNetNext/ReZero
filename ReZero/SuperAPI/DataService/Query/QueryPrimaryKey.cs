@@ -9,13 +9,10 @@ namespace ReZero.SuperAPI
 {
     internal class QueryByPrimaryKey: IDataService
     {
-        private ISqlSugarClient db;
-        public QueryByPrimaryKey() 
-        {
-            db = App.Db;
-        }
+       
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
+            var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             var id = dataModel.DefaultParameters.First().Value;
             var data=await db.QueryableByObject(type).InSingleAsync(id);
