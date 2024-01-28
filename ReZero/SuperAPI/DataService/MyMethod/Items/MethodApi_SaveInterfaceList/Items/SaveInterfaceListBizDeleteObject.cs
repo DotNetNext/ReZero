@@ -11,8 +11,7 @@ namespace ReZero.SuperAPI
         {
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             base.SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
-            App.Db.Insertable(zeroInterfaceList).ExecuteReturnSnowflakeId();
-            return true;
+            return base.InsertData(zeroInterfaceList);
         }
     }
 }

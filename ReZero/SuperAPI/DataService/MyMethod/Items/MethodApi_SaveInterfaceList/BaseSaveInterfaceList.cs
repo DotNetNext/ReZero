@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace ReZero.SuperAPI
 {
     public class BaseSaveInterfaceList
     { 
-        internal void SetCommonProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
+        protected void SetCommonProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
             // Set default values for ZeroInterfaceList
             zeroInterfaceList.IsInitialized = false;
@@ -37,7 +38,18 @@ namespace ReZero.SuperAPI
             };
 
         }
+        protected EntityInfo GetEntityInfo(long tableId) 
+        { 
+            var type = EntityGeneratorManager.GetTypeAsync(tableId).GetAwaiter().GetResult();
+            var entityInfo = App.Db.EntityMaintenance.GetEntityInfo(type);
+            return entityInfo;
+        }
 
+        protected   object InsertData(ZeroInterfaceList zeroInterfaceList)
+        {
+            App.Db.Insertable(zeroInterfaceList).ExecuteReturnSnowflakeId();
+            return true;
+        }
         private long GetTableId(string? tableId)
         {
             var db = App.Db;

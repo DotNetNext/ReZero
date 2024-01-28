@@ -334,10 +334,15 @@
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData)
                         .then(response => {
-                            tools.alert("添加成功");
-                            btnAddOrUpdateColse.click();
-                            this.error = null;
-                           
+                            if (response.data == true) {
+                                tools.alert("添加成功");
+                                btnAddOrUpdateColse.click();
+                                this.error = null;
+                            }
+                            else
+                            {
+                                tools.alert(response.data.message);
+                            } 
                         })
                         .catch(error => {
                             this.error = error.message; 
