@@ -7,7 +7,16 @@ using System.Text;
 namespace ReZero.SuperAPI 
 {
     public class BaseSaveInterfaceList
-    { 
+    {
+
+        protected   void Check(EntityColumnInfo pk)
+        {
+            if (pk == null)
+            {
+                throw new Exception(TextHandler.GetCommonText("创建失败实体没有主键", "The failed entity does not have a primary key"));
+
+            }
+        }
         protected void SetCommonProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
             // Set default values for ZeroInterfaceList

@@ -21,7 +21,7 @@ namespace ReZero.SuperAPI
         {
             var entityInfo = base.GetEntityInfo(zeroInterfaceList!.DataModel!.TableId!);
             var pk = entityInfo.Columns.FirstOrDefault(it => it.IsPrimarykey);
-            Check(pk);
+            base.Check(pk);
             zeroInterfaceList.DataModel.DefaultParameters = new List<DataModelDefaultParameter>()
             {
                 new DataModelDefaultParameter(){ 
@@ -33,13 +33,6 @@ namespace ReZero.SuperAPI
                 }
             };
         }
-
-        private static void Check(EntityColumnInfo pk)
-        {
-            if (pk == null)
-            {
-                throw new Exception(TextHandler.GetCommonText("创建失败实体没有主键", "The failed entity does not have a primary key"));
-            }
-        }
+         
     }
 }
