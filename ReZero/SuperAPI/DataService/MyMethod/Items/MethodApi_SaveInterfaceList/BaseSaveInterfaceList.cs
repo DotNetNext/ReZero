@@ -19,7 +19,11 @@ namespace ReZero.SuperAPI
             var options = SuperAPIModule._apiOptions;
             var userInfo = options?.DatabaseOptions!.GetCurrentUserCallback();
             zeroInterfaceList.Creator = userInfo?.UserName;
-            zeroInterfaceList.CreateTime =DateTime.Now; 
+            zeroInterfaceList.CreateTime =DateTime.Now;
+            if (zeroInterfaceList.HttpMethod == null) 
+            {
+                zeroInterfaceList.HttpMethod = HttpRequestMethod.All+"";
+            }
             zeroInterfaceList.DataModel = new DataModel()
             {
                  ActionType = saveInterfaceListModel!.ActionType!.Value,

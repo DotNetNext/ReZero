@@ -10,6 +10,7 @@ namespace ReZero.SuperAPI
         POST,
         PUT,
         DELETE,
-        PATCH
+        PATCH,
+        All
     }
 }
