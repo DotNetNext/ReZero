@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -13,6 +15,20 @@ namespace ReZero.SuperAPI
             AddInterfaceCategroy(result);
             AddInterfacUrl(result);
             AddGroup(result);
+        }
+
+        protected  void AddActionTypeElementModel(List<ActionTypeFormElementModel> result, IEelementActionType obj)
+        {
+
+            var keyValue = UtilMethods.EnumToDictionary<ActionType>()
+                .Where(it => obj.GetType().FullName == InstanceManager.GetActionTypeElementName(it.Value))
+                .First();
+            result.Add(new ActionTypeFormElementModel()
+            {
+                ElementType = ElementType.Hidden,
+                Name =nameof(SaveInterfaceListModel.ActionType) ,
+                Value = ((int)keyValue.Value).ToString()
+            });
         }
         private void AddInterfacUrl(List<ActionTypeFormElementModel> result)
         {

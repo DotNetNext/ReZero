@@ -5,7 +5,11 @@ using System.Text;
 namespace ReZero.SuperAPI 
 {
     internal class InstanceManager
-    { 
+    {
+        public static string GetActionTypeName(ActionType actionType)
+        {
+            return $"ReZero.SuperAPI.{actionType}";
+        }
         public static string GetActionTypeName(DataModel dataModel)
         {
             return $"ReZero.SuperAPI.{dataModel.ActionType}";

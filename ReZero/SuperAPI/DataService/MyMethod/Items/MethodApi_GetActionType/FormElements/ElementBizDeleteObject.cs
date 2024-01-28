@@ -12,7 +12,9 @@ namespace ReZero.SuperAPI
         {
             var result = new List<ActionTypeFormElementModel>();
             base.AddActionTypeFormElementModels(result);
+            base.AddActionTypeElementModel(result,this);
             return result;
-        } 
+        }
+
     }
 }

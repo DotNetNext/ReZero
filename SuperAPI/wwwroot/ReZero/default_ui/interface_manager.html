@@ -125,14 +125,14 @@
 
                                     <form id="frmSave" action="#!" method="post" name="edit-form" class="edit-form">
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
-                                            <label for="type">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
+                                            <label v-if="item.ElementType!=5" for="type">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
                                             <div class="form-controls">
+                                                <!--text-->
                                                 <template v-if="item.ElementType==0">
-                                                    <!--text-->
                                                     <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" />
                                                 </template>
+                                                <!--table-->
                                                 <template v-if="item.ElementType==1">
-                                                    <!--table-->
                                                     <div class="input-group">
                                                         <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" type="text" readonly="readonly" class="form-control">
                                                         <span class="input-group-btn">
@@ -140,19 +140,23 @@
                                                         </span>
                                                     </div>
                                                 </template>
+                                                <!--group-->
                                                 <template v-if="item.ElementType==2">
-                                                    <!--group-->
                                                     <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" />
                                                 </template>
+                                                <!--Columns-->
                                                 <template v-if="item.ElementType==3">
-                                                    <!--Columns-->
                                                     <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" />
                                                 </template>
+                                                <!--Select-->
                                                 <template v-if="item.ElementType==4">
-                                                    <!--Columns-->
-                                                    <select :name="item.Name"  v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" >
+                                                    <select :name="item.Name" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control">
                                                         <option v-if="item.SelectDataSource" v-for="o in item.SelectDataSource" :value="o.Key">{{o.Value}}</option>
                                                     </select>
+                                                </template>
+                                                <!--Hidden-->
+                                                <template v-if="item.ElementType==5">
+                                                    <input :name="item.Name" v-model="item.Value" type="hidden" :validate-data="JSON.stringify(item)" class="form-control" />
                                                 </template>
                                             </div>
                                         </div>
