@@ -64,34 +64,34 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.Add(data2);
         }
         private void Dynamic()
-        {
-            //动态测试接口
-            ZeroInterfaceList data3 = GetNewItem(it =>
-            {
-                it.HttpMethod = HttpRequestMethod.GET.ToString();
-                it.Id = TestId;
-                it.GroupName = nameof(ZeroInterfaceList);
-                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id200100;
-                it.Name = TextHandler.GetInterfaceListText(TestId);
-                it.Url = "/MyTest/API";
-                it.DataModel = new DataModel()
-                {
-                    TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
-                    ActionType = ActionType.QueryByPrimaryKey,
-                    DefaultParameters = new List<DataModelDefaultParameter>() {
-                            new DataModelDefaultParameter(){
-                                  Name="Id",
-                                  ParameterValidate=new ParameterValidate{
-                                  IsRequired=true
-                                },
-                                FieldOperator=FieldOperatorType.Equal,
-                                ValueType=typeof(long).Name,
-                                Description=TextHandler.GetCommonText("根据主键获取接口","Get interface detail") },
-                         }
-                };
-                it.IsInitialized = false;
-            });
-            zeroInterfaceList.Add(data3);
+        { 
+            ////动态测试接口
+            //ZeroInterfaceList data3 = GetNewItem(it =>
+            //{
+            //    it.HttpMethod = HttpRequestMethod.GET.ToString();
+            //    it.Id = TestId;
+            //    it.GroupName = nameof(ZeroInterfaceList);
+            //    it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id200100;
+            //    it.Name = TextHandler.GetInterfaceListText(TestId);
+            //    it.Url = "/MyTest/API";
+            //    it.DataModel = new DataModel()
+            //    {
+            //        TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
+            //        ActionType = ActionType.QueryByPrimaryKey,
+            //        DefaultParameters = new List<DataModelDefaultParameter>() {
+            //                new DataModelDefaultParameter(){
+            //                      Name="Id",
+            //                      ParameterValidate=new ParameterValidate{
+            //                      IsRequired=true
+            //                    },
+            //                    FieldOperator=FieldOperatorType.Equal,
+            //                    ValueType=typeof(long).Name,
+            //                    Description=TextHandler.GetCommonText("根据主键获取接口","Get interface detail") },
+            //             }
+            //    };
+            //    it.IsInitialized = false;
+            //});
+            //zeroInterfaceList.Add(data3);
 
 
             //获取动态接口加分页

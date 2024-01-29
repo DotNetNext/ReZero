@@ -86,12 +86,12 @@ namespace ReZero.SuperAPI
 
 
 
-        /// <summary>
-        /// 动态接口[测试01]
-        /// </summary>
-        [ChineseTextAttribute("测试动态接口01")]
-        [EnglishTextAttribute("Test API 01")]
-        public const long TestId = 5;
+        ///// <summary>
+        ///// 动态接口[测试01]
+        ///// </summary>
+        //[ChineseTextAttribute("测试动态接口01")]
+        //[EnglishTextAttribute("Test API 01")]
+        //public const long TestId = 175179646053135000;
 
 
         /// <summary>
