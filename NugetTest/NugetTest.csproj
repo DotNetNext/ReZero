@@ -269,8 +269,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rezero" Version="1.0.4.4" />
+    <PackageReference Include="Rezero" Version="1.0.4.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Rezero\" />
   </ItemGroup>
  
 
