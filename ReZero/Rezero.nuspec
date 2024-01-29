@@ -18,6 +18,6 @@
 	</metadata>
 	<files>
 		<file src="G:\Git\ReZero\ReZero\bin\Debug\netstandard2.1\ReZero.dll" target="lib\netstandard2.1" />
-		<file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\*.*" target="contentFiles\any\any\wwwroot\rezero" />
+		<file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\*.*" target="content\wwwroot\rezero" />
 	</files>
 </package>
