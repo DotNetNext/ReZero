@@ -52,7 +52,7 @@ namespace ReZero.SuperAPI
             {
                 ElementType = ElementType.Text,
                 Name = nameof(DataModel.CommonPage.PageSize),
-                Text = TextHandler.GetCommonText("每页显示条数，不填不分页", "Page size"),
+                Text = TextHandler.GetCommonText("Page size", "Page size"),
                 Value =null
             }); 
         }
