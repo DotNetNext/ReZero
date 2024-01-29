@@ -20,7 +20,7 @@ namespace ReZero.SuperAPI
             {
                 var apiOptions = options.SuperApiOptions;
                 _apiOptions = InitializeOptions(apiOptions);
-                InitUi(options);
+                //InitUi(options);
                 InitZeroStaticFileMiddleware();
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
