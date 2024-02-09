@@ -19,4 +19,9 @@
     <PackageReference Include="SqlSugarCore" Version="5.1.4.131-preview01" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SuperAPI\DatabseModels\Public\" />
+    <Folder Include="SuperAPI\DatabseModels\Table\" />
+  </ItemGroup>
+
 </Project>
