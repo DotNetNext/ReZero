@@ -14,7 +14,7 @@ builder.Services.AddReZeroServices(api =>
 {
     //∆Ù”√≥¨º∂API
     api.EnableSuperApi(new SuperAPIOptions() { 
-     
+      
     });
    
 }); 
