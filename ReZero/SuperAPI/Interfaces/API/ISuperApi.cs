@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
-    public interface IZeroApi
+    public interface ISuperApi
     {
 
         bool IsApi(string url);

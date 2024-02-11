@@ -53,7 +53,7 @@ namespace ReZero.SuperAPI
             var path = context.Request.Path.ToString()?.ToLower();
             var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
             var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
-
+            var dynamicInterfaceContext = new DynamicInterfaceContext() { Context = context };
             if (interInfo == null)
             {
                 var message = TextHandler.GetCommonText($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
@@ -66,8 +66,10 @@ namespace ReZero.SuperAPI
                 {
                     DataService dataService = new DataService();
                     interInfo!.DataModel!.ApiId = interInfo.Id;
-                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
+                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context); 
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.BeginActionAsync(dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.CommitActionAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel);
@@ -77,6 +79,7 @@ namespace ReZero.SuperAPI
                 catch (Exception ex)
                 {
                     await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.ErrorActionAsync(dynamicInterfaceContext);
                 }
             }
         }

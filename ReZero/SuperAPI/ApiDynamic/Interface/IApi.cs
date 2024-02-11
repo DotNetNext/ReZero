@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
-    public interface IDynamicApi:IZeroApi
+    public interface IDynamicApi:ISuperApi
     {
     }  
 }

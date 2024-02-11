@@ -1,5 +1,5 @@
-﻿using SqlSugar;
-using System;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
@@ -8,10 +8,17 @@ namespace ReZero.SuperAPI
     /// </summary>
     public class SuperAPIOptions
     {
-        public void EnableSuperApi(Action<SuperAPIOptions> func) 
+        //public void EnableSuperApi(Action<SuperAPIOptions> func) 
+        //{
+        //    IsEnableSuperAPI = true;
+        //    func(this);
+        //}
+        public void EnableSuperApi(SuperAPIOptions  options)
         {
             IsEnableSuperAPI = true;
-            func(this);
+            this.DatabaseOptions = options.DatabaseOptions;
+             this.InterfaceOptions = options.InterfaceOptions;
+             this.UiOptions = options.UiOptions;
         }
 
         /// <summary>
@@ -24,10 +31,18 @@ namespace ReZero.SuperAPI
         /// </summary>
         public DatabaseOptions DatabaseOptions { get; set; } = new DatabaseOptions();
 
+
+        public InterfaceOptions InterfaceOptions { get; set; } = new InterfaceOptions();
+
         /// <summary>
         /// Gets or sets the UI configuration options.
         /// </summary>
         public UiOptions UiOptions { get; set; } = new UiOptions();
+    }
+
+    public class InterfaceOptions 
+    {
+        public ISuperApiAop ISuperApiAop { get; set; } = new DefaultSuperApiAop();
     }
 
     /// <summary>
@@ -45,7 +60,7 @@ namespace ReZero.SuperAPI
         /// </summary>
         public ReZeroConnectionConfig ConnectionConfig { get; set; } = new ReZeroConnectionConfig()
         {
-            DbType = DbType.Sqlite,
+            DbType = SqlSugar.DbType.Sqlite,
             ConnectionString = "datasource=ReZero.db"
         };
 
