@@ -9,5 +9,6 @@ namespace ReZero.SuperAPI
     public class DynamicInterfaceContext
     {
         public HttpContext? Context { get; internal set; }
+        public DataModel? DataModel { get; internal set; }
     }
 }

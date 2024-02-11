@@ -42,7 +42,7 @@ namespace ReZero.SuperAPI
 
     public class InterfaceOptions 
     {
-        public ISuperApiAop ISuperApiAop { get; set; } = new DefaultSuperApiAop();
+        public DefaultSuperApiAop ISuperApiAop { get; set; } = new DefaultSuperApiAop();
     }
 
     /// <summary>
