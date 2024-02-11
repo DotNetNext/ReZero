@@ -311,6 +311,7 @@
                 btnNextClose.click();
                 btnSave.click();
                 this.currentActionTypeContext = this.currentActionType.Items[0];
+                this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
             },
             openEdit: function () {
                 alert("开发中");
