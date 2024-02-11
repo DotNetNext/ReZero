@@ -13,6 +13,14 @@ namespace ReZero.SuperAPI
         //    IsEnableSuperAPI = true;
         //    func(this);
         //}
+        public void EnableSuperApi()
+        {
+            SuperAPIOptions options = new SuperAPIOptions();
+            IsEnableSuperAPI = true;
+            this.DatabaseOptions = options.DatabaseOptions;
+            this.InterfaceOptions = options.InterfaceOptions;
+            this.UiOptions = options.UiOptions;
+        }
         public void EnableSuperApi(SuperAPIOptions  options)
         {
             IsEnableSuperAPI = true;
