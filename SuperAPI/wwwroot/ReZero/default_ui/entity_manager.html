@@ -233,7 +233,7 @@
                                 <tr>
                                     <th class="width30">
                                         <label class="lyear-checkbox checkbox-primary">
-                                            <input type="checkbox" @change="selectAll2" id="check-all2"><span></span>
+                                            <input type="checkbox" @change="selectAllTables" id="check-all2"><span></span>
                                         </label>
                                     </th>
                                     <th>
@@ -519,7 +519,7 @@
                     this.selectedItems = [];
                 }
             },
-            selectAll2(event) {
+            selectAllTables(event) {
                 if (event.target.checked) {
                     // 全选
                     this.selectedTables = this.tables.map(item => item.Name);
