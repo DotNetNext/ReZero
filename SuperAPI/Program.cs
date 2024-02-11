@@ -13,8 +13,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddReZeroServices(api => 
 {
     //ÆôÓÃ³¬¼¶API
-    api.EnableSuperApi(it => { 
-     });
+    api.EnableSuperApi(new SuperAPIOptions() { 
+     
+    });
    
 }); 
 
