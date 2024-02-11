@@ -56,6 +56,14 @@ namespace ReZero.SuperAPI
             return Regex.IsMatch(str, @"^[a-z,A-Z,_]\w*$");
         }
 
+        public static byte[] ConvertFromBase64(string base64String)
+        { 
+            int startIndex = base64String.IndexOf(',') + 1;
+            string base64Data = base64String.Substring(startIndex);
+             
+            return Convert.FromBase64String(base64Data);
+        }
+
         public static void CopyDirectory(string sourceDir, string destDir)
         {
             if (!Directory.Exists(destDir))

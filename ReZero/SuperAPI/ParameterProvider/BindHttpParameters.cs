@@ -100,11 +100,17 @@ namespace ReZero.SuperAPI
                 var options = SuperAPIModule._apiOptions;
                 item.Value =DateTime.Now;
             }
+            else if (IsFile(item))
+            { 
+                item.Value = PubMethod.ConvertFromBase64(item.Value+"");
+            }
             //if (!string.IsNullOrEmpty(item?.FieldName))
             //{
             //    item.Name = item.FieldName;
             //}
         }
+
+ 
 
         private static bool NoPageParameters(DataModelDefaultParameter it)
         {
@@ -120,7 +126,10 @@ namespace ReZero.SuperAPI
         {
             return item?.InsertParameter?.IsDateTimeNow == true;
         }
-
+        private bool IsFile(DataModelDefaultParameter item)
+        {
+           return item?.ValueType=="Byte[]";
+        }
         private static bool IsDefaultValue(DataModelDefaultParameter item)
         {
             return item.Value == null && item.DefaultValue != null;

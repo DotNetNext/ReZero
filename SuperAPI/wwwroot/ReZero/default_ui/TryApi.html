@@ -11,12 +11,12 @@
         <div class="parameter" v-if="data.DataModel.DefaultParameters && data.DataModel.DefaultParameters.length > 0">
             <div v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
                 <label>{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
-
-                <div v-if="param.ValueIsReadOnly==false">
-                    <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
+                 
+                <div v-if="param.ValueType=='Byte[]'">
+                    <input @change="handleFileChange($event, param)" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
                 </div>
-                <div v-else-if="param.ValueType=='Byte[]'">
-                    <input v-model="param.Value" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
+                <div v-else-if="param.ValueIsReadOnly==false">
+                    <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
                 </div>
                 <div v-else-if="param.ValueIsReadOnly==true">
                     <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
@@ -101,7 +101,18 @@
                         this.error = error.message;
                         this.data = null;
                     }.bind(this));
-            }
+            },
+            handleFileChange: function (event, param) {
+                // Handle the file change event
+                var file = event.target.files[0];
+                // Assuming you want to read the file as base64 for upload
+                var reader = new FileReader();
+                reader.onload = function () {
+                    // Update the param value with the file content
+                    param.Value = reader.result;
+                };
+                reader.readAsDataURL(file);
+            },
         }
     });
 </script>
