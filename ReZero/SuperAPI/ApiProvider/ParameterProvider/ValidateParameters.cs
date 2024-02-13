@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReZero.SuperAPI
+namespace ReZero.SuperAPI 
 {
     internal class ValidateParameters
     {
@@ -38,12 +38,12 @@ namespace ReZero.SuperAPI
             var entityInfo = db!.EntityMaintenance.GetEntityInfo(type);
             var dbColumnInfo = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(item.Name!));
             var isDeleteIdColumn = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted)));
-            bool isAny = await IsAnyValue(item, type, db, dbColumnInfo, isDeleteIdColumn,dataModel);
+            bool isAny = await IsAnyValue(item, type, db, dbColumnInfo, isDeleteIdColumn, dataModel);
             if (isAny)
             {
                 errorLists.Add(new ErrorParameter() { Name = item.Name, ErrorType = "IsUnique", Message = TextHandler.GetCommonText("唯一", "Unique") });
             }
-        } 
+        }
         private static void AddReuiredError(List<ErrorParameter> errorLists, DataModelDefaultParameter item)
         {
             errorLists.Add(new ErrorParameter() { Name = item.Name, ErrorType = "IsRequired", Message = TextHandler.GetCommonText("必填", "Required") });
@@ -70,7 +70,7 @@ namespace ReZero.SuperAPI
                 FieldName = dbColumnInfo.DbColumnName
 
             };
-            var whereColumns= new List<IConditionalModel>() { condition };
+            var whereColumns = new List<IConditionalModel>() { condition };
             if (isDeleteIdColumn != null)
             {
                 var condition2 = new ConditionalModel()
@@ -82,22 +82,22 @@ namespace ReZero.SuperAPI
                 };
                 whereColumns.Add(condition2);
             }
-            if (type.Name == nameof(ZeroEntityInfo)) 
-            { 
+            if (type.Name == nameof(ZeroEntityInfo))
+            {
                 var condition3 = new ConditionalModel()
                 {
                     ConditionalType = ConditionalType.Equal,
                     CSharpTypeName = typeof(long).Name,
-                    FieldValue =dataModel.DefaultParameters.First(it=>it.Name!.EqualsCase(nameof(ZeroEntityInfo.DataBaseId))).Value+"",
-                    FieldName = db!.EntityMaintenance.GetEntityInfo(type).Columns.First(it=>it.PropertyName==nameof(ZeroEntityInfo.DataBaseId)).DbColumnName
+                    FieldValue = dataModel.DefaultParameters.First(it => it.Name!.EqualsCase(nameof(ZeroEntityInfo.DataBaseId))).Value + "",
+                    FieldName = db!.EntityMaintenance.GetEntityInfo(type).Columns.First(it => it.PropertyName == nameof(ZeroEntityInfo.DataBaseId)).DbColumnName
                 };
                 whereColumns.Add(condition3);
             }
             return await db!.QueryableByObject(type)
                             .Where(whereColumns)
                             .AnyAsync();
-        } 
-        #endregion 
+        }
+        #endregion
 
     }
 }

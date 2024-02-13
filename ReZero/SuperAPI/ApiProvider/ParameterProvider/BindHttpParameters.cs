@@ -21,29 +21,30 @@ namespace ReZero.SuperAPI
         private void BindGroupByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
             if (dataModel?.GroupParemters != null)
-            { 
+            {
                 var groupBys = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.GroupParemters)));
                 if (groupBys.Value != null)
                 {
                     dataModel!.GroupParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelGroupParameter>>(groupBys.Value + "");
-                } 
+                }
             }
         }
 
         private void BindOrderByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
-            if (dataModel?.OrderParemters != null) {
+            if (dataModel?.OrderParemters != null)
+            {
                 //var data = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModel.OrderParemters)) == true);
                 //if (data != null)
                 //{
-                    var orderDatas = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.OrderParemters)));
-                    if (orderDatas.Value != null)
-                    {
-                        dataModel!.OrderParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelOrderParemter>>(orderDatas.Value + "");
-                    }
+                var orderDatas = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.OrderParemters)));
+                if (orderDatas.Value != null)
+                {
+                    dataModel!.OrderParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelOrderParemter>>(orderDatas.Value + "");
+                }
                 //}
             }
-        } 
+        }
         private void BindPageParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
             if (dataModel?.CommonPage != null)
@@ -79,7 +80,7 @@ namespace ReZero.SuperAPI
 
         private static bool IsJObjct(DataModel? dataModel, Dictionary<string, object> formDatas)
         {
-            var isJObject= dataModel?.DefaultParameters?.Count == 1 && dataModel!.DefaultParameters!.First().ValueType == nameof(JObject) && dataModel!.DefaultParameters!.First().IsSingleParameter==true;
+            var isJObject = dataModel?.DefaultParameters?.Count == 1 && dataModel!.DefaultParameters!.First().ValueType == nameof(JObject) && dataModel!.DefaultParameters!.First().IsSingleParameter == true;
             return isJObject;
         }
 
@@ -98,11 +99,11 @@ namespace ReZero.SuperAPI
             else if (IsDateTimeNow(item))
             {
                 var options = SuperAPIModule._apiOptions;
-                item.Value =DateTime.Now;
+                item.Value = DateTime.Now;
             }
             else if (IsFile(item))
-            { 
-                item.Value = PubMethod.ConvertFromBase64(item.Value+"");
+            {
+                item.Value = PubMethod.ConvertFromBase64(item.Value + "");
             }
             //if (!string.IsNullOrEmpty(item?.FieldName))
             //{
@@ -110,7 +111,7 @@ namespace ReZero.SuperAPI
             //}
         }
 
- 
+
 
         private static bool NoPageParameters(DataModelDefaultParameter it)
         {
@@ -128,7 +129,7 @@ namespace ReZero.SuperAPI
         }
         private bool IsFile(DataModelDefaultParameter item)
         {
-           return item?.ValueType=="Byte[]";
+            return item?.ValueType == "Byte[]";
         }
         private static bool IsDefaultValue(DataModelDefaultParameter item)
         {
@@ -140,14 +141,14 @@ namespace ReZero.SuperAPI
             if (parameter.ValueIsReadOnly)
             {
                 return parameter.Value + "";
-            } 
+            }
             string parameterValue = context.Request.Query[parameter.Name];
             var formData = formDatas.FirstOrDefault(it => it.Key.EqualsCase(parameter.Name ?? ""));
-            if (formData.Key!=null)
+            if (formData.Key != null)
             {
                 parameterValue = formData.Value + "";
             }
-            parameter.Value = parameterValue; 
+            parameter.Value = parameterValue;
             return parameterValue;
         }
 
