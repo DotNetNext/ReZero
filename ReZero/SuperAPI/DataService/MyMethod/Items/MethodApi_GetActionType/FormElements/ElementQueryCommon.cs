@@ -19,40 +19,20 @@ namespace ReZero.SuperAPI
 
         private void AddElements(List<ActionTypeFormElementModel> result)
         {
-
+ 
             result.Add(new ActionTypeFormElementModel()
             {
-                ElementType = ElementType.Text,
-                Name = "Join",
-                Text = TextHandler.GetCommonText("Join json", "Join json"),
+                ElementType = ElementType.Columns,
+                Name = "Columns",
+                Text=TextHandler.GetCommonText("显示列", "Show columns"),
                 Value = null
             });
+           
             result.Add(new ActionTypeFormElementModel()
             {
-                ElementType = ElementType.Text,
-                Name = "Where",
-                Text=TextHandler.GetCommonText("Where json", "Where json"),
-                Value = null
-            });
-            result.Add(new ActionTypeFormElementModel()
-            {
-                ElementType = ElementType.Text,
-                Name = "OrderBy",
-                Text = TextHandler.GetCommonText("OrderBy json", "OrderBy json"),
-                Value = null
-            });
-            result.Add(new ActionTypeFormElementModel()
-            {
-                ElementType = ElementType.Text,
-                Name = "Select",
-                Text = TextHandler.GetCommonText("Select json", "Select json"),
-                Value = null
-            });
-            result.Add(new ActionTypeFormElementModel()
-            {
-                ElementType = ElementType.Text,
+                ElementType = ElementType.Page,
                 Name = nameof(DataModel.CommonPage.PageSize),
-                Text = TextHandler.GetCommonText("Page size", "Page size"),
+                Text = TextHandler.GetCommonText("分页","Page"),
                 Value =null
             }); 
         }

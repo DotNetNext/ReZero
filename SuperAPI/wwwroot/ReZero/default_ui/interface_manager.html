@@ -140,13 +140,26 @@
                                                         </span>
                                                     </div>
                                                 </template>
-                                                <!--group-->
-                                                <template v-if="item.ElementType==2">
-                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" />
-                                                </template>
                                                 <!--Columns-->
                                                 <template v-if="item.ElementType==3">
-                                                    <input :name="item.Name" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" />
+                                                    <button class="btn btn-w-xs btn-primary m-tb-10">添加列</button>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>列名</th>
+                                                                <th>排序</th>
+                                                                <th>作者</th>
+                                                                <th>国籍</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Id</th>
+                                                                <td>DESC</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <input :name="item.Name" type="hidden" :placeholder="item.Placeholder" v-model="item.Value" :validate-data="JSON.stringify(item)" class="form-control" />
                                                 </template>
                                                 <!--Select-->
                                                 <template v-if="item.ElementType==4">
@@ -157,6 +170,14 @@
                                                 <!--Hidden-->
                                                 <template v-if="item.ElementType==5">
                                                     <input :name="item.Name" v-model="item.Value" type="hidden" :validate-data="JSON.stringify(item)" class="form-control" />
+                                                </template>
+                                                <!--Page-->
+                                                <template v-if="item.ElementType==6">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" value=""> 是 
+                                                        </label>
+                                                    </div>
                                                 </template>
                                             </div>
                                         </div>
@@ -331,7 +352,7 @@
                 });
 
                 if (isSuccess) {
-                    var formData = tools.formToJson("frmSave"); 
+                    var formData = tools.formToJson("frmSave");
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData)
                         .then(response => {
@@ -341,13 +362,12 @@
                                 this.error = null;
                                 th.onSearch();
                             }
-                            else
-                            {
+                            else {
                                 tools.alert(response.data.message);
-                            } 
+                            }
                         })
                         .catch(error => {
-                            this.error = error.message; 
+                            this.error = error.message;
                         });
                 }
             },
@@ -413,7 +433,7 @@
                         this.data = null;
                     });
             },
-            tabClick: function (index,item) {
+            tabClick: function (index, item) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
                 this.currentActionTypeContext.FormElements[0].Value = item.Text;
@@ -457,11 +477,11 @@
                 if (attributeValue.IsRequired && !element.value) {
                     tools.alert(attributeValue.Text + "不能为空");
                     return false;
-                } 
+                }
                 if (attributeValue.Name === "Url" && element.value && !tools.isValidURLPattern(element.value)) {
                     tools.alert("Url格式不正确，应该是/xxx/yyy 或者 /xx.xx");
                     return false;
-                } 
+                }
                 return true;
             }
         }
