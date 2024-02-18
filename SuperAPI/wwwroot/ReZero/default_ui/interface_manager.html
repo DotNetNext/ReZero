@@ -304,12 +304,6 @@
                 });
                 this.fetchData(urlParameters);
             },
-            enable: function () {
-                alert("开发中");
-            },
-            disable: function () {
-                alert("开发中");
-            },
             selectAll(event) {
                 if (event.target.checked) {
                     // 全选
@@ -318,7 +312,38 @@
                     // 全不选
                     this.selectedItems = [];
                 }
+            }, 
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterface?IsDeleted=true&Id=" + localStorage.delId;
+                    axios.get(url)
+                        .then(response => {
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },   
+            enable: function () {
+                alert("开发中");
             },
+            disable: function () {
+                alert("开发中");
+            },
+
+            //编辑接口
+            openEdit: function () {
+                alert("开发中");
+            },
+
+            //添加接口
             openNext: function () {
                 this.title = this.addTitle;
                 btnNext.click();
@@ -333,10 +358,7 @@
                 btnSave.click();
                 this.currentActionTypeContext = this.currentActionType.Items[0];
                 this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
-            },
-            openEdit: function () {
-                alert("开发中");
-            },
+            }, 
             addOrUpdateColumnInfoSubmit: function () {
 
                 var elementsWithValidateData = document.querySelectorAll('[validate-data]');
@@ -370,25 +392,50 @@
                             this.error = error.message;
                         });
                 }
+            }, 
+            tabClick: function (index, item) {
+                this.tabIndex = index;
+                this.currentActionTypeContext = this.currentActionType.Items[index];
+                this.currentActionTypeContext.FormElements[0].Value = item.Text;
+            }, 
+            openImportEntity: function () {
+                btnImportEntity.click();
+                this.bindImportTables();
             },
-            deleteAndConfirm: function (item) {
-                if (item == null) {
-                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterface?IsDeleted=true&Id=" + localStorage.delId;
-                    axios.get(url)
-                        .then(response => {
-                            this.data = response.data;
-                            this.error = null;
-                            this.onSearch();
-                            btnDelClose.click();
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                            this.data = null;
-                        });
+            importEntitySubmit: function () {
+                var th = this;
+                this.currentActionType.Items.forEach((item) => {
+                    item.FormElements.forEach((element) => {
+                        element.Value = (element.ElementType == "1")
+                            ? this.selectedTables[0] : element.Value;
+                    });
+                });
+
+                btnImportEntityClose.click();
+            },
+            bindImportTables: function () {
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
+                axios.get(url)
+                    .then(response => {
+                        this.tables = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+            selectAllTables(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedTables = this.tables.map(item => item.Name);
                 } else {
-                    localStorage.delId = item.Id;
+                    // 全不选
+                    this.selectedTables = [];
                 }
             },
+
+
+            //次要方法
             bindGroupListSelect: function () {
                 axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
                     .then(response => {
@@ -432,46 +479,6 @@
                         this.error = error.message;
                         this.data = null;
                     });
-            },
-            tabClick: function (index, item) {
-                this.tabIndex = index;
-                this.currentActionTypeContext = this.currentActionType.Items[index];
-                this.currentActionTypeContext.FormElements[0].Value = item.Text;
-            },
-            openImportEntity: function () {
-                btnImportEntity.click();
-                this.bindImportTables();
-            },
-            importEntitySubmit: function () {
-                var th = this;
-                this.currentActionType.Items.forEach((item) => {
-                    item.FormElements.forEach((element) => {
-                        element.Value = (element.ElementType == "1")
-                            ? this.selectedTables[0] : element.Value;
-                    });
-                });
-
-                btnImportEntityClose.click();
-            },
-            bindImportTables: function () {
-                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
-                axios.get(url)
-                    .then(response => {
-                        this.tables = response.data;
-                        this.error = null;
-                    })
-                    .catch(error => {
-                        this.error = error.message;
-                    });
-            },
-            selectAllTables(event) {
-                if (event.target.checked) {
-                    // 全选
-                    this.selectedTables = this.tables.map(item => item.Name);
-                } else {
-                    // 全不选
-                    this.selectedTables = [];
-                }
             },
             validateElement: function (element, attributeValue) {
                 if (attributeValue.IsRequired && !element.value) {
