@@ -23,6 +23,7 @@
         height: 25px;
         margin-left: 10px;
     }
-#divImportEntity .modal-dialog {
+#divImportEntity .modal-dialog,
+#divAddColumns .modal-dialog {
     border: 3px solid #ccc;
 }

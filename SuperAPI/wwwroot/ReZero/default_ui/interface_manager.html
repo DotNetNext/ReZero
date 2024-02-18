@@ -142,20 +142,19 @@
                                                 </template>
                                                 <!--Columns-->
                                                 <template v-if="item.ElementType==3">
-                                                    <button class="btn btn-w-xs btn-primary m-tb-10">添加列</button>
+                                                    <span @click="openAddColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加主表列</span>
+                                                    <span @click="openAddNavColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加从表列</span>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
                                                                 <th>列名</th>
                                                                 <th>排序</th>
-                                                                <th>作者</th>
-                                                                <th>国籍</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <th scope="row">Id</th>
-                                                                <td>DESC</td>
+                                                                <th scope="row">主表所有</th>
+                                                                <td></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -175,7 +174,7 @@
                                                 <template v-if="item.ElementType==6">
                                                     <div class="checkbox">
                                                         <label>
-                                                            <input type="checkbox" value=""> 是 
+                                                            <input type="checkbox" value=""> 是
                                                         </label>
                                                     </div>
                                                 </template>
@@ -247,6 +246,38 @@
                 <div class="modal-footer">
                     <button type="button" id="btnImportEntityClose" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="importEntitySubmit()" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--选择主表列窗口-->
+    <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddColumns" style="display: none;">
+        <button id="btnDivAddColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddColumns"></button>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">选择主表列</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>列名</th>
+                                <th>排序</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">主表所有</th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"   class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button"  class="btn btn-primary">下一步</button>
                 </div>
             </div>
         </div>
@@ -433,7 +464,13 @@
                     this.selectedTables = [];
                 }
             },
-
+            openAddColumn: function () {
+                btnDivAddColumns.click();
+            },
+            openAddNavColumn: function ()
+            {
+                alert("开发中");
+            },
 
             //次要方法
             bindGroupListSelect: function () {
