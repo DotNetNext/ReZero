@@ -24,7 +24,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = IntCateGroupNameListId;
-                it.GroupName = nameof(zeroInterfaceList);
+                it.GroupName = nameof(ZeroInterfaceList);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
                 it.Name = TextHandler.GetInterfaceListText(IntCateGroupNameListId);
                 it.Url = GetUrl(it, "GetDynamicGroupNameList");
