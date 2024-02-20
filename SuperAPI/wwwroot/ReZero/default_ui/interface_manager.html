@@ -263,13 +263,20 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th><input type="checkbox" /></th>
                                 <th>列名</th>
                                 <th>排序</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">主表所有</th>
+                                <th scope="row"><input type="checkbox" /></th>
+                                <td  >所有列</td>
+                                <td></td>
+                            </tr>
+                            <tr v-for="item in columns">
+                                <th scope="row"><input type="checkbox" /></th>
+                                <td>{{item.PropertyName}}</td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -277,7 +284,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button"   class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button"  class="btn btn-primary">下一步</button>
+                    <button type="button"  class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -442,7 +449,7 @@
                             ? this.selectedTables[0].Name : element.Value;
                     });
                 });
-
+                this.columns = [];
                 btnImportEntityClose.click();
             },
             bindImportTables: function () {
@@ -468,17 +475,16 @@
             openAddColumn: function (item) {
                 var th = this;
                 btnDivAddColumns.click();
-                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + item.Id;
-                axios.get(url)
-                    .then(response => {
-                        th.columns = response.data;
-                        if (th.columns.length == 0) {
-                            th.columns.push({ TableId: item.Id });
-                        }
-                    })
-                    .catch(error => {
-                        this.error = error.message;
-                    });
+                if (this.selectedTables.length > 0) {
+                    var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
+                    axios.get(url)
+                        .then(response => {
+                            th.columns = response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                        });
+                }
             },
             openAddNavColumn: function ()
             {
