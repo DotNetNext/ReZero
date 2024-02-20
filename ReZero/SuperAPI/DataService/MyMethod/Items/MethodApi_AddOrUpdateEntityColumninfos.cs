@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace ReZero.SuperAPI
         public object AddOrUpdateEntityColumninfos(string columns)
         {
             try
-            { 
+            {
                 List<ZeroEntityColumnInfo> zeroEntityColumns = App.Db.Utilities.DeserializeObject<List<ZeroEntityColumnInfo>>(columns);
                 var tableId = zeroEntityColumns.GroupBy(it => it.TableId).Select(it => it.Key).Single();
                 EntityGeneratorManager.RemoveTypeCacheByTypeId(tableId);
@@ -19,8 +20,9 @@ namespace ReZero.SuperAPI
                 this.CheckTableInfo(tableInfo);
                 App.Db.Deleteable<ZeroEntityColumnInfo>().Where(it => it.TableId == tableId).ExecuteCommand();
                 var newColumns = ConvetSaveColumn(zeroEntityColumns).ToArray();
+                this.CheckColumns(newColumns);
                 App.Db.Insertable(newColumns).ExecuteReturnSnowflakeId();
-                tableInfo.ColumnCount= newColumns.Length;
+                tableInfo.ColumnCount = newColumns.Length;
                 App.Db.Updateable(tableInfo).UpdateColumns(it => new { it.ColumnCount }).ExecuteCommand();
                 return true;
             }
@@ -28,6 +30,25 @@ namespace ReZero.SuperAPI
             {
                 return ex.Message;
             }
+        }
+
+        private  void CheckColumns(ZeroEntityColumnInfo[] newColumns)
+        {
+            if (IsRepeatColumn(newColumns))
+            {
+                throw new Exception(TextHandler.GetCommonText("列名重复", "Column name repeat"));
+            }
+        }
+
+        private static bool IsRepeatColumn(ZeroEntityColumnInfo[] newColumns)
+        {
+            return newColumns
+                   .Where(it => it.PropertyName != null)
+                   .GroupBy(it => it.PropertyName?.ToLower()).Any(it => it.Count() > 1) ||
+                   newColumns
+                   .Where(it => it.DbColumnName != null)
+                   .GroupBy(it => it.DbColumnName?.ToLower())
+                   .Any(it => it.Count() > 1);
         }
 
         private List<ZeroEntityColumnInfo> ConvetSaveColumn(List<ZeroEntityColumnInfo> zeroEntityColumns)

@@ -229,7 +229,7 @@
                             <tbody v-if="tables">
                                 <tr v-for="item in tables">
                                     <td>
-                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item.Name">
+                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name"  :value="item">
                                     </td>
                                     <td>
                                         {{ item.Name }}
@@ -303,7 +303,8 @@
             tables: [],
             selectedTables: [],
             databaseId: 0,
-            database: []
+            database: [],
+            columns:[]
         },
         mounted() {
             this.fetchData("");
@@ -438,7 +439,7 @@
                 this.currentActionType.Items.forEach((item) => {
                     item.FormElements.forEach((element) => {
                         element.Value = (element.ElementType == "1")
-                            ? this.selectedTables[0] : element.Value;
+                            ? this.selectedTables[0].Name : element.Value;
                     });
                 });
 
@@ -458,14 +459,26 @@
             selectAllTables(event) {
                 if (event.target.checked) {
                     // 全选
-                    this.selectedTables = this.tables.map(item => item.Name);
+                    this.selectedTables = this.tables.map(item => item);
                 } else {
                     // 全不选
                     this.selectedTables = [];
                 }
             },
-            openAddColumn: function () {
+            openAddColumn: function (item) {
+                var th = this;
                 btnDivAddColumns.click();
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + item.Id;
+                axios.get(url)
+                    .then(response => {
+                        th.columns = response.data;
+                        if (th.columns.length == 0) {
+                            th.columns.push({ TableId: item.Id });
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
             openAddNavColumn: function ()
             {
