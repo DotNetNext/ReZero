@@ -20,6 +20,8 @@ namespace ReZero.SuperAPI
                 App.Db.Deleteable<ZeroEntityColumnInfo>().Where(it => it.TableId == tableId).ExecuteCommand();
                 var newColumns = ConvetSaveColumn(zeroEntityColumns).ToArray();
                 App.Db.Insertable(newColumns).ExecuteReturnSnowflakeId();
+                tableInfo.ColumnCount= newColumns.Length;
+                App.Db.Updateable(tableInfo).UpdateColumns(it => new { it.ColumnCount }).ExecuteCommand();
                 return true;
             }
             catch (Exception ex)

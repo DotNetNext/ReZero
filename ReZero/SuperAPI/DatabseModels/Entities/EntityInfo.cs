@@ -8,7 +8,9 @@ namespace ReZero.SuperAPI
     public class ZeroEntityInfo : DbBase
     { 
         public string?  ClassName { get; set; } 
-        public string?  DbTableName { get; set; } 
+        public string?  DbTableName { get; set; }
+        [SugarColumn(IsNullable = true)]
+        public int? ColumnCount { get; set; }
         public long DataBaseId { get; set; }
         [SugarColumn(IsNullable =true)]
         public string ? Description { get; set; }
