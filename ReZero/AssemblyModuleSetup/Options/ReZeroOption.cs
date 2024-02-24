@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero
+namespace ReZero 
 {
     /// <summary>
     /// Represents the options for the ReZero class.

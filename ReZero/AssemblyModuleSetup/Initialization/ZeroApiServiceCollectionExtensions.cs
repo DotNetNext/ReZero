@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using ReZero.ModuleSetup.Options;
 using ReZero.SuperAPI;
 using System;
 
-namespace ReZero
+namespace ReZero 
 {
-    
+
     public static partial class ReZeroServiceCollectionExtensions
     {
 
@@ -17,16 +18,16 @@ namespace ReZero
         /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
         {
-            SuperAPIModule.Init(services, options); 
+            SuperAPIModule.Init(services, options);
             return services;
         }
 
-       
-        public static IServiceCollection AddReZeroServices(this IServiceCollection services,Action<SuperAPIOptions> superAPIOptions)
+
+        public static IServiceCollection AddReZeroServices(this IServiceCollection services, Action<SuperAPIOptions> superAPIOptions)
         {
             var options = new ReZeroOptions();
             superAPIOptions(options.SuperApiOptions);
-            return AddReZeroServices(services, options);
+            return services.AddReZeroServices(options);
         }
     }
 }
