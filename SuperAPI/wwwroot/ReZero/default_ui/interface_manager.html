@@ -147,13 +147,17 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
+                                                                
                                                                 <th>列名</th>
-                                                                <th>排序</th>
+                                                                <th>显示名称</th>
+                                                                <th>删除</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <th scope="row">主表所有</th>
+                                                            <tr v-for="item in selectedColumnInfos">
+                                                               
+                                                                <td>{{item.PropertyName}}</td>
+                                                                <td>{{item.PropertyName}}</td>
                                                                 <td></td>
                                                             </tr>
                                                         </tbody>
@@ -263,28 +267,23 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" /></th>
+                                <th><input @change="selectAllColumns" type="checkbox" /></th>
                                 <th>列名</th>
-                                <th>排序</th>
+                                <th>显示名称</th> 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row"><input type="checkbox" /></th>
-                                <td>所有列</td>
-                                <td></td>
-                            </tr>
                             <tr v-for="item in columns">
-                                <th scope="row"><input type="checkbox" /></th>
+                                <th scope="row"><input name="columnIds[]" v-model="selectColumns" :alt="item.Id" :value="item.Id" type="checkbox" /></th>
                                 <td>{{item.PropertyName}}</td>
-                                <td></td>
+                                <td><input class="form-control" :value="item.PropertyName" /></td> 
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">确定</button>
+                    <button type="button" id="btnCloseAddColumns" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="saveColumns()" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -311,7 +310,9 @@
             selectedTables: [],
             databaseId: 0,
             database: [],
-            columns: []
+            columns: [],
+            selectColumns: [],
+            selectedColumnInfos:[]
         },
         mounted() {
             this.fetchData("");
@@ -489,6 +490,24 @@
             openAddNavColumn: function () {
                 alert("开发中");
             },
+            saveColumns: function () {
+
+                var th = this;
+                this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
+                btnCloseAddColumns.click();
+            },
+            saveNavColumns: function () {
+       
+            },
+            selectAllColumns(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectColumns = this.columns.map(item => item.TableId);
+                } else {
+                    // 全不选
+                    this.selectColumns = [];
+                } 
+            }, 
 
             //次要方法
             bindGroupListSelect: function () {
