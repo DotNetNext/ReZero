@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Components.Forms;
-using ReZero.ModuleSetup.Initialization;
+using Microsoft.AspNetCore.Components.Forms; 
+using ReZero;
 using ReZero.SuperAPI;
 
 var builder = WebApplication.CreateBuilder(args) ;
