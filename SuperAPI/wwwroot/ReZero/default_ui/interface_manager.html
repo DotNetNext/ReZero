@@ -14,7 +14,7 @@
                     <div class="col-md-1"><label class="form-control">分类:</label></div>
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2">
-                        <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button @c             * lick=             * "onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
                     </div>
                     <div class="col-md-2"></div>
@@ -147,7 +147,7 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                
+
                                                                 <th>列名</th>
                                                                 <th>显示名称</th>
                                                                 <th>排序号</th>
@@ -155,7 +155,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr v-for="item in selectedColumnInfos">
-                                                               
+
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.SortId}}</td>
@@ -254,7 +254,7 @@
             </div>
         </div>
     </div>
-    <!--选择主表列窗口-->
+    <!--选择简单列-->
     <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddColumns" style="display: none;">
         <button id="btnDivAddColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddColumns"></button>
         <div class="modal-dialog" role="document">
@@ -270,7 +270,7 @@
                                 <th><input @change="selectAllColumns" type="checkbox" /></th>
                                 <th>列名</th>
                                 <th>显示名称</th>
-                                <th>排序号</th> 
+                                <th>排序号</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -278,7 +278,7 @@
                                 <th scope="row"><input name="columnIds[]" v-model="selectColumns" :alt="item.Id" :value="item.Id" type="checkbox" /></th>
                                 <td>{{item.PropertyName}}</td>
                                 <td><input class="form-control" :value="item.PropertyName" /></td>
-                                <td><input v-model="item.SortId" class="form-control"   /></td>
+                                <td><input v-model="item.SortId" class="form-control" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -286,6 +286,25 @@
                 <div class="modal-footer">
                     <button type="button" id="btnCloseAddColumns" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="saveColumns()" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--追加简复杂列-->
+    <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddComplexityColumns" style="display: none;">
+        <button id="btnDivAddComplexityColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddComplexityColumns"></button>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">选择主表列</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseAddComplexityColumns" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="saveComplexityColumns()" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -324,6 +343,10 @@
             this.bindDatabaseSelect();
         },
         methods: {
+
+            /*
+               主列表逻辑开始
+            */
             fetchData(append) {
                 var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList" + append;
                 axios.get(url)
@@ -379,13 +402,20 @@
             disable: function () {
                 alert("开发中");
             },
+          
+         
 
-            //编辑接口
+            /*
+               编辑接口开始 
+            */
             openEdit: function () {
                 alert("开发中");
-            },
+            }, 
 
-            //添加接口
+            /*
+                添加接口开始
+            */
+            //1.打开和保存-添加接口
             openNext: function () {
                 this.title = this.addTitle;
                 btnNext.click();
@@ -439,7 +469,8 @@
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
                 this.currentActionTypeContext.FormElements[0].Value = item.Text;
-            },
+            }, 
+            //2.选择表逻辑-添加接口
             openImportEntity: function () {
                 btnImportEntity.click();
                 this.bindImportTables();
@@ -474,7 +505,8 @@
                     // 全不选
                     this.selectedTables = [];
                 }
-            },
+            }, 
+            //3.添加简单列逻辑-添加接口
             openAddColumn: function (item) {
                 var th = this;
                 btnDivAddColumns.click();
@@ -510,8 +542,11 @@
                     this.selectColumns = [];
                 } 
             }, 
+            //4.追加复杂列逻辑-添加接口 
 
-            //次要方法
+            /*
+                  次要方法
+            */
             bindGroupListSelect: function () {
                 axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
                     .then(response => {
@@ -566,7 +601,7 @@
                     return false;
                 }
                 return true;
-            }
+            } 
         }
     });
 </script>
