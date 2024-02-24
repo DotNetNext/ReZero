@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="SuperAPI\Entities\DTO\**" />
+    <Compile Remove="VueTemplate\**" />
     <EmbeddedResource Remove="SuperAPI\Entities\DTO\**" />
+    <EmbeddedResource Remove="VueTemplate\**" />
     <None Remove="SuperAPI\Entities\DTO\**" />
+    <None Remove="VueTemplate\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +25,6 @@
   <ItemGroup>
     <Folder Include="SuperAPI\DatabseModels\Public\" />
     <Folder Include="SuperAPI\DatabseModels\Table\" />
-    <Folder Include="VueTemplate\" />
   </ItemGroup>
 
 </Project>
