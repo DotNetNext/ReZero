@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="SuperAPI\DatabseModels\Public\" />
     <Folder Include="SuperAPI\DatabseModels\Table\" />
+    <Folder Include="VueTemplate\" />
   </ItemGroup>
 
 </Project>
