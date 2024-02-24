@@ -142,8 +142,8 @@
                                                 </template>
                                                 <!--Columns-->
                                                 <template v-if="item.ElementType==3">
-                                                    <span @click="openAddColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加列</span>
-                                                    <span @click="openAddNavColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>追加复杂列</span>
+                                                    <span @click="openAddColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加主表列</span>
+                                                    <span @click="openAddComplexityColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>追加复杂列</span>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -261,7 +261,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">选择主表列</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">选择列</h4>
                 </div>
                 <div class="modal-body">
                     <table class="table table-bordered">
@@ -297,7 +297,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">选择主表列</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">追加列</h4>
                 </div>
                 <div class="modal-body">
                     
@@ -508,6 +508,12 @@
             }, 
             //3.添加简单列逻辑-添加接口
             openAddColumn: function (item) {
+                var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
+                if (!tableValue)
+                {
+                    tools.alert("请先选择主表");
+                    return;
+                }
                 var th = this;
                 btnDivAddColumns.click();
                 if (this.selectedTables.length > 0) {
@@ -520,19 +526,13 @@
                             this.error = error.message;
                         });
                 } 
-            },
-            openAddNavColumn: function () {
-                alert("开发中");
-            },
+            }, 
             saveColumns: function () {
 
                 var th = this;
                 this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
                 btnCloseAddColumns.click();
-            },
-            saveNavColumns: function () {
-       
-            },
+            }, 
             selectAllColumns(event) {
                 if (event.target.checked) {
                     // 全选
@@ -543,7 +543,12 @@
                 } 
             }, 
             //4.追加复杂列逻辑-添加接口
-            openAddColumn: function (item) {
+            openAddComplexityColumn: function (item) {
+                var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
+                if (!tableValue) {
+                    tools.alert("请先选择主表");
+                    return;
+                }
                 var th = this;
                 btnDivAddComplexityColumns.click();
                  
