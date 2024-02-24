@@ -19,8 +19,26 @@ namespace ReZero.SuperAPI
             SetInterfaceManager();
             SetProjectManager();
             SetCodeBuilder();
+            SetDataDocument();
         }
 
+        private void SetDataDocument()
+        {
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = DataDocumentRootId;
+                it.Name = TextHandler.GetInterfaceCategoryText(DataDocumentRootId);
+                it.ParentId = Id;
+                it.Icon = "mdi mdi-file-document-box";
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = DataDocumentManagerId;
+                it.Name = TextHandler.GetInterfaceCategoryText(DataDocumentManagerId);
+                it.ParentId = DataDocumentRootId;
+                it.Url = "/rezero/data_document.html";
+            }));
+        }
         private void SetCodeBuilder()
         {
             zeroInterfaceCategory.Add(GetNewItem(it =>

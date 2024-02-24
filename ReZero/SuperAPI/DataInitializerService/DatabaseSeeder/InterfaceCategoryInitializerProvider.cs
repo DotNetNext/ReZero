@@ -122,5 +122,14 @@ namespace ReZero.SuperAPI
         public const long CodeBuilderManagerId = 400001;
         #endregion
 
+        #region Data document
+        [ChineseTextAttribute("数据文档")]
+        [EnglishTextAttribute("Data document")]
+        public const long DataDocumentRootId = 500;
+        [ChineseTextAttribute("数据文档")]
+        [EnglishTextAttribute("Data document")]
+        public const long DataDocumentManagerId = 500001;
+        #endregion
+
     }
 }
