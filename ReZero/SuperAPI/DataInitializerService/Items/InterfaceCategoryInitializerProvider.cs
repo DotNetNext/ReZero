@@ -18,6 +18,25 @@ namespace ReZero.SuperAPI
             SetIndexAndRoot();
             SetInterfaceManager();
             SetProjectManager();
+            SetCodeBuilder();
+        }
+
+        private void SetCodeBuilder()
+        {
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = CodeBuilderRootId;
+                it.Name = TextHandler.GetInterfaceCategoryText(CodeBuilderRootId);
+                it.ParentId = Id; 
+                it.Icon = "mdi mdi-codepen";
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = CodeBuilderManagerId;
+                it.Name = TextHandler.GetInterfaceCategoryText(CodeBuilderManagerId);
+                it.ParentId = CodeBuilderRootId;
+                it.Url = "/rezero/code_builder.html";
+            }));
         }
 
         private void SetIndexAndRoot()

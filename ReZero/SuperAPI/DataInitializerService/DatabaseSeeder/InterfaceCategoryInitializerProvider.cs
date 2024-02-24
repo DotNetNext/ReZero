@@ -113,5 +113,14 @@ namespace ReZero.SuperAPI
         public const long Id300006 = 300006;
         #endregion
 
+        #region Code builder
+        [ChineseTextAttribute("代码生成")]
+        [EnglishTextAttribute("Code builder")]
+        public const long CodeBuilderRootId = 400;
+        [ChineseTextAttribute("代码生成")]
+        [EnglishTextAttribute("Code builder")]
+        public const long CodeBuilderManagerId = 400001;
+        #endregion
+
     }
 }
