@@ -229,7 +229,7 @@
                             <tbody v-if="tables">
                                 <tr v-for="item in tables">
                                     <td>
-                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name"  :value="item">
+                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item">
                                     </td>
                                     <td>
                                         {{ item.Name }}
@@ -271,7 +271,7 @@
                         <tbody>
                             <tr>
                                 <th scope="row"><input type="checkbox" /></th>
-                                <td  >所有列</td>
+                                <td>所有列</td>
                                 <td></td>
                             </tr>
                             <tr v-for="item in columns">
@@ -283,8 +283,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"   class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button"  class="btn btn-primary">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -311,7 +311,7 @@
             selectedTables: [],
             databaseId: 0,
             database: [],
-            columns:[]
+            columns: []
         },
         mounted() {
             this.fetchData("");
@@ -351,7 +351,7 @@
                     // 全不选
                     this.selectedItems = [];
                 }
-            }, 
+            },
             deleteAndConfirm: function (item) {
                 if (item == null) {
                     var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterface?IsDeleted=true&Id=" + localStorage.delId;
@@ -369,7 +369,7 @@
                 } else {
                     localStorage.delId = item.Id;
                 }
-            },   
+            },
             enable: function () {
                 alert("开发中");
             },
@@ -397,7 +397,7 @@
                 btnSave.click();
                 this.currentActionTypeContext = this.currentActionType.Items[0];
                 this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
-            }, 
+            },
             addOrUpdateColumnInfoSubmit: function () {
 
                 var elementsWithValidateData = document.querySelectorAll('[validate-data]');
@@ -431,12 +431,12 @@
                             this.error = error.message;
                         });
                 }
-            }, 
+            },
             tabClick: function (index, item) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
                 this.currentActionTypeContext.FormElements[0].Value = item.Text;
-            }, 
+            },
             openImportEntity: function () {
                 btnImportEntity.click();
                 this.bindImportTables();
@@ -486,8 +486,7 @@
                         });
                 }
             },
-            openAddNavColumn: function ()
-            {
+            openAddNavColumn: function () {
                 alert("开发中");
             },
 
@@ -548,4 +547,5 @@
                 return true;
             }
         }
-    });</script>
+    });
+</script>
