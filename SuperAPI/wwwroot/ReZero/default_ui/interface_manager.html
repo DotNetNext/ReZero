@@ -14,7 +14,7 @@
                     <div class="col-md-1"><label class="form-control">分类:</label></div>
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2">
-                        <button @c             * lick=             * "onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button @click= "onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
                     </div>
                     <div class="col-md-2"></div>
@@ -519,7 +519,7 @@
                         .catch(error => {
                             this.error = error.message;
                         });
-                }
+                } 
             },
             openAddNavColumn: function () {
                 alert("开发中");
@@ -543,6 +543,11 @@
                 } 
             }, 
             //4.追加复杂列逻辑-添加接口
+            openAddColumn: function (item) {
+                var th = this;
+                btnDivAddComplexityColumns.click();
+                 
+            },
 
 
             /*
