@@ -311,13 +311,13 @@
                     <div class="card-body"> 
                         <form action="lyear_forms_elements.html" method="post" onsubmit="return false;">
                             <div class="form-group">
-                                <label for="example-nf-email">当前表关联字段</label>
+                                <label for="example-nf-email">主表字段</label>
                                 <select class="form-control">
                                     <option></option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">当前表</label>
+                                <label for="example-nf-email">关联表</label>
                                 <select class="form-control">
                                     <option></option>
                                 </select>
@@ -325,7 +325,9 @@
                             <div class="form-group">
                                 <label for="example-nf-email">关联方式</label>
                                 <select class="form-control">
-                                    <option></option>
+                                    <option>左链接 [存在相同关联会重复]</option>
+                                    <option>内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
+                                    <option>子查询 [不会重复]</option>
                                 </select>
                             </div>
                             <div class="form-group">
