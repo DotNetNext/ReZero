@@ -14,7 +14,7 @@
                     <div class="col-md-1"><label class="form-control">分类:</label></div>
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option></option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2">
-                        <button @click= "onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
                     </div>
                     <div class="col-md-2"></div>
@@ -277,7 +277,7 @@
                             <tr v-for="item in columns">
                                 <th scope="row"><input name="columnIds[]" v-model="selectColumns" :alt="item.Id" :value="item.Id" type="checkbox" /></th>
                                 <td>{{item.PropertyName}}</td>
-                                <td><input v-model="item.DbColumnName" class="form-control"   /></td>
+                                <td><input v-model="item.DbColumnName" class="form-control" /></td>
                                 <td><input v-model="item.SortId" class="form-control" /></td>
                             </tr>
                         </tbody>
@@ -300,7 +300,14 @@
                     <h4 class="modal-title" id="exampleModalLabel">追加列</h4>
                 </div>
                 <div class="modal-body">
-                    
+                    <div class="card">
+                        <ul class="nav nav-tabs page-tabs">
+                            <li class="active"><a href="#!">联表字段</a></li> 
+                            <li class=""><a href="#!">函数字段</a></li>
+                            <li class=""> <a href="#!">导航对象</a></li>
+                            <li class=""><a href="#!">开发中</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnCloseAddComplexityColumns" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -333,7 +340,7 @@
             database: [],
             columns: [],
             selectColumns: [],
-            selectedColumnInfos:[]
+            selectedColumnInfos: []
         },
         mounted() {
             this.fetchData("");
@@ -345,7 +352,7 @@
         methods: {
 
             /*
-               主列表逻辑 
+               主列表逻辑
             */
             fetchData(append) {
                 var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList" + append;
@@ -402,18 +409,18 @@
             disable: function () {
                 alert("开发中");
             },
-          
-          
+
+
             /*
-               编辑接口 
+               编辑接口
             */
             openEdit: function () {
                 alert("开发中");
-            }, 
-             
+            },
+
 
             /*
-                添加接口 
+                添加接口
             */
             //1.打开和保存-添加接口
             openNext: function () {
@@ -469,7 +476,7 @@
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
                 this.currentActionTypeContext.FormElements[0].Value = item.Text;
-            }, 
+            },
             //2.选择表逻辑-添加接口
             openImportEntity: function () {
                 btnImportEntity.click();
@@ -505,12 +512,11 @@
                     // 全不选
                     this.selectedTables = [];
                 }
-            }, 
+            },
             //3.添加简单列逻辑-添加接口
             openAddColumn: function (item) {
                 var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
-                if (!tableValue)
-                {
+                if (!tableValue) {
                     tools.alert("请先选择主表");
                     return;
                 }
@@ -525,14 +531,14 @@
                         .catch(error => {
                             this.error = error.message;
                         });
-                } 
-            }, 
+                }
+            },
             saveColumns: function () {
 
                 var th = this;
                 this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
                 btnCloseAddColumns.click();
-            }, 
+            },
             selectAllColumns(event) {
                 if (event.target.checked) {
                     // 全选
@@ -540,8 +546,8 @@
                 } else {
                     // 全不选
                     this.selectColumns = [];
-                } 
-            }, 
+                }
+            },
             //4.追加复杂列逻辑-添加接口
             openAddComplexityColumn: function (item) {
                 var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
@@ -551,7 +557,7 @@
                 }
                 var th = this;
                 btnDivAddComplexityColumns.click();
-                 
+
             },
 
 
@@ -612,7 +618,7 @@
                     return false;
                 }
                 return true;
-            } 
+            }
         }
     });
 </script>
