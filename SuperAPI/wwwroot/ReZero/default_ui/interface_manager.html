@@ -319,7 +319,7 @@
                             <div class="form-group">
                                 <label for="example-nf-email">关联表</label>
                                 <select class="form-control">
-                                    <option></option>
+                                    <option v-if="tables&&tables.length>0" v-for="item in tables">{{item.Name}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
