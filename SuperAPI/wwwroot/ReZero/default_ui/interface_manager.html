@@ -310,21 +310,21 @@
                     </div>
                     <div class="card-body tabbox">  
                             <div class="form-group">
-                                <label for="example-nf-email">主表字段</label>
+                                <label for="example-nf-email">主表字段 <span class="red">*</span></label>
                                 <select name="MasterField"  class="form-control">
                                     <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联表</label>
+                                <label for="example-nf-email">关联表 <span class="red">*</span></label>
                                 <input v-model="copcol_selectedValue" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
                                 <datalist id="browsers">
                                     <option v-if="tables&&tables.length>0" v-for="item in tables" :value="item.Name">{{item.Name}}</option>
                                 </datalist> 
                                 <button class="btn btn-xs btn-primary removedatalist" @click="clearJoinTable"><i class="mdi mdi-do-not-disturb"></i>删除选定项</button>
                             </div>
-                            <div class="form-group">
-                                <label for="example-nf-email">关联方式</label>
+                            <div class="form-group"> 
+                                <label for="example-nf-email">关联方式<span class="red">*</span></label>
                                 <select name="joinType" class="form-control">
                                     <option value="0">左链接 [存在相同关联会重复]</option>
                                     <option value="1">内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
@@ -332,7 +332,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联字段</label>
+                                <label for="example-nf-email">关联字段 <span class="red">*</span></label>
                                 <select name="joinField" class="form-control">
                                     <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
                                 </select>
