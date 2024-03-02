@@ -313,7 +313,7 @@
                             <div class="form-group">
                                 <label for="example-nf-email">主表字段</label>
                                 <select class="form-control">
-                                    <option></option>
+                                    <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -559,17 +559,8 @@
                     return;
                 }
                 var th = this;
-                btnDivAddColumns.click();
-                if (this.selectedTables.length > 0) {
-                    var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
-                    axios.get(url)
-                        .then(response => {
-                            th.columns = response.data;
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                        });
-                }
+                btnDivAddColumns.click(); 
+                this.SetColumns();
             },
             saveColumns: function () {
 
@@ -594,10 +585,10 @@
                     return;
                 }
                 var th = this;
+                this.SetColumns();
                 btnDivAddComplexityColumns.click();
 
-            },
-
+            }, 
 
             /*
                   次要方法
@@ -646,6 +637,19 @@
                         this.data = null;
                     });
             },
+            SetColumns: function () {
+                var th = this;
+                if (this.selectedTables.length > 0) {
+                    var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
+                    axios.get(url)
+                        .then(response => {
+                            th.columns = response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                        });
+                }
+            },
             validateElement: function (element, attributeValue) {
                 if (attributeValue.IsRequired && !element.value) {
                     tools.alert(attributeValue.Text + "不能为空");
@@ -657,6 +661,7 @@
                 }
                 return true;
             }
+
         }
     });
 </script>
