@@ -318,9 +318,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联表</label>
-                                <select class="form-control">
-                                    <option v-if="tables&&tables.length>0" v-for="item in tables">{{item.Name}}</option>
-                                </select>
+                                <input  @change="changeJoinTable"  class="form-control" list="browsers" name="browser">
+                                <datalist id="browsers">
+                                    <option v-if="tables&&tables.length>0"  v-for="item in tables">{{item.Name}}</option>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联方式</label>
@@ -588,7 +589,11 @@
                 this.SetColumns();
                 btnDivAddComplexityColumns.click();
 
-            }, 
+            },
+            changeJoinTable: function ()
+            {
+                alert(1);
+            },
 
             /*
                   次要方法
