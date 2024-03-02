@@ -377,6 +377,7 @@
             databaseId: 0,
             database: [],
             columns: [],
+            joinColumns:[],
             selectColumns: [],
             selectedColumnInfos: [],
 
@@ -563,7 +564,7 @@
                 }
                 var th = this;
                 btnDivAddColumns.click(); 
-                this.SetColumns();
+                this.setColumns();
             },
             saveColumns: function () {
 
@@ -588,18 +589,20 @@
                     return;
                 }
                 var th = this;
-                this.SetColumns();
+                this.setColumns();
                 btnDivAddComplexityColumns.click();
 
             },
             changeJoinTable: function ()
             {
-                alert(copcol_selectedValue);
+                this.setJoinColumns();
             },
             clearJoinTable: function ()
             {
                 this.copcol_selectedValue = null;
             },
+
+
             /*
                   次要方法
             */
@@ -647,13 +650,27 @@
                         this.data = null;
                     });
             },
-            SetColumns: function () {
+            setColumns: function () {
                 var th = this;
                 if (this.selectedTables.length > 0) {
                     var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
                     axios.get(url)
                         .then(response => {
                             th.columns = response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                        });
+                }
+            },
+            setJoinColumns: function () {
+                var th = this;
+                var tableId = this.copcol_selectedValue;
+                if (this.selectedTables.length > 0) {
+                    var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
+                    axios.get(url)
+                        .then(response => {
+                            th.joinColumns = response.data;
                         })
                         .catch(error => {
                             this.error = error.message;
