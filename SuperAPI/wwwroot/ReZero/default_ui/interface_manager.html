@@ -319,7 +319,7 @@
                                 <label for="example-nf-email">关联表</label>
                                 <input v-model="copcol_selectedValue" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
                                 <datalist id="browsers">
-                                    <option v-if="tables&&tables.length>0" v-for="item in tables">{{item.Name}}</option>
+                                    <option v-if="tables&&tables.length>0" v-for="item in tables" :value="item.Name">{{item.Name}}</option>
                                 </datalist> 
                                 <button class="btn btn-xs btn-primary removedatalist" @click="clearJoinTable"><i class="mdi mdi-do-not-disturb"></i>删除选定项</button>
                             </div>
@@ -334,7 +334,7 @@
                             <div class="form-group">
                                 <label for="example-nf-email">关联字段</label>
                                 <select name="joinField" class="form-control">
-                                    <option></option>
+                                    <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -600,6 +600,7 @@
             clearJoinTable: function ()
             {
                 this.copcol_selectedValue = null;
+                this.joinColumns = [];
             },
 
 
@@ -666,6 +667,9 @@
             setJoinColumns: function () {
                 var th = this;
                 var tableId = this.copcol_selectedValue;
+                tableId = this.tables.find(function (item) {
+                    return item.Name === tableId;
+                }).Id;
                 if (this.selectedTables.length > 0) {
                     var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
                     axios.get(url)
