@@ -308,44 +308,43 @@
                             <li class=""><a href="#!">更多开发中</a></li>
                         </ul>
                     </div>
-                    <div class="card-body tabbox"> 
-                      
+                    <div class="card-body tabbox">  
                             <div class="form-group">
                                 <label for="example-nf-email">主表字段</label>
-                                <select class="form-control">
+                                <select name="MasterField"  class="form-control">
                                     <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联表</label>
-                                <input  @change="changeJoinTable"  class="form-control" list="browsers" name="browser">
+                                <input v-model="copcol_selectedValue" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
                                 <datalist id="browsers">
-                                    <option v-if="tables&&tables.length>0"  v-for="item in tables">{{item.Name}}</option>
-                                </datalist>
+                                    <option v-if="tables&&tables.length>0" v-for="item in tables">{{item.Name}}</option>
+                                </datalist> 
+                                <button class="btn btn-xs btn-primary" @click="clearJoinTable"><i class="mdi mdi-do-not-disturb"></i>删除选定项</button>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联方式</label>
-                                <select class="form-control">
-                                    <option>左链接 [存在相同关联会重复]</option>
-                                    <option>内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
-                                    <option>子查询 [不会重复]</option>
+                                <select name="joinType" class="form-control">
+                                    <option value="0">左链接 [存在相同关联会重复]</option>
+                                    <option value="1">内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
+                                    <option value="2">子查询 [不会重复]</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联字段</label>
-                                <select class="form-control">
+                                <select name="joinField" class="form-control">
                                     <option></option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">显示名称</label>
-                                <input class="form-control" />
+                                <input name="Name" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">排序号</label>
-                                <input class="form-control" />
-                            </div> 
-
+                                <input name="Sort" class="form-control" />
+                            </div>  
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -379,7 +378,10 @@
             database: [],
             columns: [],
             selectColumns: [],
-            selectedColumnInfos: []
+            selectedColumnInfos: [],
+
+            //ComplexityColumn
+            copcol_selectedValue: null  
         },
         mounted() {
             this.fetchData("");
@@ -592,9 +594,12 @@
             },
             changeJoinTable: function ()
             {
-                alert(1);
+                alert(copcol_selectedValue);
             },
-
+            clearJoinTable: function ()
+            {
+                this.copcol_selectedValue = null;
+            },
             /*
                   次要方法
             */
@@ -669,4 +674,15 @@
 
         }
     });
+    function clearDataListById(id) {
+        var datalist = document.getElementById(id);
+        if (datalist) {
+            // 清空datalist中的所有选项  
+            while (datalist.firstChild) {
+                datalist.removeChild(datalist.firstChild);
+            }
+        } else {
+            console.warn(`No datalist found with ID: ${id}`); // 如果没有找到datalist，则输出警告  
+        }
+    }  
 </script>
