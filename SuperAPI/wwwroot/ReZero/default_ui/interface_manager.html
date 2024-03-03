@@ -659,11 +659,17 @@
             },
             openOrderByColumn: function ()
             {
-                alert("添加排序")
+                if (!this.validateColumsAny())
+                {
+                    alert("请选择列后在选择排序");
+                }
             },
             openWhereColumn: function ()
             {
-                alert("添加条件")
+                if (!this.validateColumsAny())
+                {
+                    alert("请选择列后在选择条件");
+                }
             },
 
             /*
@@ -753,6 +759,10 @@
                     return false;
                 }
                 return true;
+            },
+            validateColumsAny: function ()
+            {
+                return (this.selectedColumnInfos.length + this.selectedComplexityColumnInfos.length) > 0;
             }
 
         }
