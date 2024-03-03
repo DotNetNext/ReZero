@@ -151,6 +151,7 @@
                                                                 <th>列名</th>
                                                                 <th>显示名称</th>
                                                                 <th>排序号</th>
+                                                                <th>删除</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -159,6 +160,14 @@
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.DbColumnName}}</td>
                                                                 <td>{{item.SortId}}</td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr v-for="item in selectedComplexityColumnInfos">
+
+                                                                <td>{{item.PropertyName}}</td>
+                                                                <td>{{item.DbColumnName}}</td>
+                                                                <td>{{item.SortId}}</td>
+                                                                <td></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -308,48 +317,54 @@
                             <li class=""><a href="#!">更多开发中</a></li>
                         </ul>
                     </div>
-                    <div class="card-body tabbox">  
-                            <div class="form-group">
-                                <label for="example-nf-email">主表字段 <span class="red">*</span></label>
-                                <select  v-model="copcol_MasterField" name="MasterField"  class="form-control">
-                                    <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="example-nf-email">关联表 <span class="red">*</span></label>
-                                <input v-model="copcol_JoinTable" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
-                                <datalist id="browsers">
-                                    <option v-if="tables&&tables.length>0" v-for="item in tables" :value="item.Name">{{item.Name}}</option>
-                                </datalist> 
-                                <button class="btn btn-xs btn-primary removedatalist" @click="clearJoinTable"><i class="mdi mdi-do-not-disturb"></i>删除选定项</button>
-                            </div>
-                            <div class="form-group"> 
-                                <label for="example-nf-email">关联方式<span class="red">*</span></label>
-                                <select  v-model="copcol_joinType" name="joinType" class="form-control">
-                                    <option value="0">左链接 [存在相同关联会重复]</option>
-                                    <option value="1">内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
-                                    <option value="2">子查询 [不会重复]</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="example-nf-email">关联字段 <span class="red">*</span></label>
-                                <select   v-model="copcol_joinField" name="joinField" class="form-control">
-                                    <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="example-nf-email">显示名称</label>
-                                <input  v-model="copcol_Name" name="Name" placeholder="默认字段名" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="example-nf-email">排序号</label>
-                                <input  v-model="copcol_SortId" name="Sort" class="form-control" />
-                            </div>  
+                    <div class="card-body tabbox">
+                        <div class="form-group">
+                            <label for="example-nf-email">主表字段 <span class="red">*</span></label>
+                            <select v-model="copcol_MasterField" name="MasterField" class="form-control">
+                                <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-nf-email">关联表 <span class="red">*</span></label>
+                            <input v-model="copcol_JoinTable" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
+                            <datalist id="browsers">
+                                <option v-if="tables&&tables.length>0" v-for="item in tables" :value="item.Name">{{item.Name}}</option>
+                            </datalist>
+                            <button class="btn btn-xs btn-primary removedatalist" @click="clearJoinTable"><i class="mdi mdi-do-not-disturb"></i>删除选定项</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-nf-email">关联方式<span class="red">*</span></label>
+                            <select v-model="copcol_joinType" name="joinType" class="form-control">
+                                <option value="LeftJoin">左链接 [存在相同关联会重复]</option>
+                                <option value="InnerJoin">内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
+                                <option value="SubqueryJoin">子查询 [不会重复]</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-nf-email">关联字段 <span class="red">*</span></label>
+                            <select v-model="copcol_joinField" name="joinField" class="form-control">
+                                <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-nf-email">关联显示字段 <span class="red">*</span></label>
+                            <select v-model="copcol_ShowField" name="joinField" class="form-control">
+                                <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-nf-email">关联显示字段名称</label>
+                            <input v-model="copcol_Name" name="Name" placeholder="关联显示字段" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="example-nf-email">排序号</label>
+                            <input v-model="copcol_SortId" name="Sort" class="form-control" />
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnCloseAddComplexityColumns" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="saveComplexityColumns()" class="btn btn-primary">确定</button>
+                    <button type="button" @click="saveComplexityColumns" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -380,7 +395,7 @@
             joinColumns:[],
             selectColumns: [],
             selectedColumnInfos: [],
-
+            selectedComplexityColumnInfos:[],
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -388,6 +403,7 @@
             copcol_joinField: null,
             copcol_SortId: null,
             copcol_Name: null,
+            copcol_ShowField:null
         },
         mounted() {
             this.fetchData("");
@@ -607,8 +623,20 @@
                 this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-            saveComplexityColumns: function () {
-                alert(1);
+            saveComplexityColumns: function () { 
+                var addItem = {
+                    PropertyName:
+                        document.querySelectorAll('[name=TableId]')[0].value + " " +
+                        this.copcol_joinType + " " +
+                        this.copcol_JoinTable + " ON "+
+                        document.querySelectorAll('[name=TableId]')[0].value+"."+this.copcol_MasterField +"="+
+                        this.copcol_JoinTable + "."+
+                        this.copcol_joinField + "" ,
+                    DbColumnName: this.copcol_JoinTable+"."+this.copcol_ShowField+" AS "+(this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
+                    SortId:1
+                };
+                this.selectedComplexityColumnInfos.push(addItem)
+                btnCloseAddComplexityColumns.click();
             },
 
             /*
