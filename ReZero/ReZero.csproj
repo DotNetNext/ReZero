@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SuperAPI\DatabseModels\Public\**" />
+    <Compile Remove="SuperAPI\DatabseModels\Table\**" />
     <Compile Remove="SuperAPI\Entities\DTO\**" />
     <Compile Remove="VueTemplate\**" />
+    <EmbeddedResource Remove="SuperAPI\DatabseModels\Public\**" />
+    <EmbeddedResource Remove="SuperAPI\DatabseModels\Table\**" />
     <EmbeddedResource Remove="SuperAPI\Entities\DTO\**" />
     <EmbeddedResource Remove="VueTemplate\**" />
+    <None Remove="SuperAPI\DatabseModels\Public\**" />
+    <None Remove="SuperAPI\DatabseModels\Table\**" />
     <None Remove="SuperAPI\Entities\DTO\**" />
     <None Remove="VueTemplate\**" />
   </ItemGroup>
@@ -20,11 +26,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="SqlSugarCore" Version="5.1.4.131-preview01" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SuperAPI\DatabseModels\Public\" />
-    <Folder Include="SuperAPI\DatabseModels\Table\" />
   </ItemGroup>
 
 </Project>
