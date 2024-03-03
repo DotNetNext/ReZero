@@ -311,13 +311,13 @@
                     <div class="card-body tabbox">  
                             <div class="form-group">
                                 <label for="example-nf-email">主表字段 <span class="red">*</span></label>
-                                <select name="MasterField"  class="form-control">
+                                <select  v-model="copcol_MasterField" name="MasterField"  class="form-control">
                                     <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联表 <span class="red">*</span></label>
-                                <input v-model="copcol_selectedValue" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
+                                <input v-model="copcol_JoinTable" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
                                 <datalist id="browsers">
                                     <option v-if="tables&&tables.length>0" v-for="item in tables" :value="item.Name">{{item.Name}}</option>
                                 </datalist> 
@@ -325,7 +325,7 @@
                             </div>
                             <div class="form-group"> 
                                 <label for="example-nf-email">关联方式<span class="red">*</span></label>
-                                <select name="joinType" class="form-control">
+                                <select  v-model="copcol_joinType" name="joinType" class="form-control">
                                     <option value="0">左链接 [存在相同关联会重复]</option>
                                     <option value="1">内链接 [存在相同关联会重复+子表不存在主表也不显示]</option>
                                     <option value="2">子查询 [不会重复]</option>
@@ -333,17 +333,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联字段 <span class="red">*</span></label>
-                                <select name="joinField" class="form-control">
+                                <select   v-model="copcol_joinField" name="joinField" class="form-control">
                                     <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">显示名称</label>
-                                <input name="Name" placeholder="默认字段名" class="form-control" />
+                                <input  v-model="copcol_Name" name="Name" placeholder="默认字段名" class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">排序号</label>
-                                <input name="Sort" class="form-control" />
+                                <input  v-model="copcol_SortId" name="Sort" class="form-control" />
                             </div>  
                     </div>
                 </div>
@@ -382,7 +382,12 @@
             selectedColumnInfos: [],
 
             //ComplexityColumn
-            copcol_selectedValue: null  
+            copcol_JoinTable: null,
+            copcol_MasterField: null,
+            copcol_joinType: null,
+            copcol_joinField: null,
+            copcol_SortId: null,
+            copcol_Name: null,
         },
         mounted() {
             this.fetchData("");
@@ -599,10 +604,12 @@
             },
             clearJoinTable: function ()
             {
-                this.copcol_selectedValue = null;
+                this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-
+            saveComplexityColumns: function () {
+                alert(1);
+            },
 
             /*
                   次要方法
@@ -666,7 +673,7 @@
             },
             setJoinColumns: function () {
                 var th = this;
-                var tableId = this.copcol_selectedValue;
+                var tableId = this.copcol_JoinTable;
                 tableId = this.tables.find(function (item) {
                     return item.Name === tableId;
                 }).Id;
