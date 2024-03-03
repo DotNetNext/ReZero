@@ -148,6 +148,8 @@
                                                 <template v-if="item.ElementType==3">
                                                     <span @click="openAddColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加主表列</span>
                                                     <span @click="openAddComplexityColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>追加复杂列</span>
+                                                    <span @click="openOrderByColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加排序</span>
+                                                    <span @click="openWhereColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加条件</span>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -654,6 +656,14 @@
             DeleteComplexitySelectedColumn: function (item)
             {
                 this.selectedComplexityColumnInfos.removeArrayItem(item)
+            },
+            openOrderByColumn: function ()
+            {
+                alert("添加排序")
+            },
+            openWhereColumn: function ()
+            {
+                alert("添加条件")
             },
 
             /*
