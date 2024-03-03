@@ -160,14 +160,22 @@
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.DbColumnName}}</td>
                                                                 <td>{{item.SortId}}</td>
-                                                                <td></td>
+                                                                <td>
+                                                                    <button @click="DeleteSelectedColumn(item)" type="button" class="btn btn-link">
+                                                                        <i class="mdi mdi-do-not-disturb"></i> 删除
+                                                                    </button>
+                                                                </td>
                                                             </tr>
                                                             <tr v-for="item in selectedComplexityColumnInfos">
 
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.DbColumnName}}</td>
                                                                 <td>{{item.SortId}}</td>
-                                                                <td></td>
+                                                                <td>
+                                                                    <button @click="DeleteComplexitySelectedColumn(item)" type="button" class="btn btn-link">
+                                                                        <i class="mdi mdi-do-not-disturb"></i> 删除
+                                                                    </button>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -311,7 +319,7 @@
                 <div class="modal-body">
                     <div class="card p-b-0 m-b-0">
                         <ul class="nav nav-tabs page-tabs">
-                            <li class=""><a href="#!">联表字段</a></li> 
+                            <li class=""><a href="#!">联表字段</a></li>
                             <li class=""><a href="#!">函数字段</a></li>
                             <li class=""> <a href="#!">导航对象</a></li>
                             <li class=""><a href="#!">更多开发中</a></li>
@@ -392,10 +400,10 @@
             databaseId: 0,
             database: [],
             columns: [],
-            joinColumns:[],
+            joinColumns: [],
             selectColumns: [],
             selectedColumnInfos: [],
-            selectedComplexityColumnInfos:[],
+            selectedComplexityColumnInfos: [],
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -403,7 +411,7 @@
             copcol_joinField: null,
             copcol_SortId: null,
             copcol_Name: null,
-            copcol_ShowField:null
+            copcol_ShowField: null
         },
         mounted() {
             this.fetchData("");
@@ -584,7 +592,7 @@
                     return;
                 }
                 var th = this;
-                btnDivAddColumns.click(); 
+                btnDivAddColumns.click();
                 this.setColumns();
             },
             saveColumns: function () {
@@ -614,29 +622,34 @@
                 btnDivAddComplexityColumns.click();
 
             },
-            changeJoinTable: function ()
-            {
+            changeJoinTable: function () {
                 this.setJoinColumns();
             },
-            clearJoinTable: function ()
-            {
+            clearJoinTable: function () {
                 this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-            saveComplexityColumns: function () { 
+            saveComplexityColumns: function () {
                 var addItem = {
                     PropertyName:
                         document.querySelectorAll('[name=TableId]')[0].value + " " +
                         this.copcol_joinType + " " +
-                        this.copcol_JoinTable + " ON "+
-                        document.querySelectorAll('[name=TableId]')[0].value+"."+this.copcol_MasterField +"="+
-                        this.copcol_JoinTable + "."+
-                        this.copcol_joinField + "" ,
-                    DbColumnName: this.copcol_JoinTable+"."+this.copcol_ShowField+" AS "+(this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
-                    SortId:1
+                        this.copcol_JoinTable + " ON " +
+                        document.querySelectorAll('[name=TableId]')[0].value + "." + this.copcol_MasterField + "=" +
+                        this.copcol_JoinTable + "." +
+                        this.copcol_joinField + "",
+                    DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
+                    SortId: 1
                 };
                 this.selectedComplexityColumnInfos.push(addItem)
                 btnCloseAddComplexityColumns.click();
+            },
+            DeleteSelectedColumn: function (item) {
+                this.selectedColumnInfos.removeArrayItem(item)
+            },
+            DeleteComplexitySelectedColumn: function (item)
+            {
+                this.selectedComplexityColumnInfos.removeArrayItem(item)
             },
 
             /*
@@ -733,12 +746,12 @@
     function clearDataListById(id) {
         var datalist = document.getElementById(id);
         if (datalist) {
-            // 清空datalist中的所有选项  
+            // 清空datalist中的所有选项
             while (datalist.firstChild) {
                 datalist.removeChild(datalist.firstChild);
             }
         } else {
-            console.warn(`No datalist found with ID: ${id}`); // 如果没有找到datalist，则输出警告  
+            console.warn(`No datalist found with ID: ${id}`); // 如果没有找到datalist，则输出警告
         }
-    }  
+    }
 </script>
