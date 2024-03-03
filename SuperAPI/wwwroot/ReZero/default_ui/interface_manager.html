@@ -2,6 +2,7 @@
 <link href="css/page_table_list.css" rel="stylesheet" />
 <link href="css/page_interface_manager.css" rel="stylesheet" />
 <div id="apibox" class="card">
+    <!--主列表搜索-->
     <div class="search-bar">
 
         <form id="frmSearach" action="lyear_forms_elements.html" method="post" onsubmit="return false;">
@@ -23,6 +24,7 @@
         </form>
 
     </div>
+    <!--主表列表操作按钮-->
     <div class="card-toolbar clearfix">
         <div class="toolbar-btn-action">
             <a class="btn btn-primary m-r-5" @click="openNext()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
@@ -30,6 +32,7 @@
             <a class="btn btn-warning m-r-5" @click="disable()" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
         </div>
     </div>
+    <!--主列表-->
     <div class="card-body">
 
         <h5> </h5>
@@ -72,6 +75,7 @@
         </div>
 
     </div>
+    <!--分页局部视图-->
     @@page_control.html
     <!--保存前选分类-->
     <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divBefore" style="display: none;">
