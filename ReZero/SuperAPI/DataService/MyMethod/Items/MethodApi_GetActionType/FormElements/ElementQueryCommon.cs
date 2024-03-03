@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using ReZero.SuperAPI;
@@ -14,7 +15,32 @@ namespace ReZero.SuperAPI
             base.AddActionTypeFormElementModels(result);
             base.AddActionTypeElementModel(result, this);
             this.AddElements(result);
+            result = result.OrderBy(it => GetSprt(it)).ToList();
             return result;
+        }
+
+        private static int GetSprt(ActionTypeFormElementModel it)
+        {
+            if (it.ElementType == ElementType.Columns)
+            {
+                return 0;
+            } 
+            else if (it.ElementType == ElementType.Page)
+            {
+                return 0;
+            }
+            else if (it.ElementType == ElementType.Table)
+            {
+                return 0;
+            } 
+            else if (it.Name == "Name")
+            {
+                return -100;
+            }
+            else
+            {
+                return 1;
+            }
         }
 
         private void AddElements(List<ActionTypeFormElementModel> result)
