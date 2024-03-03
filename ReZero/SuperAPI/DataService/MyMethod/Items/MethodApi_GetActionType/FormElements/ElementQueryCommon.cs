@@ -33,9 +33,13 @@ namespace ReZero.SuperAPI
             {
                 return 0;
             } 
-            else if (it.Name == "Name")
+            else if (it.Name == nameof(ZeroInterfaceList.Name))
             {
                 return -100;
+            }
+            else if (it.Name == nameof(ZeroInterfaceList.InterfaceCategoryId))
+            {
+                return -99;
             }
             else
             {
