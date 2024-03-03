@@ -746,16 +746,5 @@
             }
 
         }
-    });
-    function clearDataListById(id) {
-        var datalist = document.getElementById(id);
-        if (datalist) {
-            // 清空datalist中的所有选项
-            while (datalist.firstChild) {
-                datalist.removeChild(datalist.firstChild);
-            }
-        } else {
-            console.warn(`No datalist found with ID: ${id}`); // 如果没有找到datalist，则输出警告
-        }
-    }
+    }); 
 </script>
