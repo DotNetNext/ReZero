@@ -392,8 +392,32 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">添加排序</h4>
                 </div>
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <div class="card-body tabbox">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>列名</th>
+                                    <th>排序方式</th>
+                                    <th>排序号</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in selectedOrderBys">
+                                    <td>{{item.Name}}<input type="hidden" v-model="item.Name" /> </td>
+                                    <td>
+                                        <select v-model="item.OrderByType" class="form-control">
+                                            <option>不排序</option>
+                                            <option value="ASC">正序</option>
+                                            <option value="DESC">倒序</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input v-model="item.SortId" class="form-control" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -412,7 +436,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="exampleModalLabel">添加条件</h4>
                 </div>
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <div class="card-body tabbox">
                     </div>
                 </div>
@@ -449,6 +473,7 @@
             joinColumns: [],
             selectColumns: [],
             selectedColumnInfos: [],
+            selectedOrderBys: [],
             selectedComplexityColumnInfos: [],
             //ComplexityColumn
             copcol_JoinTable: null,
@@ -693,32 +718,30 @@
             DeleteSelectedColumn: function (item) {
                 this.selectedColumnInfos.removeArrayItem(item)
             },
-            DeleteComplexitySelectedColumn: function (item)
-            {
+            DeleteComplexitySelectedColumn: function (item) {
                 this.selectedComplexityColumnInfos.removeArrayItem(item)
             },
-            openOrderByColumn: function ()
-            {
-                if (!this.validateColumsAny())
-                {
+            openOrderByColumn: function () {
+                if (!this.validateColumsAny()) {
                     tools.alert("请选择列后在选择排序");
+                    return;
                 }
+                this.selectedOrderBys = this.selectedColumnInfos.map(it => ({
+                    Name: it.DbColumnName
+                }));
                 btnAddOrderBy.click();
             },
-            saveBtnOrderBy: function ()
-            {
+            saveBtnOrderBy: function () {
                 btnCloseAddOrderBy.click();
             },
-            openWhereColumn: function ()
-            {
-                if (!this.validateColumsAny())
-                {
+            openWhereColumn: function () {
+                if (!this.validateColumsAny()) {
                     tools.alert("请选择列后在选择条件");
+                    return;
                 }
                 btnAddWhere.click();
             },
-            saveBtnWhere: function ()
-            {
+            saveBtnWhere: function () {
                 btnCloseAddWhere.click();
             },
             /*
@@ -809,11 +832,10 @@
                 }
                 return true;
             },
-            validateColumsAny: function ()
-            {
+            validateColumsAny: function () {
                 return (this.selectedColumnInfos.length + this.selectedComplexityColumnInfos.length) > 0;
             }
 
         }
-    }); 
+    });
 </script>
