@@ -420,11 +420,17 @@
                         </table>
                         <div>
                             <div>
-                                <p>
-                                    <input v-model="selectedOrderBys_EnableSort" type="checkbox" /> 允许URL覆盖上面排序
+                                <p class="example-box">
+                                    <label class="lyear-checkbox">
+                                        <input v-model="selectedOrderBys_EnableSort" type="checkbox" /> <span class="p-l-15">允许URL覆盖上面排序</span>
+                                    </label>
                                 </p>
-                                <p>参数OrderByName生效：值为上面列名或者为空</p>
-                                <p>参数OrderByType生效：值为ASC或者DESC</p>
+                                <p>
+                                    <code>参数OrderByName生效：值为上面列名或者为空</code>
+                                </p>
+                                <p>
+                                    <code>参数OrderByType生效：值为ASC或者DESC</code>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -681,6 +687,7 @@
                 var th = this;
                 this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
                 btnCloseAddColumns.click();
+                this.clearOrderBy();
             },
             selectAllColumns(event) {
                 if (event.target.checked) {
@@ -724,6 +731,7 @@
                 };
                 this.selectedComplexityColumnInfos.push(addItem)
                 btnCloseAddComplexityColumns.click();
+                this.clearOrderBy();
             },
             DeleteSelectedColumn: function (item) {
                 this.selectedColumnInfos.removeArrayItem(item)
@@ -846,6 +854,10 @@
             },
             validateColumsAny: function () {
                 return (this.selectedColumnInfos.length + this.selectedComplexityColumnInfos.length) > 0;
+            },
+            clearOrderBy: function () {
+                this.selectedOrderBys = [];
+                this.selectedOrderBys_EnableSort = false;
             }
 
         }
