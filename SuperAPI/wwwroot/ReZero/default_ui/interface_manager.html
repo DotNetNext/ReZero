@@ -277,7 +277,7 @@
             </div>
         </div>
     </div>
-    <!--创建接口子窗体：选择简单列-->
+    <!--创建接口子窗体：添加简单列-->
     <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddColumns" style="display: none;">
         <button id="btnDivAddColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddColumns"></button>
         <div class="modal-dialog border3CCC" role="document">
@@ -315,7 +315,7 @@
     </div>
     <!--创建接口子窗体：追加简复杂列-->
     <div class="modal fade  bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddComplexityColumns" style="display: none;">
-        <button id="btnDivAddComplexityColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddComplexityColumns"></button>
+        <button id="btnAddComplexityColumns" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddComplexityColumns"></button>
         <div class="modal-dialog  border3CCC" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
@@ -379,6 +379,46 @@
                 <div class="modal-footer">
                     <button type="button" id="btnCloseAddComplexityColumns" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="saveComplexityColumns" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--创建接口子窗体：添加排序-->
+    <div class="modal fade  bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddOrderBy" style="display: none;">
+        <button id="btnAddOrderBy" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddOrderBy"></button>
+        <div class="modal-dialog  border3CCC" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">添加排序</h4>
+                </div>
+                <div class="modal-body"> 
+                    <div class="card-body tabbox">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseAddOrderBy" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="saveBtnOrderBy" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--创建接口子窗体：添加条件-->
+    <div class="modal fade  bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddWhere" style="display: none;">
+        <button id="btnAddWhere" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddWhere"></button>
+        <div class="modal-dialog  border3CCC" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">添加条件</h4>
+                </div>
+                <div class="modal-body"> 
+                    <div class="card-body tabbox">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseAddWhere" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="saveBtnWhere" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -625,7 +665,7 @@
                 }
                 var th = this;
                 this.setColumns();
-                btnDivAddComplexityColumns.click();
+                btnAddComplexityColumns.click();
 
             },
             changeJoinTable: function () {
@@ -663,6 +703,11 @@
                 {
                     tools.alert("请选择列后在选择排序");
                 }
+                btnAddOrderBy.click();
+            },
+            saveBtnOrderBy: function ()
+            {
+                btnCloseAddOrderBy.click();
             },
             openWhereColumn: function ()
             {
@@ -670,8 +715,12 @@
                 {
                     tools.alert("请选择列后在选择条件");
                 }
+                btnAddWhere.click();
             },
-
+            saveBtnWhere: function ()
+            {
+                btnCloseAddWhere.click();
+            },
             /*
                   次要方法
             */
