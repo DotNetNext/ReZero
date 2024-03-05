@@ -418,6 +418,15 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div>
+                            <div>
+                                <p>
+                                    <input v-model="selectedOrderBys_EnableSort" type="checkbox" /> 允许URL覆盖上面排序
+                                </p>
+                                <p>参数OrderByName生效：值为上面列名或者为空</p>
+                                <p>参数OrderByType生效：值为ASC或者DESC</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -474,6 +483,7 @@
             selectColumns: [],
             selectedColumnInfos: [],
             selectedOrderBys: [],
+            selectedOrderBys_EnableSort: false,
             selectedComplexityColumnInfos: [],
             //ComplexityColumn
             copcol_JoinTable: null,
@@ -726,9 +736,11 @@
                     tools.alert("请选择列后在选择排序");
                     return;
                 }
-                this.selectedOrderBys = this.selectedColumnInfos.map(it => ({
-                    Name: it.DbColumnName
-                }));
+                if (this.selectedOrderBys.length == 0) {
+                    this.selectedOrderBys = this.selectedColumnInfos.map(it => ({
+                        Name: it.DbColumnName
+                    }));
+                }
                 btnAddOrderBy.click();
             },
             saveBtnOrderBy: function () {
