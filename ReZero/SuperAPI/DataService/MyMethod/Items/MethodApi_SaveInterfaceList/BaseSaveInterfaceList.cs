@@ -89,6 +89,10 @@ namespace ReZero.SuperAPI
             {
                 saveInterfaceListModel!.Url = $"/{saveInterfaceListModel.InterfaceCategoryId}/{saveInterfaceListModel.ActionType.ToString().ToLower()}/{saveInterfaceListModel.TableId?.ToLower()}/{SqlSugar.SnowFlakeSingle.Instance.NextId()}";
             }
+            if (saveInterfaceListModel?.Url?.StartsWith(@"/") != true) 
+            {
+                saveInterfaceListModel!.Url = $@"/{saveInterfaceListModel?.Url}";
+            }
             return saveInterfaceListModel?.Url!;
         }
     }
