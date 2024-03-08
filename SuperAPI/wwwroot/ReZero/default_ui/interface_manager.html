@@ -303,7 +303,7 @@
                                 <th scope="row"><input name="columnIds[]" v-model="selectColumns" :alt="item.Id" :value="item.Id" type="checkbox" /></th>
                                 <td>{{item.PropertyName}}</td>
                                 <td><input v-model="item.DbColumnName" class="form-control" /></td>
-                                <td><input v-model="item.SortId" class="form-control" /></td>
+                                <td><input v-model="item.SortId" onchange="tools.ensureNumeric(this)"  class="form-control" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -374,7 +374,7 @@
                         </div>
                         <div class="form-group">
                             <label for="example-nf-email">排序号</label>
-                            <input v-model="copcol_SortId" name="Sort" class="form-control" />
+                            <input v-model="copcol_SortId" onchange="tools.ensureNumeric(this)"  name="Sort" class="form-control" />
                         </div>
                     </div>
                 </div>
