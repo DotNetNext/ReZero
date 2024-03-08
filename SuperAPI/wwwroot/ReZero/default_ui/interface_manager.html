@@ -711,8 +711,8 @@
                 }
                 var th = this;
                 this.setColumns();
-                btnAddComplexityColumns.click();
-
+                btnAddComplexityColumns.click(); 
+                this.clearComplexityColumns();
             },
             changeJoinTable: function () {
                 this.setJoinColumns();
@@ -872,6 +872,15 @@
             clearOrderBy: function () {
                 this.selectedOrderBys = [];
                 this.selectedOrderBys_EnableSort = false;
+            },
+            clearComplexityColumns: function ()
+            {
+                this.copcol_joinField = null;
+                this.copcol_Name = null;
+                this.copcol_SortId = null;
+                this.copcol_ShowField = null;
+                this.copcol_MasterField = null;
+                this.copcol_JoinTable = null; 
             }
 
         }
