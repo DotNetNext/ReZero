@@ -409,13 +409,13 @@
                                     <td>{{item.Name}}<input type="hidden" v-model="item.Name" /> </td>
                                     <td>
                                         <select v-model="item.OrderByType" class="form-control">
-                                            <option>不排序</option>
+                                            <option> </option>
                                             <option value="ASC">正序</option>
                                             <option value="DESC">倒序</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <input v-model="item.SortId" class="form-control" />
+                                        <input v-model="item.SortId" onchange="tools.ensureNumeric(this)" class="form-control" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -761,7 +761,7 @@
                     .selectedOrderBys 
                     .filter(it => it.OrderByType == "ASC" || it.OrderByType == "DESC")
                     .sort(function (a, b) {
-                        return a.SortId < b.SortId; 
+                        return a.SortId - b.SortId; 
                     })
                     .map(it => it.Name + " " + it.OrderByType)
                     .join(",");

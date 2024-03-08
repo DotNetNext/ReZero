@@ -45,7 +45,6 @@
             .map(key => key + '=' + encodeURIComponent(obj[key]))
             .join('&');
     },
-
     formToJson: function (formId) {
         var form = document.getElementById(formId);
         var formData = new FormData(form);
@@ -61,8 +60,22 @@
         var url = "https://www.rezero.com" + inputString;
         var pattern = /^((http|https|ftp):\/\/)?([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,6}(\/[a-zA-Z0-9_.-]*)*\/?$/;
         return (pattern.test(url));
-    }
+    },
+    ensureNumeric: function (inputField) {
+        // 尝试将输入值转换为数字
+        var value = inputField.value;
 
+        // 尝试将输入值转换为数字
+        var numericValue = parseFloat(value);
+
+        // 如果转换失败，则将值设置为 0
+        if (isNaN(numericValue)) {
+            numericValue = 0;
+        }
+
+        // 将更新后的值设置回输入框
+        inputField.value = numericValue;
+    }
 }
 Array.prototype.removeArrayItem = function (item) {
     const index = this.indexOf(item);
