@@ -303,7 +303,7 @@
                                 <th scope="row"><input name="columnIds[]" v-model="selectColumns" :alt="item.Id" :value="item.Id" type="checkbox" /></th>
                                 <td>{{item.PropertyName}}</td>
                                 <td><input v-model="item.DbColumnName" class="form-control" /></td>
-                                <td><input v-model="item.SortId" onchange="tools.ensureNumeric(this)"  class="form-control" /></td>
+                                <td><input v-model="item.SortId" onchange="tools.ensureNumeric(this)" class="form-control" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -374,7 +374,7 @@
                         </div>
                         <div class="form-group">
                             <label for="example-nf-email">排序号</label>
-                            <input v-model="copcol_SortId" onchange="tools.ensureNumeric(this)"  name="Sort" class="form-control" />
+                            <input v-model="copcol_SortId" onchange="tools.ensureNumeric(this)" name="Sort" class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -711,7 +711,7 @@
                 }
                 var th = this;
                 this.setColumns();
-                btnAddComplexityColumns.click(); 
+                btnAddComplexityColumns.click();
                 this.clearComplexityColumns();
             },
             changeJoinTable: function () {
@@ -721,7 +721,11 @@
                 this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-            saveComplexityColumns: function () {
+            saveComplexityColumns: function () { 
+                if (!this.ValidateComplexityColumns()) {
+                    tools.alert("请填写完整");
+                    return;
+                }
                 var addItem = {
                     PropertyName:
                         document.querySelectorAll('[name=TableId]')[0].value + " " +
@@ -758,10 +762,10 @@
             saveBtnOrderBy: function () {
                 btnCloseAddOrderBy.click();
                 this.selectedOrderByString = this
-                    .selectedOrderBys 
+                    .selectedOrderBys
                     .filter(it => it.OrderByType == "ASC" || it.OrderByType == "DESC")
                     .sort(function (a, b) {
-                        return a.SortId - b.SortId; 
+                        return a.SortId - b.SortId;
                     })
                     .map(it => it.Name + " " + it.OrderByType)
                     .join(",");
@@ -873,14 +877,24 @@
                 this.selectedOrderBys = [];
                 this.selectedOrderBys_EnableSort = false;
             },
-            clearComplexityColumns: function ()
-            {
+            clearComplexityColumns: function () {
                 this.copcol_joinField = null;
                 this.copcol_Name = null;
                 this.copcol_SortId = null;
                 this.copcol_ShowField = null;
                 this.copcol_MasterField = null;
-                this.copcol_JoinTable = null; 
+                this.copcol_JoinTable = null;
+                this.copcol_joinType = null;
+            },
+            ValidateComplexityColumns: function () {
+                if (this.copcol_joinField == null ||
+                    this.copcol_Name == null ||
+                    this.copcol_joinType == null || 
+                    this.copcol_MasterField == null ||
+                    this.copcol_JoinTable == null) {
+                    return false;
+                }
+                return true;
             }
 
         }
