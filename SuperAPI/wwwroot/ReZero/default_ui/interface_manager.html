@@ -327,10 +327,10 @@
                 <div class="modal-body">
                     <div class="card p-b-0 m-b-0">
                         <ul class="nav nav-tabs page-tabs">
-                            <li class="active" ><a href="#!">联表字段</a></li>
-                            <li><a href="#!">函数字段</a></li>
-                            <li> <a href="#!">导航对象</a></li>
-                            <li><a href="#!">更多开发中</a></li>
+                            <li id="liComplexityColumns" class="active" @click="tabClickComplexityColumns(1)"><a href="#!">联表字段</a></li>
+                            <li><a href="#!" @click="tabClickComplexityColumns(2)">函数字段</a></li>
+                            <li> <a href="#!" @click="tabClickComplexityColumns(3)">导航对象</a></li>
+                            <li><a href="#!" @click="tabClickComplexityColumns(4)">更多开发中</a></li>
                         </ul>
                     </div>
                     <div class="tab-content tabbox">
@@ -723,7 +723,7 @@
                 this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-            saveComplexityColumns: function () { 
+            saveComplexityColumns: function () {
                 if (!this.ValidateComplexityColumns()) {
                     tools.alert("带*的请填写完整");
                     return;
@@ -781,6 +781,21 @@
             },
             saveBtnWhere: function () {
                 btnCloseAddWhere.click();
+            },
+            tabClickComplexityColumns: function (index) {
+                if (index != 1) {
+                    liComplexityColumns.className = "";
+                }
+                if (index == 1) {
+                }
+                else if (index == 2) {
+                }
+                else if (index == 3) {
+                    tools.alert("开发中");
+                }
+                else if (index == 4) {
+                    tools.alert("开发中");
+                }
             },
 
 
@@ -891,7 +906,7 @@
             ValidateComplexityColumns: function () {
                 if (this.copcol_joinField == null ||
                     this.copcol_ShowField == null ||
-                    this.copcol_joinType == null || 
+                    this.copcol_joinType == null ||
                     this.copcol_MasterField == null ||
                     this.copcol_JoinTable == null) {
                     return false;
