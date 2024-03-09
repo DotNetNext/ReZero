@@ -149,7 +149,7 @@
                                                     <span @click="openAddColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>添加主表列</span>
                                                     <span @click="openAddComplexityColumn(item)" class="btn   btn-primary m-tb-10"><i class="mdi mdi-plus"></i>追加复杂列</span>
                                                     <span @click="openOrderByColumn(item)" class="btn   btn-purple m-tb-10"><i class="mdi mdi-plus"></i>添加排序</span>
-                                                    <span @click="openWhereColumn(item)" class="btn btn-dark m-tb-10"><i class="mdi mdi-plus"></i>添加条件</span>
+                                                    <span @click="openWhere(item)" class="btn btn-dark m-tb-10"><i class="mdi mdi-plus"></i>添加条件</span>
                                                     <p> <code>排序：{{selectedOrderByString}} {{ selectedOrderBys_EnableSort==false ? "": "["+selectedOrderBys_EnableSort+"]" }} </code> </p>
                                                     <p> <code>条件：{{selectedWhereString}}</code></p>
                                                     <table class="table table-bordered">
@@ -483,9 +483,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr v-for="(item, index) in selectedWheres" :key="item.Id">
                                     <td>
-                                        1
+                                        {{item.Id}}
                                     </td>
                                     <td>
                                         2
@@ -494,12 +494,15 @@
                                         2
                                     </td>
                                     <td>
+                                        2
+                                    </td>
                                     <td>
-                                        <span class="pointer m-r-10" @click="openAddWhereItem()"><i class="mdi mdi-plus"></i>添加</span> <span class="pointer"><i class="mdi  mdi-window-close"></i>删除</span>
+                                        <span class="pointer m-r-10" @click="AddWhereItem(selectedWheres[selectedWheres.length - 1].Id)"><i class="mdi mdi-plus"></i> 添加</span>
+                                        <span class="pointer" @click="deleteWhereItem(item.Id)"><i class="mdi  mdi-window-close"></i> 删除</span>
                                     </td>
                                 </tr>
                             </tbody>
-                        </table> 
+                        </table>
                         <p><code>条件关系：</code></p>
                     </div>
                 </div>
@@ -542,7 +545,7 @@
             selectedOrderBys_EnableSort: false,
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
-            selectedWheres: [],
+            selectedWheres: [{ Id: 0 }],
             selectedWhereTemplate: "AND",
             //ComplexityColumn
             copcol_JoinTable: null,
@@ -832,7 +835,7 @@
                     .join(",");
             },
             //6.添加条件逻辑-添加接口
-            openWhereColumn: function () {
+            openWhere: function () {
                 if (!this.validateColumsAny()) {
                     tools.alert("请选择列后在选择条件");
                     return;
@@ -842,8 +845,18 @@
             saveBtnWhere: function () {
                 btnCloseAddWhere.click();
             },
-            openAddWhereItem: function () {
+            AddWhereItem: function (id) {
+                this.selectedWheres.push({ Id: id + 1 });
             },
+            deleteWhereItem: function (id) {
+                if (this.selectedWheres.length == 1) {
+                    this.selectedWheres = [{ Id: 0 }];
+                }
+                else {
+                    this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
+                }
+            },
+
 
             /*
                   次要方法
