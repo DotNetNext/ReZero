@@ -122,7 +122,7 @@
                     <div class="table-container">
                         <div class="card">
                             <ul class="nav nav-tabs page-tabs">
-                                <li v-for="(item,index) in currentActionType.Items" @click="tabClick(index,item)" :class="index==tabIndex?'active':''"> <a href="#!">{{item.Text}}</a> </li>
+                                <li v-for="(item,index) in currentActionType.Items" @click="interfaceListTabClick(index,item)" :class="index==tabIndex?'active':''"> <a href="#!">{{item.Text}}</a> </li>
                             </ul>
                             <div class="tab-content tabbox">
                                 <div class="tab-pane active">
@@ -219,7 +219,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnAddOrUpdateColse" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
+                    <button type="button" @click="addOrUpdateInterfaceList()" class="btn btn-primary">点击保存</button>
                 </div>
             </div>
         </div>
@@ -600,7 +600,7 @@
                 this.currentActionTypeContext = this.currentActionType.Items[0];
                 this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
             },
-            addOrUpdateColumnInfoSubmit: function () {
+            addOrUpdateInterfaceList: function () {
 
                 var elementsWithValidateData = document.querySelectorAll('[validate-data]');
                 var isSuccess = true;
@@ -634,7 +634,7 @@
                         });
                 }
             },
-            tabClick: function (index, item) {
+            interfaceListTabClick: function (index, item) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
                 this.currentActionTypeContext.FormElements[0].Value = item.Text;
