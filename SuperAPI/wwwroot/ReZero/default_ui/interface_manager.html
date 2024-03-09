@@ -502,17 +502,24 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
-                        <p><code>条件关系：</code></p>
-                        <div class="form-group"> 
-                            <select class="form-control">
+                        </table> 
+                        <div class="form-group">
+                            <p><code>条件关系：</code></p>
+                            <select v-model="selectedWheresConditionalRelation" @change="changeConditionalRelation" class="form-control">
                                 <option value="And">And：参数不传不算条件</option>
                                 <option value="And all">And all：参数不传也算条件</option>
                                 <option value="Or">Or： 或者</option>
                                 <option value="Customize">Customize ：自定义配置</option>
                             </select>
                         </div>
-                    </div>
+                        <div v-if="selectedWheresConditionalRelation=='Customize'" class="form-group">
+                            <p><code>自定义关系： </code></p>
+                            <p><code>{0}表示编号为0的条件</code></p>
+                            <p><code>{1}表示编号为1的条件</code></p>
+                            <textarea v-model="selectedWhereConditionalRelationTemplate" class="form-control">
+
+                            </textarea>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnCloseAddWhere" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -554,7 +561,8 @@
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
             selectedWheres: [{ Id: 0 }],
-            selectedWhereTemplate: "AND",
+            selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
+            selectedWheresConditionalRelation:"AND",
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
