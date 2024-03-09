@@ -75,6 +75,13 @@
 
         // 将更新后的值设置回输入框
         inputField.value = numericValue;
+    },
+    showSpecifiedElementAndHideOthers: function (elementToShowId, elementsToHideIds) {
+        // 显示指定元素并隐藏其他元素
+        document.getElementById(elementToShowId).style.display = "block";
+        for (var i = 0; i < elementsToHideIds.length; i++) {
+            document.getElementById(elementsToHideIds[i]).style.display = "none";
+        }
     }
 }
 Array.prototype.removeArrayItem = function (item) {

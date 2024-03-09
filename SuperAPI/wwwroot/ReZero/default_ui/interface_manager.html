@@ -334,7 +334,7 @@
                         </ul>
                     </div>
                     <div class="tab-content tabbox">
-                        <div class="tab-pane active">
+                        <div   class="tab-pane active">
                             <div class="form-group">
                                 <label for="example-nf-email">主表字段 <span class="red">*</span></label>
                                 <select v-model="copcol_MasterField" name="MasterField" class="form-control">
@@ -376,6 +376,21 @@
                             <div class="form-group">
                                 <label for="example-nf-email">排序号</label>
                                 <input v-model="copcol_SortId" onchange="tools.ensureNumeric(this)" name="Sort" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="tab-pane">
+                            <div class="form-group">
+                                aaa
+                            </div>
+                        </div>
+                        <div class="tab-pane">
+                            <div class="form-group">
+                                开发中..
+                            </div>
+                        </div>
+                        <div class="tab-pane">
+                            <div class="form-group">
+                                开发中..
                             </div>
                         </div>
                     </div>
@@ -783,19 +798,10 @@
                 btnCloseAddWhere.click();
             },
             tabClickComplexityColumns: function (index) {
-                if (index != 1) {
-                    liComplexityColumns.className = "";
-                }
-                if (index == 1) {
-                }
-                else if (index == 2) {
-                }
-                else if (index == 3) {
-                    tools.alert("开发中");
-                }
-                else if (index == 4) {
-                    tools.alert("开发中");
-                }
+                if (index != 1) liComplexityColumns.className = "";
+                var $tabs = $("#divAddComplexityColumns  .tab-pane");
+                $tabs.hide();
+                $tabs.eq(index - 1).show();
             },
 
 
