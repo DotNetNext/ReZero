@@ -334,7 +334,7 @@
                         </ul>
                     </div>
                     <div class="tab-content tabbox">
-                        <div   class="tab-pane active">
+                        <div class="tab-pane active">
                             <div class="form-group">
                                 <label for="example-nf-email">主表字段 <span class="red">*</span></label>
                                 <select v-model="copcol_MasterField" name="MasterField" class="form-control">
@@ -472,6 +472,35 @@
                 </div>
                 <div class="modal-body">
                     <div class="card-body tabbox">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>条件编号</th>
+                                    <th>条件列</th>
+                                    <th>条件关系</th>
+                                    <th>条件值</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>
+                                    <td>
+                                        <span class="pointer m-r-10" @click="openAddWhereItem()"><i class="mdi mdi-plus"></i>添加</span> <span class="pointer"><i class="mdi  mdi-window-close"></i>删除</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                        <p><code>条件关系：</code></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -505,7 +534,7 @@
             database: [],
             columns: [],
             joinColumns: [],
-            selectColumns: [], 
+            selectColumns: [],
             selectColumnsTabIndex: 1,
             selectedColumnInfos: [],
             selectedOrderBys: [],
@@ -514,7 +543,7 @@
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
             selectedWheres: [],
-            selectedWhereTemplate:"AND",
+            selectedWhereTemplate: "AND",
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -741,8 +770,8 @@
                 this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-            saveComplexityColumns: function () { 
-                if (this.selectColumnsTabIndex !=1) {
+            saveComplexityColumns: function () {
+                if (this.selectColumnsTabIndex != 1) {
                     tools.alert("开发中..");
                     return;
                 }
@@ -771,6 +800,14 @@
             DeleteComplexitySelectedColumn: function (item) {
                 this.selectedComplexityColumnInfos.removeArrayItem(item)
             },
+            tabClickComplexityColumns: function (index) {
+                if (index != 1) liComplexityColumns.className = "";
+                var $tabs = $("#divAddComplexityColumns  .tab-pane");
+                $tabs.hide();
+                $tabs.eq(index - 1).show();
+                this.selectColumnsTabIndex = index;
+            },
+            //5.添加排序逻辑-添加接口
             openOrderByColumn: function () {
                 if (!this.validateColumsAny()) {
                     tools.alert("请选择列后在选择排序");
@@ -794,6 +831,7 @@
                     .map(it => it.Name + " " + it.OrderByType)
                     .join(",");
             },
+            //6.添加条件逻辑-添加接口
             openWhereColumn: function () {
                 if (!this.validateColumsAny()) {
                     tools.alert("请选择列后在选择条件");
@@ -804,14 +842,8 @@
             saveBtnWhere: function () {
                 btnCloseAddWhere.click();
             },
-            tabClickComplexityColumns: function (index) {
-                if (index != 1) liComplexityColumns.className = "";
-                var $tabs = $("#divAddComplexityColumns  .tab-pane");
-                $tabs.hide();
-                $tabs.eq(index - 1).show();
-                this.selectColumnsTabIndex = index;
+            openAddWhereItem: function () {
             },
-
 
             /*
                   次要方法
