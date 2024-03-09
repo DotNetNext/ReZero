@@ -380,7 +380,7 @@
                         </div>
                         <div class="tab-pane">
                             <div class="form-group">
-                                aaa
+                                开发中
                             </div>
                         </div>
                         <div class="tab-pane">
@@ -505,7 +505,8 @@
             database: [],
             columns: [],
             joinColumns: [],
-            selectColumns: [],
+            selectColumns: [], 
+            selectColumnsTabIndex: 1,
             selectedColumnInfos: [],
             selectedOrderBys: [],
             selectedOrderByString: "-",
@@ -738,7 +739,11 @@
                 this.copcol_JoinTable = null;
                 this.joinColumns = [];
             },
-            saveComplexityColumns: function () {
+            saveComplexityColumns: function () { 
+                if (this.selectColumnsTabIndex !=1) {
+                    tools.alert("开发中..");
+                    return;
+                }
                 if (!this.ValidateComplexityColumns()) {
                     tools.alert("带*的请填写完整");
                     return;
@@ -802,6 +807,7 @@
                 var $tabs = $("#divAddComplexityColumns  .tab-pane");
                 $tabs.hide();
                 $tabs.eq(index - 1).show();
+                this.selectColumnsTabIndex = index;
             },
 
 
