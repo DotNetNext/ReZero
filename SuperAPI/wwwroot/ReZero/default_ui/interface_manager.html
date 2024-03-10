@@ -186,7 +186,7 @@
                                                                 <td>{{item.DbColumnName}}</td>
                                                                 <td>{{item.SortId}}</td>
                                                                 <td>
-                                                                    <button @click="DeleteComplexitySelectedColumn(item)" type="button" class="btn btn-link">
+                                                                    <button @click="deleteComplexitySelectedColumn(item)" type="button" class="btn btn-link">
                                                                         <i class="mdi mdi-do-not-disturb"></i> 删除
                                                                     </button>
                                                                 </td>
@@ -842,7 +842,7 @@
             DeleteSelectedColumn: function (item) {
                 this.selectedColumnInfos.removeArrayItem(item)
             },
-            DeleteComplexitySelectedColumn: function (item) {
+            deleteComplexitySelectedColumn: function (item) {
                 this.selectedComplexityColumnInfos.removeArrayItem(item)
             },
             tabClickComplexityColumns: function (index) {
