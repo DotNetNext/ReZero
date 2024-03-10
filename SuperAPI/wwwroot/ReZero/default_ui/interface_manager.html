@@ -521,9 +521,7 @@
                             </select>
                         </div>
                         <div v-if="selectedWheresConditionalRelation=='Customize'" class="form-group">
-                            <p><code>自定义关系： </code></p>
-                            <p><code>{0}表示编号为0的条件</code></p>
-                            <p><code>{1}表示编号为1的条件</code></p>
+                            <p><code>{0}表示编号为0的条件，{1}表示编号为 </code></p>
                             <textarea v-model="selectedWhereConditionalRelationTemplate" class="form-control">
 
                             </textarea>
