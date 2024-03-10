@@ -537,466 +537,467 @@
             </div>
         </div>
     </div>
-    <script>
-        var vueObj = new Vue({
-            el: '#apibox',
-            data: {
-                data: null,
-                error: null,
-                addTitle: "添加接口",
-                editTitle: "修改接口",
-                title: "",
-                tabIndex: 0,
-                formData: {},
-                selectedItems: [],
-                groupList: [],
-                interfaceCategroyList: [],
-                actionList: [],
-                currentActionType: [],
-                currentActionTypeContext: [],
-                tables: [],
-                selectedTables: [],
-                databaseId: 0,
-                database: [],
-                columns: [],
-                joinColumns: [],
-                selectColumns: [],
-                selectColumnsTabIndex: 1,
-                selectedColumnInfos: [],
-                selectedOrderBys: [],
-                selectedOrderByString: "-",
-                selectedOrderBys_EnableSort: false,
-                selectedComplexityColumnInfos: [],
-                selectedWhereString: "-",
-                selectedWheres: [{ Id: 0 }],
-                selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
-                selectedWheresConditionalRelation: "AND",
-                //ComplexityColumn
-                copcol_JoinTable: null,
-                copcol_MasterField: null,
-                copcol_joinType: null,
-                copcol_joinField: null,
-                copcol_SortId: null,
-                copcol_Name: null,
-                copcol_ShowField: null
-            },
-            mounted() {
-                this.fetchData("");
-                this.bindGroupListSelect();
-                this.bindInterfaceCategroySelect();
-                this.bindActionLists();
-                this.bindDatabaseSelect();
-            },
-            methods: {
+</div>
+<script>
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null,
+            addTitle: "添加接口",
+            editTitle: "修改接口",
+            title: "",
+            tabIndex: 0,
+            formData: {},
+            selectedItems: [],
+            groupList: [],
+            interfaceCategroyList: [],
+            actionList: [],
+            currentActionType: [],
+            currentActionTypeContext: [],
+            tables: [],
+            selectedTables: [],
+            databaseId: 0,
+            database: [],
+            columns: [],
+            joinColumns: [],
+            selectColumns: [],
+            selectColumnsTabIndex: 1,
+            selectedColumnInfos: [],
+            selectedOrderBys: [],
+            selectedOrderByString: "-",
+            selectedOrderBys_EnableSort: false,
+            selectedComplexityColumnInfos: [],
+            selectedWhereString: "-",
+            selectedWheres: [{ Id: 0 }],
+            selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
+            selectedWheresConditionalRelation: "AND",
+            //ComplexityColumn
+            copcol_JoinTable: null,
+            copcol_MasterField: null,
+            copcol_joinType: null,
+            copcol_joinField: null,
+            copcol_SortId: null,
+            copcol_Name: null,
+            copcol_ShowField: null
+        },
+        mounted() {
+            this.fetchData("");
+            this.bindGroupListSelect();
+            this.bindInterfaceCategroySelect();
+            this.bindActionLists();
+            this.bindDatabaseSelect();
+        },
+        methods: {
 
-                /*
-                   主列表逻辑
-                */
-                fetchData(append) {
-                    var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList" + append;
+            /*
+               主列表逻辑
+            */
+            fetchData(append) {
+                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList" + append;
+                axios.get(url)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            onSearch: function (page) {
+
+                var urlParameters = "?" + tools.objectToQueryString({
+                    PageNumber: page,
+                    Name: txtName.value,
+                    GroupName: selGroupName.value,
+                    InterfaceCategoryId: selInterfaceCategoryId.value,
+                });
+                this.fetchData(urlParameters);
+            },
+            selectAll(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedItems = this.data.Data.map(item => item.Id);
+                } else {
+                    // 全不选
+                    this.selectedItems = [];
+                }
+            },
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterface?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url)
                         .then(response => {
                             this.data = response.data;
                             this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
                         })
                         .catch(error => {
                             this.error = error.message;
                             this.data = null;
                         });
-                },
-                onSearch: function (page) {
-
-                    var urlParameters = "?" + tools.objectToQueryString({
-                        PageNumber: page,
-                        Name: txtName.value,
-                        GroupName: selGroupName.value,
-                        InterfaceCategoryId: selInterfaceCategoryId.value,
-                    });
-                    this.fetchData(urlParameters);
-                },
-                selectAll(event) {
-                    if (event.target.checked) {
-                        // 全选
-                        this.selectedItems = this.data.Data.map(item => item.Id);
-                    } else {
-                        // 全不选
-                        this.selectedItems = [];
-                    }
-                },
-                deleteAndConfirm: function (item) {
-                    if (item == null) {
-                        var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterface?IsDeleted=true&Id=" + localStorage.delId;
-                        axios.get(url)
-                            .then(response => {
-                                this.data = response.data;
-                                this.error = null;
-                                this.onSearch();
-                                btnDelClose.click();
-                            })
-                            .catch(error => {
-                                this.error = error.message;
-                                this.data = null;
-                            });
-                    } else {
-                        localStorage.delId = item.Id;
-                    }
-                },
-                enable: function () {
-                    alert("开发中");
-                },
-                disable: function () {
-                    alert("开发中");
-                },
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },
+            enable: function () {
+                alert("开发中");
+            },
+            disable: function () {
+                alert("开发中");
+            },
 
 
-                /*
-                   编辑接口
-                */
-                openEdit: function () {
-                    alert("开发中");
-                },
+            /*
+               编辑接口
+            */
+            openEdit: function () {
+                alert("开发中");
+            },
 
 
-                /*
-                    添加接口
-                */
-                //1.打开和保存-添加接口
-                openNext: function () {
-                    this.title = this.addTitle;
-                    btnNext.click();
-                    this.currentActionTypeContext = [];
-                },
-                openAdd: function (item) {
-                    if (this.currentActionType.length == 0) {
-                        tools.alert("请选择类型");
-                        return;
-                    }
-                    btnNextClose.click();
-                    btnSave.click();
-                    this.currentActionTypeContext = this.currentActionType.Items[0];
-                    this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
-                },
-                addOrUpdateInterfaceList: function () {
+            /*
+                添加接口
+            */
+            //1.打开和保存-添加接口
+            openNext: function () {
+                this.title = this.addTitle;
+                btnNext.click();
+                this.currentActionTypeContext = [];
+            },
+            openAdd: function (item) {
+                if (this.currentActionType.length == 0) {
+                    tools.alert("请选择类型");
+                    return;
+                }
+                btnNextClose.click();
+                btnSave.click();
+                this.currentActionTypeContext = this.currentActionType.Items[0];
+                this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
+            },
+            addOrUpdateInterfaceList: function () {
 
-                    var elementsWithValidateData = document.querySelectorAll('[validate-data]');
-                    var isSuccess = true;
-                    var th = this;
-                    elementsWithValidateData.forEach(function (element) {
-                        var attributeName = 'validate-data';
-                        var attributeValue = JSON.parse(element.getAttribute(attributeName));
-
-                        if (isSuccess) {
-                            isSuccess = th.validateElement(element, attributeValue);
-                        }
-                    });
+                var elementsWithValidateData = document.querySelectorAll('[validate-data]');
+                var isSuccess = true;
+                var th = this;
+                elementsWithValidateData.forEach(function (element) {
+                    var attributeName = 'validate-data';
+                    var attributeValue = JSON.parse(element.getAttribute(attributeName));
 
                     if (isSuccess) {
-                        var formData = tools.formToJson("frmSave");
-                        var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
-                        axios.post(url, formData)
-                            .then(response => {
-                                if (response.data == true) {
-                                    tools.alert("添加成功");
-                                    btnAddOrUpdateColse.click();
-                                    this.error = null;
-                                    th.onSearch();
-                                }
-                                else {
-                                    tools.alert(response.data.message);
-                                }
-                            })
-                            .catch(error => {
-                                this.error = error.message;
-                            });
+                        isSuccess = th.validateElement(element, attributeValue);
                     }
-                },
-                interfaceListTabClick: function (index, item) {
-                    this.tabIndex = index;
-                    this.currentActionTypeContext = this.currentActionType.Items[index];
-                    this.currentActionTypeContext.FormElements[0].Value = item.Text;
-                },
-                //2.选择表逻辑-添加接口
-                openImportEntity: function () {
-                    btnImportEntity.click();
-                    this.bindImportTables();
-                },
-                importEntitySubmit: function () {
-                    var th = this;
-                    this.currentActionType.Items.forEach((item) => {
-                        item.FormElements.forEach((element) => {
-                            element.Value = (element.ElementType == "1")
-                                ? this.selectedTables[0].Name : element.Value;
+                });
+
+                if (isSuccess) {
+                    var formData = tools.formToJson("frmSave");
+                    var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
+                    axios.post(url, formData)
+                        .then(response => {
+                            if (response.data == true) {
+                                tools.alert("添加成功");
+                                btnAddOrUpdateColse.click();
+                                this.error = null;
+                                th.onSearch();
+                            }
+                            else {
+                                tools.alert(response.data.message);
+                            }
+                        })
+                        .catch(error => {
+                            this.error = error.message;
                         });
+                }
+            },
+            interfaceListTabClick: function (index, item) {
+                this.tabIndex = index;
+                this.currentActionTypeContext = this.currentActionType.Items[index];
+                this.currentActionTypeContext.FormElements[0].Value = item.Text;
+            },
+            //2.选择表逻辑-添加接口
+            openImportEntity: function () {
+                btnImportEntity.click();
+                this.bindImportTables();
+            },
+            importEntitySubmit: function () {
+                var th = this;
+                this.currentActionType.Items.forEach((item) => {
+                    item.FormElements.forEach((element) => {
+                        element.Value = (element.ElementType == "1")
+                            ? this.selectedTables[0].Name : element.Value;
                     });
-                    this.columns = [];
-                    btnImportEntityClose.click();
-                },
-                bindImportTables: function () {
-                    var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
+                });
+                this.columns = [];
+                btnImportEntityClose.click();
+            },
+            bindImportTables: function () {
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
+                axios.get(url)
+                    .then(response => {
+                        this.tables = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+            selectAllTables(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedTables = this.tables.map(item => item);
+                } else {
+                    // 全不选
+                    this.selectedTables = [];
+                }
+            },
+            //3.添加简单列逻辑-添加接口
+            openAddColumn: function (item) {
+                var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
+                if (!tableValue) {
+                    tools.alert("请先选择主表");
+                    return;
+                }
+                var th = this;
+                btnDivAddColumns.click();
+                this.setColumns();
+            },
+            saveColumns: function () {
+
+                var th = this;
+                this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
+                btnCloseAddColumns.click();
+                this.clearOrderBy();
+            },
+            selectAllColumns(event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectColumns = this.columns.map(item => item.Id);
+                } else {
+                    // 全不选
+                    this.selectColumns = [];
+                }
+            },
+            //4.追加复杂列逻辑-添加接口
+            openAddComplexityColumn: function (item) {
+                var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
+                if (!tableValue) {
+                    tools.alert("请先选择主表");
+                    return;
+                }
+                var th = this;
+                this.setColumns();
+                btnAddComplexityColumns.click();
+                this.clearComplexityColumns();
+            },
+            changeJoinTable: function () {
+                this.setJoinColumns();
+            },
+            clearJoinTable: function () {
+                this.copcol_JoinTable = null;
+                this.joinColumns = [];
+            },
+            saveComplexityColumns: function () {
+                if (this.selectColumnsTabIndex != 1) {
+                    tools.alert("开发中..");
+                    return;
+                }
+                if (!this.ValidateComplexityColumns()) {
+                    tools.alert("带*的请填写完整");
+                    return;
+                }
+                var addItem = {
+                    PropertyName:
+                        document.querySelectorAll('[name=TableId]')[0].value + " " +
+                        this.copcol_joinType + " " +
+                        this.copcol_JoinTable + " ON " +
+                        document.querySelectorAll('[name=TableId]')[0].value + "." + this.copcol_MasterField + "=" +
+                        this.copcol_JoinTable + "." +
+                        this.copcol_joinField + "",
+                    DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
+                    SortId: 1
+                };
+                this.selectedComplexityColumnInfos.push(addItem)
+                btnCloseAddComplexityColumns.click();
+                this.clearOrderBy();
+            },
+            DeleteSelectedColumn: function (item) {
+                this.selectedColumnInfos.removeArrayItem(item)
+            },
+            DeleteComplexitySelectedColumn: function (item) {
+                this.selectedComplexityColumnInfos.removeArrayItem(item)
+            },
+            tabClickComplexityColumns: function (index) {
+                if (index != 1) liComplexityColumns.className = "";
+                var $tabs = $("#divAddComplexityColumns  .tab-pane");
+                $tabs.hide();
+                $tabs.eq(index - 1).show();
+                this.selectColumnsTabIndex = index;
+            },
+            //5.添加排序逻辑-添加接口
+            openOrderByColumn: function () {
+                if (!this.validateColumsAny()) {
+                    tools.alert("请选择列后在选择排序");
+                    return;
+                }
+                if (this.selectedOrderBys.length == 0) {
+                    this.selectedOrderBys = this.selectedColumnInfos.map(it => ({
+                        Name: it.DbColumnName
+                    }));
+                }
+                btnAddOrderBy.click();
+            },
+            saveBtnOrderBy: function () {
+                btnCloseAddOrderBy.click();
+                this.selectedOrderByString = this
+                    .selectedOrderBys
+                    .filter(it => it.OrderByType == "ASC" || it.OrderByType == "DESC")
+                    .sort(function (a, b) {
+                        return a.SortId - b.SortId;
+                    })
+                    .map(it => it.Name + " " + it.OrderByType)
+                    .join(",");
+            },
+            //6.添加条件逻辑-添加接口
+            openWhere: function () {
+                if (!this.validateColumsAny()) {
+                    tools.alert("请选择列后在选择条件");
+                    return;
+                }
+                btnAddWhere.click();
+            },
+            saveBtnWhere: function () {
+                btnCloseAddWhere.click();
+            },
+            AddWhereItem: function (id) {
+                this.selectedWheres.push({ Id: id + 1 });
+            },
+            deleteWhereItem: function (id) {
+                if (this.selectedWheres.length == 1) {
+                    this.selectedWheres = [{ Id: 0 }];
+                }
+                else {
+                    this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
+                }
+            },
+
+
+            /*
+                  次要方法
+            */
+            bindGroupListSelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
+                    .then(response => {
+                        this.groupList = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            bindInterfaceCategroySelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDynamicInterfaceCategoryList")
+                    .then(response => {
+                        this.interfaceCategroyList = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            bindActionLists: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetActionType")
+                    .then(response => {
+                        this.actionList = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+            bindDatabaseSelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
+                    .then(response => {
+                        this.database = response.data;
+                        this.databaseId = this.database[0].Id;
+                        var th = this;
+                        setTimeout(function () {
+                            th.onSearch();
+                        }, 50);
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            setColumns: function () {
+                var th = this;
+                if (this.selectedTables.length > 0) {
+                    var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
                     axios.get(url)
                         .then(response => {
-                            this.tables = response.data;
-                            this.error = null;
+                            th.columns = response.data;
                         })
                         .catch(error => {
                             this.error = error.message;
                         });
-                },
-                selectAllTables(event) {
-                    if (event.target.checked) {
-                        // 全选
-                        this.selectedTables = this.tables.map(item => item);
-                    } else {
-                        // 全不选
-                        this.selectedTables = [];
-                    }
-                },
-                //3.添加简单列逻辑-添加接口
-                openAddColumn: function (item) {
-                    var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
-                    if (!tableValue) {
-                        tools.alert("请先选择主表");
-                        return;
-                    }
-                    var th = this;
-                    btnDivAddColumns.click();
-                    this.setColumns();
-                },
-                saveColumns: function () {
-
-                    var th = this;
-                    this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
-                    btnCloseAddColumns.click();
-                    this.clearOrderBy();
-                },
-                selectAllColumns(event) {
-                    if (event.target.checked) {
-                        // 全选
-                        this.selectColumns = this.columns.map(item => item.Id);
-                    } else {
-                        // 全不选
-                        this.selectColumns = [];
-                    }
-                },
-                //4.追加复杂列逻辑-添加接口
-                openAddComplexityColumn: function (item) {
-                    var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
-                    if (!tableValue) {
-                        tools.alert("请先选择主表");
-                        return;
-                    }
-                    var th = this;
-                    this.setColumns();
-                    btnAddComplexityColumns.click();
-                    this.clearComplexityColumns();
-                },
-                changeJoinTable: function () {
-                    this.setJoinColumns();
-                },
-                clearJoinTable: function () {
-                    this.copcol_JoinTable = null;
-                    this.joinColumns = [];
-                },
-                saveComplexityColumns: function () {
-                    if (this.selectColumnsTabIndex != 1) {
-                        tools.alert("开发中..");
-                        return;
-                    }
-                    if (!this.ValidateComplexityColumns()) {
-                        tools.alert("带*的请填写完整");
-                        return;
-                    }
-                    var addItem = {
-                        PropertyName:
-                            document.querySelectorAll('[name=TableId]')[0].value + " " +
-                            this.copcol_joinType + " " +
-                            this.copcol_JoinTable + " ON " +
-                            document.querySelectorAll('[name=TableId]')[0].value + "." + this.copcol_MasterField + "=" +
-                            this.copcol_JoinTable + "." +
-                            this.copcol_joinField + "",
-                        DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
-                        SortId: 1
-                    };
-                    this.selectedComplexityColumnInfos.push(addItem)
-                    btnCloseAddComplexityColumns.click();
-                    this.clearOrderBy();
-                },
-                DeleteSelectedColumn: function (item) {
-                    this.selectedColumnInfos.removeArrayItem(item)
-                },
-                DeleteComplexitySelectedColumn: function (item) {
-                    this.selectedComplexityColumnInfos.removeArrayItem(item)
-                },
-                tabClickComplexityColumns: function (index) {
-                    if (index != 1) liComplexityColumns.className = "";
-                    var $tabs = $("#divAddComplexityColumns  .tab-pane");
-                    $tabs.hide();
-                    $tabs.eq(index - 1).show();
-                    this.selectColumnsTabIndex = index;
-                },
-                //5.添加排序逻辑-添加接口
-                openOrderByColumn: function () {
-                    if (!this.validateColumsAny()) {
-                        tools.alert("请选择列后在选择排序");
-                        return;
-                    }
-                    if (this.selectedOrderBys.length == 0) {
-                        this.selectedOrderBys = this.selectedColumnInfos.map(it => ({
-                            Name: it.DbColumnName
-                        }));
-                    }
-                    btnAddOrderBy.click();
-                },
-                saveBtnOrderBy: function () {
-                    btnCloseAddOrderBy.click();
-                    this.selectedOrderByString = this
-                        .selectedOrderBys
-                        .filter(it => it.OrderByType == "ASC" || it.OrderByType == "DESC")
-                        .sort(function (a, b) {
-                            return a.SortId - b.SortId;
-                        })
-                        .map(it => it.Name + " " + it.OrderByType)
-                        .join(",");
-                },
-                //6.添加条件逻辑-添加接口
-                openWhere: function () {
-                    if (!this.validateColumsAny()) {
-                        tools.alert("请选择列后在选择条件");
-                        return;
-                    }
-                    btnAddWhere.click();
-                },
-                saveBtnWhere: function () {
-                    btnCloseAddWhere.click();
-                },
-                AddWhereItem: function (id) {
-                    this.selectedWheres.push({ Id: id + 1 });
-                },
-                deleteWhereItem: function (id) {
-                    if (this.selectedWheres.length == 1) {
-                        this.selectedWheres = [{ Id: 0 }];
-                    }
-                    else {
-                        this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
-                    }
-                },
-
-
-                /*
-                      次要方法
-                */
-                bindGroupListSelect: function () {
-                    axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
-                        .then(response => {
-                            this.groupList = response.data;
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                            this.data = null;
-                        });
-                },
-                bindInterfaceCategroySelect: function () {
-                    axios.get("/PrivateReZeroRoute/100004/GetDynamicInterfaceCategoryList")
-                        .then(response => {
-                            this.interfaceCategroyList = response.data;
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                            this.data = null;
-                        });
-                },
-                bindActionLists: function () {
-                    axios.get("/PrivateReZeroRoute/100004/GetActionType")
-                        .then(response => {
-                            this.actionList = response.data;
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                        });
-                },
-                bindDatabaseSelect: function () {
-                    axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
-                        .then(response => {
-                            this.database = response.data;
-                            this.databaseId = this.database[0].Id;
-                            var th = this;
-                            setTimeout(function () {
-                                th.onSearch();
-                            }, 50);
-                        })
-                        .catch(error => {
-                            this.error = error.message;
-                            this.data = null;
-                        });
-                },
-                setColumns: function () {
-                    var th = this;
-                    if (this.selectedTables.length > 0) {
-                        var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
-                        axios.get(url)
-                            .then(response => {
-                                th.columns = response.data;
-                            })
-                            .catch(error => {
-                                this.error = error.message;
-                            });
-                    }
-                },
-                setJoinColumns: function () {
-                    var th = this;
-                    var tableId = this.copcol_JoinTable;
-                    tableId = this.tables.find(function (item) {
-                        return item.Name === tableId;
-                    }).Id;
-                    if (this.selectedTables.length > 0) {
-                        var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
-                        axios.get(url)
-                            .then(response => {
-                                th.joinColumns = response.data;
-                            })
-                            .catch(error => {
-                                this.error = error.message;
-                            });
-                    }
-                },
-                validateElement: function (element, attributeValue) {
-                    if (attributeValue.IsRequired && !element.value) {
-                        tools.alert(attributeValue.Text + "不能为空");
-                        return false;
-                    }
-                    if (attributeValue.Name === "Url" && element.value && !tools.isValidURLPattern(element.value)) {
-                        tools.alert("Url格式不正确，应该是/xxx/yyy 或者 /xx.xx");
-                        return false;
-                    }
-                    return true;
-                },
-                validateColumsAny: function () {
-                    return (this.selectedColumnInfos.length + this.selectedComplexityColumnInfos.length) > 0;
-                },
-                clearOrderBy: function () {
-                    this.selectedOrderBys = [];
-                    this.selectedOrderBys_EnableSort = false;
-                },
-                clearComplexityColumns: function () {
-                    this.copcol_joinField = null;
-                    this.copcol_Name = null;
-                    this.copcol_SortId = null;
-                    this.copcol_ShowField = null;
-                    this.copcol_MasterField = null;
-                    this.copcol_JoinTable = null;
-                    this.copcol_joinType = null;
-                },
-                ValidateComplexityColumns: function () {
-                    if (this.copcol_joinField == null ||
-                        this.copcol_ShowField == null ||
-                        this.copcol_joinType == null ||
-                        this.copcol_MasterField == null ||
-                        this.copcol_JoinTable == null) {
-                        return false;
-                    }
-                    return true;
                 }
-
+            },
+            setJoinColumns: function () {
+                var th = this;
+                var tableId = this.copcol_JoinTable;
+                tableId = this.tables.find(function (item) {
+                    return item.Name === tableId;
+                }).Id;
+                if (this.selectedTables.length > 0) {
+                    var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
+                    axios.get(url)
+                        .then(response => {
+                            th.joinColumns = response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                        });
+                }
+            },
+            validateElement: function (element, attributeValue) {
+                if (attributeValue.IsRequired && !element.value) {
+                    tools.alert(attributeValue.Text + "不能为空");
+                    return false;
+                }
+                if (attributeValue.Name === "Url" && element.value && !tools.isValidURLPattern(element.value)) {
+                    tools.alert("Url格式不正确，应该是/xxx/yyy 或者 /xx.xx");
+                    return false;
+                }
+                return true;
+            },
+            validateColumsAny: function () {
+                return (this.selectedColumnInfos.length + this.selectedComplexityColumnInfos.length) > 0;
+            },
+            clearOrderBy: function () {
+                this.selectedOrderBys = [];
+                this.selectedOrderBys_EnableSort = false;
+            },
+            clearComplexityColumns: function () {
+                this.copcol_joinField = null;
+                this.copcol_Name = null;
+                this.copcol_SortId = null;
+                this.copcol_ShowField = null;
+                this.copcol_MasterField = null;
+                this.copcol_JoinTable = null;
+                this.copcol_joinType = null;
+            },
+            ValidateComplexityColumns: function () {
+                if (this.copcol_joinField == null ||
+                    this.copcol_ShowField == null ||
+                    this.copcol_joinType == null ||
+                    this.copcol_MasterField == null ||
+                    this.copcol_JoinTable == null) {
+                    return false;
+                }
+                return true;
             }
-        });
-    </script>
+
+        }
+    });
+</script>
