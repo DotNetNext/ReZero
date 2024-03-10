@@ -68,10 +68,5 @@ namespace ReZero.SuperAPI
             return result;
         }
 
-        public static object GetWhereTypeList()
-        {
-            return SqlSugar.UtilMethods.EnumToDictionary<FieldOperatorType>()
-                .Select(it=>new { Key=it.Key,Value=it.Value }).ToList();
-        }
     }
 }

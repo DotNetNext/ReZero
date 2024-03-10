@@ -153,7 +153,7 @@ namespace ReZero.SuperAPI
                     {
                         MethodArgsCount = 0,
                         MethodClassFullName = typeof(MethodApi).FullName,
-                        MethodName = nameof(MethodApi.GetWhereTypeList)
+                        MethodName = nameof(EnumApi.GetWhereTypeList)
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
