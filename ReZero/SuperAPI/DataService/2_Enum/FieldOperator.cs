@@ -16,11 +16,8 @@ namespace ReZero.SuperAPI
         NotIn,
         LikeLeft,
         LikeRight,
-        NoEqual,
-        IsNullOrEmpty,
-        IsNot,
-        NoLike,
-        EqualNull,
+        NoEqual,  
+        NoLike, 
         InLike
     }
 }

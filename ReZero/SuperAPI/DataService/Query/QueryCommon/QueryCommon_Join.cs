@@ -70,15 +70,9 @@ namespace ReZero.SuperAPI
                 case FieldOperatorType.LikeRight:
                     break;
                 case FieldOperatorType.NoEqual:
-                    break;
-                case FieldOperatorType.IsNullOrEmpty:
-                    break;
-                case FieldOperatorType.IsNot:
-                    break;
+                    break;  
                 case FieldOperatorType.NoLike:
-                    break;
-                case FieldOperatorType.EqualNull:
-                    break;
+                    break; 
                 case FieldOperatorType.InLike:
                     break;
             }
