@@ -14,6 +14,7 @@ namespace ReZero.SuperAPI
             GetActionType();
             GetAllTables();
             SaveInterfaceList();
+            GetWhereTypeList();
         }
 
         private void SaveInterfaceList()
@@ -44,8 +45,7 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data1);
-        }
-
+        } 
         private void GetImportTables()
         {
             //获取导入的表
@@ -129,6 +129,35 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                        
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void GetWhereTypeList()
+        {
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetWhereTypeListId;
+                it.GroupName = nameof(MethodApi);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
+                it.Name = TextHandler.GetInterfaceListText(GetWhereTypeListId);
+                it.Url = GetUrl(it, "GetWhereTypeList");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MyMethod,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 0,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetWhereTypeList)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+
                     }
                 };
             });

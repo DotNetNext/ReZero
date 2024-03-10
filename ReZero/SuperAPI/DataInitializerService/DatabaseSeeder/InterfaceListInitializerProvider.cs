@@ -223,6 +223,11 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Save interface")]
         public const long SaveInterfaceListId = 37;
 
+
+        [ChineseTextAttribute("下拉列表：获取条件类型")]
+        [EnglishTextAttribute("Get where type list ")]
+        public const long GetWhereTypeListId = 38;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

@@ -468,7 +468,7 @@
     <!--创建接口子窗体：添加条件-->
     <div class="modal fade  bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divAddWhere" style="display: none;">
         <button id="btnAddWhere" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divAddWhere"></button>
-        <div class="modal-dialog width800  border3CCC" role="document">
+        <div class="modal-dialog width1200  border3CCC" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -479,11 +479,11 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>条件编号</th>
-                                    <th>条件列</th>
-                                    <th>条件关系</th>
+                                    <th class="w-15">条件编号</th>
+                                    <th class="w-15">条件列</th>
+                                    <th class="w-15">条件关系</th>
                                     <th>条件值</th>
-                                    <th>操作</th>
+                                    <th class="w-20">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -492,13 +492,31 @@
                                         {{item.Id}}
                                     </td>
                                     <td>
-                                        2
+                                        <select class="form-control">
+                                            <option v-for="item in selectedColumnInfos">
+                                                {{item.PropertyName}}
+                                            </option>
+                                        </select>
                                     </td>
                                     <td>
-                                        2
+                                        <select class="form-control">
+                                            <option v-for="item in whereTypeList">
+                                                {{item.Value}}
+                                            </option>
+                                        </select>
                                     </td>
                                     <td>
-                                        2
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <select id="selectOption" class="form-control">
+                                                    <option>固定值</option>
+                                                    <option>参数</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input id="inputValue" class="form-control" type="text">
+                                            </div>
+                                        </div>
                                     </td>
                                     <td>
                                         <span class="pointer m-r-10" @click="AddWhereItem(selectedWheres[selectedWheres.length - 1].Id)"><i class="mdi mdi-plus"></i> 添加</span>
@@ -509,7 +527,7 @@
                         </table>
                         <div class="form-group">
                             <p><code>条件关系：</code></p>
-                            <select v-model="selectedWheresConditionalRelation" @change="changeConditionalRelation" class="form-control">
+                            <select v-model="selectedWheresConditionalRelation"  class="form-control">
                                 <option value="And">And：参数不传不算条件</option>
                                 <option value="And all">And all：参数不传也算条件</option>
                                 <option value="Or">Or： 或者</option>
@@ -517,7 +535,9 @@
                             </select>
                         </div>
                         <div v-if="selectedWheresConditionalRelation=='Customize'" class="form-group">
-                            <p><code>{0}表示编号为0的条件，{1}表示编号为{1}的条件 </code></p>
+                            <p>
+                                <code>{0}表示编号为0的条件，{1}表示编号为{1}的条件 </code>
+                            </p>
                             <textarea v-model="selectedWhereConditionalRelationTemplate" class="form-control">
 
                             </textarea>
@@ -545,6 +565,7 @@
             formData: {},
             selectedItems: [],
             groupList: [],
+            whereTypeList: [],
             interfaceCategroyList: [],
             actionList: [],
             currentActionType: [],
@@ -581,6 +602,7 @@
             this.bindInterfaceCategroySelect();
             this.bindActionLists();
             this.bindDatabaseSelect();
+            this.bindWhereType();
         },
         methods: {
 
@@ -922,6 +944,15 @@
                     .catch(error => {
                         this.error = error.message;
                         this.data = null;
+                    });
+            },
+            bindWhereType: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetWhereTypeList")
+                    .then(response => {
+                        this.whereTypeList = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
                     });
             },
             setColumns: function () {
