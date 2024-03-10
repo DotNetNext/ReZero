@@ -12,7 +12,10 @@
 .width1200 {
     width: 1200px !important
 }
-.width1500 {
+.width800 {
+    width: 800px !important
+}
+.width500 {
     width: 500px !important
 }
 .width200 {
@@ -33,4 +36,10 @@
 
 .width30 {
     width: 30px !important
+}
+.t_a_r {
+    text-align: right !important
+}
+.t_a_l {
+    text-align: left !important
 }
