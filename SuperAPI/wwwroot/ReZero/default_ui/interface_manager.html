@@ -527,7 +527,7 @@
                         </table>
                         <div class="form-group">
                             <p><code>条件关系：</code></p>
-                            <select v-model="selectedWheresConditionalRelation"  class="form-control">
+                            <select v-model="selectedWheresConditionalRelation" class="form-control">
                                 <option value="And">And：参数不传不算条件</option>
                                 <option value="And all">And all：参数不传也算条件</option>
                                 <option value="Or">Or： 或者</option>
@@ -541,6 +541,9 @@
                             <textarea v-model="selectedWhereConditionalRelationTemplate" class="form-control">
 
                             </textarea>
+                        </div>
+                        <div class="form-group">
+                            <p><code>预览：</code></p>
                         </div>
                     </div>
                     <div class="modal-footer">
