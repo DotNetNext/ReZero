@@ -169,7 +169,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="item in selectedColumnInfos">
+                                                            <tr v-for="item in selectedColumns">
 
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.DbColumnName}}</td>
@@ -491,7 +491,7 @@
                                     </td>
                                     <td>
                                         <select class="form-control">
-                                            <option v-for="item in selectedColumnInfos">
+                                            <option v-for="item in selectedColumns">
                                                 {{item.PropertyName}}
                                             </option>
                                         </select>
@@ -579,7 +579,7 @@
             joinColumns: [],
             selectColumns: [],
             selectColumnsTabIndex: 1,
-            selectedColumnInfos: [],
+            selectedColumns: [],
             selectedOrderBys: [],
             selectedOrderByString: "-",
             selectedOrderBys_EnableSort: false,
@@ -783,7 +783,7 @@
             saveColumns: function () {
 
                 var th = this;
-                this.selectedColumnInfos = this.columns.filter(it => th.selectColumns.includes(it.Id));
+                this.selectedColumns = this.columns.filter(it => th.selectColumns.includes(it.Id));
                 btnCloseAddColumns.click();
                 this.clearOrderBy();
             },
@@ -840,7 +840,7 @@
                 this.clearOrderBy();
             },
             deleteSelectedColumn: function (item) {
-                this.selectedColumnInfos.removeArrayItem(item)
+                this.selectedColumns.removeArrayItem(item)
             },
             deleteComplexitySelectedColumn: function (item) {
                 this.selectedComplexityColumnInfos.removeArrayItem(item)
@@ -859,7 +859,7 @@
                     return;
                 }
                 if (this.selectedOrderBys.length == 0) {
-                    this.selectedOrderBys = this.selectedColumnInfos.map(it => ({
+                    this.selectedOrderBys = this.selectedColumns.map(it => ({
                         Name: it.DbColumnName
                     }));
                 }
@@ -998,7 +998,7 @@
                 return true;
             },
             validateColumsAny: function () {
-                return (this.selectedColumnInfos.length + this.selectedComplexityColumnInfos.length) > 0;
+                return (this.selectedColumns.length + this.selectedComplexityColumnInfos.length) > 0;
             },
             clearOrderBy: function () {
                 this.selectedOrderBys = [];
