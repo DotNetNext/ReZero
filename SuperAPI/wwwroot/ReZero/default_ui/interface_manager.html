@@ -517,7 +517,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="pointer m-r-10" @click="AddWhereItem(selectedWheres[selectedWheres.length - 1].Id)"><i class="mdi mdi-plus"></i> 添加</span>
+                                        <span class="pointer m-r-10" @click="addWhereItem(selectedWheres[selectedWheres.length - 1].Id)"><i class="mdi mdi-plus"></i> 添加</span>
                                         <span class="pointer" @click="deleteWhereItem(item.Id)"><i class="mdi  mdi-window-close"></i> 删除</span>
                                     </td>
                                 </tr>
@@ -887,7 +887,7 @@
             saveBtnWhere: function () {
                 btnCloseAddWhere.click();
             },
-            AddWhereItem: function (id) {
+            addWhereItem: function (id) {
                 this.selectedWheres.push({ Id: id + 1 });
             },
             deleteWhereItem: function (id) {
