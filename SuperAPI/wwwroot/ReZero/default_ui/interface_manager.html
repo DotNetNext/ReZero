@@ -157,7 +157,8 @@
                                                         <i class="mdi mdi-settings"></i> 配置条件
                                                     </span>
                                                     <p> <code>排序：{{selectedOrderByString}} {{ selectedOrderBys_EnableSort==false ? "": "["+selectedOrderBys_EnableSort+"]" }} </code> </p>
-                                                    <p> <code>条件：{{selectedWhereString}}</code></p>
+                                                    <p v-if="selectedWheres.filter(item => item.PropertyName).length>0"> <code>条件：{{selectedWheres.filter(item => item.PropertyName ).length}} </code></p>
+                                                    <p v-if="selectedWheres.filter(item => item.PropertyName).length==0"> <code>条件：{{selectedWhereString}}</code></p>
                                                     <table class="table table-bordered m-b-0">
                                                         <thead>
                                                             <tr>
@@ -490,7 +491,8 @@
                                         {{item.Id}}
                                     </td>
                                     <td>
-                                        <select class="form-control">
+                                        <select v-model="item.PropertyName" class="form-control">
+                                            <option></option>
                                             <option v-for="item in selectedColumns">
                                                 {{item.PropertyName}}
                                             </option>
@@ -498,6 +500,7 @@
                                     </td>
                                     <td>
                                         <select class="form-control">
+                                            <option></option>
                                             <option v-for="item in whereTypeList">
                                                 {{item.Key}}
                                             </option>
@@ -585,7 +588,7 @@
             selectedOrderBys_EnableSort: false,
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
-            selectedWheres: [{ Id: 1 }],
+            selectedWheres: [{ Id: 1, PropertyName:null}],
             selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
             selectedWheresConditionalRelation: "AND",
             //ComplexityColumn
@@ -888,11 +891,11 @@
                 btnCloseAddWhere.click();
             },
             addWhereItem: function (id) {
-                this.selectedWheres.push({ Id: id + 1 });
+                this.selectedWheres.push({ Id: id + 1, PropertyName:null });
             },
             deleteWhereItem: function (id) {
                 if (this.selectedWheres.length == 1) {
-                    this.selectedWheres = [{ Id: 1 }];
+                    this.selectedWheres = [{ Id: 1, PropertyName: null }];
                 }
                 else {
                     this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
