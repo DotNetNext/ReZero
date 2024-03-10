@@ -584,7 +584,7 @@
             selectedOrderBys_EnableSort: false,
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
-            selectedWheres: [{ Id: 0 }],
+            selectedWheres: [{ Id: 1 }],
             selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
             selectedWheresConditionalRelation: "AND",
             //ComplexityColumn
@@ -891,7 +891,7 @@
             },
             deleteWhereItem: function (id) {
                 if (this.selectedWheres.length == 1) {
-                    this.selectedWheres = [{ Id: 0 }];
+                    this.selectedWheres = [{ Id: 1 }];
                 }
                 else {
                     this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
