@@ -820,7 +820,7 @@
                     tools.alert("开发中..");
                     return;
                 }
-                if (!this.ValidateComplexityColumns()) {
+                if (!this.validateComplexityColumns()) {
                     tools.alert("带*的请填写完整");
                     return;
                 }
@@ -1013,7 +1013,7 @@
                 this.copcol_JoinTable = null;
                 this.copcol_joinType = null;
             },
-            ValidateComplexityColumns: function () {
+            validateComplexityColumns: function () {
                 if (this.copcol_joinField == null ||
                     this.copcol_ShowField == null ||
                     this.copcol_joinType == null ||
