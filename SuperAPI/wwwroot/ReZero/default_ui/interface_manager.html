@@ -531,25 +531,25 @@
                         <div class="form-group">
                             <p><code>条件关系：</code></p>
                             <select v-model="selectedWheresConditionalRelation" @change="showWherePreview" class="form-control">
-                                <option value="And">And：参数为空条件成立</option>
-                                <option value="And all">And all： </option>
-                                <option value="Or">Or：参数为空条件成立 </option>
-                                <option value="Or all">Or all：  </option>
-                                <option value="Customize">Custom ： 参数为空条件成立 </option>
-                                <option value="Customize all">Custom all： </option>
+                                <option value="And">And：并且-带OR参数NULL</option>
+                                <option value="And all">And all：并且  </option>
+                                <option value="Or">Or：或者-带OR参数NULL </option>
+                                <option value="Or all">Or all： 或者  </option>
+                                <option value="Customize">Custom ：自定义-带OR参数NULL </option>
+                                <option value="Customize all">Custom all：自定义 </option>
                             </select>
                         </div>
                         <div v-if="selectedWheresConditionalRelation=='Customize'||selectedWheresConditionalRelation=='Customize all'" class="form-group">
+                            <textarea rows="5" v-model="selectedWhereConditionalRelationTemplate" class="form-control">
+
+                            </textarea>
                             <p>
                                 <code>{0}表示编号为0的条件，{1}表示编号为{1}的条件 </code>
                             </p>
-                            <textarea v-model="selectedWhereConditionalRelationTemplate" class="form-control">
-
-                            </textarea>
                         </div>
                         <div class="form-group">
                             <p><code>预览：</code></p>
-                            <p>{{selectdWherePreviewString}}</p>
+                            <p style="white-space: pre-line;">{{selectdWherePreviewString}}</p>
                             <button @click="showWherePreview" class="btn btn-info">
                                 <i class="mdi mdi-refresh"></i> 刷新结果
                             </button>
@@ -927,7 +927,7 @@
                 if (isCustom || isCustomAll) {
                     var template = this.selectedWhereConditionalRelationTemplate + "";
                     this.selectedWheres.forEach(function (it) {
-                        var value = ` (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value} OR (@${it.Value} IS NULL)`})\r\n`;
+                        var value = ` (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value} OR (@${it.Value} IS NULL)`}) `;
                         if (isCustomAll) {
                             value = `(${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`}) `;
                         }
