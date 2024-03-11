@@ -924,33 +924,17 @@
                 var isCustom = cr == "Customize"; 
                 if (isCustom) {
                 }
-                else if (isAnd || isOr) {
+                if (isAnd || isOr) {
                     var type = isAnd ? "AND" : "OR";
                     var wheres = this.selectedWheres.map(it =>
-                        type + " ("
-                        + it.PropertyName
-                        + " " +
-                        it.WhereType
-                        + " "
-                        +"" +(it.ValueType == 0 ? it.Value :
-                            ("@" + it.Value + "  OR ( @" + it.Value +" IS NULL) ")
-                           )
-                        + ")\r\n"
+                        `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value} OR (@${it.Value} IS NULL)`})\r\n`
                     ).join("");
                     this.selectdWherePreviewString = wheres;
-                }
-                else if (isAndAll || isOrAll) {
+                } else if (isAndAll || isOrAll) {
                     var type = isAndAll ? "AND" : "OR";
                     var wheres = this.selectedWheres.map(it =>
-                        type+" ("
-                        + it.PropertyName
-                        + " " +
-                        it.WhereType
-                        + " "
-                        + (it.ValueType == 0 ? it.Value : ("@" + it.Value))
-                        + ") "
+                        `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`}) `
                     ).join("");
-                    this.selectdWherePreviewString = wheres;
                 }
             },
 
