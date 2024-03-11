@@ -126,6 +126,7 @@
                                 <div class="tab-pane active">
 
                                     <form id="frmSave" action="#!" method="post" name="edit-form" class="edit-form">
+                                        <input name="Id" type="hidden" value="0" />
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
                                             <label v-if="item.ElementType!=5" for="type">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
                                             <div class="form-controls">
