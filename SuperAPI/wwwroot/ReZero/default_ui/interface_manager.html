@@ -499,7 +499,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control">
+                                        <select v-model="item.WhereType" class="form-control">
                                             <option></option>
                                             <option v-for="item in whereTypeList">
                                                 {{item.Key}}
@@ -509,13 +509,13 @@
                                     <td>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <select id="selectOption" class="form-control">
+                                                <select v-model="item.ValueType" id="selectOption" class="form-control">
                                                     <option>固定值</option>
                                                     <option>参数名</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <input id="inputValue" class="form-control" type="text">
+                                                <input  v-model="item.Value"  id="inputValue" class="form-control" type="text">
                                             </div>
                                         </div>
                                     </td>
@@ -588,7 +588,7 @@
             selectedOrderBys_EnableSort: false,
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
-            selectedWheres: [{ Id: 1, PropertyName:null}],
+            selectedWheres: [],
             selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
             selectedWheresConditionalRelation: "AND",
             //ComplexityColumn
@@ -885,17 +885,24 @@
                     tools.alert("请选择列后在选择条件");
                     return;
                 }
+                if (this.selectedWheres.length == 0)
+                {
+                    this.selectedWheres.push(this.getWhereModel());
+                }
                 btnAddWhere.click();
             },
             saveBtnWhere: function () {
                 btnCloseAddWhere.click();
             },
             addWhereItem: function (id) {
-                this.selectedWheres.push({ Id: id + 1, PropertyName:null });
+                var model = this.getWhereModel();
+                model.Id = model.Id + 1
+                this.selectedWheres.push(model);
             },
             deleteWhereItem: function (id) {
                 if (this.selectedWheres.length == 1) {
-                    this.selectedWheres = [{ Id: 1, PropertyName: null }];
+                    this.selectedWheres = [];
+                    btnCloseAddWhere.click();
                 }
                 else {
                     this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
@@ -1025,6 +1032,10 @@
                     return false;
                 }
                 return true;
+            },
+            getWhereModel: function ()
+            {
+                return { Id: 1, PropertyName: null, WhereType: null, ValueType: null, Value: null };
             }
 
         }
