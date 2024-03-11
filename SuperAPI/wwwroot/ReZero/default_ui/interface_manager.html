@@ -512,12 +512,12 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <select v-model="item.ValueType" id="selectOption" class="form-control">
-                                                    <option>固定值</option>
-                                                    <option>参数名</option>
+                                                    <option value="0">固定值</option>
+                                                    <option value="1">参数名</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <input  v-model="item.Value"  id="inputValue" class="form-control" type="text">
+                                                <input v-model="item.Value" id="inputValue" class="form-control" type="text">
                                             </div>
                                         </div>
                                     </td>
@@ -530,10 +530,11 @@
                         </table>
                         <div class="form-group">
                             <p><code>条件关系：</code></p>
-                            <select v-model="selectedWheresConditionalRelation" class="form-control">
+                            <select v-model="selectedWheresConditionalRelation" @change="showWherePreview" class="form-control">
                                 <option value="And">And：参数不传不算条件</option>
                                 <option value="And all">And all：参数不传也算条件</option>
-                                <option value="Or">Or： 或者</option>
+                                <option value="Or">Or：参数不传不算条件 </option>
+                                <option value="Or all">Or all： 参数不传也算条件</option>
                                 <option value="Customize">Customize ：自定义配置</option>
                             </select>
                         </div>
@@ -547,6 +548,10 @@
                         </div>
                         <div class="form-group">
                             <p><code>预览：</code></p>
+                            <p>{{selectdWherePreviewString}}</p>
+                            <button @click="showWherePreview" class="btn btn-info">
+                                <i class="mdi mdi-play-circle-outline"></i> 刷新结果
+                            </button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -593,6 +598,7 @@
             selectedWheres: [],
             selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
             selectedWheresConditionalRelation: "AND",
+            selectdWherePreviewString: null,
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -887,8 +893,7 @@
                     tools.alert("请选择列后在选择条件");
                     return;
                 }
-                if (this.selectedWheres.length == 0)
-                {
+                if (this.selectedWheres.length == 0) {
                     this.selectedWheres.push(this.getWhereModel());
                 }
                 btnAddWhere.click();
@@ -908,6 +913,44 @@
                 }
                 else {
                     this.selectedWheres.removeArrayItem(this.selectedWheres.find(it => it.Id == id));
+                }
+            },
+            showWherePreview: function () {
+                var cr = this.selectedWheresConditionalRelation;
+                var isAndAll = cr == "And all";
+                var isOrAll = cr == "Or all";
+                var isAnd = cr == "And";
+                var isOr = cr == "Or";
+                var isCustom = cr == "Customize"; 
+                if (isCustom) {
+                }
+                else if (isAnd || isOr) {
+                    var type = isAnd ? "AND" : "OR";
+                    var wheres = this.selectedWheres.map(it =>
+                        type + " ("
+                        + it.PropertyName
+                        + " " +
+                        it.WhereType
+                        + " "
+                        +"" +(it.ValueType == 0 ? it.Value :
+                            ("@" + it.Value + "  OR ( @" + it.Value +" IS NULL) ")
+                           )
+                        + ")\r\n"
+                    ).join("");
+                    this.selectdWherePreviewString = wheres;
+                }
+                else if (isAndAll || isOrAll) {
+                    var type = isAndAll ? "AND" : "OR";
+                    var wheres = this.selectedWheres.map(it =>
+                        type+" ("
+                        + it.PropertyName
+                        + " " +
+                        it.WhereType
+                        + " "
+                        + (it.ValueType == 0 ? it.Value : ("@" + it.Value))
+                        + ") "
+                    ).join("");
+                    this.selectdWherePreviewString = wheres;
                 }
             },
 
@@ -1035,9 +1078,8 @@
                 }
                 return true;
             },
-            getWhereModel: function ()
-            {
-                return { Id: 1, PropertyName: null, WhereType: null, ValueType: null, Value: null };
+            getWhereModel: function () {
+                return { Id: 1, PropertyName: null, WhereType: null, ValueType: 0, Value: null };
             }
 
         }
