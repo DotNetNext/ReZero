@@ -531,14 +531,15 @@
                         <div class="form-group">
                             <p><code>条件关系：</code></p>
                             <select v-model="selectedWheresConditionalRelation" @change="showWherePreview" class="form-control">
-                                <option value="And">And：参数不传不算条件</option>
-                                <option value="And all">And all：参数不传也算条件</option>
-                                <option value="Or">Or：参数不传不算条件 </option>
-                                <option value="Or all">Or all： 参数不传也算条件</option>
-                                <option value="Customize">Customize ：自定义配置</option>
+                                <option value="And">And：参数为空条件成立</option>
+                                <option value="And all">And all： </option>
+                                <option value="Or">Or：参数为空条件成立 </option>
+                                <option value="Or all">Or all：  </option>
+                                <option value="Customize">Custom ： 参数为空条件成立 </option>
+                                <option value="Customize all">Custom all： </option>
                             </select>
                         </div>
-                        <div v-if="selectedWheresConditionalRelation=='Customize'" class="form-group">
+                        <div v-if="selectedWheresConditionalRelation=='Customize'||selectedWheresConditionalRelation=='Customize all'" class="form-group">
                             <p>
                                 <code>{0}表示编号为0的条件，{1}表示编号为{1}的条件 </code>
                             </p>
@@ -596,7 +597,7 @@
             selectedComplexityColumnInfos: [],
             selectedWhereString: "-",
             selectedWheres: [],
-            selectedWhereConditionalRelationTemplate: "( {0} and {1} ) ",
+            selectedWhereConditionalRelationTemplate: "( {1} and {2} ) ",
             selectedWheresConditionalRelation: "AND",
             selectdWherePreviewString: null,
             //ComplexityColumn
@@ -903,7 +904,7 @@
             },
             addWhereItem: function (id) {
                 var model = this.getWhereModel();
-                model.Id = model.Id + 1
+                model.Id = id + 1
                 this.selectedWheres.push(model);
             },
             deleteWhereItem: function (id) {
@@ -921,8 +922,19 @@
                 var isOrAll = cr == "Or all";
                 var isAnd = cr == "And";
                 var isOr = cr == "Or";
-                var isCustom = cr == "Customize"; 
-                if (isCustom) {
+                var isCustom = cr == "Customize";
+                var isCustomAll = cr == "Customize all";
+                if (isCustom || isCustomAll) {
+                    var template = this.selectedWhereConditionalRelationTemplate + "";
+                    this.selectedWheres.forEach(function (it) {
+                        var value = ` (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value} OR (@${it.Value} IS NULL)`})\r\n`;
+                        if (isCustomAll) {
+                            value = `(${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`}) `;
+                        }
+                        var regex = new RegExp("\\{" + it.Id + "\\}", "g");
+                        template = template.replace(regex, value);
+                    });
+                    this.selectdWherePreviewString = template;
                 }
                 if (isAnd || isOr) {
                     var type = isAnd ? "AND" : "OR";
@@ -935,7 +947,8 @@
                     var wheres = this.selectedWheres.map(it =>
                         `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`}) `
                     ).join("");
-                }
+                    this.selectdWherePreviewString = wheres;
+                } 
             },
 
 
