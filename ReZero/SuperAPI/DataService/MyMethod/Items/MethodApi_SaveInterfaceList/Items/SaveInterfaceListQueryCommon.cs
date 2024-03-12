@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             base.SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
             SetChildObject(zeroInterfaceList);
-            SetPage(saveInterfaceListModel, zeroInterfaceList); 
+            SetPage(saveInterfaceListModel, zeroInterfaceList);
             SetColumns(saveInterfaceListModel, zeroInterfaceList);
             SetOrderBy(saveInterfaceListModel, zeroInterfaceList);
             SetWhere(saveInterfaceListModel, zeroInterfaceList);
@@ -22,17 +23,30 @@ namespace ReZero.SuperAPI
 
         private void SetColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
-    
+            var anyColumns = saveInterfaceListModel!.Json!.Columns.Any();
+            var anyJoin = saveInterfaceListModel!.Json!.ComplexityColumns.Any();
+            if (!anyJoin && !anyColumns)
+            {
+                var columns = App.Db.Queryable<ZeroEntityColumnInfo>()
+                    .Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
+                zeroInterfaceList.DataModel!.Columns =
+                    columns.Select(it => new DataColumnParameter()
+                    { 
+                        Description=it.Description,
+                        PropertyName=it.PropertyName
+
+                    }).ToList();
+            }
         }
 
         private void SetWhere(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
-            
+
         }
 
         private void SetOrderBy(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
-        
+
         }
 
         private static void SetChildObject(ZeroInterfaceList zeroInterfaceList)
@@ -55,6 +69,10 @@ namespace ReZero.SuperAPI
                              new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
                     }
                   );
+                zeroInterfaceList.CustomResultModel = new ResultModel()
+                {
+                    ResultType = ResultType.Grid
+                };
             }
         }
     }
