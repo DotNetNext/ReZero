@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     public class SaveInterfaceListModel
     {
@@ -12,5 +12,51 @@ namespace ReZero.SuperAPI
         public string? Name { get; set; }
         public string? InterfaceCategoryId { get; set; }
         public ActionType? ActionType { get; set; }
+        public string? Json { get; set; }
+        public bool PageSize { get; set; }
     }
+
+
+    public class CommonQueryConfig
+    {
+        public CommonQueryColumn[]? Columns { get; set; }
+        public CommonQueryComplexitycolumn[]? ComplexityColumns { get; set; }
+        public CommonQueryWhere[]? Where { get; set; }
+        public string? WhereConditionalRelation { get; set; }
+        public string? WhereConditionalRelationTemplate { get; set; }
+        public CommonQueryOrderby[]? OrderBys { get; set; }
+        public bool OrderBysEnableSort { get; set; }
+    }
+
+    public class CommonQueryColumn
+    {
+        public string? Id { get; set; } 
+        public string? DbColumnName { get; set; }
+        public string? PropertyName { get; set; } 
+        public int SortId { get; set; } 
+    }
+
+    public class CommonQueryComplexitycolumn
+    {
+        public string? PropertyName { get; set; }
+        public string? DbColumnName { get; set; }
+        public int SortId { get; set; }
+    }
+
+    public class CommonQueryWhere
+    {
+        public int Id { get; set; }
+        public string? PropertyName { get; set; }
+        public string? WhereType { get; set; }
+        public int ValueType { get; set; }
+        public string? Value { get; set; }
+    }
+
+    public class CommonQueryOrderby
+    {
+        public string? Name { get; set; }
+        public string? OrderByType { get; set; }
+        public string? SortId { get; set; }
+    }
+
 }

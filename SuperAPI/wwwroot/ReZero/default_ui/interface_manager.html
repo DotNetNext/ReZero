@@ -183,7 +183,7 @@
                                                                     </button>
                                                                 </td>
                                                             </tr>
-                                                            <tr v-for="item in selectedComplexityColumnInfos">
+                                                            <tr v-for="item in selectedComplexityColumns">
 
                                                                 <td>{{item.PropertyName}}</td>
                                                                 <td>{{item.DbColumnName}}</td>
@@ -594,7 +594,7 @@
             selectedOrderBys: [],
             selectedOrderByString: "-",
             selectedOrderBys_EnableSort: false,
-            selectedComplexityColumnInfos: [],
+            selectedComplexityColumns: [],
             selectedWhereString: "-",
             selectedWheres: [],
             selectedWhereConditionalRelationTemplate: "( {1} and {2} ) ",
@@ -722,6 +722,15 @@
 
                 if (isSuccess) {
                     var formData = tools.formToJson("frmSave");
+                    formData.Json = JSON.stringify( {
+                        Columns:this.selectedColumns,
+                        ComplexityColumns: this.selectedComplexityColumns,
+                        Where: this.selectedWheres,
+                        WhereConditionalRelation: this.selectedWheresConditionalRelation,
+                        WhereConditionalRelationTemplate: this.selectedWhereConditionalRelationTemplate,
+                        OrderBys: this.selectedOrderBys,
+                        OrderBysEnableSort: this.selectedOrderBys_EnableSort
+                    });
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData)
                         .then(response => {
@@ -847,7 +856,7 @@
                     DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
                     SortId: 1
                 };
-                this.selectedComplexityColumnInfos.push(addItem)
+                this.selectedComplexityColumns.push(addItem)
                 btnCloseAddComplexityColumns.click();
                 this.clearOrderBy();
             },
@@ -855,7 +864,7 @@
                 this.selectedColumns.removeArrayItem(item)
             },
             deleteComplexitySelectedColumn: function (item) {
-                this.selectedComplexityColumnInfos.removeArrayItem(item)
+                this.selectedComplexityColumns.removeArrayItem(item)
             },
             tabClickComplexityColumns: function (index) {
                 if (index != 1) liComplexityColumns.className = "";
@@ -1053,7 +1062,7 @@
                 return true;
             },
             validateColumsAny: function () {
-                return (this.selectedColumns.length + this.selectedComplexityColumnInfos.length) > 0;
+                return (this.selectedColumns.length + this.selectedComplexityColumns.length) > 0;
             },
             clearOrderBy: function () {
                 this.selectedOrderBys = [];
