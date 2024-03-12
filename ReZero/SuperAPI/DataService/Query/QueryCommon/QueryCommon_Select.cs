@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
                         item.AsName = item.Name; 
                     var name = $"{_sqlBuilder!.GetTranslationColumnName(GetSelectFieldName(queryObject,item))} AS {item.AsName} ";
                     selectLists.Add(name);
-                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type,item).PropertyInfo.PropertyType });
+                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type,item)?.PropertyInfo?.PropertyType??typeof(object)});
                 }
             }
             var  resultType=new DynamicTypeBuilder(_sqlSugarClient!,"ViewModel_"+dataModel.ApiId, resultTypeInfos).BuildDynamicType();

@@ -26,9 +26,9 @@ namespace ReZero.SuperAPI
         {
             var anyColumns = saveInterfaceListModel!.Json!.Columns.Any();
             var anyJoin = saveInterfaceListModel!.Json!.ComplexityColumns.Any();
+            var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
             if (!anyJoin && !anyColumns)
-            {
-                var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
+            { 
                 zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
                     {
                         Description = it.Description,
@@ -38,6 +38,12 @@ namespace ReZero.SuperAPI
             }
             if (anyColumns)
             {
+                zeroInterfaceList.DataModel!.Columns = columns
+                .Where(it => saveInterfaceListModel!.Json!.Columns.Any(z=>z.PropertyName== it.PropertyName)).Select(it => new DataColumnParameter()
+                {
+                    Description = it.Description,
+                    PropertyName = it.PropertyName  
+                }).ToList();
                 zeroInterfaceList.DataModel!.SelectParameters = saveInterfaceListModel!.Json!.Columns
                   .Select(it => new DataModelSelectParameters()
                   {
