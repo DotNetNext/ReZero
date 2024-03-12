@@ -210,7 +210,7 @@
                                                 </template>
                                                 <!--Page-->
                                                 <template v-if="item.ElementType==6">
-                                                    <label class="lyear-checkbox   t_a_l "><input :name="item.Name" type="checkbox"> <span class="p-l-15">是否分页</span></label>
+                                                    <label class="lyear-checkbox   t_a_l "><input :name="item.Name" value="true" type="checkbox"> <span class="p-l-15">是否分页</span></label>
                                                 </template>
                                             </div>
                                         </div>
@@ -722,7 +722,7 @@
 
                 if (isSuccess) {
                     var formData = tools.formToJson("frmSave");
-                    formData.Json = JSON.stringify( {
+                    formData.Json = {
                         Columns:this.selectedColumns,
                         ComplexityColumns: this.selectedComplexityColumns,
                         Where: this.selectedWheres,
@@ -730,7 +730,7 @@
                         WhereConditionalRelationTemplate: this.selectedWhereConditionalRelationTemplate,
                         OrderBys: this.selectedOrderBys,
                         OrderBysEnableSort: this.selectedOrderBys_EnableSort
-                    });
+                    };
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData)
                         .then(response => {

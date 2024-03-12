@@ -45,7 +45,7 @@ namespace ReZero.SuperAPI
                 ActionType = saveInterfaceListModel!.ActionType!.Value,
                 TableId = GetTableId(saveInterfaceListModel.TableId)
             };
-
+             
         }
         protected EntityInfo GetEntityInfo(long tableId) 
         { 

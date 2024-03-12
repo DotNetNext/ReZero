@@ -12,7 +12,7 @@ namespace ReZero.SuperAPI
         public string? Name { get; set; }
         public string? InterfaceCategoryId { get; set; }
         public ActionType? ActionType { get; set; }
-        public string? Json { get; set; }
+        public CommonQueryConfig? Json { get; set; }
         public bool PageSize { get; set; }
     }
 
