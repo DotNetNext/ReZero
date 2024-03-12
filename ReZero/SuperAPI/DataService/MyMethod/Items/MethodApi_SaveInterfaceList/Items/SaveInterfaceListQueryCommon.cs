@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using Newtonsoft.Json;
+using static Npgsql.Replication.PgOutput.Messages.RelationMessage;
 
 namespace ReZero.SuperAPI
 {
@@ -27,15 +28,23 @@ namespace ReZero.SuperAPI
             var anyJoin = saveInterfaceListModel!.Json!.ComplexityColumns.Any();
             if (!anyJoin && !anyColumns)
             {
-                var columns = App.Db.Queryable<ZeroEntityColumnInfo>()
-                    .Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
-                zeroInterfaceList.DataModel!.Columns =
-                    columns.Select(it => new DataColumnParameter()
-                    { 
-                        Description=it.Description,
-                        PropertyName=it.PropertyName
+                var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
+                zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
+                    {
+                        Description = it.Description,
+                        PropertyName = it.PropertyName
 
                     }).ToList();
+            }
+            if (anyColumns)
+            {
+                zeroInterfaceList.DataModel!.SelectParameters = saveInterfaceListModel!.Json!.Columns
+                  .Select(it => new DataModelSelectParameters()
+                  {
+                      AsName = it.DbColumnName,
+                      TableIndex = 0,
+                      Name = it.PropertyName,
+                  }).ToList();
             }
         }
 
