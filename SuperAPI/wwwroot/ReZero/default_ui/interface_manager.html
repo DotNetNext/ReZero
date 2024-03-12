@@ -544,7 +544,7 @@
 
                             </textarea>
                             <p>
-                                <code>{1}表示编号为1的条件，{2}表示编号为{2}的条件 </code>
+                                <code>{1}表示编号为1的条件，{2}表示编号为2的条件 </code>
                             </p>
                         </div>
                         <div class="form-group">
@@ -924,6 +924,9 @@
                 var isOr = cr == "Or";
                 var isCustom = cr == "Customize";
                 var isCustomAll = cr == "Customize all";
+                var andStr = "AND";
+                var orStr = "Or";
+                var empStr = "";
                 if (isCustom || isCustomAll) {
                     var template = this.selectedWhereConditionalRelationTemplate + "";
                     this.selectedWheres.forEach(function (it) {
@@ -937,16 +940,16 @@
                     this.selectdWherePreviewString = template;
                 }
                 if (isAnd || isOr) {
-                    var type = isAnd ? "AND" : "OR";
+                    var type = isAnd ? andStr : orStr;
                     var wheres = this.selectedWheres.map(it =>
                         `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value} OR (@${it.Value} IS NULL)`})\r\n`
-                    ).join("");
+                    ).join(empStr);
                     this.selectdWherePreviewString = wheres;
                 } else if (isAndAll || isOrAll) {
-                    var type = isAndAll ? "AND" : "OR";
+                    var type = isAndAll ? andStr : orStr;
                     var wheres = this.selectedWheres.map(it =>
                         `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`}) `
-                    ).join("");
+                    ).join(empStr);
                     this.selectdWherePreviewString = wheres;
                 } 
             },
