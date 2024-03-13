@@ -24,14 +24,14 @@
             </div>
         </div>
 
-        <div class="parameter" v-if="data.DataModel.OrderParemters">
+        <div class="parameter" v-if="data.DataModel.OrderDynamicParemters">
             <label>
                 排序:
             </label>
-            <textarea id="txtOrderParemters" placeholder="格式：[{FieldName:FieldName,OrderByType:0}] ，其中： 0 升序, 1 倒序，FieldName是列表中的列">  </textarea>
+            <textarea id="txtOrderDynamicParemters" placeholder="格式：[{FieldName:FieldName,OrderByType:0}] ，其中： 0 升序, 1 倒序，FieldName是列表中的列">  </textarea>
         </div>
-        <div class="parameter" v-if="!data.DataModel.OrderParemters">
-              <input id="txtOrderParemters" type="hidden"/>
+        <div class="parameter" v-if="!data.DataModel.OrderDynamicParemters">
+              <input id="txtOrderDynamicParemters" type="hidden"/>
         </div>
         <button class="btn btn-success" v-on:click="submitRequest">提交</button>
         <button class="btn btn-close" v-on:click="submitClose">关闭</button>
@@ -71,9 +71,9 @@
                         postData[param.Name] = param.Value;
                     });
                 }
-                if (txtOrderParemters.value)
+                if (txtOrderDynamicParemters.value)
                 {
-                    postData["OrderParemters"] = txtOrderParemters.value;
+                    postData["OrderDynamicParemters"] = txtOrderDynamicParemters.value;
                 }
                 // 发送 POST 请求
                 axios.post(fullUrl, postData)

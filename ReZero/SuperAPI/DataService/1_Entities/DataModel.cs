@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
 
         #region Paremters
 
+        public List<DataModelDynamicOrderParemter>? OrderDynamicParemters { get; set; }
         public List<DataModelOrderParemter>? OrderParemters { get; set; }
         public List<DataModelDefaultParameter>? DefaultParameters { get; set; }
         public DataModelPageParameter? CommonPage { get; set; }

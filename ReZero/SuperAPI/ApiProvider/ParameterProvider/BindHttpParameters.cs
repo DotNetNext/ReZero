@@ -32,15 +32,15 @@ namespace ReZero.SuperAPI
 
         private void BindOrderByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
         {
-            if (dataModel?.OrderParemters != null)
+            if (dataModel?.OrderDynamicParemters != null)
             {
                 //var data = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModel.OrderParemters)) == true);
                 //if (data != null)
                 //{
-                var orderDatas = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.OrderParemters)));
+                var orderDatas = formDatas.FirstOrDefault(it => it.Key.EqualsCase(nameof(DataModel.OrderDynamicParemters)));
                 if (orderDatas.Value != null)
                 {
-                    dataModel!.OrderParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelOrderParemter>>(orderDatas.Value + "");
+                    dataModel!.OrderDynamicParemters = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataModelDynamicOrderParemter>>(orderDatas.Value + "");
                 }
                 //}
             }

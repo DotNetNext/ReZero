@@ -13,9 +13,9 @@ namespace ReZero.SuperAPI
         private QueryMethodInfo OrderBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<OrderByModel> orderByModels = new List<OrderByModel>();
-            if (dataModel.OrderParemters != null)
+            if (dataModel.OrderDynamicParemters != null)
             {
-                foreach (var item in dataModel.OrderParemters)
+                foreach (var item in dataModel.OrderDynamicParemters)
                 {
                     orderByModels.Add(new OrderByModel()
                     {
@@ -28,7 +28,7 @@ namespace ReZero.SuperAPI
             return queryObject;
         }
 
-        private static string GetFieldName(QueryMethodInfo queryObject, DataModelOrderParemter item)
+        private static string GetFieldName(QueryMethodInfo queryObject, DataModelDynamicOrderParemter item)
         {
             var name= App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
             return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;

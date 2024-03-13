@@ -28,21 +28,21 @@ namespace ReZero.SuperAPI
             var anyJoin = saveInterfaceListModel!.Json!.ComplexityColumns.Any();
             var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
             if (!anyJoin && !anyColumns)
-            { 
+            {
                 zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
-                    {
-                        Description = it.Description,
-                        PropertyName = it.PropertyName
+                {
+                    Description = it.Description,
+                    PropertyName = it.PropertyName
 
-                    }).ToList();
+                }).ToList();
             }
             if (anyColumns)
             {
                 zeroInterfaceList.DataModel!.Columns = columns
-                .Where(it => saveInterfaceListModel!.Json!.Columns.Any(z=>z.PropertyName== it.PropertyName)).Select(it => new DataColumnParameter()
+                .Where(it => saveInterfaceListModel!.Json!.Columns.Any(z => z.PropertyName == it.PropertyName)).Select(it => new DataColumnParameter()
                 {
                     Description = it.Description,
-                    PropertyName = it.PropertyName  
+                    PropertyName = it.PropertyName
                 }).ToList();
                 zeroInterfaceList.DataModel!.SelectParameters = saveInterfaceListModel!.Json!.Columns
                   .Select(it => new DataModelSelectParameters()
@@ -61,7 +61,14 @@ namespace ReZero.SuperAPI
 
         private void SetOrderBy(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
-
+            if (saveInterfaceListModel.Json!.OrderBysEnableSort)
+            {
+                zeroInterfaceList.DataModel!.OrderDynamicParemters = new List<DataModelDynamicOrderParemter>();
+            }
+            if (saveInterfaceListModel.Json!.OrderBys.Any())
+            {
+                zeroInterfaceList.DataModel!.OrderDynamicParemters = new List<DataModelDynamicOrderParemter>();
+            }
         }
 
         private static void SetChildObject(ZeroInterfaceList zeroInterfaceList)

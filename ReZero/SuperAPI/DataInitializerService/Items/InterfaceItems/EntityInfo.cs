@@ -273,8 +273,8 @@ namespace ReZero.SuperAPI
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
                     ActionType = ActionType.QueryCommon,
-                    OrderParemters=new List<DataModelOrderParemter>() { 
-                      new DataModelOrderParemter(){  FieldName=nameof(ZeroInterfaceCategory.Id),OrderByType=SqlSugar.OrderByType.Desc }
+                    OrderDynamicParemters=new List<DataModelDynamicOrderParemter>() { 
+                      new DataModelDynamicOrderParemter(){  FieldName=nameof(ZeroInterfaceCategory.Id),OrderByType=SqlSugar.OrderByType.Desc }
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>() {
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
