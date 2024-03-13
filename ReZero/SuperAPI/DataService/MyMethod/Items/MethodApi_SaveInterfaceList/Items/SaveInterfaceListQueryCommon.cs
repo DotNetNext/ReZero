@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using Newtonsoft.Json;
+using SqlSugar;
 using static Npgsql.Replication.PgOutput.Messages.RelationMessage;
 
 namespace ReZero.SuperAPI
@@ -67,7 +68,14 @@ namespace ReZero.SuperAPI
             }
             if (saveInterfaceListModel.Json!.OrderBys.Any())
             {
-                zeroInterfaceList.DataModel!.OrderDynamicParemters = new List<DataModelDynamicOrderParemter>();
+                zeroInterfaceList.DataModel!.OrderParemters =
+                    saveInterfaceListModel.Json!.OrderBys
+                    .Select(it => new DataModelOrderParemter()
+                    {
+                        FieldName = it.Name,
+                        OrderByType = it.OrderByType!.EqualsCase("asc")?OrderByType.Asc:OrderByType.Desc,
+                        TableIndex = 1
+                    }).ToList();
             }
         }
 
