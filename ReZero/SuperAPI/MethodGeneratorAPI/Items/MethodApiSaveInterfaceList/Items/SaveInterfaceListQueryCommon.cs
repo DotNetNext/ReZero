@@ -5,6 +5,7 @@ using System.Security.AccessControl;
 using System.Text;
 using Newtonsoft.Json;
 using SqlSugar;
+using SqlSugar.Extensions;
 using static Npgsql.Replication.PgOutput.Messages.RelationMessage;
 
 namespace ReZero.SuperAPI
@@ -70,6 +71,7 @@ namespace ReZero.SuperAPI
             {
                 zeroInterfaceList.DataModel!.OrderParemters =
                     saveInterfaceListModel.Json!.OrderBys
+                    .OrderBy(it=> it.SortId.ObjToInt())
                     .Select(it => new DataModelOrderParemter()
                     {
                         FieldName = it.Name,
