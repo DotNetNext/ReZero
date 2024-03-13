@@ -74,7 +74,7 @@ namespace ReZero.SuperAPI
                     {
                         FieldName = it.Name,
                         OrderByType = it.OrderByType!.EqualsCase("asc")?OrderByType.Asc:OrderByType.Desc,
-                        TableIndex = 1
+                        TableIndex = 0
                     }).ToList();
             }
         }
