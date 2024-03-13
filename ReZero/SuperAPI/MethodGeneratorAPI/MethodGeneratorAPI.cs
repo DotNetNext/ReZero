@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI 
 {
-    internal class MyMethod : IDataService
+    internal class MethodGeneratorAPI : IDataService
     {
         private ISqlSugarClient db;
-        public MyMethod()
+        public MethodGeneratorAPI()
         {
             db = App.Db;
         }

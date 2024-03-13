@@ -305,7 +305,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 2,

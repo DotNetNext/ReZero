@@ -83,7 +83,7 @@ namespace ReZero.SuperAPI
         [ChineseText("自定义方法")]
         [EnglishText("My method")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_MyMethodCN, PubConst.DataSource_ActionTypeGroupName_MyMethodEN)]
-        MyMethod = 99999, 
+        MethodGeneratorAPI = 99999, 
         #endregion
     }
 }

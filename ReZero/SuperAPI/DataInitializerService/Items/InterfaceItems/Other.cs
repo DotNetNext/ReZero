@@ -31,7 +31,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 1,
@@ -60,7 +60,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo=new MyMethodInfo() {  
                          MethodArgsCount=2,
                           MethodClassFullName=typeof(MethodApi).FullName,
@@ -89,7 +89,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 2,
@@ -119,7 +119,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 0,
@@ -148,12 +148,12 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 0,
-                        MethodClassFullName = typeof(EnumApi).FullName,
-                        MethodName = nameof(EnumApi.GetWhereTypeList)
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetWhereTypeList)
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {

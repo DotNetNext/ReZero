@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ReZero.SuperAPI 
 {
-    public class EnumApi
+    public partial class MethodApi
     {
         public List<EnumItemInfo> GetDbTypeSelectDataSource()
         {

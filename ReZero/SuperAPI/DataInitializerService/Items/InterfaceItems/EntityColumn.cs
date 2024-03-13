@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroColumnInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo=new MyMethodInfo()
                     {
                         MethodArgsCount = 1,
@@ -80,7 +80,7 @@ namespace ReZero.SuperAPI
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroColumnInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
                         MethodArgsCount = 1,

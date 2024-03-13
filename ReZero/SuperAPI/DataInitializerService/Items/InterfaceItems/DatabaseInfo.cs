@@ -73,7 +73,7 @@ namespace ReZero.SuperAPI
                         MethodName = nameof(MethodApi.TestDb)
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     DefaultParameters = new List<DataModelDefaultParameter>() {
                              new DataModelDefaultParameter() { Name = nameof(ZeroDatabaseInfo.Id),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,Value=0, Description = TextHandler.GetCommonText("主键", "Id") }
                          }

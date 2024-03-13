@@ -18,19 +18,19 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = GetDbTypeListId;
-                it.GroupName = nameof(EnumApi);
+                it.GroupName = nameof(MethodApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
                 it.Name = TextHandler.GetInterfaceListText(GetDbTypeListId);
                 it.Url = GetUrl(it, "GetDbTypeList");
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodClassFullName = typeof(EnumApi).FullName,
+                        MethodClassFullName = typeof(MethodApi).FullName,
                         MethodArgsCount = 0,
-                        MethodName = nameof(EnumApi.GetDbTypeSelectDataSource)
+                        MethodName = nameof(MethodApi.GetDbTypeSelectDataSource)
                     }
                 };
             });
@@ -42,19 +42,19 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = GetNativeTypeId;
-                it.GroupName = nameof(EnumApi);
+                it.GroupName = nameof(MethodApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100004;
                 it.Name = TextHandler.GetInterfaceListText(GetNativeTypeId);
                 it.Url = GetUrl(it, "GetNativeTypeList");
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
-                    ActionType = ActionType.MyMethod,
+                    ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodClassFullName = typeof(EnumApi).FullName,
+                        MethodClassFullName = typeof(MethodApi).FullName,
                         MethodArgsCount = 0,
-                        MethodName = nameof(EnumApi.GetNativeTypeSelectDataSource)
+                        MethodName = nameof(MethodApi.GetNativeTypeSelectDataSource)
                     }
                 };
             });
