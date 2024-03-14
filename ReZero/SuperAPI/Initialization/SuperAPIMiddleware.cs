@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     /// <summary>
     /// Middleware class for handling Zero Dynamic API and Internal API requests.
     /// </summary>
-    public class ZeroApiMiddleware
+    public class SuperAPIMiddleware
     {
         private readonly IApplicationBuilder _applicationBuilder;
 
@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
         /// Constructor for ZeroApiMiddleware class.
         /// </summary>
         /// <param name="application">Instance of IApplicationBuilder.</param>
-        public ZeroApiMiddleware(IApplicationBuilder application)
+        public SuperAPIMiddleware(IApplicationBuilder application)
         {
             _applicationBuilder = application ?? throw new ArgumentNullException(nameof(application));
         }

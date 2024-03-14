@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
         /// Initializes a new instance of the DatabaseContext class with the provided database connection configuration.
         /// </summary>
         /// <param name="connectionConfig">Database connection configuration.</param>
-        public DatabaseContext(ReZeroConnectionConfig rezeroConnectionConfig)
+        public DatabaseContext(SuperAPIConnectionConfig rezeroConnectionConfig)
         {
             var connectionConfig = new ConnectionConfig()
             {

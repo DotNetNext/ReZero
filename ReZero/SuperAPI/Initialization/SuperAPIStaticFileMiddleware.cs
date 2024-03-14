@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ReZero.SuperAPI
 {
-    public class ZeroStaticFileMiddleware
+    public class SuperAPIStaticFileMiddleware
     {
         private readonly RequestDelegate _next;
 
@@ -21,7 +21,7 @@ namespace ReZero.SuperAPI
         internal static string DefaultUiFolderName = "default_ui";
         private static string UiFolderPath { get; set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
 
-        public ZeroStaticFileMiddleware(RequestDelegate next)
+        public SuperAPIStaticFileMiddleware(RequestDelegate next)
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
         }

@@ -66,7 +66,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Gets or sets the initialization connection string information. Default is SQLite.
         /// </summary>
-        public ReZeroConnectionConfig ConnectionConfig { get; set; } = new ReZeroConnectionConfig()
+        public SuperAPIConnectionConfig ConnectionConfig { get; set; } = new SuperAPIConnectionConfig()
         {
             DbType = SqlSugar.DbType.Sqlite,
             ConnectionString = "datasource=ReZero.db"

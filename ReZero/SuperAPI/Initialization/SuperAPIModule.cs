@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
         /// </summary>
         private static void InitZeroStaticFileMiddleware()
         {
-            _apiOptions!.UiOptions!.DefaultUiFolderName = ZeroStaticFileMiddleware.DefaultUiFolderName;
+            _apiOptions!.UiOptions!.DefaultUiFolderName = SuperAPIStaticFileMiddleware.DefaultUiFolderName;
         }
 
 
@@ -82,7 +82,7 @@ namespace ReZero.SuperAPI
             // Add transient services to the IServiceCollection.
             services.AddTransient<IDynamicApi, DynamicApiManager>();
             services.AddTransient<InternalApi, InternalApi>();
-            services.AddTransient<IStartupFilter, ZeroApiRequestSetOptionsStartupFilter>();
+            services.AddTransient<IStartupFilter, SuperAPIRequestSetOptionsStartupFilter>();
 
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
             services.AddTransient<DatabaseContext>(it => new DatabaseContext(options.DatabaseOptions!.ConnectionConfig));

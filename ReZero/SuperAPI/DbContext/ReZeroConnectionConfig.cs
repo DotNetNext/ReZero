@@ -6,7 +6,7 @@ using System.Text;
 namespace ReZero.SuperAPI 
 {
 
-    public class ReZeroConnectionConfig
+    public class SuperAPIConnectionConfig
     {
         public SqlSugar.DbType DbType { get; set; }
         public string? ConnectionString { get;   set; }

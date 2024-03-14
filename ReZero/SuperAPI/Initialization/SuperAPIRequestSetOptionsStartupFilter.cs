@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
     /// <summary>
     /// Custom startup filter to configure application services and middleware.
     /// </summary>
-    public class ZeroApiRequestSetOptionsStartupFilter : IStartupFilter
+    public class SuperAPIRequestSetOptionsStartupFilter : IStartupFilter
     {
         /// <summary>
         /// Configures application services and middleware.
@@ -25,12 +25,12 @@ namespace ReZero.SuperAPI
                 App.ServiceProvider = new ApplicationServiceProvider(builder);
 
                 // Create an instance of ZeroApiMiddleware and handle API requests.
-                Func<HttpContext, Func<Task>, Task> func = async (context, next) => await new ZeroApiMiddleware(builder).InvokeAsync(context, next);
+                Func<HttpContext, Func<Task>, Task> func = async (context, next) => await new SuperAPIMiddleware(builder).InvokeAsync(context, next);
 
                 // Use the created middleware in the pipeline.
                 builder.Use(func);
 
-                builder.UseMiddleware<ZeroStaticFileMiddleware>();
+                builder.UseMiddleware<SuperAPIStaticFileMiddleware>();
 
                 // Call the next middleware in the pipeline.
                 next(builder);
