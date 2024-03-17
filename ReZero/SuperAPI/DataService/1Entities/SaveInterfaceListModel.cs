@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -50,7 +52,7 @@ namespace ReZero.SuperAPI
         public string? PropertyName { get; set; }
         public string? WhereType { get; set; }
         public WhereValueType ValueType { get; set; }
-        public string? Value { get; set; }
+        public string? Value { get; set; }  
     }
 
     public class CommonQueryOrderby

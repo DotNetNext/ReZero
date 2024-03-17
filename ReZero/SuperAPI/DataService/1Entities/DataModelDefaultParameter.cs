@@ -24,6 +24,7 @@ namespace ReZero.SuperAPI
         public ParameterValidate? ParameterValidate { get; set; }
         public string?  DefaultValue { get; set; }
         public int TableIndex { get; set; }
+        public bool IsHidden { get; set; }
     }
     public class ParameterValidate
     {

@@ -25,7 +25,6 @@ namespace ReZero.SuperAPI
         private static void SetChildObject(ZeroInterfaceList zeroInterfaceList)
         {
             zeroInterfaceList.DataModel!.DefaultParameters = zeroInterfaceList.DataModel.DefaultParameters ?? new List<DataModelDefaultParameter>();
-        }
-
+        } 
     }
 }
