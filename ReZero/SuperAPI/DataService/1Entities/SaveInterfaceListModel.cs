@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
         public int Id { get; set; }
         public string? PropertyName { get; set; }
         public string? WhereType { get; set; }
-        public int ValueType { get; set; }
+        public WhereValueType ValueType { get; set; }
         public string? Value { get; set; }
     }
 
