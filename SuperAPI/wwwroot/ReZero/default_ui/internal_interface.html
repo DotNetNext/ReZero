@@ -33,7 +33,7 @@
                 </div>
                 <div class="parameter" style="display:none" v-if="item.DataModel.DefaultParameters && item.DataModel.DefaultParameters.length > 0">
                     <ul>
-                        <li v-for="param in item.DataModel.DefaultParameters" :key="param.Name">
+                        <li v-for="param in item.DataModel.DefaultParameters.filter(p => !p.ValueIsReadOnly && p.Value !== undefined && p.Value !== '')" :key="param.Name">
                             <code>{{ param.ValueIsReadOnly ?   'Readonly:':''}}{{ param.Name }}</code> ({{ param.ValueType }}) - {{param.Type}} {{ param.Description }}  {{ param.Value  ?  ' ['+param.Name +' = ' + param.Value+']' : ''}}
                         </li>
                         <li v-if="item.DataModel.OrderDynamicParemters" >
