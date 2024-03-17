@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
             }
             if (saveInterfaceListModel.Json!.OrderBys.Any())
             {
-                zeroInterfaceList.DataModel!.OrderParemters =
+                zeroInterfaceList.DataModel!.OrderByFixedParemters  =
                     saveInterfaceListModel.Json!.OrderBys
                     .OrderBy(it => it.SortId.ObjToInt())
                     .Select(it => new DataModelOrderParemter()

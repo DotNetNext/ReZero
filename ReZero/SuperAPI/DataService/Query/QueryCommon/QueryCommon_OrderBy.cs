@@ -13,9 +13,9 @@ namespace ReZero.SuperAPI
         private QueryMethodInfo OrderBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<OrderByModel> orderByModels = new List<OrderByModel>();
-            if (dataModel.OrderParemters != null)
+            if (dataModel.OrderByFixedParemters  != null)
             {
-                foreach (var item in dataModel.OrderParemters)
+                foreach (var item in dataModel.OrderByFixedParemters )
                 {
                     orderByModels.Add(new OrderByModel()
                     {
