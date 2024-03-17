@@ -19,11 +19,11 @@ namespace ReZero.SuperAPI
                     zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
                     {
                         Name = it.PropertyName,
-                        Value = it.Value,
+                        Value = it.ValueType == WhereValueType.Value ? it.Value:null,
                         FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
                         DefaultValue = it.Value, 
                         Description = json.Columns.FirstOrDefault(s=>s.PropertyName==it.PropertyName)?.DbColumnName,
-                        IsHidden=it.ValueType==WhereValueType.Value?true:false
+                        ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
                     });
                 }
             }

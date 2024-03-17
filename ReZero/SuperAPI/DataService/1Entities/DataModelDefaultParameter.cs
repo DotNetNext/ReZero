@@ -23,8 +23,7 @@ namespace ReZero.SuperAPI
         public DeleteParameter? DeleteParameter { get; set; } 
         public ParameterValidate? ParameterValidate { get; set; }
         public string?  DefaultValue { get; set; }
-        public int TableIndex { get; set; }
-        public bool IsHidden { get; set; }
+        public int TableIndex { get; set; } 
     }
     public class ParameterValidate
     {
