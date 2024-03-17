@@ -10,7 +10,7 @@
         </div>
         <div class="parameter" v-if="data.DataModel.DefaultParameters && data.DataModel.DefaultParameters.length > 0">
             <div v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
-                <label>{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
+                <label  :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
                  
                 <div v-if="param.ValueType=='Byte[]'">
                     <input @change="handleFileChange($event, param)" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
@@ -18,7 +18,7 @@
                 <div v-else-if="param.ValueIsReadOnly==false">
                     <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
                 </div>
-                <div v-else-if="param.ValueIsReadOnly==true">
+                <div v-else-if="param.ValueIsReadOnly==true"  :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">
                     <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
                 </div>
             </div>
