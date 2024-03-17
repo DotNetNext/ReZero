@@ -101,6 +101,15 @@ namespace ReZero.SuperAPI
                 case FieldOperatorType.NotIn:
                     conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.NotIn, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
                     break;
+                case FieldOperatorType.LikeLeft:
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.LikeLeft, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    break;
+                case FieldOperatorType.LikeRight:
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.LikeRight, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    break;
+                case FieldOperatorType.NoLike:
+                    conditionalModels.Add(new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.NoLike, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" });
+                    break;
                 default:
                     break;
             }
