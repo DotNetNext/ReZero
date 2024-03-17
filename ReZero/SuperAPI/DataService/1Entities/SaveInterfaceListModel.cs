@@ -23,8 +23,8 @@ namespace ReZero.SuperAPI
         public CommonQueryColumn[]? Columns { get; set; }
         public CommonQueryComplexitycolumn[]? ComplexityColumns { get; set; }
         public CommonQueryWhere[]? Where { get; set; }
-        public WhereConditionalRelation? WhereConditionalRelation { get; set; }
-        public string? WhereConditionalRelationTemplate { get; set; }
+        public WhereRelation? WhereRelation { get; set; }
+        public string? WhereRelationTemplate { get; set; }
         public CommonQueryOrderby[]? OrderBys { get; set; }
         public bool OrderBysEnableSort { get; set; }
     }

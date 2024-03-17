@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero.SuperAPI
 {
-    public enum WhereConditionalRelation
+    public enum WhereRelation
     {
         /// <summary>  
         /// And：并且-带OR参数NULL  
