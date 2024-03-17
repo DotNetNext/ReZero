@@ -534,12 +534,12 @@
                                 <option value="And">And：并且-带OR参数NULL</option>
                                 <option value="And all">And all：并且  </option>
                                 <option value="Or">Or：或者-带OR参数NULL </option>
-                                <option value="Or all">Or all： 或者  </option>
-                                <option value="Customize">Custom ：自定义-带OR参数NULL </option>
-                                <option value="Customize all">Custom all：自定义 </option>
+                                <option value="OrAll">OrAll： 或者  </option>
+                                <option value="Custom">Custom ：自定义-带OR参数NULL </option>
+                                <option value="CustomAll">CustomAll：自定义 </option>
                             </select>
                         </div>
-                        <div v-if="selectedWheresConditionalRelation=='Customize'||selectedWheresConditionalRelation=='Customize all'" class="form-group">
+                        <div v-if="selectedWheresConditionalRelation=='Custom'||selectedWheresConditionalRelation=='CustomAll'" class="form-group">
                             <textarea rows="5" v-model="selectedWhereConditionalRelationTemplate" class="form-control">
 
                             </textarea>
@@ -928,11 +928,11 @@
             showWherePreview: function () {
                 var cr = this.selectedWheresConditionalRelation;
                 var isAndAll = cr == "And all";
-                var isOrAll = cr == "Or all";
+                var isOrAll = cr == "OrAll";
                 var isAnd = cr == "And";
                 var isOr = cr == "Or";
-                var isCustom = cr == "Customize";
-                var isCustomAll = cr == "Customize all";
+                var isCustom = cr == "Custom";
+                var isCustomAll = cr == "CustomAll";
                 var andStr = "AND";
                 var orStr = "Or";
                 var empStr = "";
