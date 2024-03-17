@@ -58,7 +58,7 @@ namespace ReZero.SuperAPI
 
         private void SetWhere(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
-            //if(saveInterfaceListModel.Json.WhereConditionalRelation=="And")
+             
         }
 
         private void SetOrderBy(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
