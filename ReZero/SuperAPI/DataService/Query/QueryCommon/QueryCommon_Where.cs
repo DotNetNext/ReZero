@@ -32,12 +32,14 @@ namespace ReZero.SuperAPI
                         OrAll(dataModel, queryObject, conditionalModels);
                         break;
                     case WhereRelation.Custom:
+                        Custom(dataModel, queryObject, conditionalModels);
                         break;
                     case WhereRelation.CustomAll:
+                        CustomAll(dataModel, queryObject, conditionalModels);
                         break;
                 } 
             }
-            queryObject = queryObject.Where(conditionalModels);
+            queryObject = queryObject.Where(conditionalModels,true);
             foreach (var item in funcModels)
             {
                 queryObject = queryObject.Where(item);
@@ -67,6 +69,12 @@ namespace ReZero.SuperAPI
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
+            var conditionalList = conditionalModels.Select(it=>new KeyValuePair<WhereType, ConditionalModel>(WhereType.Or,(ConditionalModel)it)).ToList();
+            conditionalModels.Clear(); 
+            conditionalModels.Add(new ConditionalCollections()
+            {
+                 ConditionalList= conditionalList,
+            });
         }
         
         private static void OrAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
@@ -75,6 +83,12 @@ namespace ReZero.SuperAPI
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
+            var conditionalList = conditionalModels.Select(it => new KeyValuePair<WhereType, ConditionalModel>(WhereType.Or, (ConditionalModel)it)).ToList();
+            conditionalModels.Clear();
+            conditionalModels.Add(new ConditionalCollections()
+            {
+                ConditionalList = conditionalList,
+            });
         }
         
         private static void Custom(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
