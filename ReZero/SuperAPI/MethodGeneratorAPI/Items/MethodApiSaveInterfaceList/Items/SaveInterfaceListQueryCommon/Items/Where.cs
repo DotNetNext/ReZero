@@ -14,6 +14,8 @@ namespace ReZero.SuperAPI
             var json = saveInterfaceListModel.Json!;
             if (IsWhere(json))
             {
+                zeroInterfaceList.DataModel!.WhereRelation=json.WhereRelation;
+                zeroInterfaceList.DataModel.WhereRelationTemplate = json.WhereRelationTemplate; 
                 foreach (var it in json.Where??new CommonQueryWhere[] { })
                 {
                     zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()

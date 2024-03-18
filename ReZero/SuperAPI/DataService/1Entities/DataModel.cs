@@ -32,6 +32,8 @@ namespace ReZero.SuperAPI
         public object? OutPutData { get; set; }
         public long ApiId { get; set; }
         public List<DataColumnParameter>? Columns { get; set; }
+        public WhereRelation? WhereRelation { get;  set; }
+        public string? WhereRelationTemplate { get;  set; }
         #endregion
     }
 }
