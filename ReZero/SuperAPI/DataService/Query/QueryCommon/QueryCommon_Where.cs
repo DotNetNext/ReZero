@@ -16,33 +16,26 @@ namespace ReZero.SuperAPI
             List<IFuncModel> funcModels = new List<IFuncModel>();
             if (dataModel.DefaultParameters != null)
             {
-                foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+                dataModel.WhereRelation = dataModel.WhereRelation ?? WhereRelation.And;
+                switch (dataModel.WhereRelation)
                 {
-                    item.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
-                    if (item.Value != null)
-                    {
-                        if (item.ValueType == typeof(bool).Name)
-                        {
-                            if (item.Value?.ToString().EqualsCase( "true" )==true|| item.Value?.ToString().EqualsCase("false")==true)
-                            {
-                                item.Value = Convert.ToBoolean(item.Value);
-                            }
-                            else
-                            {
-                                item.Value = Convert.ToBoolean(Convert.ToInt32(item.Value));
-                            }
-                        }
-                    }
-                    var forNames = dataModel.DefaultParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
-                    if (forNames.Any())
-                    {
-                        ConvetConditionalModelForNames(conditionalModels, item, forNames);
-                    }
-                    else
-                    {
-                        ConvetConditionalModelDefault(conditionalModels, item);
-                    }
-                }
+                    case WhereRelation.And: 
+                        And(dataModel, queryObject, conditionalModels);
+                        break;
+                    case WhereRelation.AndAll:
+                        AndAll(dataModel, queryObject, conditionalModels);
+                        break;
+                    case WhereRelation.Or:
+                        Or(dataModel, queryObject, conditionalModels);
+                        break;
+                    case WhereRelation.OrAll:
+                        OrAll(dataModel, queryObject, conditionalModels);
+                        break;
+                    case WhereRelation.Custom:
+                        break;
+                    case WhereRelation.CustomAll:
+                        break;
+                } 
             }
             queryObject = queryObject.Where(conditionalModels);
             foreach (var item in funcModels)
@@ -50,6 +43,82 @@ namespace ReZero.SuperAPI
                 queryObject = queryObject.Where(item);
             }
             return queryObject;
+        }
+
+        private static void And(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        {
+            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+            {
+                ConvetConditional(dataModel, queryObject, conditionalModels, item);
+            }
+        }
+        
+        private static void AndAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        {
+            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
+            {
+                ConvetConditional(dataModel, queryObject, conditionalModels, item);
+            }
+        }
+        
+        private static void Or(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        {
+            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+            {
+                ConvetConditional(dataModel, queryObject, conditionalModels, item);
+            }
+        }
+        
+        private static void OrAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        {
+            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
+            {
+                ConvetConditional(dataModel, queryObject, conditionalModels, item);
+            }
+        }
+        
+        private static void Custom(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        {
+            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+            {
+                ConvetConditional(dataModel, queryObject, conditionalModels, item);
+            }
+        }
+        
+        private static void CustomAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        {
+            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
+            {
+                ConvetConditional(dataModel, queryObject, conditionalModels, item);
+            }
+        }
+
+        private static void ConvetConditional(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
+        {
+            item!.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
+            if (item.Value != null)
+            {
+                if (item.ValueType == typeof(bool).Name)
+                {
+                    if (item.Value?.ToString().EqualsCase("true") == true || item.Value?.ToString().EqualsCase("false") == true)
+                    {
+                        item.Value = Convert.ToBoolean(item.Value);
+                    }
+                    else
+                    {
+                        item.Value = Convert.ToBoolean(Convert.ToInt32(item.Value));
+                    }
+                }
+            }
+            var forNames = dataModel.DefaultParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
+            if (forNames.Any())
+            {
+                ConvetConditionalModelForNames(conditionalModels, item, forNames);
+            }
+            else
+            {
+                ConvetConditionalModelDefault(conditionalModels, item);
+            }
         }
 
         private static void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, DataModelDefaultParameter item, List<DataModelDefaultParameter> forNames)
@@ -114,7 +183,6 @@ namespace ReZero.SuperAPI
                     break;
             }
         }
-
 
         private static string GetFieldName(DataModelDefaultParameter item)
         {
