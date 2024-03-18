@@ -75,6 +75,16 @@ namespace ReZero.SuperAPI
             {
                  ConditionalList= conditionalList,
             });
+            if (conditionalList.Count == 0) 
+            {
+                conditionalModels.Clear();
+                conditionalModels.Add(new ConditionalModel()
+                {
+                    FieldName = UtilMethods.FiledNameSql(), 
+                    ConditionalType = ConditionalType.Equal,
+                    FieldValue = "1=2"
+                });
+            }
         }
         
         private static void OrAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
@@ -89,6 +99,16 @@ namespace ReZero.SuperAPI
             {
                 ConditionalList = conditionalList,
             });
+            if (conditionalList.Count == 0)
+            {
+                conditionalModels.Clear();
+                conditionalModels.Add(new ConditionalModel()
+                {
+                    FieldName = UtilMethods.FiledNameSql(),
+                    ConditionalType = ConditionalType.Equal,
+                    FieldValue = "1=2"
+                });
+            }
         }
         
         private static void Custom(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
