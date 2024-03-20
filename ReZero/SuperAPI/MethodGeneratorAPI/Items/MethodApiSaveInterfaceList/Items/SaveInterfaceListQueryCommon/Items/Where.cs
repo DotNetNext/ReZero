@@ -20,6 +20,7 @@ namespace ReZero.SuperAPI
                 {
                     zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
                     {
+                        Id=it.Id, 
                         Name = it.PropertyName,
                         Value = it.ValueType == WhereValueType.Value ? it.Value:null,
                         FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Runtime.CompilerServices;
 namespace ReZero.SuperAPI 
 {
     /// <summary>
@@ -113,16 +114,33 @@ namespace ReZero.SuperAPI
         
         private static void Custom(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
-            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+            var temp = dataModel.WhereRelationTemplate+string.Empty;
+            List<SugarParameter> sugarParameters = new List<SugarParameter>();
+            var index = 0;
+            foreach (var item in dataModel.DefaultParameters!)
             {
+                index++;
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
+                var conditional=conditionalModels.Last();
+                var sql = queryObject.Context.Utilities.ConditionalModelsToSql(new List<IConditionalModel>() { conditional }, index);
+                if (item.ValueIsReadOnly) 
+                { 
+                    temp = temp.Replace($"{{{item.Id}}}", sql.Key);
+                    sugarParameters.AddRange(sql.Value);
+                }
+                else
+                {
+                    temp = temp.Replace($"{{{item.Id}}}", sql.Key);
+                    sugarParameters.AddRange(sql.Value);
+                }
             }
-
+            queryObject.Where(temp, sugarParameters);
+            conditionalModels.Clear();
         }
         
         private static void CustomAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
-            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
+            foreach (var item in dataModel.DefaultParameters!)
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
