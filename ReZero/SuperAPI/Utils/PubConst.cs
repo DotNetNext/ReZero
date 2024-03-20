@@ -9,6 +9,7 @@ namespace ReZero.SuperAPI
         public const string Ui_TreeChild = "TreeChild";
         public const string Ui_TreeUrlFormatId = "{Id}";
 
+        public const string Orm_SqlFalseString = " 1=2 ";
         public const string Orm_TableDefaultPreName = "t"; 
         public const string Orm_DataBaseNameDTO = "DataBaseName";
         public const string Orm_InterfaceCategroyNameDTO = "InterfaceCategroyName";

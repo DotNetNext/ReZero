@@ -82,7 +82,7 @@ namespace ReZero.SuperAPI
                 {
                     FieldName = UtilMethods.FiledNameSql(), 
                     ConditionalType = ConditionalType.Equal,
-                    FieldValue = "1=2"
+                    FieldValue = PubConst.Orm_SqlFalseString
                 });
             }
         }
@@ -106,7 +106,7 @@ namespace ReZero.SuperAPI
                 {
                     FieldName = UtilMethods.FiledNameSql(),
                     ConditionalType = ConditionalType.Equal,
-                    FieldValue = "1=2"
+                    FieldValue = PubConst.Orm_SqlFalseString
                 });
             }
         }
