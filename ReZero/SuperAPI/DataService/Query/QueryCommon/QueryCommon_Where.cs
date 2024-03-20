@@ -123,10 +123,14 @@ namespace ReZero.SuperAPI
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
                 var conditional=conditionalModels.Last();
                 var sql = queryObject.Context.Utilities.ConditionalModelsToSql(new List<IConditionalModel>() { conditional }, index);
-                if (item.ValueIsReadOnly) 
-                { 
+                if (item.ValueIsReadOnly)
+                {
                     temp = temp.Replace($"{{{item.Id}}}", sql.Key);
                     sugarParameters.AddRange(sql.Value);
+                }
+                else if (item.Value?.Equals(string.Empty)==true) 
+                {
+                    temp = temp.Replace($"{{{item.Id}}}",$" 1=1 ");
                 }
                 else
                 {
