@@ -117,6 +117,7 @@ namespace ReZero.SuperAPI
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
+
         }
         
         private static void CustomAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)

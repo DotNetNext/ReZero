@@ -62,6 +62,14 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(DefaultResult());
             }
+            if (newColumns.Any(it => it.IsIdentity && it.PropertyType == NativeType.String)) 
+            {
+                throw new Exception(TextHandler.GetCommonText("字符串类型不能设置自增", "String type cannot be set to auto-increment"));
+            }
+            if (newColumns.Any(it => it.IsIdentity)&& newColumns.Count()==1)
+            {
+                throw new Exception(TextHandler.GetCommonText("存在自增表里面至少2个字段", "If self-increment columns exist: Requires 2 columns"));
+            }
             return newColumns;
         }
 
