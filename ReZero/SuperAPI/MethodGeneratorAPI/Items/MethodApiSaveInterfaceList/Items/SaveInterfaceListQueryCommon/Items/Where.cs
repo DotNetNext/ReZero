@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace ReZero.SuperAPI
 {
@@ -18,10 +19,13 @@ namespace ReZero.SuperAPI
                 zeroInterfaceList.DataModel.WhereRelationTemplate = json.WhereRelationTemplate; 
                 foreach (var it in json.Where??new CommonQueryWhere[] { })
                 {
+                    var type = this.zeroEntityInfo!
+                                       .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
                     zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
                     {
                         Id=it.Id, 
-                        Name = it.PropertyName,
+                        Name = it.PropertyName, 
+                        ValueType= EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
                         Value = it.ValueType == WhereValueType.Value ? it.Value:null,
                         FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
                         DefaultValue = it.Value, 

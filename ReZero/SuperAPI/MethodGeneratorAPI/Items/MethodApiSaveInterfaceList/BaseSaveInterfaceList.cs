@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
     public class BaseSaveInterfaceList
     {
 
-        protected   void Check(EntityColumnInfo pk)
+        protected void Check(EntityColumnInfo pk)
         {
             if (pk == null)
             {
