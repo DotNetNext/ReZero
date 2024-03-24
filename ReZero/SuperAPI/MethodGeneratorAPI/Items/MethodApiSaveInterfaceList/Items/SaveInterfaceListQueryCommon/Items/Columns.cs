@@ -14,13 +14,32 @@ namespace ReZero.SuperAPI
             var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
             if (!anyJoin && !anyColumns)
             {
-                zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
-                {
-                    Description = it.Description,
-                    PropertyName = it.PropertyName
-
-                }).ToList();
+                AddDefaultColumns(zeroInterfaceList, columns);
             }
+            else
+            {
+                AddMasterColumns(saveInterfaceListModel, zeroInterfaceList, anyColumns, columns);
+                AddJoinColumns(saveInterfaceListModel,zeroInterfaceList, anyJoin);
+            }
+        }
+
+        private static void AddJoinColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyJoin)
+        {
+            if (anyJoin)
+            {
+              //  var joinColumns = saveInterfaceListModel!.Json!.ComplexityColumns;
+                //var joinTable = App.Db
+                //    .Queryable<ZeroEntityInfo>()
+                //    .Includes(it=>it.ZeroEntityColumnInfos)
+                //    .Where(it => joinColumns.Any(it=>it.n)).First();
+                //foreach (var item in joinColumns!)
+                //{
+                //    item.DbColumnName = item.DbColumnName ?? item.PropertyName;
+                //}
+            }
+        }
+        private static void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
+        {
             if (anyColumns)
             {
                 zeroInterfaceList.DataModel!.Columns = columns
@@ -38,6 +57,15 @@ namespace ReZero.SuperAPI
                   }).ToList();
             }
         } 
+        private static void AddDefaultColumns(ZeroInterfaceList zeroInterfaceList, List<ZeroEntityColumnInfo> columns)
+        {
+            zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
+            {
+                Description = it.Description,
+                PropertyName = it.PropertyName
+
+            }).ToList();
+        }
 
     }
 }
