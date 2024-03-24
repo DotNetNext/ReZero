@@ -44,6 +44,21 @@ namespace ReZero.SuperAPI
         public string? PropertyName { get; set; }
         public string? DbColumnName { get; set; }
         public int SortId { get; set; }
+        public CommonQueryComplexitycolumnJson? Json { get; set; }
+    }
+    public class CommonQueryComplexitycolumnJson 
+    {
+        public CommonQueryComplexitycolumnJoinInfo? JoinInfo { get; set; }
+    }
+    public class CommonQueryComplexitycolumnJoinInfo
+    {
+        public string? MasterField { get; set; }
+        public string? JoinTable { get; set; }
+        public ColumnJoinType? JoinType { get; set; }
+        public string? JoinField { get; set; }
+        public string? ShowField { get; set; }
+        public string? Name { get; set; }
+        public int? SortId { get; set; }
     }
 
     public class CommonQueryWhere

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,8 @@ namespace ReZero.SuperAPI
     {
         public bool IsHidden { get; set; }
         public string? PropertyName { get;   set; }
-        public string? Description { get; set; }
+        public string? Description { get; set; } 
+        public NativeType? PropertyType { get; set; }
+        public string? AsName { get; set; }
     }
 }

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SqlSugar;
+using SqlSugar.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     public partial class SaveInterfaceListQueryCommon : BaseSaveInterfaceList, ISaveInterfaceList
     {
@@ -19,7 +21,7 @@ namespace ReZero.SuperAPI
             else
             {
                 AddMasterColumns(saveInterfaceListModel, zeroInterfaceList, anyColumns, columns);
-                AddJoinColumns(saveInterfaceListModel,zeroInterfaceList, anyJoin);
+                AddJoinColumns(saveInterfaceListModel, zeroInterfaceList, anyJoin);
             }
         }
 
@@ -27,15 +29,46 @@ namespace ReZero.SuperAPI
         {
             if (anyJoin)
             {
-              //  var joinColumns = saveInterfaceListModel!.Json!.ComplexityColumns;
-                //var joinTable = App.Db
-                //    .Queryable<ZeroEntityInfo>()
-                //    .Includes(it=>it.ZeroEntityColumnInfos)
-                //    .Where(it => joinColumns.Any(it=>it.n)).First();
-                //foreach (var item in joinColumns!)
-                //{
-                //    item.DbColumnName = item.DbColumnName ?? item.PropertyName;
-                //}
+                var joinColumns = saveInterfaceListModel!.Json!.ComplexityColumns;
+                var tableNames = joinColumns.Select(it => it.Json!.JoinInfo!.JoinTable!.ToLower()).ToList();
+                var entityInfos = App.Db.Queryable<ZeroEntityInfo>()
+                    .Includes(s => s.ZeroEntityColumnInfos)
+                    .Where(s => 
+                                      joinColumns.Any(it => tableNames.Contains(s.DbTableName!.ToLower()))||
+                                      joinColumns.Any(it => tableNames.Contains(s.ClassName!.ToLower()))
+                              )
+                    .ToList();
+                var index = 0;
+                zeroInterfaceList.DataModel!.JoinParameters = new List<DataModelJoinParameters>();
+                foreach (var item in joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType != ColumnJoinType.SubqueryJoin))
+                {
+                    index++;
+                    var tableInfo = entityInfos.FirstOrDefault(it => it.DbTableName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower()||
+                                                                     it.ClassName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower());
+                    zeroInterfaceList.DataModel.JoinParameters.Add(new DataModelJoinParameters()
+                    {
+                        JoinTableId = tableInfo!.Id,
+                        OnList = new List<JoinParameter>()
+                        {
+                            new JoinParameter()
+                            {
+                                FieldOperator=FieldOperatorType.Equal,
+                                LeftIndex=index-1,
+                                LeftPropertyName=item.Json!.JoinInfo!.JoinField,
+                                RightPropertyName=item.Json!.JoinInfo!.MasterField,
+                                RightIndex=index
+                            }
+                        }
+                    });
+                    var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
+                        .Where(it=>it.PropertyName== item.Json!.JoinInfo!.ShowField).First(); 
+                    zeroInterfaceList.DataModel!.Columns!.Add(new DataColumnParameter() { 
+                          PropertyName = columnsInfo.PropertyName,
+                          Description = columnsInfo.Description,
+                          PropertyType=columnsInfo.PropertyType,
+                          AsName=string.IsNullOrEmpty(item.Json!.JoinInfo!.Name)?columnsInfo.PropertyName:item.Json!.JoinInfo!.Name
+                    });
+                }
             }
         }
         private static void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
@@ -56,7 +89,7 @@ namespace ReZero.SuperAPI
                       Name = it.PropertyName,
                   }).ToList();
             }
-        } 
+        }
         private static void AddDefaultColumns(ZeroInterfaceList zeroInterfaceList, List<ZeroEntityColumnInfo> columns)
         {
             zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
