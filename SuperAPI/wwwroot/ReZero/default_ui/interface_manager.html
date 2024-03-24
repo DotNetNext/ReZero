@@ -854,7 +854,19 @@
                         this.copcol_JoinTable + "." +
                         this.copcol_joinField + "",
                     DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
-                    SortId: 1
+                    SortId: 1,
+                    Json: {
+
+                        JoinInfo: {
+                            MasterField: this.copcol_MasterField,
+                            JoinTable: this.copcol_JoinTable,
+                            JoinType: this.copcol_joinType,
+                            JoinField: this.copcol_joinField,
+                            ShowField: this.copcol_ShowField,
+                            Name: this.copcol_Name,
+                            SortId: this.copcol_SortId
+                        }
+                    }
                 };
                 this.selectedComplexityColumns.push(addItem)
                 btnCloseAddComplexityColumns.click();
