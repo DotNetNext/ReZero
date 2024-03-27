@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
         public string? Url { get; set; }
         public string? Name { get; set; } 
         public long InterfaceCategoryId { get; set; }
-        [SugarColumn(IsJson =true,IsNullable =true)]
+        [SugarColumn(IsJson =true,IsNullable =true, ColumnDataType = StaticConfig.CodeFirst_BigString)]
         public ResultModel? CustomResultModel{ get; set; } 
         [SugarColumn(IsNullable = true)]
         public string? Description { get; set; }
