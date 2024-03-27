@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
 {
     public partial class SaveInterfaceListQueryCommon : BaseSaveInterfaceList, ISaveInterfaceList
     {
-        public ZeroEntityInfo? zeroEntityInfo { get;set;}
+        public ZeroEntityInfo? zeroEntityInfo { get; set; } 
         public object SaveInterfaceList(SaveInterfaceListModel saveInterfaceListModel)
         {
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
@@ -29,7 +29,7 @@ namespace ReZero.SuperAPI
             var tableId=Convert.ToInt64( zeroInterfaceList.DataModel!.TableId);
             var db = App.Db;
             this.zeroEntityInfo = db.Queryable<ZeroEntityInfo>()
-                .Includes(it => it.ZeroEntityColumnInfos).First();
+                .Includes(it => it.ZeroEntityColumnInfos).Where(it=>it.Id==tableId).First();
         }
 
         private static void SetChildObject(ZeroInterfaceList zeroInterfaceList)
