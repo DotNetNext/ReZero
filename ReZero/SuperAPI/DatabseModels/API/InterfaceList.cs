@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
         public string? Description { get; set; }
         public string GroupName { get; set; } = "默认分组"; 
         public string? HttpMethod { get; set; }
-        [SugarColumn(IsJson = true)]
+        [SugarColumn(IsJson = true,ColumnDataType = StaticConfig.CodeFirst_BigString)]
         public DataModel? DataModel { get; set; }
     }
 }
