@@ -14,7 +14,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private static async Task<object?> ToList(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject)
+        private  async Task<object?> ToList(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject)
         {
             object? result = null;
             if (IsDefaultToList(dataModel))

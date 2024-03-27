@@ -168,9 +168,9 @@ namespace ReZero.SuperAPI
             conditionalModels.Clear();
         }
 
-        private static void ConvetConditional(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
+        private  void ConvetConditional(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
         {
-            item!.Name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
+            item!.Name =_sqlSugarClient!.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
             if (item.Value != null)
             {
                 if (item.ValueType == typeof(bool).Name)
