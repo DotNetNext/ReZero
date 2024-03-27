@@ -60,12 +60,12 @@ namespace ReZero.SuperAPI
 
         private string GetSelectFieldName(QueryMethodInfo queryObject, DataModelSelectParameters item)
         {
-            var name = App.Db.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
+            var name = _sqlSugarClient!.EntityMaintenance.GetDbColumnName(item.Name, queryObject.EntityType);
             return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
         }
         private EntityColumnInfo GetColumnInfo(Type type, DataModelSelectParameters item)
         {
-            var collumnInfo = App.Db.EntityMaintenance.GetEntityInfo(type).Columns.FirstOrDefault(it=>it.PropertyName.EqualsCase(item.AsName!));
+            var collumnInfo = _sqlSugarClient!.EntityMaintenance.GetEntityInfo(type).Columns.FirstOrDefault(it=>it.PropertyName.EqualsCase(item.AsName!));
             return collumnInfo;
         }
         private QueryMethodInfo GetDefaultSelect(Type type, QueryMethodInfo queryObject)

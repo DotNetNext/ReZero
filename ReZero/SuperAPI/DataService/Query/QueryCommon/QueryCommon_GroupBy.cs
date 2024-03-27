@@ -28,7 +28,7 @@ namespace ReZero.SuperAPI
         }
         private string GetGroupByFieldName(QueryMethodInfo queryObject, DataModelGroupParameter item)
         {
-            var name = App.Db.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
+            var name = _sqlSugarClient!.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
             return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
         }
     }
