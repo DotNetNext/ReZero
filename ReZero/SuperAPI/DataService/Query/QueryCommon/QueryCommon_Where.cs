@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private static QueryMethodInfo Where(Type type, DataModel dataModel, QueryMethodInfo queryObject)
+        private   QueryMethodInfo Where(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<IConditionalModel> conditionalModels = new List<IConditionalModel>();
             List<IFuncModel> funcModels = new List<IFuncModel>();
@@ -48,7 +48,7 @@ namespace ReZero.SuperAPI
             return queryObject;
         }
 
-        private static void And(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        private   void And(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
             foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
             {
@@ -56,7 +56,7 @@ namespace ReZero.SuperAPI
             }
         }
         
-        private static void AndAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        private   void AndAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
             foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
             {
@@ -64,7 +64,7 @@ namespace ReZero.SuperAPI
             }
         }
         
-        private static void Or(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        private   void Or(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
             foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
             {
@@ -88,7 +88,7 @@ namespace ReZero.SuperAPI
             }
         }
         
-        private static void OrAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        private   void OrAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
             foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
             {
@@ -112,7 +112,7 @@ namespace ReZero.SuperAPI
             }
         }
         
-        private static void Custom(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        private   void Custom(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
             var temp = dataModel.WhereRelationTemplate+string.Empty;
             List<SugarParameter> sugarParameters = new List<SugarParameter>();
@@ -142,7 +142,7 @@ namespace ReZero.SuperAPI
             conditionalModels.Clear();
         }
         
-        private static void CustomAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
+        private   void CustomAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
             var temp = dataModel.WhereRelationTemplate + string.Empty;
             List<SugarParameter> sugarParameters = new List<SugarParameter>();
