@@ -13,7 +13,8 @@ namespace ReZero.SuperAPI
         {
             var anyColumns = saveInterfaceListModel!.Json!.Columns.Any();
             var anyJoin = saveInterfaceListModel!.Json!.ComplexityColumns.Any();
-            var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == Convert.ToInt64(saveInterfaceListModel.TableId)).ToList();
+            var tableId = App.Db.Queryable<ZeroEntityInfo>().Where(it => it.ClassName == saveInterfaceListModel.TableId).First().Id;
+            var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == tableId).ToList();
             if (!anyJoin && !anyColumns)
             {
                 AddDefaultColumns(zeroInterfaceList, columns);
