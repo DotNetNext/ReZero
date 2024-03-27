@@ -50,13 +50,13 @@ namespace ReZero.SuperAPI
             connectionConfig.ConfigureExternalServices.EntityService = (x, p) =>
             {
                 // Convert the database column name to snake case.
-                if (!p.DbTableName.ToLower().StartsWith("rezero"))
+                if (p.DbTableName.ToLower().StartsWith("rezero"))
                     p.DbColumnName = UtilMethods.ToUnderLine(p.DbColumnName);
             };
             connectionConfig.ConfigureExternalServices.EntityNameService = (x, p) =>
             {
                 // Convert the database table name to snake case.
-                if (!p.DbTableName.ToLower().StartsWith("rezero"))
+                if (p.DbTableName.ToLower().StartsWith("rezero"))
                     p.DbTableName = UtilMethods.ToUnderLine(p.DbTableName);
             };
         }
