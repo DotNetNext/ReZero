@@ -11,13 +11,13 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private static async Task<object?> PageQuery(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject, object? result)
+        private  async Task<object?> PageQuery(DataModel dataModel, RefAsync<int> count, Type type, QueryMethodInfo queryObject, object? result)
         {
             result = await queryObject.ToPageListAsync(dataModel!.CommonPage!.PageNumber, dataModel.CommonPage.PageSize, count);
             dataModel.CommonPage.TotalCount = count.Value;
             if (dataModel.Columns?.Any() == false)
             {
-                dataModel.Columns = App.Db.EntityMaintenance.GetEntityInfo(type).Columns.Select(it => new DataColumnParameter
+                dataModel.Columns = _sqlSugarClient!.EntityMaintenance.GetEntityInfo(type).Columns.Select(it => new DataColumnParameter
                 {
                     PropertyName = it.PropertyName,
                     Description = it.ColumnDescription
