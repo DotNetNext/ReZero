@@ -845,6 +845,7 @@
                     tools.alert("带*的请填写完整");
                     return;
                 }
+                var asName = (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField);
                 var addItem = {
                     PropertyName:
                         document.querySelectorAll('[name=TableId]')[0].value + " " +
@@ -853,7 +854,7 @@
                         document.querySelectorAll('[name=TableId]')[0].value + "." + this.copcol_MasterField + "=" +
                         this.copcol_JoinTable + "." +
                         this.copcol_joinField + "",
-                    DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField),
+                    DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + asName,
                     SortId: 1,
                     Json: { 
                         JoinInfo: {
@@ -867,6 +868,12 @@
                         }
                     }
                 };
+                if (this.selectedColumns.some(column => column.DbColumnName== asName)) {
+
+                    tools.alert("【关联显示字段】与主表重复，可以设置【关联显示字段名称】来定义显示名");
+                    return;
+                }  
+
                 this.selectedComplexityColumns.push(addItem)
                 btnCloseAddComplexityColumns.click();
                 this.clearOrderBy();
