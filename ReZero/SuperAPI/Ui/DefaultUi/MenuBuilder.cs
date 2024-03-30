@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
         {
             StringBuilder htmlBuilder = new StringBuilder();
             int i = 0;
-            foreach (var tree in treeList)
+            foreach (var tree in treeList.OrderBy(it=>it.SortId))
             {
                 var isOpen = IsOpen(current, tree);
                 var active = isOpen ? " active " : null;
@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
         private static void GenerateSubMenu(List<ZeroInterfaceCategory> subTreeList, StringBuilder htmlBuilder, ZeroInterfaceCategory current)
         {
 
-            foreach (var subTree in subTreeList)
+            foreach (var subTree in subTreeList.OrderBy(it=>it.SortId))
             {
                 var isOpen = IsOpen(current, subTree);
                 var active = isOpen ? " active " : "";

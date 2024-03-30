@@ -16,8 +16,8 @@ namespace ReZero.SuperAPI
         internal void Set()
         {
             SetIndexAndRoot();
+            SetInterfaceDocument();
             SetInterfaceManager();
-            SetProjectManager();
             SetCodeBuilder();
             SetDataDocument();
         }
@@ -30,6 +30,7 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(DataDocumentRootId);
                 it.ParentId = Id;
                 it.Icon = "mdi mdi-file-document-box";
+                it.SortId = 500;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
@@ -47,6 +48,7 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(CodeBuilderRootId);
                 it.ParentId = Id; 
                 it.Icon = "mdi mdi-codepen";
+                it.SortId = 499;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
@@ -64,6 +66,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id);
                 it.ParentId = Id-1;
+                it.SortId = 0;
             }));
 
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -76,13 +79,14 @@ namespace ReZero.SuperAPI
             }));
         }
 
-        private void SetProjectManager()
+        private void SetInterfaceManager()
         {
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id300;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300);
                 it.ParentId = Id;
+                it.SortId = 3;
                 //it.Url= "/rezero/interface_manager.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -90,6 +94,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id300002;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300002);
                 it.ParentId = Id300;
+                it.SortId = 0;
                 it.Url= "/rezero/interface_categroy.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -97,6 +102,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id300003;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300003);
                 it.ParentId = Id300;
+                it.SortId = 1;
                 it.Url= "/rezero/database_manager.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -105,6 +111,7 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300001);
                 it.ParentId = Id300;
                 it.Url="/rezero/entity_manager.html";
+                it.SortId = 2;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
@@ -112,10 +119,11 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300006);
                 it.ParentId = Id300;
                 it.Url = "/rezero/interface_manager.html";
+                it.SortId = 3;
             }));
         }
 
-        private void SetInterfaceManager()
+        private void SetInterfaceDocument()
         {
             //Dyanamic interface
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -124,6 +132,7 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id200);
                 it.ParentId = Id;
                 it.Icon = "mdi mdi-palette";
+                it.SortId = 1;
 
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
@@ -141,6 +150,7 @@ namespace ReZero.SuperAPI
                 it.Id = Id100;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id100);
                 it.ParentId = Id;
+                it.SortId = 999;
                 it.Icon = "mdi mdi-file-outline";
             }));
             //zeroInterfaceCategory.Add(GetNewItem(it =>

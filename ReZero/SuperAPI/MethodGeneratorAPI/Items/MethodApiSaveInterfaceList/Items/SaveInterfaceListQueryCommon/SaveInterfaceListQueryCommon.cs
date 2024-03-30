@@ -11,11 +11,12 @@ namespace ReZero.SuperAPI
     public partial class SaveInterfaceListQueryCommon : BaseSaveInterfaceList, ISaveInterfaceList
     {
         public ZeroEntityInfo? zeroEntityInfo { get; set; } 
+        public bool isPage { get; set; }
         public object SaveInterfaceList(SaveInterfaceListModel saveInterfaceListModel)
         {
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
-            SetCurrentClassField(zeroInterfaceList);
+            SetCurrentClassField(zeroInterfaceList, saveInterfaceListModel);
             SetChildObject(zeroInterfaceList);
             SetPage(saveInterfaceListModel, zeroInterfaceList);
             SetColumns(saveInterfaceListModel, zeroInterfaceList);
@@ -24,12 +25,13 @@ namespace ReZero.SuperAPI
             return InsertData(zeroInterfaceList);
         }
 
-        private void SetCurrentClassField(ZeroInterfaceList zeroInterfaceList)
+        private void SetCurrentClassField(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
             var tableId=Convert.ToInt64( zeroInterfaceList.DataModel!.TableId);
             var db = App.Db;
             this.zeroEntityInfo = db.Queryable<ZeroEntityInfo>()
                 .Includes(it => it.ZeroEntityColumnInfos).Where(it=>it.Id==tableId).First();
+            this.isPage = saveInterfaceListModel?.PageSize == true;
         }
 
         private static void SetChildObject(ZeroInterfaceList zeroInterfaceList)

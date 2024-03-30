@@ -62,13 +62,15 @@ namespace ReZero.SuperAPI
                         }
                     });
                     var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
-                        .Where(it=>it.PropertyName== item.Json!.JoinInfo!.ShowField).First(); 
-                    zeroInterfaceList.DataModel!.Columns!.Add(new DataColumnParameter() { 
-                          PropertyName = columnsInfo.PropertyName,
-                          Description = columnsInfo.Description,
-                          PropertyType=columnsInfo.PropertyType,
-                          AsName=string.IsNullOrEmpty(item.Json!.JoinInfo!.Name)?columnsInfo.PropertyName:item.Json!.JoinInfo!.Name
-                    });
+                        .Where(it=>it.PropertyName== item.Json!.JoinInfo!.ShowField).First();
+                    var addColumnItem = new DataColumnParameter()
+                    {
+                        PropertyName = columnsInfo.PropertyName,
+                        Description = columnsInfo.Description,
+                        PropertyType = columnsInfo.PropertyType,
+                        AsName = string.IsNullOrEmpty(item.Json!.JoinInfo!.Name) ? columnsInfo.PropertyName : item.Json!.JoinInfo!.Name
+                    };
+                    zeroInterfaceList.DataModel!.Columns!.Add(addColumnItem);
                 }
             }
         }
@@ -91,14 +93,28 @@ namespace ReZero.SuperAPI
                   }).ToList();
             }
         }
-        private static void AddDefaultColumns(ZeroInterfaceList zeroInterfaceList, List<ZeroEntityColumnInfo> columns)
+        private  void AddDefaultColumns(ZeroInterfaceList zeroInterfaceList, List<ZeroEntityColumnInfo> columns)
         {
-            zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
+            if (this.isPage)
             {
-                Description = it.Description,
-                PropertyName = it.PropertyName
+                zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
+                {
+                    Description = it.PropertyName,
+                    PropertyName = it.PropertyName,
+                    AsName = it.PropertyName
 
-            }).ToList();
+                }).ToList();
+            }
+            else
+            {
+                zeroInterfaceList.DataModel!.Columns = columns.Select(it => new DataColumnParameter()
+                {
+                    Description = it.DbColumnName,
+                    PropertyName = it.PropertyName,
+                    AsName = it.DbColumnName
+
+                }).ToList();
+            }
         }
 
     }
