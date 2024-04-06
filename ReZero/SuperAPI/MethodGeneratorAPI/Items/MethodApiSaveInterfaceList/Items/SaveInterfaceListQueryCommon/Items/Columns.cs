@@ -63,14 +63,13 @@ namespace ReZero.SuperAPI
                     });
                     var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
                         .Where(it=>it.PropertyName== item.Json!.JoinInfo!.ShowField).First();
-                    var addColumnItem = new DataColumnParameter()
+                    DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
                     {
-                        PropertyName = columnsInfo.PropertyName,
-                        Description = columnsInfo.Description,
-                        PropertyType = columnsInfo.PropertyType,
+                        Name = columnsInfo.PropertyName,
+                        TableIndex = index, 
                         AsName = string.IsNullOrEmpty(item.Json!.JoinInfo!.Name) ? columnsInfo.PropertyName : item.Json!.JoinInfo!.Name
                     };
-                    zeroInterfaceList.DataModel!.Columns!.Add(addColumnItem);
+                    zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
                 }
             }
         }
