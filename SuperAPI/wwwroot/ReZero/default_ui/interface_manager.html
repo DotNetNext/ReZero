@@ -341,13 +341,13 @@
                     <div class="tab-content tabbox">
                         <div class="tab-pane active">
                             <div class="form-group">
-                                <label for="example-nf-email">主表字段 <span class="red">*</span></label>
+                                <label for="example-nf-email">主表关联字段 （一般是外键） <span class="red">*</span></label>
                                 <select v-model="copcol_MasterField" name="MasterField" class="form-control">
                                     <option v-if="columns&&columns.length>0" v-for="item in columns">{{item.PropertyName}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联表 <span class="red">*</span></label>
+                                <label for="example-nf-email">关联的表 <span class="red">*</span></label>
                                 <input v-model="copcol_JoinTable" @change="changeJoinTable" class="form-control" list="browsers" name="joinTable">
                                 <datalist id="browsers">
                                     <option v-if="tables&&tables.length>0" v-for="item in tables" :value="item.Name">{{item.Name}}</option>
@@ -363,7 +363,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联字段 <span class="red">*</span></label>
+                                <label for="example-nf-email">关联字段（一般主键） <span class="red">*</span></label>
                                 <select v-model="copcol_joinField" name="joinField" class="form-control">
                                     <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
                                 </select>
@@ -375,7 +375,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联显示字段名称</label>
+                                <label for="example-nf-email">关联显示字段名称（AS 名称）</label>
                                 <input v-model="copcol_Name" name="Name" placeholder="默认：关联显示字段" class="form-control" />
                             </div>
                             <div class="form-group">
