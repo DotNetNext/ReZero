@@ -55,8 +55,8 @@ namespace ReZero.SuperAPI
                             {
                                 FieldOperator=FieldOperatorType.Equal,
                                 LeftIndex=index-1,
-                                LeftPropertyName=item.Json!.JoinInfo!.JoinField,
-                                RightPropertyName=item.Json!.JoinInfo!.MasterField,
+                                LeftPropertyName=item.Json!.JoinInfo!.MasterField,
+                                RightPropertyName=item.Json!.JoinInfo!.JoinField,
                                 RightIndex=index
                             }
                         }

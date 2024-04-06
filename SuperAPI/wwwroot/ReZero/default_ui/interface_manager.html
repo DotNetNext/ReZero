@@ -369,7 +369,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联显示字段 <span class="red">*</span></label>
+                                <label for="example-nf-email">关联显示字段 （一般是Name） <span class="red">*</span></label>
                                 <select v-model="copcol_ShowField" name="joinField" class="form-control">
                                     <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
                                 </select>
