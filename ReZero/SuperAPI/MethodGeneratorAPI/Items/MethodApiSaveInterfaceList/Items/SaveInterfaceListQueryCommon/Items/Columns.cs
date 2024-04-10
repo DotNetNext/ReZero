@@ -9,13 +9,14 @@ namespace ReZero.SuperAPI
 {
     public partial class SaveInterfaceListQueryCommon : BaseSaveInterfaceList, ISaveInterfaceList
     {
+        #region Core
         private void SetColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
             var anyColumns = saveInterfaceListModel!.Json!.Columns.Any();
             var anyJoin = saveInterfaceListModel!.Json!.ComplexityColumns.Any();
-            var tableId = App.Db.Queryable<ZeroEntityInfo>().Where(it => it.ClassName == saveInterfaceListModel.TableId).First().Id;
-            var columns = App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == tableId).ToList();
-            if (!anyJoin && !anyColumns)
+            var tableId = GetTableId(saveInterfaceListModel);
+            var columns = GetTableColums(tableId);
+            if (IsDefaultColums(anyColumns, anyJoin))
             {
                 AddDefaultColumns(zeroInterfaceList, columns);
             }
@@ -25,7 +26,6 @@ namespace ReZero.SuperAPI
                 AddJoinColumns(saveInterfaceListModel, zeroInterfaceList, anyJoin);
             }
         }
-
         private static void AddJoinColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyJoin)
         {
             if (anyJoin)
@@ -34,8 +34,8 @@ namespace ReZero.SuperAPI
                 var tableNames = joinColumns.Select(it => it.Json!.JoinInfo!.JoinTable!.ToLower()).ToList();
                 var entityInfos = App.Db.Queryable<ZeroEntityInfo>()
                     .Includes(s => s.ZeroEntityColumnInfos)
-                    .Where(s => 
-                                      joinColumns.Any(it => tableNames.Contains(s.DbTableName!.ToLower()))||
+                    .Where(s =>
+                                      joinColumns.Any(it => tableNames.Contains(s.DbTableName!.ToLower())) ||
                                       joinColumns.Any(it => tableNames.Contains(s.ClassName!.ToLower()))
                               )
                     .ToList();
@@ -44,7 +44,7 @@ namespace ReZero.SuperAPI
                 foreach (var item in joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType != ColumnJoinType.SubqueryJoin))
                 {
                     index++;
-                    var tableInfo = entityInfos.FirstOrDefault(it => it.DbTableName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower()||
+                    var tableInfo = entityInfos.FirstOrDefault(it => it.DbTableName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower() ||
                                                                      it.ClassName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower());
                     zeroInterfaceList.DataModel.JoinParameters.Add(new DataModelJoinParameters()
                     {
@@ -62,11 +62,11 @@ namespace ReZero.SuperAPI
                         }
                     });
                     var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
-                        .Where(it=>it.PropertyName== item.Json!.JoinInfo!.ShowField).First();
+                        .Where(it => it.PropertyName == item.Json!.JoinInfo!.ShowField).First();
                     DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
                     {
                         Name = columnsInfo.PropertyName,
-                        TableIndex = index, 
+                        TableIndex = index,
                         AsName = string.IsNullOrEmpty(item.Json!.JoinInfo!.Name) ? columnsInfo.PropertyName : item.Json!.JoinInfo!.Name
                     };
                     zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
@@ -92,7 +92,7 @@ namespace ReZero.SuperAPI
                   }).ToList();
             }
         }
-        private  void AddDefaultColumns(ZeroInterfaceList zeroInterfaceList, List<ZeroEntityColumnInfo> columns)
+        private void AddDefaultColumns(ZeroInterfaceList zeroInterfaceList, List<ZeroEntityColumnInfo> columns)
         {
             if (this.isPage)
             {
@@ -114,7 +114,25 @@ namespace ReZero.SuperAPI
 
                 }).ToList();
             }
+        } 
+        #endregion
+
+        #region Helper
+        private static bool IsDefaultColums(bool anyColumns, bool anyJoin)
+        {
+            return !anyJoin && !anyColumns;
         }
+
+        private static List<ZeroEntityColumnInfo> GetTableColums(long tableId)
+        {
+            return App.Db.Queryable<ZeroEntityColumnInfo>().Where(it => it.TableId == tableId).ToList();
+        }
+
+        private static long GetTableId(SaveInterfaceListModel saveInterfaceListModel)
+        {
+            return App.Db.Queryable<ZeroEntityInfo>().Where(it => it.ClassName == saveInterfaceListModel.TableId).First().Id;
+        }
+        #endregion
 
     }
 }

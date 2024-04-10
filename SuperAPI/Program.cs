@@ -14,7 +14,13 @@ builder.Services.AddReZeroServices(api =>
 {
     //∆Ù”√≥¨º∂API
     api.EnableSuperApi(new SuperAPIOptions() { 
-      
+       DatabaseOptions=new DatabaseOptions() {
+        ConnectionConfig = new SuperAPIConnectionConfig()
+        {
+            ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
+            DbType = SqlSugar.DbType.SqlServer, 
+        },
+       }
     });
    
 }); 
