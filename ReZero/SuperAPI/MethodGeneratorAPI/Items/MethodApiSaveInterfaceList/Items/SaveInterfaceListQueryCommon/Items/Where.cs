@@ -19,6 +19,10 @@ namespace ReZero.SuperAPI
                 zeroInterfaceList.DataModel.WhereRelationTemplate = json.WhereRelationTemplate; 
                 foreach (var it in json.Where??new CommonQueryWhere[] { })
                 {
+                    if (it.PropertyName == null) 
+                    {
+                        throw new Exception(TextHandler.GetCommonText("Condition No column name is configured", "条件没有配置列名"));
+                    }
                     var type = this.zeroEntityInfo!
                                        .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
                     zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
