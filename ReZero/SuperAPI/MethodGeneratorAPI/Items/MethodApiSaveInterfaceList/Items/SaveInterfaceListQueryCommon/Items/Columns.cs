@@ -32,24 +32,26 @@ namespace ReZero.SuperAPI
             {
                 var joinColumns = saveInterfaceListModel!.Json!.ComplexityColumns;
                 var tableNames = joinColumns.Select(it => it.Json!.JoinInfo!.JoinTable!.ToLower()).ToList();
-                var entityInfos = App.Db.Queryable<ZeroEntityInfo>()
-                    .Includes(s => s.ZeroEntityColumnInfos)
-                    .Where(s =>
-                                      joinColumns.Any(it => tableNames.Contains(s.DbTableName!.ToLower())) ||
-                                      joinColumns.Any(it => tableNames.Contains(s.ClassName!.ToLower()))
-                              )
-                    .ToList();
+                var entityInfos = GetJoinEntityInfos(joinColumns, tableNames);
                 var index = 0;
-                zeroInterfaceList.DataModel!.JoinParameters = new List<DataModelJoinParameters>();
-                foreach (var item in joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType != ColumnJoinType.SubqueryJoin))
+                foreach (var item in GetJoinComplexityColumns(joinColumns!))
                 {
                     index++;
-                    var tableInfo = entityInfos.FirstOrDefault(it => it.DbTableName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower() ||
-                                                                     it.ClassName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower());
-                    zeroInterfaceList.DataModel.JoinParameters.Add(new DataModelJoinParameters()
-                    {
-                        JoinTableId = tableInfo!.Id,
-                        OnList = new List<JoinParameter>()
+                    var tableInfo = GetJoinEntity(entityInfos, item);
+                    AddJoins(zeroInterfaceList, index, item, tableInfo);
+                    AddJoinSelectColumns(zeroInterfaceList, index, item, tableInfo);
+                }
+            }
+        }
+
+        private static void AddJoins(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
+        {
+
+            zeroInterfaceList.DataModel!.JoinParameters = new List<DataModelJoinParameters>();
+            zeroInterfaceList!.DataModel!.JoinParameters.Add(new DataModelJoinParameters()
+            {
+                JoinTableId = tableInfo!.Id,
+                OnList = new List<JoinParameter>()
                         {
                             new JoinParameter()
                             {
@@ -60,19 +62,8 @@ namespace ReZero.SuperAPI
                                 RightIndex=index
                             }
                         }
-                    });
-                    var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
-                        .Where(it => it.PropertyName == item.Json!.JoinInfo!.ShowField).First();
-                    DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
-                    {
-                        Name = columnsInfo.PropertyName,
-                        TableIndex = index,
-                        AsName = string.IsNullOrEmpty(item.Json!.JoinInfo!.Name) ? columnsInfo.PropertyName : item.Json!.JoinInfo!.Name
-                    };
-                    zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
-                }
-            }
-        }
+            });
+        } 
         private static void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
         {
             if (anyColumns)
@@ -114,10 +105,44 @@ namespace ReZero.SuperAPI
 
                 }).ToList();
             }
-        } 
+        }
+
+        private static void AddJoinSelectColumns(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
+        {
+            var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
+                                    .Where(it => it.PropertyName == item.Json!.JoinInfo!.ShowField).First();
+            DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
+            {
+                Name = columnsInfo.PropertyName,
+                TableIndex = index,
+                AsName = string.IsNullOrEmpty(item.Json!.JoinInfo!.Name) ? columnsInfo.PropertyName : item.Json!.JoinInfo!.Name
+            };
+            zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
+        }
+
         #endregion
 
-        #region Helper
+        #region Helper 
+        private static ZeroEntityInfo GetJoinEntity(List<ZeroEntityInfo> entityInfos, CommonQueryComplexitycolumn item)
+        {
+            return entityInfos.FirstOrDefault(it => it.DbTableName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower() ||
+                                                                                 it.ClassName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower());
+        } 
+        private static IEnumerable<CommonQueryComplexitycolumn> GetJoinComplexityColumns(CommonQueryComplexitycolumn[] joinColumns)
+        {
+            return joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType != ColumnJoinType.SubqueryJoin);
+        }
+
+        private static List<ZeroEntityInfo> GetJoinEntityInfos(CommonQueryComplexitycolumn[]? joinColumns, List<string> tableNames)
+        {
+            return App.Db.Queryable<ZeroEntityInfo>()
+                                .Includes(s => s.ZeroEntityColumnInfos)
+                                .Where(s =>
+                                                  joinColumns.Any(it => tableNames.Contains(s.DbTableName!.ToLower())) ||
+                                                  joinColumns.Any(it => tableNames.Contains(s.ClassName!.ToLower()))
+                                          )
+                                .ToList();
+        } 
         private static bool IsDefaultColums(bool anyColumns, bool anyJoin)
         {
             return !anyJoin && !anyColumns;
