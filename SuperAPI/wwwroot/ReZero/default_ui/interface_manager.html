@@ -439,7 +439,7 @@
                                     <td>
                                         <input v-model="item.SortId" onchange="tools.ensureNumeric(this)" class="form-control" />
                                     </td>
-                                </tr>
+                                </tr> 
                             </tbody>
                         </table>
                         <div>
@@ -497,6 +497,9 @@
                                             <option></option>
                                             <option v-for="item in selectedColumns">
                                                 {{item.PropertyName}}
+                                            </option>
+                                            <option v-for="item in selectedComplexityColumns">
+                                                {{item.DbColumnName}}
                                             </option>
                                         </select>
                                     </td>
@@ -901,6 +904,10 @@
                     this.selectedOrderBys = this.selectedColumns.map(it => ({
                         Name: it.DbColumnName
                     }));
+                    var selectComplexityColumnOrderBys = this.selectedComplexityColumns.map(it => ({
+                        Name: it.DbColumnName
+                  }));
+                    this.selectedOrderBys = this.selectedOrderBys.concat(selectComplexityColumnOrderBys);
                 }
                 btnAddOrderBy.click();
             },
