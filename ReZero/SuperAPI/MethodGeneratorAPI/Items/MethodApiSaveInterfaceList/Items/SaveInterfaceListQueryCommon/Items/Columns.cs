@@ -106,7 +106,6 @@ namespace ReZero.SuperAPI
                 }).ToList();
             }
         }
-
         private static void AddJoinSelectColumns(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
         {
             var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
