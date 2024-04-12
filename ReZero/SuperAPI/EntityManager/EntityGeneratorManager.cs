@@ -186,6 +186,10 @@ namespace ReZero.SuperAPI
                     {
                         return typeof(string);
                     }
+                    if (nativeTypes.ToString().ToLower().StartsWith("decimal"))
+                    {
+                        return typeof(decimal);
+                    } 
                     throw new ArgumentException("Unsupported NativeType");
             }
         }
