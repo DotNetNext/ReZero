@@ -182,6 +182,10 @@ namespace ReZero.SuperAPI
                 case NativeType.Json:
                     return typeof(object); // Assuming Json is a placeholder for any JSON-related type
                 default:
+                    if (nativeTypes.ToString().ToLower().StartsWith("string")) 
+                    {
+                        return typeof(string);
+                    }
                     throw new ArgumentException("Unsupported NativeType");
             }
         }
