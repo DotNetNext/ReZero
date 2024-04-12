@@ -22,7 +22,13 @@ namespace ReZero.SuperAPI
             SetColumns(saveInterfaceListModel, zeroInterfaceList);
             SetOrderBy(saveInterfaceListModel, zeroInterfaceList);
             SetWhere(saveInterfaceListModel, zeroInterfaceList);
+            SetCurrentData(saveInterfaceListModel);
             return InsertData(zeroInterfaceList);
+        }
+
+        private static void SetCurrentData(SaveInterfaceListModel saveInterfaceListModel)
+        {
+            saveInterfaceListModel.CurrentDataString = saveInterfaceListModel?.Json?.CurrentDataString;
         }
 
         private void SetCurrentClassField(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)

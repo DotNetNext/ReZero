@@ -17,6 +17,7 @@ namespace ReZero.SuperAPI
         public ActionType? ActionType { get; set; }
         public CommonQueryConfig? Json { get; set; }
         public bool PageSize { get; set; }
+        public string? CurrentDataString { get;  set; }
     }
 
 
@@ -29,6 +30,7 @@ namespace ReZero.SuperAPI
         public string? WhereRelationTemplate { get; set; }
         public CommonQueryOrderby[]? OrderBys { get; set; }
         public bool OrderBysEnableSort { get; set; }
+        public string? CurrentDataString { get; set; }
     }
 
     public class CommonQueryColumn

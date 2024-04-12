@@ -724,7 +724,7 @@
                 });
 
                 if (isSuccess) {
-                    var formData = tools.formToJson("frmSave");
+                    var formData = tools.formToJson("frmSave"); 
                     formData.Json = {
                         Columns:this.selectedColumns,
                         ComplexityColumns: this.selectedComplexityColumns,
@@ -732,7 +732,8 @@
                         WhereRelation: this.selectedWheresConditionalRelation,
                         WhereRelationTemplate: this.selectedWhereRelationTemplate,
                         OrderBys: this.selectedOrderBys,
-                        OrderBysEnableSort: this.selectedOrderBys_EnableSort
+                        OrderBysEnableSort: this.selectedOrderBys_EnableSort,
+                        CurrentDataString: JSON.stringify(vueObj.data)
                     };
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData)
