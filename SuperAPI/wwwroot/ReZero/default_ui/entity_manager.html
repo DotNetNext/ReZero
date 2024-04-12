@@ -160,7 +160,7 @@
                                     <th>列名</th>
                                     <th width="200">C#类型</th>
                                     <th>备注</th>
-                                    <th>必填</th>
+                                    <th>可空</th>
                                     <th>主键</th>
                                     <th>自增</th>
                                     <th width="200"></th>
@@ -186,7 +186,7 @@
                                         </div>
                                     </td>
                                     <td><input v-model="item.Description" class="form-control" placeholder="" type="text" /></td>
-                                    <td><input v-model="!item.IsNullable" type="checkbox" class="form-control" /></td>
+                                    <td><input v-model="item.IsNullable" type="checkbox" class="form-control" /></td>
                                     <td><input v-model="item.IsPrimarykey" type="checkbox" class="form-control" /></td>
                                     <td><input v-model="item.IsIdentity" type="checkbox" class="form-control" /></td>
                                     <td>
