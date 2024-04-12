@@ -75,7 +75,8 @@ namespace ReZero.SuperAPI
                     DecimalDigits = item.DecimalDigits,
                     Length = item.Length,
                     ColumnDataType = item.DataType,
-                    ColumnDescription = item.Description
+                    ColumnDescription = item.Description,
+                    IsNullable=item.IsNullable
                 };
                 if (column.Length == int.MaxValue)
                 {
