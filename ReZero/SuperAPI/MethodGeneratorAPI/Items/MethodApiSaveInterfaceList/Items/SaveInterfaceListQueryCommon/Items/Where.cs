@@ -32,7 +32,7 @@ namespace ReZero.SuperAPI
                         ValueType= EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
                         Value = it.ValueType == WhereValueType.Value ? it.Value:null,
                         FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
-                        DefaultValue = it.Value, 
+                        DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
                         Description = json.Columns.FirstOrDefault(s=>s.PropertyName==it.PropertyName)?.DbColumnName,
                         ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
                     });
