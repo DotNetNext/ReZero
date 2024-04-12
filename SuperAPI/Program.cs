@@ -17,8 +17,8 @@ builder.Services.AddReZeroServices(api =>
        DatabaseOptions=new DatabaseOptions() {
         ConnectionConfig = new SuperAPIConnectionConfig()
         {
-            ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
-            DbType = SqlSugar.DbType.SqlServer, 
+            ConnectionString = "server=sh-cdb-c8h30rhm.sql.tencentcdb.com;port=63539;database=SuperApi;user=root;password=lnx118558",
+            DbType = SqlSugar.DbType.MySql, 
         },
        }
     });

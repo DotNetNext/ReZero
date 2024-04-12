@@ -52,6 +52,10 @@ namespace ReZero.SuperAPI
             if (!string.IsNullOrEmpty(value))
             {
                 parameters[0] = JsonConvert.DeserializeObject(value, type)!;
+                if (parameters[0] is SaveInterfaceListModel saveInterfaceListModel) 
+                {
+                    saveInterfaceListModel.InterfaceCategoryId =Convert.ToInt64( Convert.ToDouble(saveInterfaceListModel.InterfaceCategoryId)) + "";
+                }
             }
         }
 
