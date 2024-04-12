@@ -186,7 +186,7 @@ namespace ReZero.SuperAPI
                     {
                         return typeof(string);
                     }
-                    if (nativeTypes.ToString().ToLower().StartsWith("decimal"))
+                    else if (nativeTypes.ToString().ToLower().StartsWith("decimal"))
                     {
                         return typeof(decimal);
                     } 
