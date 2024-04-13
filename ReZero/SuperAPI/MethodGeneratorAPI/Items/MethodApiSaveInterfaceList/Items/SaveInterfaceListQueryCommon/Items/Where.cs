@@ -40,7 +40,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static bool IsWhere(CommonQueryConfig json)
+        private static bool IsWhere(CommonConfig json)
         {
             return json.Where?.Any() == true;
         }

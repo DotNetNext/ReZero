@@ -47,7 +47,7 @@ namespace ReZero.SuperAPI
             };
 
             //primary key
-            zeroInterfaceList.Id=saveInterfaceListModel.Id;
+            zeroInterfaceList.Id= saveInterfaceListModel.Json?.Id??0;
 
             //update info
             SetCurrentData(zeroInterfaceList.DataModel,saveInterfaceListModel);

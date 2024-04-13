@@ -15,13 +15,13 @@ namespace ReZero.SuperAPI
         public string? Name { get; set; }
         public string? InterfaceCategoryId { get; set; }
         public ActionType? ActionType { get; set; }
-        public CommonQueryConfig? Json { get; set; }
+        public CommonConfig? Json { get; set; }
         public bool PageSize { get; set; }
         public string? CurrentDataString { get;  set; }
     }
 
 
-    public class CommonQueryConfig
+    public class CommonConfig
     {
         public CommonQueryColumn[]? Columns { get; set; }
         public CommonQueryComplexitycolumn[]? ComplexityColumns { get; set; }
@@ -31,6 +31,7 @@ namespace ReZero.SuperAPI
         public CommonQueryOrderby[]? OrderBys { get; set; }
         public bool OrderBysEnableSort { get; set; }
         public string? CurrentDataString { get; set; }
+        public long? Id { get; set; }
     }
 
     public class CommonQueryColumn
