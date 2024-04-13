@@ -102,5 +102,9 @@ namespace ReZero.SuperAPI
         /// Gets or sets the path for NuGet packages. Default is the default user NuGet packages path.
         /// </summary>
         public string? NugetPackagesPath { get; set; } = @"C:\Users\Administrator\.nuget\packages";
+        /// <summary>
+        /// Show system api document
+        /// </summary>
+        public bool  ShowSystemApi { get; set; } = false;
     }
 }
