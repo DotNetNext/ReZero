@@ -694,7 +694,8 @@
                     axios.get(urlById)
                         .then(response => { 
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
-                            tools.assignValuesToObject(data,th);
+                            tools.assignValuesToObject(data, th);
+                            th.editId = data.Id;
                             th.title = title;  
                             btnSave.click();
                         })
