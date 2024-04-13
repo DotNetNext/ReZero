@@ -67,6 +67,10 @@ namespace ReZero.SuperAPI
          
         protected  object SaveData(ZeroInterfaceList zeroInterfaceList)
         {
+            if (zeroInterfaceList.Id == 0) 
+            {
+                zeroInterfaceList.Id = SnowFlakeSingle.Instance.NextId();
+            }
             App.Db.Storageable(zeroInterfaceList).DefaultAddElseUpdate().ExecuteCommand();
             return true;
         }
