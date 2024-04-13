@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <package >
 	<metadata>
-		<id>Rezero</id>
-		<version>1.0.4.6</version>
+		<id>RezeroAPI</id>
+		<version>1.0.0.7</version>
 		<authors>sunkaixuan</authors>
 		<owners>果糖大数据科技</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
@@ -12,12 +12,14 @@
 		<description> 从零开始 </description>
 		<copyright>Copyright 2016</copyright>
 		<tags>rezero 零 低代码 zero</tags>
-		<dependencies>
-			<dependency id="SqlSugarCore" version="5.1.4.153-preview06" />
-		</dependencies> 
+		<dependencies> 
+			<dependency id="Rezero" version="1.0.4.6" />
+		</dependencies>
+		<contentFiles>
+			<files include="contentFiles/any/any/wwwroot/rezero/*.*" buildAction="None" copyToOutput="true" flatten="false" />
+		</contentFiles>
 	</metadata>
-	<files>
-		<file src="G:\Git\ReZero\ReZero\bin\Debug\netstandard2.1\ReZero.dll" target="lib\netstandard2.1" />
+	<files> 
 		<file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\*.*" target="contentFiles\any\any\wwwroot\rezero" />
 	</files>
 </package>
