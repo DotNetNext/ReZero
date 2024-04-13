@@ -17,6 +17,7 @@
   
 
   <ItemGroup>
+    <PackageReference Include="RezeroAPI" Version="1.0.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
  
