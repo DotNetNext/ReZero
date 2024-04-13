@@ -149,7 +149,7 @@ namespace ReZero.SuperAPI
 
         private void SystemDocment()
         {
-            if (SuperAPIModule._apiOptions!.UiOptions!.ShowSystemApi == true)
+            if (SuperAPIModule._apiOptions!.UiOptions!.ShowSystemApiDocument == true)
             {
 
                 zeroInterfaceCategory.Add(GetNewItem(it =>
