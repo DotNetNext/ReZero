@@ -1,4 +1,5 @@
 using ReZero;
+using ReZero.SuperAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +10,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+ 
 //Register: Register the super API service
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
 {
-  
+    //启用超级API
+    api.EnableSuperApi();
 
 });
 
