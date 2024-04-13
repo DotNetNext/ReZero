@@ -45,7 +45,18 @@ namespace ReZero.SuperAPI
                 ActionType = saveInterfaceListModel!.ActionType!.Value,
                 TableId = GetTableId(saveInterfaceListModel.TableId)
             };
-             
+
+            //primary key
+            zeroInterfaceList.Id=saveInterfaceListModel.Id;
+
+            //update info
+            SetCurrentData(zeroInterfaceList.DataModel,saveInterfaceListModel);
+
+        }
+
+        protected  void SetCurrentData(DataModel dataModel, SaveInterfaceListModel saveInterfaceListModel)
+        {
+            dataModel.CurrentDataString = saveInterfaceListModel?.Json?.CurrentDataString;
         }
         protected EntityInfo GetEntityInfo(long tableId) 
         { 
@@ -53,8 +64,12 @@ namespace ReZero.SuperAPI
             var entityInfo = App.Db.EntityMaintenance.GetEntityInfo(type);
             return entityInfo;
         }
-
-        protected   object InsertData(ZeroInterfaceList zeroInterfaceList)
+        protected object UpdateData(ZeroInterfaceList zeroInterfaceList)
+        {
+            App.Db.Updateable(zeroInterfaceList).ExecuteCommand();
+            return true;
+        }
+        protected  object InsertData(ZeroInterfaceList zeroInterfaceList)
         {
             App.Db.Insertable(zeroInterfaceList).ExecuteReturnSnowflakeId();
             return true;

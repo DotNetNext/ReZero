@@ -688,7 +688,7 @@
             openEdit: function (item)
             {
                 this.editId = 0;
-                var urlById = "/PrivateReZeroRoute/100003/GetDataBaseInfoById?id=" + item.Id;
+                var urlById = "/PrivateReZeroRoute/100003/GetInternalDetail?id=" + item.Id;
                 if (item.Id) {
                     this.title = this.editTitle;
                     axios.get(urlById)

@@ -34,6 +34,7 @@ namespace ReZero.SuperAPI
         public List<DataColumnParameter>? Columns { get; set; }
         public WhereRelation? WhereRelation { get;  set; }
         public string? WhereRelationTemplate { get;  set; }
+        public string? CurrentDataString { get;   set; }
         #endregion
     }
 }
