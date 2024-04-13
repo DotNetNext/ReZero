@@ -82,7 +82,16 @@
         for (var i = 0; i < elementsToHideIds.length; i++) {
             document.getElementById(elementsToHideIds[i]).style.display = "none";
         }
-    }
+    },
+    assignValuesToObject: function (sourceObject, targetObject) {
+        Object.keys(sourceObject).forEach(function (key) {
+            if (targetObject.hasOwnProperty(key)) {
+                targetObject[key] = sourceObject[key];
+            } else {
+                console.warn(`Property '${key}' does not exist in the target object.`);
+            }
+        });  
+}
 }
 Array.prototype.removeArrayItem = function (item) {
     const index = this.indexOf(item);

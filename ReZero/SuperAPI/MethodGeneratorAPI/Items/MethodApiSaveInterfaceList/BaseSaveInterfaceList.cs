@@ -64,14 +64,10 @@ namespace ReZero.SuperAPI
             var entityInfo = App.Db.EntityMaintenance.GetEntityInfo(type);
             return entityInfo;
         }
-        protected object UpdateData(ZeroInterfaceList zeroInterfaceList)
+         
+        protected  object SaveData(ZeroInterfaceList zeroInterfaceList)
         {
-            App.Db.Updateable(zeroInterfaceList).ExecuteCommand();
-            return true;
-        }
-        protected  object InsertData(ZeroInterfaceList zeroInterfaceList)
-        {
-            App.Db.Insertable(zeroInterfaceList).ExecuteReturnSnowflakeId();
+            App.Db.Storageable(zeroInterfaceList).ExecuteCommand();
             return true;
         }
         private long GetTableId(string? tableId)

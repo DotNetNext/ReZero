@@ -22,7 +22,7 @@ namespace ReZero.SuperAPI
             SetColumns(saveInterfaceListModel, zeroInterfaceList);
             SetOrderBy(saveInterfaceListModel, zeroInterfaceList);
             SetWhere(saveInterfaceListModel, zeroInterfaceList);
-            return InsertData(zeroInterfaceList);
+            return SaveData(zeroInterfaceList);
         }
          
 

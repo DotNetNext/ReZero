@@ -688,13 +688,14 @@
             openEdit: function (item)
             {
                 var th = this;
+                var title = th.editTitle;
                 var urlById = "/PrivateReZeroRoute/100003/GetInternalDetail?id=" + item.Id;
                 if (item.Id) { 
                     axios.get(urlById)
-                        .then(response => {
-                            vueObj.data = JSON.parse(response.data.DataModel.CurrentDataString); 
-                            th.editId = item.Id; 
-                            th.title = "aa";  
+                        .then(response => { 
+                            var data = JSON.parse(response.data.DataModel.CurrentDataString);
+                            tools.assignValuesToObject(data,th);
+                            th.title = title;  
                             btnSave.click();
                         })
                         .catch(error => {

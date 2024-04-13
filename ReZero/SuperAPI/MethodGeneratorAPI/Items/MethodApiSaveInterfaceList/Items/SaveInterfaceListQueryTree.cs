@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         {
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             base.SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
-            return base.InsertData(zeroInterfaceList);
+            return base.SaveData(zeroInterfaceList);
         }
     }
 }
