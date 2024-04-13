@@ -695,10 +695,9 @@
                         .then(response => {  
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
                             tools.assignValuesToObject(data, th); 
-                            th.title = title;
-                            th.fetchData("");
-                            btnSave.click();
+                            th.title = title;  
                             th.editId = data.Id;
+                            btnSave.click();
                         })
                         .catch(error => {
                             this.error = error.message;
