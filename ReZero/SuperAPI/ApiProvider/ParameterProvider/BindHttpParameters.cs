@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -154,37 +155,53 @@ namespace ReZero.SuperAPI
 
         private static Dictionary<string, object> GetFormDatas(HttpContext context)
         {
-            var ContentTypes = new List<string>()
-            {
-                "multipart/form-data",
-                "application/x-www-form-urlencoded"
-            };
+
             Dictionary<string, object> formDatas = new Dictionary<string, object>();
             if (context.Request.Body != null)
             {
-                // 从请求正文中读取参数值
-                using var reader = new System.IO.StreamReader(context.Request.Body);
-                if (ContentTypes.Any(context.Request.ContentType.Contains))
-                {
-                    var formParams = context.Request.Form;
-
-                    foreach (var key in formParams.Keys)
-                    {
-                        formDatas[key] = formParams[key];
-                    }
-                }
-                var body = reader.ReadToEndAsync().Result;
-
-                if (!string.IsNullOrEmpty(body))
-                {
-
-                    var bodyParams = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body) ?? new Dictionary<string, object>();
-
-                    formDatas = formDatas.Union(bodyParams).ToDictionary(pair => pair.Key, pair => pair.Value);
-                }
+                AddFormData(context, formDatas);
+                AddRawParameters(context, formDatas);
             }
             return formDatas ?? new Dictionary<string, object>();
         }
 
+        private static void AddFormData(HttpContext context, Dictionary<string, object> formDatas)
+        {
+            if (IsFormData(context))
+            {
+                var formParams = context.Request.Form;
+
+                foreach (var key in formParams.Keys)
+                {
+                    formDatas[key] = formParams[key];
+                }
+            }
+        }
+
+        private static StreamReader AddRawParameters(HttpContext context,  Dictionary<string, object> formDatas)
+        {
+            using StreamReader reader = new System.IO.StreamReader(context.Request.Body);
+            var body = reader.ReadToEndAsync().Result;
+
+            if (!string.IsNullOrEmpty(body))
+            {
+
+                var bodyParams = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body) ?? new Dictionary<string, object>();
+
+                formDatas = formDatas.Union(bodyParams).ToDictionary(pair => pair.Key, pair => pair.Value);
+            }
+
+            return reader;
+        }
+
+        private static bool IsFormData(HttpContext context)
+        {
+            var contentTypes = new List<string>()
+            {
+                "multipart/form-data",
+                "application/x-www-form-urlencoded"
+            };
+            return context.Request.ContentType != null && contentTypes.Any(context.Request.ContentType.Contains);
+        }
     }
 }
