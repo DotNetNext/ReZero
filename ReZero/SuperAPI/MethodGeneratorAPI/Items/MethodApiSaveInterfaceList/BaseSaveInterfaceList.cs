@@ -67,7 +67,7 @@ namespace ReZero.SuperAPI
          
         protected  object SaveData(ZeroInterfaceList zeroInterfaceList)
         {
-            App.Db.Storageable(zeroInterfaceList).ExecuteCommand();
+            App.Db.Storageable(zeroInterfaceList).DefaultAddElseUpdate().ExecuteCommand();
             return true;
         }
         private long GetTableId(string? tableId)
