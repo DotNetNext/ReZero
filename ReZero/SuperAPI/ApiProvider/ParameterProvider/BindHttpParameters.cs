@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
     {
         internal void Bind(DataModel? dataModel, HttpContext context)
         {
-            var formDatas = GetForDatams(context);
+            var formDatas = GetFormDatas(context);
             BindPageParameters(dataModel, context, formDatas);
             BindDefaultParameters(dataModel, context, formDatas);
             BindOrderByParameters(dataModel, context, formDatas);
@@ -152,7 +152,7 @@ namespace ReZero.SuperAPI
             return parameterValue;
         }
 
-        private static Dictionary<string, object> GetForDatams(HttpContext context)
+        private static Dictionary<string, object> GetFormDatas(HttpContext context)
         {
             var ContentTypes = new List<string>()
             {
