@@ -154,16 +154,33 @@ namespace ReZero.SuperAPI
 
         private static Dictionary<string, object> GetForDatams(HttpContext context)
         {
+            var ContentTypes = new List<string>()
+            {
+                "multipart/form-data",
+                "application/x-www-form-urlencoded"
+            };
             Dictionary<string, object> formDatas = new Dictionary<string, object>();
             if (context.Request.Body != null)
             {
                 // 从请求正文中读取参数值
                 using var reader = new System.IO.StreamReader(context.Request.Body);
+                if (ContentTypes.Any(context.Request.ContentType.Contains))
+                {
+                    var formParams = context.Request.Form;
+
+                    foreach (var key in formParams.Keys)
+                    {
+                        formDatas[key] = formParams[key];
+                    }
+                }
                 var body = reader.ReadToEndAsync().Result;
+
                 if (!string.IsNullOrEmpty(body))
                 {
-                    formDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body) ?? new Dictionary<string, object>();
 
+                    var bodyParams = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body) ?? new Dictionary<string, object>();
+
+                    formDatas = formDatas.Union(bodyParams).ToDictionary(pair => pair.Key, pair => pair.Value);
                 }
             }
             return formDatas ?? new Dictionary<string, object>();
