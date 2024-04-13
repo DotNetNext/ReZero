@@ -13,8 +13,7 @@ builder.Services.AddSwaggerGen();
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
 {
-    //启用超级API
-    api.EnableSuperApi(it => { });
+  
 
 });
 

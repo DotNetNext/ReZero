@@ -7,17 +7,14 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="content\**" />
-    <Content Remove="content\**" />
-    <EmbeddedResource Remove="content\**" />
-    <None Remove="content\**" />
-  </ItemGroup>
+<ItemGroup>  
+ <Compile Remove="wwwroot\**" />   
+</ItemGroup>
 
   
 
   <ItemGroup>
-    <PackageReference Include="RezeroAPI" Version="1.0.0.9" />
+    <PackageReference Include="RezeroAPI" Version="1.0.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
  
