@@ -188,7 +188,11 @@ namespace ReZero.SuperAPI
 
                 var bodyParams = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(body) ?? new Dictionary<string, object>();
 
-                formDatas = formDatas.Union(bodyParams).ToDictionary(pair => pair.Key, pair => pair.Value);
+                var items = formDatas.Union(bodyParams).ToDictionary(pair => pair.Key, pair => pair.Value);
+                foreach (var item in items)
+                {
+                    formDatas.Add(item.Key,item.Value);
+                }
             }
 
             return reader;
