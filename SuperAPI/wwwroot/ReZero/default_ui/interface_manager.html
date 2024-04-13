@@ -695,11 +695,11 @@
                         .then(response => { 
                             var oldData = th.data;
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
-                            tools.assignValuesToObject(data, th);
-                            th.editId = data.Id;
+                            tools.assignValuesToObject(data, th); 
                             th.title = title;
                             th.data = oldData;
                             btnSave.click();
+                            th.editId = data.Id;
                         })
                         .catch(error => {
                             this.error = error.message;
