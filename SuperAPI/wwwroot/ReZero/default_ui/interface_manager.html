@@ -687,15 +687,15 @@
             */
             openEdit: function (item)
             {
-                this.editId = 0;
+                var th = this;
                 var urlById = "/PrivateReZeroRoute/100003/GetInternalDetail?id=" + item.Id;
-                if (item.Id) {
-                    this.title = this.editTitle;
+                if (item.Id) { 
                     axios.get(urlById)
                         .then(response => {
+                            vueObj.data = JSON.parse(response.data.DataModel.CurrentDataString); 
+                            th.editId = item.Id; 
+                            th.title = "aa";  
                             btnSave.click();
-                            this.title = this.editTitle;
-                            console.log(response.data);
                         })
                         .catch(error => {
                             this.error = error.message;
@@ -750,7 +750,7 @@
                         WhereRelationTemplate: this.selectedWhereRelationTemplate,
                         OrderBys: this.selectedOrderBys,
                         OrderBysEnableSort: this.selectedOrderBys_EnableSort,
-                        CurrentDataString: JSON.stringify(vueObj.data)
+                        CurrentDataString: JSON.stringify(this.$data)
                     };
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData)
