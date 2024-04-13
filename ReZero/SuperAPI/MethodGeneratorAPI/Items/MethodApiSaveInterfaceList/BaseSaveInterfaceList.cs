@@ -70,7 +70,8 @@ namespace ReZero.SuperAPI
             if (zeroInterfaceList.Id == 0) 
             {
                 zeroInterfaceList.Id = SnowFlakeSingle.Instance.NextId();
-            }
+            } 
+            zeroInterfaceList.IsDeleted = false;
             App.Db.Storageable(zeroInterfaceList).DefaultAddElseUpdate().ExecuteCommand();
             return true;
         }
