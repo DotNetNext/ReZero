@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>RezeroAPI</id>
-		<version>1.0.0.8</version>
+		<version>1.0.0.9</version>
 		<authors>sunkaixuan</authors>
 		<owners>果糖大数据科技</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
@@ -16,10 +16,10 @@
 			<dependency id="Rezero" version="1.0.4.7" />
 		</dependencies>
 		<contentFiles>
-			<files include="contentFiles/any/any/wwwroot/rezero/*.*" buildAction="None" copyToOutput="true" flatten="false" />
+			<files include="contentFiles/any/any/wwwroot/rezeroapi/*.*" buildAction="None" copyToOutput="true" flatten="false" />
 		</contentFiles>
 	</metadata>
 	<files> 
-		<file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\*.*" target="contentFiles\any\any\wwwroot\rezero" />
+		<file src="G:\Git\ReZero\SuperAPI\wwwroot\ReZero\**\*.*" target="contentFiles\any\any\wwwroot\rezeroapi" />
 	</files>
 </package>
