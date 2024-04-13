@@ -692,12 +692,11 @@
                 var urlById = "/PrivateReZeroRoute/100003/GetInternalDetail?id=" + item.Id;
                 if (item.Id) { 
                     axios.get(urlById)
-                        .then(response => { 
-                            var oldData = th.data;
+                        .then(response => {  
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
                             tools.assignValuesToObject(data, th); 
                             th.title = title;
-                            th.data = oldData;
+                            th.fetchData("");
                             btnSave.click();
                             th.editId = data.Id;
                         })
