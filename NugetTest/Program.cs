@@ -11,13 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
- 
+
 //Register: Register the super API service
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi();
+    api.EnableSuperApi(new SuperAPIOptions()
+    {
+        UiOptions = new UiOptions { ShowNativeApiDocument = false }
+    });
 
 });
 
