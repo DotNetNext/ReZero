@@ -61,6 +61,10 @@ namespace ReZero.SuperAPI
 
         private void SetIndexAndRoot()
         {
+            if (SuperAPIModule._apiOptions!.UiOptions!.ShowNativeApiDocument == false) 
+            {
+                return;
+            }
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
                 it.Id = Id;

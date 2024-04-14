@@ -106,5 +106,9 @@ namespace ReZero.SuperAPI
         /// Show system api document
         /// </summary>
         public bool  ShowSystemApiDocument { get; set; } = false;
+        /// <summary>
+        /// Show native api document
+        /// </summary>
+        public bool ShowNativeApiDocument { get; set; } = true;
     }
 }
