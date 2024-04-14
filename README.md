@@ -38,7 +38,7 @@ var app = builder.Build();
 
 ```
 # 使用ReZero
-直接访问地址就行了
+启动项目直接访问地址就行了
 http://localhost:5267/rezero 
  
 # 功能预览
