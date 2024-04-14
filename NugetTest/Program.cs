@@ -1,5 +1,6 @@
 using ReZero;
 using ReZero.SuperAPI;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,4 +36,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// 假设您的应用程序在本地5000端口上运行  
+string url = "http://localhost:5000/rezero";
+
+// 启动默认的网页浏览器并打开指定的URL  
+Process.Start(new ProcessStartInfo
+{
+    FileName = url,
+    UseShellExecute = true
+});
 app.Run();
