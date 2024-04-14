@@ -3,7 +3,12 @@
 他的功能是在线创建表、建库、API接口 （包含文档和接口调试） 
 
 # 安装
-NUGET  Rezero.Api 
+## NUGET安装
+
+```cs
+Rezero.Api 
+``` 
+## 代码中注册
 只需要注入一行代码就能使用 Rezero API
 
 ```cs
