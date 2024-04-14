@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Components.Forms; 
+using Microsoft.AspNetCore.Components.Forms;
 using ReZero;
 using ReZero.SuperAPI;
 
-var builder = WebApplication.CreateBuilder(args) ;
+var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -10,22 +10,24 @@ builder.Services.AddSwaggerGen();
 
 //Register: Register the super API service
 //注册：注册超级API服务
-builder.Services.AddReZeroServices(api => 
+builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi(new SuperAPIOptions() { 
-       DatabaseOptions=new DatabaseOptions() {
-        ConnectionConfig = new SuperAPIConnectionConfig()
+    api.EnableSuperApi(new SuperAPIOptions()
+    {
+        DatabaseOptions = new DatabaseOptions()
         {
-            ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
-            DbType = SqlSugar.DbType.SqlServer, 
-        },
-       }
+            ConnectionConfig = new SuperAPIConnectionConfig()
+            {
+                ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
+                DbType = SqlSugar.DbType.SqlServer,
+            },
+        }
     });
-   
-}); 
 
-var app = builder.Build(); 
+});
+
+var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
