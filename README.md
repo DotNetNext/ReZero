@@ -51,3 +51,5 @@ app.Run();
 直接访问地址就行了
 http://localhost:5267/rezero 
  
+# 功能预览
+![输入图片说明](image.png)
