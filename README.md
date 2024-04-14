@@ -1,5 +1,8 @@
 # ReZero
-是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户 
+是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
+ 
+# 非.NET下载EXE运行
+https://gitee.com/sunkaixuan/ReZero/releases/tag/1.0.0.16
 
 ## 功能
 在线数据库和表
