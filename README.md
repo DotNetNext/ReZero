@@ -14,10 +14,10 @@
 Rezero.Api 
 ``` 
 ## 只需要行代码
-只需要注入一行代码就能使用 Rezero API
+ 新建一个.NET6+ WEB API
+ 只需要注入一行代码就能使用 Rezero API
 
 ```cs
- 新建一个.NET6+ WEB API
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
 {
