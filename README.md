@@ -22,23 +22,11 @@ Rezero.Api
 builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi(new SuperAPIOptions()
-    {
-        DatabaseOptions = new DatabaseOptions()//DatabaseOptions 可以不设置默认Sqlite为载体
-        {
-            ConnectionConfig = new SuperAPIConnectionConfig()
-            {
-                ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
-                DbType = SqlSugar.DbType.SqlServer,
-            },
-        }
-    });
+    api.EnableSuperApi();
 
 });
 //写在builder.Build前面就行只需要一行
 var app = builder.Build();
- 
- 
 
 ```
 # 使用ReZero
