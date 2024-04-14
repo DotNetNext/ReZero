@@ -12,15 +12,7 @@ Rezero.Api
 只需要注入一行代码就能使用 Rezero API
 
 ```cs
-using Microsoft.AspNetCore.Components.Forms;
-using ReZero;
-using ReZero.SuperAPI;
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+ 
 
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
@@ -39,17 +31,10 @@ builder.Services.AddReZeroServices(api =>
     });
 
 });
-
+//写在builder.Build前面就行只需要一行
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
+ 
+ 
 
 ```
 # 使用ReZero
