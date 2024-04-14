@@ -14,8 +14,9 @@
 Rezero.Api 
 ``` 
 ## 一行代码配置
- 新建一个.NET6+ WEB API
- 只需要注入一行代码就能使用 Rezero API
+新建一个.NET6+ WEB API
+只需要注入一行代码就能使用 Rezero API
+对现有代码没有任何影响
 
 ```cs
 //注册：注册超级API服务
