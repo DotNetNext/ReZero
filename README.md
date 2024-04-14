@@ -8,7 +8,8 @@
 
 
  
-# 三、非.NET用户下载EXE运行
+# 三、非.NET用户教程
+通过下载EXE运行
 https://gitee.com/sunkaixuan/ReZero/releases/tag/1.0.0.16
 
 
