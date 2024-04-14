@@ -1,16 +1,18 @@
-# ReZero
+# ReZero说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
- 
-# 非.NET下载EXE运行
-https://gitee.com/sunkaixuan/ReZero/releases/tag/1.0.0.16
 
-## 功能
+# 功能介绍
 在线数据库和表
 在线创建API接口 、接口文档 和接口调试
-## .NET版本
+
+ 
+# 非.NET用户下载EXE运行
+https://gitee.com/sunkaixuan/ReZero/releases/tag/1.0.0.16
+
+# .NET用户教程
 .NET6+ WEB API
 
-# 安装
+## 安装
 ## NUGET安装
 
 ```cs
@@ -39,6 +41,6 @@ var app = builder.Build();
 启动项目直接访问地址就行了
 http://localhost:5267/rezero 
  
-# 功能预览
+## 功能预览
 
 ![输入图片说明](image2.png)![输入图片说明](QQ%E6%88%AA%E5%9B%BE20240414121043.png)
