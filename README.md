@@ -13,7 +13,7 @@
 ```cs
 Rezero.Api 
 ``` 
-## 只需要行代码
+## 一行代码配置
  新建一个.NET6+ WEB API
  只需要注入一行代码就能使用 Rezero API
 
@@ -22,7 +22,7 @@ Rezero.Api
 builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi();
+    api.EnableSuperApi();//默认载体为sqlite ，有重载可以配置数据库
 
 });
 //写在builder.Build前面就行只需要一行
