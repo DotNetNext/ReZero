@@ -697,8 +697,9 @@
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
                             tools.assignValuesToObject(data, th); 
                             th.title = title;  
-                            th.editId = response.data.Id;
+                            th.editId = response.data.Id; 
                             th.data = oldData.data;
+                            th.interfaceCategroyList=oldData.interfaceCategroyList;
                             btnSave.click();
                         })
                         .catch(error => {
