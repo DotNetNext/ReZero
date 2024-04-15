@@ -50,17 +50,17 @@ namespace ReZero.SuperAPI
         {
             if (dataModel?.CommonPage != null)
             {
-                var data = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageNumber)) == true);
-                if (data != null)
+                var pageNumberPar = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageNumber)) == true);
+                if (pageNumberPar != null)
                 {
-                    data.Value = GetParameterValueFromRequest(data, context, formDatas);
-                    dataModel!.CommonPage.PageNumber = Convert.ToInt32(data.Value ?? "1");
+                    pageNumberPar.Value = GetParameterValueFromRequest(pageNumberPar, context, formDatas);
+                    dataModel!.CommonPage.PageNumber = Convert.ToInt32(pageNumberPar.Value ?? "1");
                 }
-                var data2 = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageSize)) == true);
-                if (data2 != null)
+                var pageSizePar = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageSize)) == true);
+                if (pageSizePar != null)
                 {
-                    data2.Value = GetParameterValueFromRequest(data2, context, formDatas);
-                    dataModel!.CommonPage.PageSize = Convert.ToInt32(data2.Value ?? "1");
+                    pageSizePar.Value = GetParameterValueFromRequest(pageSizePar, context, formDatas);
+                    dataModel!.CommonPage.PageSize = Convert.ToInt32(pageSizePar.Value ?? "20");
                 }
             }
         }
