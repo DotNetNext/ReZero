@@ -699,7 +699,17 @@
                             th.title = title;  
                             th.editId = response.data.Id; 
                             th.data = oldData.data;
-                            th.interfaceCategroyList=oldData.interfaceCategroyList;
+                            th.interfaceCategroyList = oldData.interfaceCategroyList;
+                            if (th.currentActionTypeContext) {
+                                if (th.currentActionTypeContext.FormElements)
+                                {
+                                    if (th.currentActionTypeContext.FormElements[1].SelectDataSource) {
+                                        th.currentActionTypeContext.FormElements[1].SelectDataSource
+                                            = oldData.actionList[0].Items[1].FormElements[1].SelectDataSource;
+                                    }
+                                   
+                                }
+                            }
                             btnSave.click();
                         })
                         .catch(error => {
