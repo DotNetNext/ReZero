@@ -56,6 +56,12 @@ namespace ReZero.SuperAPI
                     data.Value = GetParameterValueFromRequest(data, context, formDatas);
                     dataModel!.CommonPage.PageNumber = Convert.ToInt32(data.Value ?? "1");
                 }
+                var data2 = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageSize)) == true);
+                if (data2 != null)
+                {
+                    data2.Value = GetParameterValueFromRequest(data2, context, formDatas);
+                    dataModel!.CommonPage.PageSize = Convert.ToInt32(data2.Value ?? "1");
+                }
             }
         }
 
