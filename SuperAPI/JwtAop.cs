@@ -10,10 +10,8 @@ namespace SuperAPITest
             //// 尝试验证JWT  
             //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
             //if (!authenticateResult.Succeeded)
-            //{
-            //    // JWT验证失败，返回401 Unauthorized或其他适当的响应  
-            //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            //    await context.Response.WriteAsync("Unauthorized");
+            //{ 
+            //    throw new Expception("Unauthorized");
             //    return;
             //}
             await base.OnExecutingAsync(aopContext);
