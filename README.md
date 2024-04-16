@@ -1,3 +1,5 @@
+# QQ群
+群号：878157334   先加 sqlsugar群和rezero是同一个作者
 # 一、ReZero说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
 创建接口
@@ -64,14 +66,11 @@ public class JwtAop : DefaultSuperApiAop
 {
     public async override Task OnExecutingAsync(InterfaceContext aopContext)
     {
-        //// 尝试验证JWT  
+       
         //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
         //if (!authenticateResult.Succeeded)
-        //{
-        //    // JWT验证失败，返回401 Unauthorized或其他适当的响应  
-        //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-        //    await context.Response.WriteAsync("Unauthorized");
-        //    return;
+        //{ 
+        //    throw new Expception("Unauthorized");
         //}
         await base.OnExecutingAsync(aopContext);
     }
@@ -86,7 +85,9 @@ public class JwtAop : DefaultSuperApiAop
 }
 ```
 # 五、打赏作者
-从项目启动时前就有人赞助我开发了
-目前已经有累计过万的打赏了很多人都需要这个功能
-希望大家多多支持，对标的是收费软件
+
+首先感谢大家 ， 项目启动前就有人赞助开发了 
+
+工作量很大 ，工作复杂 ，对标的是收费软件，相信未来将会成长的很好
+
 ![输入图片说明](READMEIMG/image6.png)
