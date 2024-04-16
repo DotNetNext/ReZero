@@ -7,8 +7,8 @@ namespace ReZero.SuperAPI
 {
     public interface ISuperApiAop 
     {
-        Task OnExecutingAsync(DynamicInterfaceContext context);
-        Task OnExecutedAsync(DynamicInterfaceContext context);
-        Task OnErrorAsync(DynamicInterfaceContext context);
+        Task OnExecutingAsync(InterfaceContext context);
+        Task OnExecutedAsync(InterfaceContext context);
+        Task OnErrorAsync(InterfaceContext context);
     }
 }

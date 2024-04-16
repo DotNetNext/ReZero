@@ -42,10 +42,13 @@ namespace ReZero.SuperAPI
                 }
                 else
                 {
+                    var systemInterfaceContext = new InterfaceContext() { Context = context, InterfaceInfo=interInfo };
                     DataService dataService = new DataService();
                     interInfo!.DataModel!.ApiId=interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.OnExecutingAsync(systemInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.OnExecutedAsync(systemInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData; 
                     data = new ResultService().GetResult(data, resultModel);

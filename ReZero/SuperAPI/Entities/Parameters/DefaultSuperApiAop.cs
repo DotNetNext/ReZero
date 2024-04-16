@@ -7,17 +7,17 @@ namespace ReZero.SuperAPI
 {
     public class DefaultSuperApiAop : ISuperApiAop
     {
-        public virtual Task OnExecutingAsync(DynamicInterfaceContext context)
+        public virtual Task OnExecutingAsync(InterfaceContext context)
         {
             return Task.FromResult(0);
         }
 
-        public virtual Task OnExecutedAsync(DynamicInterfaceContext context)
+        public virtual Task OnExecutedAsync(InterfaceContext context)
         {
             return Task.FromResult(0);
         }
 
-        public virtual Task OnErrorAsync(DynamicInterfaceContext context)
+        public virtual Task OnErrorAsync(InterfaceContext context)
         {
             return Task.FromResult(0);
         }

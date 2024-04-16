@@ -27,8 +27,7 @@ namespace ReZero.SuperAPI
             IsEnableSuperAPI = true;
             this.DatabaseOptions = options.DatabaseOptions;
             this.InterfaceOptions = options.InterfaceOptions;
-            this.UiOptions = options.UiOptions;
-            this.AopOptions = options.AopOptions;
+            this.UiOptions = options.UiOptions; 
         }
 
         /// <summary>
@@ -43,8 +42,7 @@ namespace ReZero.SuperAPI
 
 
         public InterfaceOptions InterfaceOptions { get; set; } = new InterfaceOptions();
-
-        public AopOptions AopOptions { get; set; } = new AopOptions();
+         
 
         /// <summary>
         /// Gets or sets the UI configuration options.
