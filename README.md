@@ -1,7 +1,7 @@
 # 一、ReZero说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
 创建接口
-![输入图片说明](image4.png)
+![输入图片说明](/sunkaixuan/ReZero/raw/master/image4.png)
 查看创建后的接口
 ![输入图片说明](image2.png)
 
