@@ -42,7 +42,7 @@ namespace ReZero.SuperAPI
                 }
                 else
                 {
-                    var systemInterfaceContext = new InterfaceContext() { Context = context, InterfaceInfo=interInfo };
+                    var systemInterfaceContext = new InterfaceContext() { InterfaceType=InterfaceType.SystemApi ,Context = context, InterfaceInfo=interInfo };
                     DataService dataService = new DataService();
                     interInfo!.DataModel!.ApiId=interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
