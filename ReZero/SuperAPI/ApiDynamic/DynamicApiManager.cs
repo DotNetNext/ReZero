@@ -68,9 +68,9 @@ namespace ReZero.SuperAPI
                     interInfo!.DataModel!.ApiId = interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
                     dynamicInterfaceContext.DataModel= interInfo.DataModel;
-                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
-                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel);
@@ -80,7 +80,7 @@ namespace ReZero.SuperAPI
                 catch (Exception ex)
                 {
                     await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
-                    await SuperAPIModule._apiOptions!.InterfaceOptions!.ISuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }
             }
         }
