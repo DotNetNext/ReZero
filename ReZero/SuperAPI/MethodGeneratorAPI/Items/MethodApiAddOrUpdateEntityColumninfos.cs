@@ -38,6 +38,13 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(TextHandler.GetCommonText("列名重复", "Column name repeat"));
             }
+            foreach (var item in newColumns)
+            {
+                if (item.IsPrimarykey && item.IsNullable) 
+                {
+                    throw new Exception(TextHandler.GetCommonText("主键不能为null", "Primary key cannot be null"));
+                }
+            }
         }
 
         private static bool IsRepeatColumn(ZeroEntityColumnInfo[] newColumns)
