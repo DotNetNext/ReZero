@@ -1,9 +1,9 @@
 # 一、ReZero说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
 创建接口
-![输入图片说明](image5QQ%E6%88%AA%E5%9B%BE20240414121043.png)
+![输入图片说明](READMEIMG/image1.png)
 查看创建后的接口
-![输入图片说明](image2.png)
+![输入图片说明](READMEIMG/image5.png)
 
 
 # 二、功能介绍
@@ -89,4 +89,4 @@ public class JwtAop : DefaultSuperApiAop
 从项目启动时前就有人赞助我开发了
 目前已经有累计过万的打赏了很多人都需要这个功能
 希望大家多多支持，对标的是收费软件
-![输入图片说明](image3.png)
+![输入图片说明](READMEIMG/image6.png)
