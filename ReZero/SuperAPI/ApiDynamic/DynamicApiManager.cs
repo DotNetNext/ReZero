@@ -53,7 +53,7 @@ namespace ReZero.SuperAPI
             var path = context.Request.Path.ToString()?.ToLower();
             var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
             var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
-            var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,Context = context,InterfaceInfo=interInfo };
+            var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,HttpContext = context,InterfaceInfo=interInfo };
             if (interInfo == null)
             {
                 var message = TextHandler.GetCommonText($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");

@@ -41,7 +41,7 @@ namespace ReZero.SuperAPI
             }
             else
             {
-                var systemInterfaceContext = new InterfaceContext() { InterfaceType = InterfaceType.SystemApi, Context = context, InterfaceInfo = interInfo };
+                var systemInterfaceContext = new InterfaceContext() { InterfaceType = InterfaceType.SystemApi, HttpContext = context, InterfaceInfo = interInfo };
                 try
                 { 
                     DataService dataService = new DataService();

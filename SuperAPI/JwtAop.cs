@@ -1,20 +1,30 @@
 ﻿using ReZero.SuperAPI;
+using System.Diagnostics;
 
 namespace SuperAPITest
 {
     public class JwtAop : DefaultSuperApiAop
     {
-        public override Task OnExecutingAsync(InterfaceContext context)
-        { 
-            return base.OnExecutingAsync(context);
-        }
-        public override Task OnExecutedAsync(InterfaceContext context)
+        public async override Task OnExecutingAsync(InterfaceContext aopContext)
         {
-            return base.OnExecutedAsync(context);
+            //// 尝试验证JWT  
+            //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+            //if (!authenticateResult.Succeeded)
+            //{
+            //    // JWT验证失败，返回401 Unauthorized或其他适当的响应  
+            //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            //    await context.Response.WriteAsync("Unauthorized");
+            //    return;
+            //}
+            await base.OnExecutingAsync(aopContext);
         }
-        public override Task OnErrorAsync(InterfaceContext context)
+        public async override Task OnExecutedAsync(InterfaceContext aopContext)
         {
-            return base.OnErrorAsync(context);
+            await base.OnExecutedAsync(aopContext);
+        }
+        public async override Task OnErrorAsync(InterfaceContext aopContext)
+        {
+            await base.OnErrorAsync(aopContext);
         }
     }
 }
