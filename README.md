@@ -1,5 +1,5 @@
 # QQ群
-878157334  注意：sqlsugar框架和rezero是同一个作者 先加 sqlsugar群
+群号：878157334   先加 sqlsugar群和rezero是同一个作者
 # 一、ReZero说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
 创建接口
