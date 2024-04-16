@@ -119,10 +119,10 @@ namespace ReZero.SuperAPI
 
     public class AopOptions 
     {
-        public Func<HttpContext, Func<Task>,Task>? DynamicApiBeforeInvokeAsync { get; set; }
-        public Func<HttpContext, Func<Task>, Task>? DynamicApiAfterInvokeAsync { get; set; }
+        public Func<HttpContext, Task>? DynamicApiBeforeInvokeAsync { get; set; }
+        public Func<HttpContext,  Task>? DynamicApiAfterInvokeAsync { get; set; }
 
-        public Func<HttpContext, Func<Task>, Task>? SystemApiBeforeInvokeAsync { get; set; }
-        public Func<HttpContext, Func<Task>, Task>? SystemApiAfterInvokeAsync { get; set; }
+        public Func<HttpContext, Task>? SystemApiBeforeInvokeAsync { get; set; }
+        public Func<HttpContext, Task>? SystemApiAfterInvokeAsync { get; set; }
     }
 }
