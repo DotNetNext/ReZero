@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
@@ -25,8 +26,9 @@ namespace ReZero.SuperAPI
         {
             IsEnableSuperAPI = true;
             this.DatabaseOptions = options.DatabaseOptions;
-             this.InterfaceOptions = options.InterfaceOptions;
-             this.UiOptions = options.UiOptions;
+            this.InterfaceOptions = options.InterfaceOptions;
+            this.UiOptions = options.UiOptions;
+            this.AopOptions = options.AopOptions;
         }
 
         /// <summary>
@@ -41,6 +43,8 @@ namespace ReZero.SuperAPI
 
 
         public InterfaceOptions InterfaceOptions { get; set; } = new InterfaceOptions();
+
+        public AopOptions AopOptions { get; set; } = new AopOptions();
 
         /// <summary>
         /// Gets or sets the UI configuration options.
@@ -110,5 +114,15 @@ namespace ReZero.SuperAPI
         /// Show native api document
         /// </summary>
         public bool ShowNativeApiDocument { get; set; } = true;
+    }
+
+
+    public class AopOptions 
+    {
+        public Func<HttpContext, Func<Task>,Task>? DynamicApiBeforeInvokeAsync { get; set; }
+        public Func<HttpContext, Func<Task>, Task>? DynamicApiAfterInvokeAsync { get; set; }
+
+        public Func<HttpContext, Func<Task>, Task>? SystemApiBeforeInvokeAsync { get; set; }
+        public Func<HttpContext, Func<Task>, Task>? SystemApiAfterInvokeAsync { get; set; }
     }
 }

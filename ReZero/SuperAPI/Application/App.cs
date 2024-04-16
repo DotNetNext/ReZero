@@ -6,12 +6,12 @@ namespace ReZero.SuperAPI
     /// <summary>
     /// Represents the application's main entry point and provides access to essential services and resources.
     /// </summary>
-    public class App
+    internal class App
     {
         /// <summary>
         /// Gets or sets the application's service provider, allowing access to registered services.
         /// </summary>
-        public static ApplicationServiceProvider? ServiceProvider { get; internal set; }
+        internal static ApplicationServiceProvider? ServiceProvider { get;  set; }
         /// <summary>
         /// Represents a database connection object used before service startup.
         /// </summary>
@@ -98,6 +98,6 @@ namespace ReZero.SuperAPI
             {
                 return SuperAPIModule._apiOptions!.UiOptions!.UiLanguage;
             }
-        }
+        } 
     }
 }
