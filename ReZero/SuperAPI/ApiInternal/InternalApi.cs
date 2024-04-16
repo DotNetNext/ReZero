@@ -28,37 +28,40 @@ namespace ReZero.SuperAPI
         public async Task WriteAsync(HttpContext context)
         {
             var db = App.Db;
-            try
-            {
-                var path = context.Request.Path.ToString()?.ToLower();
-                var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
-                var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
 
-                if (interInfo == null)
-                {
-                    var message = TextHandler.GetCommonText($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
-                    context.Response.StatusCode = 500;
-                    await context.Response.WriteAsync(message);
-                }
-                else
-                {
-                    var systemInterfaceContext = new InterfaceContext() { InterfaceType=InterfaceType.SystemApi ,Context = context, InterfaceInfo=interInfo };
+            var path = context.Request.Path.ToString()?.ToLower();
+            var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
+            var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
+
+            if (interInfo == null)
+            {
+                var message = TextHandler.GetCommonText($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync(message);
+            }
+            else
+            {
+                var systemInterfaceContext = new InterfaceContext() { InterfaceType = InterfaceType.SystemApi, Context = context, InterfaceInfo = interInfo };
+                try
+                { 
                     DataService dataService = new DataService();
-                    interInfo!.DataModel!.ApiId=interInfo.Id;
+                    interInfo!.DataModel!.ApiId = interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(systemInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(systemInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
-                    resultModel.OutPutData = interInfo.DataModel?.OutPutData; 
+                    resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel);
                     await context.Response.WriteAsync(JsonHelper.SerializeObject(data));
                 }
-            }
-            catch (Exception ex)
-            { 
-                await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
-            }
+                catch (Exception ex)
+                {
+                    await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
+                    systemInterfaceContext.Exception = ex;
+                    await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(systemInterfaceContext); ;
+                }
+            } 
         }
     }
 }

@@ -80,6 +80,7 @@ namespace ReZero.SuperAPI
                 catch (Exception ex)
                 {
                     await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
+                    dynamicInterfaceContext.Exception = ex;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }
             }

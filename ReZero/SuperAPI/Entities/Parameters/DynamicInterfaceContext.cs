@@ -12,6 +12,7 @@ namespace ReZero.SuperAPI
         public HttpContext? Context { get; internal set; }
         public DataModel? DataModel { get; internal set; }
         public ZeroInterfaceList? InterfaceInfo { get; internal set; }
+        public Exception? Exception { get; internal set; }
     }
     public enum InterfaceType 
     {
