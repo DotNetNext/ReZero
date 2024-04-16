@@ -27,7 +27,7 @@ builder.Services.AddReZeroServices(api =>
         },
         InterfaceOptions = new InterfaceOptions()
         {
-            SuperApiAop = new JwtAop()//jwtÀ¹½ØÆ÷
+            SuperApiAop = new JwtAop()//ÊÚÈ¨À¹½ØÆ÷
         }
     }); ;
 
