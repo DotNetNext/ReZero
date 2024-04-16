@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Forms;
 using ReZero;
 using ReZero.SuperAPI;
@@ -21,6 +22,19 @@ builder.Services.AddReZeroServices(api =>
             {
                 ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
                 DbType = SqlSugar.DbType.SqlServer,
+            },
+        },
+        AopOptions=new AopOptions()
+        {
+            DynamicApiAfterInvokeAsync=async context=>
+            {
+               //dynamic api jwt
+               await Task.FromResult(string.Empty);
+            },
+            SystemApiAfterInvokeAsync = async context =>
+            {
+                //admin api jwt
+                await Task.FromResult(string.Empty);
             },
         }
     });

@@ -40,13 +40,13 @@ namespace ReZero.SuperAPI
                 var afterAop = SuperAPIModule._apiOptions?.AopOptions?.SystemApiAfterInvokeAsync;
 
                 if (beforeAop != null)
-                    await beforeAop(context, next);
+                    await beforeAop(context);
 
                 // Handle the request using Internal API logic
                 await InternalApi(context);
 
                 if (afterAop != null)
-                    await afterAop(context, next);
+                    await afterAop(context);
             }
             // Check if the requested URL corresponds to Dynamic API
             else if(IsDynamicApi(requestedUrl))
@@ -56,13 +56,13 @@ namespace ReZero.SuperAPI
                 var afterAop=SuperAPIModule._apiOptions?.AopOptions?.DynamicApiAfterInvokeAsync; 
 
                 if (beforeAop != null)
-                    await beforeAop(context, next);
+                    await beforeAop(context);
 
                 // Handle the request using Dynamic API logic
                 await DynamicApi(context);
 
                 if (afterAop != null)
-                    await afterAop(context, next);
+                    await afterAop(context);
             }
             // If the requested URL doesn't match any specific API, pass the request to the next middleware
             else
