@@ -86,4 +86,5 @@ public class JwtAop : DefaultSuperApiAop
 }
 ```
 # 五、打赏作者
+目前已经有累计过万的打赏了很多人都需要这个功能，希望大家多多支持，对标的是收费软件。
 ![输入图片说明](image3.png)
