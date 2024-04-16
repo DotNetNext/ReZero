@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Forms;
 using ReZero;
 using ReZero.SuperAPI;
+using SuperAPITest;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -24,23 +25,14 @@ builder.Services.AddReZeroServices(api =>
                 DbType = SqlSugar.DbType.SqlServer,
             },
         },
-        AopOptions=new AopOptions()
+        InterfaceOptions = new InterfaceOptions()
         {
-            DynamicApiAfterInvokeAsync=async context=>
-            {
-               //dynamic api jwt
-               await Task.FromResult(string.Empty);
-            },
-            SystemApiAfterInvokeAsync = async context =>
-            {
-                //admin api jwt
-                await Task.FromResult(string.Empty);
-            },
+            SuperApiAop = new JwtAop()//jwtÀ¹½ØÆ÷
         }
-    });
+    }); ;
 
 });
-
+ 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -50,4 +42,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.Run();
+app.Run(); 
