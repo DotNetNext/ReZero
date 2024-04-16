@@ -2,10 +2,16 @@
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
 
 
+## 4.4功能预览
+创建接口
+![输入图片说明](QQ%E6%88%AA%E5%9B%BE20240414121043.png)
+查看创建后的接口
+![输入图片说明](image2.png)
+
+
 # 二、功能介绍
 在线数据库和表
 在线创建API接口 、接口文档 和接口调试
-
 
  
 # 三、非.NET用户教程
@@ -40,9 +46,54 @@ var app = builder.Build();
 ## 4.3使用ReZero
 启动项目直接访问地址就行了
 http://localhost:5267/rezero 
- 
-## 4.4功能预览
-创建接口
-![输入图片说明](QQ%E6%88%AA%E5%9B%BE20240414121043.png)
-查看创建后的接口
-![输入图片说明](image2.png)
+
+## 4.4 jwt授权
+
+```cs
+//注册：注册超级API服务
+builder.Services.AddReZeroServices(api =>
+{
+    //启用超级API
+    api.EnableSuperApi(new SuperAPIOptions()
+    { 
+        InterfaceOptions = new InterfaceOptions()
+        {
+            SuperApiAop = new JwtAop()//授权拦截器
+        }
+    }); ;
+
+});
+public class JwtAop : DefaultSuperApiAop
+{
+    public async override Task OnExecutingAsync(InterfaceContext aopContext)
+    {
+        //// 尝试验证JWT  
+        //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+        //if (!authenticateResult.Succeeded)
+        //{
+        //    // JWT验证失败，返回401 Unauthorized或其他适当的响应  
+        //    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        //    await context.Response.WriteAsync("Unauthorized");
+        //    return;
+        //}
+        await base.OnExecutingAsync(aopContext);
+    }
+    public async override Task OnExecutedAsync(InterfaceContext aopContext)
+    {
+        await base.OnExecutedAsync(aopContext);
+    }
+    public async override Task OnErrorAsync(InterfaceContext aopContext)
+    {
+        await base.OnErrorAsync(aopContext);
+    }
+}
+```
+
+```
+这里输入代码
+```
+
+
+```
+这里输入代码
+```
