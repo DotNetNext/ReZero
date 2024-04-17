@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
                 var type = EntityGeneratorManager.GetTypeAsync(entity.Id).GetAwaiter().GetResult();
                 if (codeFirstDb.DbMaintenance.IsAnyTable(codeFirstDb.EntityMaintenance.GetTableName(type),false))
                 {
-                    var diff = codeFirstDb.CodeFirst.GetDifferenceTables(type).ToDiffString();
+                    var diff = codeFirstDb.CodeFirst.SetStringDefaultLength(255).GetDifferenceTables(type).ToDiffString();
                     if (diff != null && !diff.Contains("No change"))
                     {
                         tableDifferences.Add(diff);
