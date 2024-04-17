@@ -18,11 +18,11 @@
     <div class="data" v-for="masterItem in data" :key="masterItem.Key">
         <h2>{{ masterItem.Key }} </h2>
         <section v-for="item in masterItem.Value" :key="item.Id">
-            <div class="endpoint">
+            <div :class="getEndpointType(item)">
                 <p class="p" @click="toggleEndpoint">
                     <span class="method">{{ item.HttpMethod }}</span>
                     <span class="url"> {{item.Url}}   {{item.Name}}</span>
-                    <span class="openapi">+</span>
+                    <span class="openapi">+</span> 
                 </p>
                 <p>{{ item.Description }}</p>
                 <div class="parameter-title" style="display:none">
@@ -91,6 +91,20 @@
                 $parameterElements.toggle(100);
                 $textEle.text(isTextPlus ? "-" : "+").toggleClass("reduction", isTextPlus);
             },
+            getEndpointType(item) {
+                var actionType =item.DataModel.ActionType;
+                if (actionType.startsWith('1')) {
+                    return 'endpoint endpointGet';
+                } else if (actionType.startsWith('2')) {
+                    return 'endpoint endpointPost';
+                } else if (actionType.startsWith('3')) {
+                    return 'endpoint endpointDelete';
+                } else if (actionType.startsWith('4')) {
+                    return 'endpoint endpointPut';
+                } else {
+                    return 'endpoint endpointOther';
+                }
+            }  
         }
     });
 </script>
