@@ -40,6 +40,7 @@ namespace ReZero.SuperAPI
         {
             var db = App.Db;
             var tableInfo = await db.Queryable<ZeroEntityInfo>().Includes(x => x.ZeroEntityColumnInfos).InSingleAsync(tableId);
+            CheckTableInfo(tableInfo);
             var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
             {
                 TableName = tableInfo.DbTableName
@@ -76,7 +77,7 @@ namespace ReZero.SuperAPI
                     Length = item.Length,
                     ColumnDataType = item.DataType,
                     ColumnDescription = item.Description,
-                    IsNullable=item.IsNullable
+                    IsNullable = item.IsNullable
                 };
                 if (column.Length == int.MaxValue)
                 {
@@ -98,6 +99,14 @@ namespace ReZero.SuperAPI
             }
             var type = builder.BuilderType();
             return type;
+        }
+
+        private static void CheckTableInfo(ZeroEntityInfo tableInfo)
+        {
+            if (tableInfo == null)
+            {
+                throw new Exception(TextHandler.GetCommonText("实体不存在了", "The entity does not exist"));
+            }
         }
 
         private static bool DecimalHasLength(string typeName)
