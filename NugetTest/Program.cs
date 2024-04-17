@@ -40,7 +40,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 // 假设您的应用程序在本地5000端口上运行  
-string url = "http://localhost:5000/rezero";
+string url = "http://localhost:5000/rezero/dynamic_interface.html?InterfaceCategoryId=200100";
 
 // 启动默认的网页浏览器并打开指定的URL  
 Process.Start(new ProcessStartInfo
