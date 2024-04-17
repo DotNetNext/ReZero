@@ -60,6 +60,10 @@ namespace ReZero.SuperAPI
             {
                 return dtc.DataType;
             }
+            if (dtc.DataType == typeof(byte[])) 
+            {
+                return dtc.DataType;
+            }
             return c.IsNullable ? typeof(Nullable<>).MakeGenericType(dtc.DataType) : dtc.DataType;
         } 
         #region Helper
