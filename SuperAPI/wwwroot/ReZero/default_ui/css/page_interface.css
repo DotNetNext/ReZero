@@ -43,7 +43,32 @@ section {
             font-size: 16px;
             font-family: monospace;
         }
+.endpointGet 
+{
+}
+.endpointPost {
+    background-color: rgba(73, 204, 144, .1);
+    border: 1px solid #49cc90;
+}
+    .endpointPost .method {
+       background:#49cc90
+    }
+.endpointPut {
+    background-color: rgba(252,161,48,.1);
+    border: 1px solid #fca130;
+}
 
+    .endpointPut .method {
+        background: #fca130
+    }
+.endpointDelete {
+    background-color: rgba(249,62,62,.1);
+    border: 1px solid #f93e3e;
+}
+
+    .endpointDelete .method {
+        background: #f93e3e
+    }
 .method {
     padding: 5px 10px;
     background-color: #61affe;
