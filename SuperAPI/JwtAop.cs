@@ -11,8 +11,7 @@ namespace SuperAPITest
             //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
             //if (!authenticateResult.Succeeded)
             //{ 
-            //    throw new Expception("Unauthorized");
-            //    return;
+            //    throw new Expception("Unauthorized"); 
             //}
             await base.OnExecutingAsync(aopContext);
         }
