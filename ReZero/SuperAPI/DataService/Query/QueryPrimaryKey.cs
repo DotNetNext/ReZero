@@ -15,7 +15,9 @@ namespace ReZero.SuperAPI
             var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
-            var id = dataModel.DefaultParameters.First().Value;
+            var pkPara = dataModel.DefaultParameters.First();
+            var id = pkPara.Value;
+            id=EntityPropertyMappingService.ConvertValue(id!, pkPara.ValueType!);
             var data=await db.QueryableByObject(type).InSingleAsync(id);
             return data;
         }
