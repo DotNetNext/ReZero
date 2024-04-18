@@ -127,6 +127,13 @@ namespace ReZero.SuperAPI
                         PageNumber = 1,
                         PageSize = 20
                     },
+                    OrderByFixedParemters=new List<DataModelOrderParemter>() 
+                    {
+                         new DataModelOrderParemter(){
+                          FieldName="ID",
+                          OrderByType=OrderByType.Desc
+                         }
+                    },
                     SelectParameters = new List<DataModelSelectParameters>()
                     {
                           new DataModelSelectParameters()
