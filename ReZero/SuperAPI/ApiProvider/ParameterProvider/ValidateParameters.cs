@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace ReZero.SuperAPI
         {
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             var db = App.GetDbTableId(dataModel.TableId);
+            new CommonDataService().InitDb(type, db!);
             var entityInfo = db!.EntityMaintenance.GetEntityInfo(type);
             var dbColumnInfo = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(item.Name!));
             var isDeleteIdColumn = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted)));

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
 {
-    internal class QueryTree : IDataService
+    internal class QueryTree :CommonDataService, IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
@@ -15,6 +15,7 @@ namespace ReZero.SuperAPI
             RefAsync<int> count = 0;
             var parameter = dataModel.TreeParameter;
             var type =await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+            base.InitDb(type, db);
             var data = await db.QueryableByObject(type)
                 .InSingleAsync(dataModel.DefaultParameters.First().Value);
             object? parentId = 1;

@@ -11,6 +11,7 @@ namespace ReZero.SuperAPI
         {
             var db=App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+            base.InitDb(type, db);
             base.InitData(type,db,dataModel);
             await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();
             return true;

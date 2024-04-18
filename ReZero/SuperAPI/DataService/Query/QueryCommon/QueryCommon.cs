@@ -9,7 +9,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 namespace ReZero.SuperAPI 
 {
-    public partial class QueryCommon : IDataService
+    public partial class QueryCommon :CommonDataService, IDataService
     {
         private ISqlSugarClient? _sqlSugarClient;
         private ISqlBuilder? _sqlBuilder;
@@ -18,15 +18,16 @@ namespace ReZero.SuperAPI
             try
             {
                 RefAsync<int> count = 0;
-                _sqlSugarClient = App.GetDbTableId(dataModel.TableId)??App.Db;
+                _sqlSugarClient = App.GetDbTableId(dataModel.TableId) ?? App.Db;
                 _sqlBuilder = _sqlSugarClient.Queryable<object>().SqlBuilder;
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
+                base.InitDb(type,_sqlSugarClient);
                 var queryObject = _sqlSugarClient.QueryableByObject(type, PubConst.Orm_TableDefaultMasterTableShortName);
-                queryObject = Join(type,dataModel, queryObject);
-                queryObject = Where(type,dataModel, queryObject);
-                queryObject = OrderBy(type,dataModel, queryObject);
-                queryObject = GroupBy(type,dataModel, queryObject);
-                queryObject = Select(type,dataModel, queryObject);
+                queryObject = Join(type, dataModel, queryObject);
+                queryObject = Where(type, dataModel, queryObject);
+                queryObject = OrderBy(type, dataModel, queryObject);
+                queryObject = GroupBy(type, dataModel, queryObject);
+                queryObject = Select(type, dataModel, queryObject);
                 object? result = await ToList(dataModel, count, type, queryObject);
                 return result;
             }

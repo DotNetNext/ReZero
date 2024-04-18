@@ -21,8 +21,19 @@ namespace ReZero.SuperAPI
                     SetIsSnowFlakeSingle(entityInfo.Columns, type,dataModel, columnInfo);
                 }
             }
-        } 
-
+        }
+        internal void InitDb(Type type, SqlSugar.ISqlSugarClient _sqlSugarClient)
+        {
+            var tableName = _sqlSugarClient.EntityMaintenance.GetTableName(type);
+            if (tableName.StartsWith("zero_") &&
+                 (
+                    _sqlSugarClient!.CurrentConnectionConfig.DbType == SqlSugar.DbType.Oracle ||
+                    _sqlSugarClient.CurrentConnectionConfig.DbType == SqlSugar.DbType.Dm
+                   ))
+            {
+                _sqlSugarClient.CurrentConnectionConfig.MoreSettings.IsAutoToUpper = true;
+            }
+        }
         internal static void CheckSystemData(ISqlSugarClient db,DataModel dataModel, Type type, SqlSugar.EntityInfo entity)
         {
             var IsInitializedColumn = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsInitialized)));
