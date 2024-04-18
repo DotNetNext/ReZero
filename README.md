@@ -45,6 +45,7 @@ var app = builder.Build();
 ## 4.3使用ReZero
 启动项目直接访问地址就行了
 http://localhost:5267/rezero 
+![输入图片说明](READMEIMG/image8.png)
 
 ## 4.4 jwt授权
 
@@ -87,7 +88,13 @@ public class JwtAop : DefaultSuperApiAop
         await base.OnErrorAsync(aopContext);
     }
 }
+
 ```
+## 4.5 集成到自已系统
+只要在url加上model=small 就会隐藏头部菜单和左边的菜单
+![输入图片说明](READMEIMG/image10.png)
+效果图如下
+![输入图片说明](READMEIMG/image9.png)
 # 五、打赏作者
 
 首先感谢大家 ， 项目启动前就有人赞助开发了 
