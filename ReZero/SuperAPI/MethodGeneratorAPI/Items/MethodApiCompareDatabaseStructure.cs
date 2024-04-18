@@ -1,6 +1,7 @@
 ﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ReZero.SuperAPI 
@@ -12,7 +13,7 @@ namespace ReZero.SuperAPI
             List<string> tableDifferences = new List<string>();
             var result = string.Empty; 
             var dbRoot = App.Db;
-            var entities=dbRoot.Queryable<ZeroEntityInfo>().In(ids).ToList(); 
+            var entities=dbRoot.Queryable<ZeroEntityInfo>().In(ids.Select(it=>Convert.ToInt64(it)).ToList()).ToList(); 
             foreach (var entity in entities)
             {
                 var codeFirstDb =App.GetDbTableId(entity.Id)!;
