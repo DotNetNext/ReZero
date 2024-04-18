@@ -92,7 +92,9 @@ namespace ReZero.SuperAPI
         {
             if (currentMenu!.Id == InterfaceCategoryInitializerProvider.Id1)
             {
-                if (!SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource!.StartsWith("/")&&
+                if (
+                    SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource!=null&&
+                    !SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource!.StartsWith("/")&&
                     !SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource.Contains(":")) 
                 {
                    SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource = "/" + SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource;
