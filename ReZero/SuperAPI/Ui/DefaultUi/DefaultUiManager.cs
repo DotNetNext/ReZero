@@ -51,12 +51,12 @@ namespace ReZero.SuperAPI
             var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
             var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);
 
-            //Nav title
-            masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
-
             //Samll page
             masterPageHtml = GetSmallPageHtml(content, masterPageHtml);
 
+            //Nav title
+            masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
+             
             //Page html
             modifiedContent = await ReplacePageContext(filePath, modifiedContent);
 
@@ -75,7 +75,9 @@ namespace ReZero.SuperAPI
                 masterPageHtml = masterPageHtml
                     .Replace("<body data-theme=\"default\">", "<body data-theme=\"default\" class=\"lyear-layout-sidebar-close\">")
                     .Replace("dropdown dropdown-profile", "dropdown dropdown-profile hide")
-                    .Replace("lyear-aside-toggler", "lyear-aside-toggler hide");
+                    .Replace("lyear-aside-toggler", "lyear-aside-toggler hide")
+                    .Replace("@@nav-title", "<i class=\"mdi mdi-soccer\"></i> Rezero云API");
+                  
             }
 
             return masterPageHtml;
