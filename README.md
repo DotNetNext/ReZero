@@ -45,7 +45,7 @@ var app = builder.Build();
 ## 4.3使用ReZero
 启动项目直接访问地址就行了
 http://localhost:5267/rezero 
-![输入图片说明](READMEIMG/image11.png)
+![输入图片说明](READMEIMG/image8.png)
 
 ## 4.4 jwt授权
 
