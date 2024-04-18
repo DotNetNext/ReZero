@@ -67,11 +67,15 @@ public class JwtAop : DefaultSuperApiAop
     public async override Task OnExecutingAsync(InterfaceContext aopContext)
     {
        
-        //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
-        //if (!authenticateResult.Succeeded)
-        //{ 
-        //    throw new Expception("Unauthorized");
-        //}
+         //if (aopContext.InterfaceType == InterfaceType.DynamicApi)
+         //{
+         //    //// 尝试验证JWT  
+         //    //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+         //    //if (!authenticateResult.Succeeded)
+         //    //{ 
+         //    //    throw new Expception("Unauthorized"); 
+         //    //}
+         //}
         await base.OnExecutingAsync(aopContext);
     }
     public async override Task OnExecutedAsync(InterfaceContext aopContext)
