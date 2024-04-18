@@ -76,7 +76,7 @@
                     postData["OrderDynamicParemters"] = txtOrderDynamicParemters.value;
                 }
                 // 发送 POST 请求
-                axios.post(fullUrl, postData)
+                axios.post(fullUrl, postData, jwHeader)
                     .then(function (response) {
                         // 更新响应
                         vm.response = JSON.stringify(response.data);
@@ -90,7 +90,7 @@
                 var urlParams = new URLSearchParams(window.location.search);
                 var idFromUrl = urlParams.get('id');
                 // 发送 GET 请求
-                axios.get('/PrivateReZeroRoute/100003/GetInternalDetail?id=' + idFromUrl)
+                axios.get('/PrivateReZeroRoute/100003/GetInternalDetail?id=' + idFromUrl, jwHeader)
                     .then(function (response) {
                         this.data = response.data;
                         this.error = null; 
