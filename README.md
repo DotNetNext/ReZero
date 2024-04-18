@@ -58,8 +58,12 @@ builder.Services.AddReZeroServices(api =>
     { 
         InterfaceOptions = new InterfaceOptions()
         {
-            //浏览器LocalStorage存token的name通过这个name能拿到token 
-            AuthorizationLocalStorageName = "name",
+
+            //AuthorizationLocalStorageName说明：
+            //localStorage["jwt"]="token";
+            //如果localStorage["jwt"]有token那么本地html页面下接口请求都会带上token
+            //一般用于本地调试用
+            AuthorizationLocalStorageName = "jwt",
             SuperApiAop = new JwtAop()//授权拦截器
         }
     }); ;
@@ -69,16 +73,13 @@ public class JwtAop : DefaultSuperApiAop
 {
     public async override Task OnExecutingAsync(InterfaceContext aopContext)
     {
-       
-         //if (aopContext.InterfaceType == InterfaceType.DynamicApi)
-         //{
-         //    //// 尝试验证JWT  
-         //    //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
-         //    //if (!authenticateResult.Succeeded)
-         //    //{ 
-         //    //    throw new Expception("Unauthorized"); 
-         //    //}
-         //}
+ 
+         //注意：html页面的url里面加token=xxx可以让内部接口也支持jwt授权
+         var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+         if (!authenticateResult.Succeeded)
+         { 
+             throw new Expception("Unauthorized"); 
+         }
         await base.OnExecutingAsync(aopContext);
     }
     public async override Task OnExecutedAsync(InterfaceContext aopContext)
@@ -94,7 +95,10 @@ public class JwtAop : DefaultSuperApiAop
 ```
 ## 4.5 集成到自已系统
 只要在url加上model=small 就会隐藏头部菜单和左边的菜单
-![输入图片说明](READMEIMG/image10.png)
+
+html页面的url里面加token=xxx可以让内部接口也支持jwt授权
+![输入图片说明](READMEIMG/image12.png)
+
 效果图如下
 ![输入图片说明](READMEIMG/image9.png)
 # 五、打赏作者
