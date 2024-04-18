@@ -33,6 +33,14 @@ namespace ReZero.SuperAPI
             {
                 _sqlSugarClient.CurrentConnectionConfig.MoreSettings.IsAutoToUpper = true;
             }
+            if (tableName.StartsWith("zero_") &&
+            (
+               _sqlSugarClient!.CurrentConnectionConfig.DbType == SqlSugar.DbType.PostgreSQL 
+              ))
+            {
+                _sqlSugarClient.CurrentConnectionConfig.MoreSettings.PgSqlIsAutoToLower = true;
+                _sqlSugarClient.CurrentConnectionConfig.MoreSettings.PgSqlIsAutoToLowerCodeFirst = true;
+            }
         }
         internal static void CheckSystemData(ISqlSugarClient db,DataModel dataModel, Type type, SqlSugar.EntityInfo entity)
         {
