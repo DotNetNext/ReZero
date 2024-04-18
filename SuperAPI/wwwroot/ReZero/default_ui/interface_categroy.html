@@ -100,7 +100,7 @@
         methods: {
             fetchData(append) {
                 var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryPageList?ParentId=200" + append;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data; 
                         this.error = null;
@@ -121,7 +121,7 @@
             deleteAndConfirm: function (item) {
                 if (item == null) {
                     var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategory?IsDeleted=true&Id=" + localStorage.delId;
-                    axios.get(url)
+                    axios.get(url, jwHeader)
                         .then(response => {
                             this.data = response.data;
                             this.error = null;
@@ -141,7 +141,7 @@
                 var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById?id="+item.Id;
                 if (item.Id) {
                     this.title = this.editTitle;
-                    axios.get(urlById)
+                    axios.get(urlById, jwHeader)
                         .then(response => {
                             this.formData= response.data;
                         })
@@ -167,7 +167,7 @@
             },
             addOrUpdateSubmit: function (url, json) { 
                 var th = this;
-                axios.post(url, json)
+                axios.post(url, json, jwHeader)
                     .then(response => { 
                         this.error = null;
                         this.onSearch(); 

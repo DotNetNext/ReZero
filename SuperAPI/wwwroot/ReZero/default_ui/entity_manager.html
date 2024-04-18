@@ -294,7 +294,7 @@
         methods: {
             fetchData(append) {
                 var url = "/PrivateReZeroRoute/100003/GetEntityInoList?random=1" + append;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
                         this.error = null;
@@ -316,7 +316,7 @@
             deleteAndConfirm: function (item) {
                 if (item == null) {
                     var url = "/PrivateReZeroRoute/100003/DeleteEntityInfo?IsDeleted=true&Id=" + localStorage.delId;
-                    axios.get(url)
+                    axios.get(url, jwHeader)
                         .then(response => {
                             if (response.data.message) {
                                 tools.alert(response.data.message);
@@ -337,7 +337,7 @@
                 var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id;
                 if (item.Id) {
                     this.title = this.editTitle;
-                    axios.get(urlById)
+                    axios.get(urlById, jwHeader)
                         .then(response => {
                             this.formData = response.data;
                         })
@@ -362,7 +362,7 @@
             },
             addOrUpdateSubmit: function (url, json) {
                 var th = this;
-                axios.post(url, json)
+                axios.post(url, json, jwHeader)
                     .then(response => {
                         this.error = null;
                         this.onSearch();
@@ -380,7 +380,7 @@
                     });
             },
             bindDatabaseSelect: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList", jwHeader)
                     .then(response => {
                         this.database = response.data;
                         this.databaseId = this.database[0].Id;
@@ -395,7 +395,7 @@
                     });
             },
             bindNativeTypeSelect: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetNativeTypeList")
+                axios.get("/PrivateReZeroRoute/100004/GetNativeTypeList", jwHeader)
                     .then(response => {
                         this.nativeTypes = response.data;
                     })
@@ -408,7 +408,7 @@
                 btnEditColumns.click();
                 this.editTable = item.ClassName + " -  " + item.DataBaseName;
                 var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + item.Id;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.columns = response.data;
                         if (this.columns.length == 0) {
@@ -425,7 +425,7 @@
             addOrUpdateColumnInfoSubmit: function () {
                 var url = "/PrivateReZeroRoute/100003/SaveEntityColumnInfos"
                 var th = this;
-                axios.post(url, { Columns: this.columns })
+                axios.post(url, { Columns: this.columns },jwHeader)
                     .then(response => {
                         this.error = null;
                         if (response.data == true) {
@@ -449,7 +449,7 @@
                 }
                 btnCompareDatabaseStructure.click();
                 var url = " /PrivateReZeroRoute/100003/CompareDatabaseStructure";
-                axios.post(url, { ids: this.selectedItems })
+                axios.post(url, { ids: this.selectedItems }, jwHeader)
                     .then(response => {
                         this.columnsCompareResult = response.data;
                         this.error = null;
@@ -462,7 +462,7 @@
             createTables: function () {
                 var url = "/PrivateReZeroRoute/100003/CreateTables";
                 this.columnsCompareResult = "同步中....";
-                axios.post(url, { ids: this.selectedItems })
+                axios.post(url, { ids: this.selectedItems }, jwHeader)
                     .then(response => {
                         this.columnsCompareResult = response.data == true ? "同步成功" : response.data.message;
                         this.error = null;
@@ -479,7 +479,7 @@
             importEntitySubmit: function ()
             {
                 var url = " /PrivateReZeroRoute/100003/ImportEntities";
-                axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables })
+                axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables }, jwHeader)
                     .then(response => { 
                         this.error = null;
                         if (response.data == true) {
@@ -501,7 +501,7 @@
             },
             bindImportTables: function () {
                 var url = "/PrivateReZeroRoute/100004/GetImportTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.tables = response.data;
                         this.error = null;

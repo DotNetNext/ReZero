@@ -52,6 +52,7 @@ namespace ReZero.SuperAPI
 
     public class InterfaceOptions 
     {
+        public string? AuthorizationLocalStorageName { get; set; }
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
     }
 

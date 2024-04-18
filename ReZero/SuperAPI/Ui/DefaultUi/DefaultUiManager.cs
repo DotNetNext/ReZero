@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks; 
 
@@ -23,6 +24,7 @@ namespace ReZero.SuperAPI
         private readonly string mastreNavNamePlaceholder = "@@nav-title";
         private readonly string pageControlPlaceholder = "@@page_control.html";
         private readonly string pageControlName = "page_control.html";
+        private readonly string authorizationLocalStorageName = "@@authorizationLocalStorageName";
         public DefaultUiManager()
         {
         }
@@ -50,6 +52,9 @@ namespace ReZero.SuperAPI
             }
             var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
             var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);
+
+            //authorization
+            masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
 
             //Samll page
             masterPageHtml = GetSmallPageHtml(content, masterPageHtml);

@@ -113,7 +113,7 @@
         methods: {
             fetchData(append) {
                 var url = "/PrivateReZeroRoute/100003/GetDatabaseInfoList?ParentId=200" + append;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
                         this.error = null;
@@ -124,7 +124,7 @@
                     });
 
 
-                axios.get("/PrivateReZeroRoute/100004/GetDbTypeList")
+                axios.get("/PrivateReZeroRoute/100004/GetDbTypeList", jwHeader)
                     .then(response => {
                         this.dbTypeList = response.data; 
                         this.error = null;
@@ -146,7 +146,7 @@
             deleteAndConfirm: function (item) {
                 if (item == null) {
                     var url = "/PrivateReZeroRoute/100003/DeleteDataBaseInfo?IsDeleted=true&Id=" + localStorage.delId;
-                    axios.get(url)
+                    axios.get(url, jwHeader)
                         .then(response => {
                             if (response.data.message)
                             {
@@ -169,7 +169,7 @@
                 if (item.Id)
                 { 
                     this.title = this.editTitle;
-                    axios.get(urlById)
+                    axios.get(urlById, jwHeader)
                         .then(response => {
                             this.formData = response.data;
                         })
@@ -194,7 +194,7 @@
             },
             addOrUpdateSubmit: function (url, json) {
                 var th = this;
-                axios.post(url, json)
+                axios.post(url, json, jwHeader)
                     .then(response => {
                         this.error = null;
                         this.onSearch();
@@ -213,7 +213,7 @@
             },
             testDatabase: function (item)
             {
-                axios.post("/PrivateReZeroRoute/100003/TestDatabaseInfo", {Id:item.Id})
+                axios.post("/PrivateReZeroRoute/100003/TestDatabaseInfo", { Id: item.Id }, jwHeader)
                     .then(response => {
                         this.error = null;
                         tools.alert(response.data+"");
@@ -225,7 +225,7 @@
             },
             createDatabase: function (item)
             {
-                axios.post("/PrivateReZeroRoute/100003/CreateDatabaseInfo", { Connection: item.Connection, DbType:item.DbType })
+                axios.post("/PrivateReZeroRoute/100003/CreateDatabaseInfo", { Connection: item.Connection, DbType: item.DbType }, jwHeader)
                     .then(response => {
                         this.error = null;
                         tools.alert(response.data+"");

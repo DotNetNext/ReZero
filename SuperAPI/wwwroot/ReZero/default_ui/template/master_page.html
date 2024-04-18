@@ -15,6 +15,14 @@
     <script src="js/vue.js"></script>
     <script src="js/axios.min.js"></script>
     <script src="js/tools.js"></script>
+    <script>
+        var jwHeader =
+        {
+            headers: {
+                "Authorization": 'Bearer ' + localStorage.getItem('@@authorizationLocalStorageName') 
+            }
+        }
+    </script>
 </head> 
 <body data-theme="default">
     <div class="lyear-layout-web">

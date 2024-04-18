@@ -27,6 +27,7 @@ builder.Services.AddReZeroServices(api =>
         },
         InterfaceOptions = new InterfaceOptions()
         {
+            AuthorizationLocalStorageName = "aaaaa",
             SuperApiAop = new JwtAop()//ÊÚÈ¨À¹½ØÆ÷
         }
     }); ;

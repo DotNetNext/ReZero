@@ -66,7 +66,7 @@
                     InterfaceCategoryId: idFromUrl
                 });
                 url = url + urlParameters;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
                         this.error = null;

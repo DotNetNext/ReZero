@@ -627,7 +627,7 @@
             */
             fetchData(append) {
                 var url = "/PrivateReZeroRoute/100003/GetDynamicInterfacePageList" + append;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
                         this.error = null;
@@ -659,7 +659,7 @@
             deleteAndConfirm: function (item) {
                 if (item == null) {
                     var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterface?IsDeleted=true&Id=" + localStorage.delId;
-                    axios.get(url)
+                    axios.get(url, jwHeader)
                         .then(response => {
                             this.data = response.data;
                             this.error = null;
@@ -691,7 +691,7 @@
                 var title = th.editTitle;
                 var urlById = "/PrivateReZeroRoute/100003/GetInternalDetail?id=" + item.Id;
                 if (item.Id) { 
-                    axios.get(urlById)
+                    axios.get(urlById, jwHeader)
                         .then(response => {
                             var oldData = JSON.parse(JSON.stringify(th.$data));
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
@@ -769,7 +769,7 @@
                         CurrentDataString: JSON.stringify(this.$data)
                     };
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
-                    axios.post(url, formData)
+                    axios.post(url, formData, jwHeader)
                         .then(response => {
                             if (response.data == true) {
                                 tools.alert("添加成功");
@@ -809,7 +809,7 @@
             },
             bindImportTables: function () {
                 var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
-                axios.get(url)
+                axios.get(url, jwHeader)
                     .then(response => {
                         this.tables = response.data;
                         this.error = null;
@@ -1027,7 +1027,7 @@
                   次要方法
             */
             bindGroupListSelect: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList")
+                axios.get("/PrivateReZeroRoute/100004/GetDynamicGroupNameList", jwHeader)
                     .then(response => {
                         this.groupList = response.data;
                     })
@@ -1037,7 +1037,7 @@
                     });
             },
             bindInterfaceCategroySelect: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetDynamicInterfaceCategoryList")
+                axios.get("/PrivateReZeroRoute/100004/GetDynamicInterfaceCategoryList", jwHeader)
                     .then(response => {
                         this.interfaceCategroyList = response.data;
                     })
@@ -1047,7 +1047,7 @@
                     });
             },
             bindActionLists: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetActionType")
+                axios.get("/PrivateReZeroRoute/100004/GetActionType", jwHeader)
                     .then(response => {
                         this.actionList = response.data;
                     })
@@ -1056,7 +1056,7 @@
                     });
             },
             bindDatabaseSelect: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList")
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList", jwHeader)
                     .then(response => {
                         this.database = response.data;
                         this.databaseId = this.database[0].Id;
@@ -1071,7 +1071,7 @@
                     });
             },
             bindWhereType: function () {
-                axios.get("/PrivateReZeroRoute/100004/GetWhereTypeList")
+                axios.get("/PrivateReZeroRoute/100004/GetWhereTypeList", jwHeader)
                     .then(response => {
                         this.whereTypeList = response.data;
                     })
@@ -1083,7 +1083,7 @@
                 var th = this;
                 if (this.selectedTables.length > 0) {
                     var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
-                    axios.get(url)
+                    axios.get(url, jwHeader)
                         .then(response => {
                             th.columns = response.data;
                         })
@@ -1100,7 +1100,7 @@
                 }).Id;
                 if (this.selectedTables.length > 0) {
                     var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
-                    axios.get(url)
+                    axios.get(url, jwHeader)
                         .then(response => {
                             th.joinColumns = response.data;
                         })
