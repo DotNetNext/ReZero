@@ -67,11 +67,15 @@ public class JwtAop : DefaultSuperApiAop
     public async override Task OnExecutingAsync(InterfaceContext aopContext)
     {
        
-        //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
-        //if (!authenticateResult.Succeeded)
-        //{ 
-        //    throw new Expception("Unauthorized");
-        //}
+         //if (aopContext.InterfaceType == InterfaceType.DynamicApi)
+         //{
+         //    //// 尝试验证JWT  
+         //    //var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+         //    //if (!authenticateResult.Succeeded)
+         //    //{ 
+         //    //    throw new Expception("Unauthorized"); 
+         //    //}
+         //}
         await base.OnExecutingAsync(aopContext);
     }
     public async override Task OnExecutedAsync(InterfaceContext aopContext)
@@ -88,6 +92,6 @@ public class JwtAop : DefaultSuperApiAop
 
 首先感谢大家 ， 项目启动前就有人赞助开发了 
 
-工作量很大 ，工能复杂 ，对标的是收费软件，相信未来将会成长的很好
+工作量很大 ，功能复杂 ，对标的是收费软件，相信未来将会成长的很好
 
 ![输入图片说明](READMEIMG/image6.png)
