@@ -54,14 +54,14 @@ namespace ReZero.SuperAPI
             var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);
 
             //authorization
-            masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
+            masterPageHtml = GetAuthorizationHtml(content,masterPageHtml);
 
             //Samll page
             masterPageHtml = GetSmallPageHtml(content, masterPageHtml);
 
             //Nav title
             masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
-             
+
             //Page html
             modifiedContent = await ReplacePageContext(filePath, modifiedContent);
 
@@ -70,6 +70,18 @@ namespace ReZero.SuperAPI
             //Body context
             masterPageHtml = ReplaceBodyContext(modifiedContent, masterPageHtml, menuHtml);
 
+            return masterPageHtml;
+        }
+
+        private string GetAuthorizationHtml(HttpContext content, string masterPageHtml)
+        {
+            if (!string.IsNullOrEmpty((content.Request.Query["token"] + "").ToString()))
+            {
+                masterPageHtml = masterPageHtml
+                    .Replace("localStorage.getItem('@@authorizationLocalStorageName')",$"'{content.Request.Query["token"]}'");
+
+            }
+            masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
             return masterPageHtml;
         }
 
@@ -90,17 +102,16 @@ namespace ReZero.SuperAPI
 
         private string ReplceIndexSrc(string modifiedContent, ZeroInterfaceCategory? currentMenu)
         {
-            if (currentMenu!.Id == InterfaceCategoryInitializerProvider.Id1)
-            {
-                if (
+            
+            if (
                     SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource!=null&&
                     !SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource!.StartsWith("/")&&
                     !SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource.Contains(":")) 
                 {
                    SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource = "/" + SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource;
                 }
-                modifiedContent = modifiedContent.Replace(index_url, SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource);
-            } 
+                
+            modifiedContent = modifiedContent.Replace(index_url, SuperAPIModule._apiOptions!.UiOptions!.DefaultIndexSource);
             return modifiedContent;
         }
 
