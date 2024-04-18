@@ -133,7 +133,10 @@
             },
             getDynamicApiDocUrl: function (item)
             {
-                return "/rezero/dynamic_interface.html?InterfaceCategoryId="+item.Id;
+                var urlParams = new URLSearchParams(window.location.search);
+                var token = urlParams.get('token');
+                var model = urlParams.get('model');
+                return "/rezero/dynamic_interface.html?InterfaceCategoryId=" + item.Id + "&model=" + model + "&token=" + token;
             }
         }
     });
