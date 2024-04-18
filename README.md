@@ -58,7 +58,8 @@ builder.Services.AddReZeroServices(api =>
     { 
         InterfaceOptions = new InterfaceOptions()
         {
-            AuthorizationLocalStorageName = "tokenName",//js LocalStorage存token的name
+            //浏览器LocalStorage存token的name通过这个name能拿到token 
+            AuthorizationLocalStorageName = "name",
             SuperApiAop = new JwtAop()//授权拦截器
         }
     }); ;
