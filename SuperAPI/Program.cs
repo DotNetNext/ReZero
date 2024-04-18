@@ -21,8 +21,8 @@ builder.Services.AddReZeroServices(api =>
         {
             ConnectionConfig = new SuperAPIConnectionConfig()
             {
-                ConnectionString = "Server=.;Database=SuperAPI;User Id=sa;Password=sasa;",
-                DbType = SqlSugar.DbType.SqlServer,
+                ConnectionString = "PORT=5432;DATABASE=SqlSugar5Demo;HOST=localhost;PASSWORD=postgres;USER ID=postgres",
+                DbType = SqlSugar.DbType.PostgreSQL,
             },
         },
         InterfaceOptions = new InterfaceOptions()
