@@ -22,7 +22,7 @@ namespace ReZero.SuperAPI
             var entityMappingService = new EntityMappingService();
             var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroEntityColumnInfo));
             data.Id = Id_ZeroColumnInfo;
-            data.DataBaseId = DataBaseInitializerProvider.Id;
+            data.DataBaseId = DataBaseInitializerProvider.Id; 
             CommonSetting(data);
             datas.Add(data);
         }

@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
         private void InitEntityInfo(ISqlSugarClient? db)
         {
             var entity = new EntityInfoInitializerProvider();
-            var datas = entity.GetDatas();
+            var datas = entity.GetDatas(); 
             db!.UpdateNav(datas, new UpdateNavRootOptions() { IsInsertRoot = true }).Include(x => x.ZeroEntityColumnInfos).ExecuteCommand();
         }
 

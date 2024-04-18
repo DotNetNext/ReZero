@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
         public int SortId { get; set; }
         [SugarColumn(IsOnlyIgnoreUpdate =true,InsertServerTime =true)]
         public DateTime CreateTime { get; set; }
-        public string? Creator { get; set; } = "";
+        public string? Creator { get; set; } = "-";
         public long CreatorId { get; set; } 
         [SugarColumn(UpdateServerTime =true,IsNullable =true,IsOnlyIgnoreInsert =true)]
         public DateTime UpdateTime { get; set; }
