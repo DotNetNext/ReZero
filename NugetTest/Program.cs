@@ -19,7 +19,7 @@ builder.Services.AddReZeroServices(api =>
     //∆Ù”√≥¨º∂API
     api.EnableSuperApi(new SuperAPIOptions()
     {
-        UiOptions = new UiOptions { ShowNativeApiDocument = false }
+        UiOptions = new UiOptions { DefaultIndexSource="/index.html" }
     });
 
 });
