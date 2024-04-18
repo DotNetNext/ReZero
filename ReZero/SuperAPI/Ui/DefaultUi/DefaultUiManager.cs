@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Microsoft.AspNetCore.Http;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,6 +54,9 @@ namespace ReZero.SuperAPI
             //Nav title
             masterPageHtml = ReplaceNavTitle(masterPageHtml, currentMenu, parentMenu);
 
+            //Samll page
+            masterPageHtml = GetSmallPageHtml(content, masterPageHtml);
+
             //Page html
             modifiedContent = await ReplacePageContext(filePath, modifiedContent);
 
@@ -63,7 +67,19 @@ namespace ReZero.SuperAPI
 
             return masterPageHtml;
         }
-        
+
+        private static string GetSmallPageHtml(HttpContext content, string masterPageHtml)
+        {
+            if ((content.Request.Query["model"] + "").ToString().ToLower() == "small")
+            {
+                masterPageHtml = masterPageHtml
+                    .Replace("<body data-theme=\"default\">", "<body data-theme=\"default\" class=\"lyear-layout-sidebar-close\">")
+                    .Replace("dropdown dropdown-profile", "dropdown dropdown-profile hide")
+                    .Replace("lyear-aside-toggler", "lyear-aside-toggler hide");
+            }
+
+            return masterPageHtml;
+        }
 
         private string ReplceIndexSrc(string modifiedContent, ZeroInterfaceCategory? currentMenu)
         {
