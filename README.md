@@ -87,12 +87,13 @@ public class JwtAop : DefaultSuperApiAop
         await base.OnErrorAsync(aopContext);
     }
 }
+
+```
 ## 4.5 集成进自已系统
 只要在url加上model=small就可能隐藏头部菜单和左边的菜单
 ![输入图片说明](READMEIMG/image10.png)
 效果图如下
 ![输入图片说明](READMEIMG/image9.png)
-```
 # 五、打赏作者
 
 首先感谢大家 ， 项目启动前就有人赞助开发了 
