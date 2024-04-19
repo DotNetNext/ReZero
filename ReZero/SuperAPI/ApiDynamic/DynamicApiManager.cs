@@ -50,9 +50,8 @@ namespace ReZero.SuperAPI
         {
             var handler = helper.GetHandler(requestMethod, context);
             var db = App.Db;
-            var path = context.Request.Path.ToString()?.ToLower();
-            var interfaceInfos = db.Queryable<ZeroInterfaceList>().ToList();
-            var interInfo = interfaceInfos.Where(it => it.Url!.ToLower() == path).FirstOrDefault();
+            var path = context.Request.Path.ToString()?.ToLower(); 
+            var interInfo = db.Queryable<ZeroInterfaceList>().Where(it => it.Url!.ToLower() == path).First();
             var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,HttpContext = context,InterfaceInfo=interInfo };
             if (interInfo == null)
             {
