@@ -108,9 +108,17 @@ namespace ReZero.SuperAPI
 
         private static string GetUrl(SaveInterfaceListModel? saveInterfaceListModel)
         {
-            if (string.IsNullOrEmpty(saveInterfaceListModel?.Url)) 
+            if (string.IsNullOrEmpty(saveInterfaceListModel?.Url))
             {
-                saveInterfaceListModel!.Url = $"/{saveInterfaceListModel.InterfaceCategoryId}/{saveInterfaceListModel.ActionType.ToString().ToLower()}/{saveInterfaceListModel.TableId?.ToLower()}/{SqlSugar.SnowFlakeSingle.Instance.NextId()}";
+                var data = App.Db.Queryable<ZeroInterfaceList>().InSingle(saveInterfaceListModel?.Json?.Id ?? 0);
+                if (data != null)
+                {
+                    saveInterfaceListModel!.Url = data.Url;
+                }
+                else
+                {
+                    saveInterfaceListModel!.Url = $"/{saveInterfaceListModel.InterfaceCategoryId}/{saveInterfaceListModel.ActionType.ToString().ToLower()}/{saveInterfaceListModel.TableId?.ToLower()}/{SqlSugar.SnowFlakeSingle.Instance.NextId()}";
+                }
             }
             if (saveInterfaceListModel?.Url?.StartsWith(@"/") != true) 
             {
