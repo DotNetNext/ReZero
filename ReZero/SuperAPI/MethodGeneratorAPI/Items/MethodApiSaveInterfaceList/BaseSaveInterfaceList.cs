@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 
 namespace ReZero.SuperAPI 
@@ -72,6 +73,12 @@ namespace ReZero.SuperAPI
                 zeroInterfaceList.Id = SnowFlakeSingle.Instance.NextId();
             } 
             zeroInterfaceList.IsDeleted = false;
+            var url = zeroInterfaceList.Url?.ToLower();
+            var urlCount = App.Db.Queryable<ZeroInterfaceList>()
+                           .Where(it => it.Id != zeroInterfaceList!.Id)
+                           .Where(it => it.Url!.ToLower() == url)
+                           .Count();
+            if (urlCount > 0) throw new Exception(TextHandler.GetCommonText("接口地址已存在", "The interface address already exists."));
             App.Db.Storageable(zeroInterfaceList).ExecuteCommand();
             return true;
         }
