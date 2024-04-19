@@ -3,6 +3,7 @@ using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -64,7 +65,7 @@ namespace ReZero.SuperAPI
                         }
             });
         } 
-        private static void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
+        private  void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
         {
             if (anyColumns)
             {
@@ -95,6 +96,14 @@ namespace ReZero.SuperAPI
                     AsName = it.PropertyName
 
                 }).ToList();
+
+                foreach (var item in zeroInterfaceList.DataModel!.Columns)
+                {
+                    if (item.PropertyName == item.Description || string.IsNullOrEmpty(item.Description))
+                    {
+                        item.Description = columns.FirstOrDefault(it => it.PropertyName == item.PropertyName).Description;
+                    }
+                }
             }
             else
             {
