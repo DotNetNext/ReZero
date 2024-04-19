@@ -79,6 +79,10 @@ namespace ReZero.SuperAPI
                     ColumnDescription = item.Description,
                     IsNullable = item.IsNullable
                 };
+                if (item.PropertyType==NativeType.String&&column.Length == 0) 
+                {
+                    column.Length = 255;
+                }
                 if (column.Length == int.MaxValue)
                 {
                     column.ColumnDataType = StaticConfig.CodeFirst_BigString;
