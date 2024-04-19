@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Rezero.Api</id>
-		<version>1.0.15</version>
+		<version>1.0.16</version>
 		<authors>sunkaixuan</authors>
 		<owners>果糖大数据科技</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
@@ -13,7 +13,7 @@
 		<copyright>Copyright 2016</copyright>
 		<tags>rezero 零 低代码 zero</tags>
 		<dependencies> 
-			<dependency id="Rezero" version="1.0.15" />
+			<dependency id="Rezero" version="1.0.16" />
 		</dependencies>
 		<contentFiles>
 			<files include="any/any/wwwroot/rezero/**" buildAction="None" copyToOutput="true" flatten="false" />
