@@ -49,3 +49,6 @@
 .t_a_l {
     text-align: left !important
 }
+.mi-w-100 {
+  min-width:100px !important;
+}
