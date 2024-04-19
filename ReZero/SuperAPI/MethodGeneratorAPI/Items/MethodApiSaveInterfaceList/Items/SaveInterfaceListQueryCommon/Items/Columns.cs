@@ -71,13 +71,14 @@ namespace ReZero.SuperAPI
                 zeroInterfaceList.DataModel!.Columns = columns
                 .Where(it => saveInterfaceListModel!.Json!.Columns.Any(z => z.PropertyName == it.PropertyName)).Select(it => new DataColumnParameter()
                 {
-                    Description = it.Description,
+                    Description = saveInterfaceListModel!.Json!.Columns.FirstOrDefault(z => z.PropertyName == it.PropertyName).DbColumnName,
                     PropertyName = it.PropertyName
                 }).ToList();
+                var isPage=saveInterfaceListModel.PageSize;
                 zeroInterfaceList.DataModel!.SelectParameters = saveInterfaceListModel!.Json!.Columns
                   .Select(it => new DataModelSelectParameters()
                   {
-                      AsName = it.DbColumnName,
+                      AsName = isPage?it.PropertyName :it.DbColumnName,
                       TableIndex = 0,
                       Name = it.PropertyName,
                   }).ToList();
