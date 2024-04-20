@@ -38,7 +38,8 @@ namespace ReZero.SuperAPI
                 }
                 else if (IsSelectSubqueryName(item)) 
                 {
-                    selectLists.Add(item.AsName!);
+                    selectLists.Add(item.SubquerySQL!);
+                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type, item)?.PropertyInfo?.PropertyType ?? typeof(object) });
                 }
                 else if (IsSelectJoinName(item))
                 {

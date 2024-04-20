@@ -135,8 +135,9 @@ namespace ReZero.SuperAPI
             var subQueryable = App.Db.Queryable<object>();
             var builder = subQueryable.QueryBuilder.Builder;
             var subquerySql = subQueryable
+                .Take(1)
                 .AS(tableInfo.DbTableName)
-                .Where($"{builder.GetTranslationColumnName(tableInfo.DbTableName)}.{builder.GetTranslationColumnName(joinField)}={builder.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName+0)}.{builder.GetTranslationColumnName(materField)}")
+                .Where($"{builder.GetTranslationColumnName(joinField)}={builder.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName+0)}.{builder.GetTranslationColumnName(materField)}")
                 .Select(SelectModel.Create(new SelectModel() { 
                   AsName = asName,
                   FieldName= showField
@@ -144,7 +145,8 @@ namespace ReZero.SuperAPI
             DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
             {
                 Name = PubConst.Orm_SubqueryKey, 
-                AsName = $"({subquerySql}) AS {builder.GetTranslationColumnName(asName)} "
+                SubquerySQL = $"({subquerySql}) AS {builder.GetTranslationColumnName(asName)} ",
+                AsName = asName,
             };
             zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
         }
