@@ -3,6 +3,7 @@ using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -42,8 +43,15 @@ namespace ReZero.SuperAPI
                     AddJoins(zeroInterfaceList, index, item, tableInfo);
                     AddJoinSelectColumns(zeroInterfaceList, index, item, tableInfo);
                 }
+                var subIndex = 0;
+                foreach (var item in GetSubqueryComplexityColumns(joinColumns!))
+                {
+                    var tableInfo = GetJoinEntity(entityInfos, item);
+                    subIndex++;
+                    AddSubquerySelectColums(zeroInterfaceList, subIndex, item, tableInfo);
+                }
             }
-        }
+        } 
 
         private static void AddJoins(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
         {
@@ -116,6 +124,30 @@ namespace ReZero.SuperAPI
                 }).ToList();
             }
         }
+        private static void AddSubquerySelectColums(ZeroInterfaceList zeroInterfaceList, int subIndex, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
+        {
+            var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
+                                 .Where(it => it.PropertyName == item.Json!.JoinInfo!.ShowField).First();
+            var joinField = item.Json!.JoinInfo!.JoinField;
+            var materField = item.Json!.JoinInfo!.MasterField;
+            var asName= item.Json!.JoinInfo!.Name;
+            var showField = item.Json!.JoinInfo!.ShowField;
+            var subQueryable = App.Db.Queryable<object>();
+            var builder = subQueryable.QueryBuilder.Builder;
+            var subquerySql = subQueryable
+                .AS(tableInfo.DbTableName)
+                .Where($"{builder.GetTranslationColumnName(tableInfo.DbTableName)}.{builder.GetTranslationColumnName(joinField)}={builder.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName+0)}.{builder.GetTranslationColumnName(materField)}")
+                .Select(SelectModel.Create(new SelectModel() { 
+                  AsName = asName,
+                  FieldName= showField
+                })).ToSql().Key;
+            DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
+            {
+                Name = PubConst.Orm_SubqueryKey, 
+                AsName = $"({subquerySql}) AS {builder.GetTranslationColumnName(asName)} "
+            };
+            zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
+        }
         private static void AddJoinSelectColumns(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
         {
             var columnsInfo = tableInfo!.ZeroEntityColumnInfos!
@@ -140,6 +172,10 @@ namespace ReZero.SuperAPI
         private static IEnumerable<CommonQueryComplexitycolumn> GetJoinComplexityColumns(CommonQueryComplexitycolumn[] joinColumns)
         {
             return joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType != ColumnJoinType.SubqueryJoin);
+        }
+        private static IEnumerable<CommonQueryComplexitycolumn> GetSubqueryComplexityColumns(CommonQueryComplexitycolumn[] joinColumns)
+        {
+            return joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType == ColumnJoinType.SubqueryJoin);
         }
 
         private static List<ZeroEntityInfo> GetJoinEntityInfos(CommonQueryComplexitycolumn[]? joinColumns, List<string> tableNames)

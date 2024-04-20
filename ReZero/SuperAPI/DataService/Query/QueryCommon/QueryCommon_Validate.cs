@@ -30,6 +30,9 @@ namespace ReZero.SuperAPI
         {
             return item.IsTableAll == false && item.TableIndex > 0;
         }
-
+        private static bool IsSelectSubqueryName(DataModelSelectParameters item)
+        {
+            return item.Name ==PubConst.Orm_SubqueryKey;
+        }
     }
 }

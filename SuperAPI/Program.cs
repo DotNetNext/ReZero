@@ -21,7 +21,7 @@ builder.Services.AddReZeroServices(api =>
         {
             ConnectionConfig = new SuperAPIConnectionConfig()
             {
-                ConnectionString = "server=.;uid=sa;pwd=sasa;database=SqlSugar5Dexxxxmo",
+                ConnectionString = "server=.;uid=sa;pwd=sasa;database=SuperAPI",
                 DbType = SqlSugar.DbType.SqlServer,
             },
         },

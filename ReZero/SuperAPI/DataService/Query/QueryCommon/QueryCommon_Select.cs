@@ -36,21 +36,25 @@ namespace ReZero.SuperAPI
                 {
                     selectLists.Add(GetMasterSelectAll(type));
                 }
+                else if (IsSelectSubqueryName(item)) 
+                {
+                    selectLists.Add(item.AsName!);
+                }
                 else if (IsSelectJoinName(item))
                 {
                     var propertyName = _sqlBuilder!.GetTranslationColumnName(item.AsName);
-                    var tableInfo = dataModel!.JoinParameters![item.TableIndex-1];
-                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName+item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {propertyName} ";
+                    var tableInfo = dataModel!.JoinParameters![item.TableIndex - 1];
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName + item.TableIndex)}.{_sqlBuilder!.GetTranslationColumnName(item.Name)} AS {propertyName} ";
                     selectLists.Add(name);
                     resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = typeof(string) });
                 }
-                else if(!string.IsNullOrEmpty(item.Name))
+                else if (!string.IsNullOrEmpty(item.Name))
                 {
-                    if (string.IsNullOrEmpty(item.AsName))  
-                        item.AsName = item.Name; 
-                    var name = $"{_sqlBuilder!.GetTranslationColumnName(GetSelectFieldName(queryObject,item))} AS {item.AsName} ";
+                    if (string.IsNullOrEmpty(item.AsName))
+                        item.AsName = item.Name;
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(GetSelectFieldName(queryObject, item))} AS {item.AsName} ";
                     selectLists.Add(name);
-                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type,item)?.PropertyInfo?.PropertyType??typeof(object)});
+                    resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type, item)?.PropertyInfo?.PropertyType ?? typeof(object) });
                 }
             }
             var  resultType=new DynamicTypeBuilder(_sqlSugarClient!,"ViewModel_"+dataModel.ApiId, resultTypeInfos).BuildDynamicType();
