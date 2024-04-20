@@ -149,6 +149,11 @@ namespace ReZero.SuperAPI
                 AsName = asName,
             };
             zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
+            zeroInterfaceList.DataModel!.Columns!.Add(new DataColumnParameter()
+            {
+                Description = addColumnItem.AsName,
+                PropertyName = addColumnItem.AsName
+            });
         }
         private static void AddJoinSelectColumns(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
         {
