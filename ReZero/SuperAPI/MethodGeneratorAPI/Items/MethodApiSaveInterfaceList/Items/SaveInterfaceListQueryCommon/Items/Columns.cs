@@ -161,6 +161,11 @@ namespace ReZero.SuperAPI
                 AsName = string.IsNullOrEmpty(item.Json!.JoinInfo!.Name) ? columnsInfo.PropertyName : item.Json!.JoinInfo!.Name
             };
             zeroInterfaceList.DataModel!.SelectParameters!.Add(addColumnItem);
+            zeroInterfaceList.DataModel!.Columns!.Add(new DataColumnParameter()
+            {
+                Description = addColumnItem.AsName,
+                PropertyName = addColumnItem.AsName
+            });
         }
 
         #endregion
