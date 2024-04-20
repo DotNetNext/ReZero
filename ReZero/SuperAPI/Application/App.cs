@@ -78,6 +78,7 @@ namespace ReZero.SuperAPI
                     IsAutoToUpper=false,
                     PgSqlIsAutoToLower=false,
                     PgSqlIsAutoToLowerCodeFirst=false,
+                    EnableOracleIdentity=true
                 }
             },
             db =>
