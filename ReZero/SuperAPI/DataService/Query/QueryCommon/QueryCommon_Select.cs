@@ -53,7 +53,7 @@ namespace ReZero.SuperAPI
                 {
                     if (string.IsNullOrEmpty(item.AsName))
                         item.AsName = item.Name;
-                    var name = $"{_sqlBuilder!.GetTranslationColumnName(GetSelectFieldName(queryObject, item))} AS {item.AsName} ";
+                    var name = $"{_sqlBuilder!.GetTranslationColumnName(GetSelectFieldName(queryObject, item))} AS {_sqlBuilder!.GetTranslationColumnName(item.AsName)} ";
                     selectLists.Add(name);
                     resultTypeInfos.Add(new ResultTypeInfo() { PropertyName = item.AsName, Type = GetColumnInfo(type, item)?.PropertyInfo?.PropertyType ?? typeof(object) });
                 }
