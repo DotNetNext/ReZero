@@ -7,6 +7,8 @@
 查看创建后的接口
 ![输入图片说明](READMEIMG/image5.png)
 
+数据库支持
+Sqlite 、 MySql 、 SqlServer 、 PgSQL 、Oracle 、人大金仓（默认模式）、 达梦
 
 # 二、功能介绍
 在线数据库和表
