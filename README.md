@@ -126,7 +126,7 @@ builder.Services.AddReZeroServices(api =>
                 }
                 else if (dto is bool b)
                 {
-                    return new { isSuccess = false, data = b };
+                    return new { isSuccess = b, data = b };
                 }
                 //更多逻辑自已处理这儿只是一个示例
                 return new { isSuccess = true, data = dto };
