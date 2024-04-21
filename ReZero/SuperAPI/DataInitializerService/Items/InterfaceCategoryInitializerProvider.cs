@@ -125,6 +125,14 @@ namespace ReZero.SuperAPI
                 it.Url = "/rezero/interface_manager.html";
                 it.SortId = 3;
             }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300007;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300007);
+                it.ParentId = Id300;
+                it.Url = "/rezero/Authorization.html";
+                it.SortId = 4;
+            }));
         }
 
         private void SetInterfaceDocument()

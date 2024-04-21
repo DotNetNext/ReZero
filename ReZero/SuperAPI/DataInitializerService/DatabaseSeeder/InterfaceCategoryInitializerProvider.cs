@@ -111,6 +111,14 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("接口维护")]
         [EnglishTextAttribute("Api management")]
         public const long Id300006 = 300006;
+
+
+        /// <summary>
+        /// 接口授权
+        /// </summary>
+        [ChineseTextAttribute("接口授权")]
+        [EnglishTextAttribute("Api authorization")]
+        public const long Id300007 = 300007;
         #endregion
 
         #region Code builder

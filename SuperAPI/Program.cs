@@ -26,12 +26,7 @@ builder.Services.AddReZeroServices(api =>
             },
         },
         InterfaceOptions = new InterfaceOptions()
-        {
-            //AuthorizationLocalStorageName说明：
-            //localStorage["jwt"]="token";
-            //如果localStorage["jwt"]有token那么本地html页面下接口请求都会带上token
-            //一般用于本地调试用
-            AuthorizationLocalStorageName = "jwt",
+        { 
             SuperApiAop = new JwtAop()//授权拦截器
         }
     }); ;

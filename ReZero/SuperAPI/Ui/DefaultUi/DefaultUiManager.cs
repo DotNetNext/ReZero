@@ -70,6 +70,8 @@ namespace ReZero.SuperAPI
             //Body context
             masterPageHtml = ReplaceBodyContext(modifiedContent, masterPageHtml, menuHtml);
 
+            //token
+            masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
             return masterPageHtml;
         }
 
