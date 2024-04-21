@@ -61,9 +61,7 @@ builder.Services.AddReZeroServices(api =>
     api.EnableSuperApi(new SuperAPIOptions()
     { 
         InterfaceOptions = new InterfaceOptions()
-        { 
-            AuthorizationLocalStorageName = "jwt",
-
+        {   
             //授权拦截器 
             SuperApiAop = new JwtAop()
         }
