@@ -1,20 +1,17 @@
-# 功能介绍
-qq群号：878157334   先加 sqlsugar群和rezero是同一个作者<br>
-数据库： Sqlite、Mysql、sqlserver、oracle、pgsql、人大金仓(默认模式)、达梦<br>
-功能：界面建库、界面建表 、界面生成接口、界面设置授权、界面生成接口文档、界面调试接口、云端ORM 、超级API
-# 一、ReZero说明
+# 加群交流
+qq群号：878157334   先加 sqlsugar群和rezero是同一个作者<br> 
+
+# 一、功能说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
-创建接口
+创建接口<br>
+界面建库、界面建表 、界面生成接口、界面设置授权、界面生成接口文档、界面调试接口、云端ORM 、超级API
 ![输入图片说明](READMEIMG/image1.png)
 查看创建后的接口
 ![输入图片说明](READMEIMG/image5.png)
+ 
 
-数据库支持
+# 二、数据库支持
 Sqlite 、 MySql 、 SqlServer 、 PgSQL 、Oracle 、人大金仓（默认模式）、 达梦
-
-# 二、功能介绍
-在线数据库和表
-在线创建API接口 、接口文档 和接口调试
 
  
 # 三、非.NET用户教程
