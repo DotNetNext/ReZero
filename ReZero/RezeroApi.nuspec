@@ -13,7 +13,7 @@
 		<copyright>Copyright 2016</copyright>
 		<tags>rezero 零 低代码 zero</tags>
 		<dependencies> 
-			<dependency id="Rezero" version="1.0.21" />
+			<dependency id="Rezero" version="1.0.22" />
 		</dependencies>
 		<contentFiles>
 			<files include="any/any/wwwroot/rezero/**" buildAction="None" copyToOutput="true" flatten="false" />
