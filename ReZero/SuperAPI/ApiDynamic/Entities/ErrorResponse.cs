@@ -1,4 +1,4 @@
-﻿namespace ReZero.SuperAPI
+﻿namespace ReZero.SuperAPI.ApiDynamic.Entities
 {
     internal class ErrorResponse
     {
