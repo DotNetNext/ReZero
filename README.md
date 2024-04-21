@@ -104,6 +104,39 @@ html页面的url里面加token=xxx可以让内部接口也支持jwt授权
 
 效果图如下
 ![输入图片说明](READMEIMG/image9.png)
+
+## 4.6统一返回结果
+如果不喜欢默认返回格式我们可以自定义返回格式
+
+```cs
+builder.Services.AddReZeroServices(api =>
+{
+   
+    api.EnableSuperApi(new SuperAPIOptions()
+    {
+        InterfaceOptions = new InterfaceOptions()
+        {
+            //MergeDataToStandardDtoFunc 设置统一返回格式
+            MergeDataToStandardDtoFunc = dto =>
+            {
+
+                if (dto is ErrorResponse error)
+                {
+                    return new { isSuccess = false, data = error.message };
+                }
+                else if (dto is bool b)
+                {
+                    return new { isSuccess = b, data = b };
+                }
+                //更多逻辑自已处理这儿只是一个示例
+                return new { isSuccess = true, data = dto };
+            }
+        }
+    });
+
+});
+```
+
 # 五、打赏作者
 
 首先感谢大家 ， 项目启动前就有人赞助开发了 
