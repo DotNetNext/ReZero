@@ -128,7 +128,7 @@ builder.Services.AddReZeroServices(api =>
                 {
                     return new { isSuccess = false, data = b };
                 }
-                //更多逻辑 dto 接口返回的对象你在这个地方返回新对象就行了
+                //更多逻辑自已处理这儿只是一个示例
                 return new { isSuccess = true, data = dto };
             }
         }
