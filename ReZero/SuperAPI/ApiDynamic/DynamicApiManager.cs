@@ -72,13 +72,16 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
-                    data = new ResultService().GetResult(data, resultModel);
-                    var json = JsonHelper.SerializeObject(data);
+                    data = new ResultService().GetResult(data, resultModel); 
+                    data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDto?.Invoke(data)??data;
+                    var json = JsonHelper.SerializeObject(data); 
                     await context.Response.WriteAsync(json);
                 }
                 catch (Exception ex)
                 {
-                    await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
+                    object data =new ErrorResponse { message = ex.Message } ;
+                    data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDto?.Invoke(data)??data;
+                    await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
                     dynamicInterfaceContext.Exception = ex;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }

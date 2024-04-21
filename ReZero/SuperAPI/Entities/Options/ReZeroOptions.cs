@@ -52,8 +52,10 @@ namespace ReZero.SuperAPI
 
     public class InterfaceOptions 
     {
-        public string? AuthorizationLocalStorageName { get; set; }
+        public string? AuthorizationLocalStorageName { get; set; } 
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
+         
+        public Func<object,object>? MergeDataToStandardDto { get; set; }
     }
 
     /// <summary>
