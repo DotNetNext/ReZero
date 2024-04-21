@@ -93,7 +93,7 @@ public class JwtAop : DefaultSuperApiAop
 界面配置ToKen
 ![输入图片说明](READMEIMG/image14.png)
 ## 4.5 集成到自已系统
-只要在url加上model=small 就会隐藏头部菜单和左边的菜单
+只要在url加上model=small 就会隐藏头部菜单和左边的菜单<br>
 如果跨域或者端口需要url加token
 html页面的url里面加token=xxx可以让内部接口也支持jwt授权
 ![输入图片说明](READMEIMG/image12.png)
