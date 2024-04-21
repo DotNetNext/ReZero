@@ -77,7 +77,7 @@ namespace ReZero.SuperAPI
 
         private string GetAuthorizationHtml(HttpContext content, string masterPageHtml)
         {
-            if (!string.IsNullOrEmpty((content.Request.Query["token"] + "").ToString()))
+            if (!string.IsNullOrEmpty((content.Request.Query["token"] + "").ToString())&& content.Request.Query["token"].ToString()!="null")
             {
                 masterPageHtml = masterPageHtml
                     .Replace("localStorage.getItem('@@authorizationLocalStorageName')",$"'{content.Request.Query["token"]}'");
