@@ -57,13 +57,7 @@ builder.Services.AddReZeroServices(api =>
     api.EnableSuperApi(new SuperAPIOptions()
     { 
         InterfaceOptions = new InterfaceOptions()
-        {
-
-            //AuthorizationLocalStorageName说明：
-            //localStorage["jwt"]="token";
-            //如果localStorage["jwt"]有token那么本地html页面下接口请求都会带上token
-            //一般用于前端和后端不跨端口和域名的情况
-            //如果跨端口或者域名看 【 4.5标题 】写法
+        { 
             AuthorizationLocalStorageName = "jwt",
 
             //授权拦截器 
@@ -96,6 +90,8 @@ public class JwtAop : DefaultSuperApiAop
 }
 
 ```
+界面配置ToKen
+![输入图片说明](READMEIMG/image14.png)
 ## 4.5 集成到自已系统
 只要在url加上model=small 就会隐藏头部菜单和左边的菜单
 
