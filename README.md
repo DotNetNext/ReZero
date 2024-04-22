@@ -130,7 +130,7 @@ builder.Services.AddReZeroServices(api =>
 
 });
 ```
-## 4.7 通用查询支持条件过滤 授权Claim[key]
+## 4.7 Where=Claim[key]
 ![输入图片说明](READMEIMG/image15.png)
 ![输入图片说明](READMEIMG/image16.png)
 # 五、打赏作者
