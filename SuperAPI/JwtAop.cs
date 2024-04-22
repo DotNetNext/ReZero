@@ -14,14 +14,6 @@ namespace SuperAPITest
             //    throw new Expception("Unauthorized"); 
             //}
             await base.OnExecutingAsync(aopContext);
-        }
-        public async override Task OnExecutedAsync(InterfaceContext aopContext)
-        {
-            await base.OnExecutedAsync(aopContext);
-        }
-        public async override Task OnErrorAsync(InterfaceContext aopContext)
-        {
-            await base.OnErrorAsync(aopContext);
-        }
+        } 
     }
 }
