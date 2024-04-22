@@ -185,6 +185,16 @@ namespace ReZero.SuperAPI
                     }
                 }
             }
+            if (item.ValueType == PubConst.Orm_WhereValueTypeClaimKey)
+            {
+                if (!dataModel.ClaimList.Any(it => it.Key?.ToLower() == item.Value?.ToString()?.ToLower()))
+                {
+                    throw new SqlSugarException(TextHandler.GetCommonText("没有找到Claim Key 请在AOP中 aopContext.AttachClaimToHttpContext(key,value)" + item.Value, "ClaimList Not Found Key:" + item.Value));
+                }
+                var value = dataModel.ClaimList.FirstOrDefault(it => it.Key?.ToLower() == item.Value?.ToString()?.ToLower()).Value;
+                item.Value = value;
+                item.ValueType = value?.GetType()?.Name;
+            }
             var forNames = dataModel.DefaultParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
             if (forNames.Any())
             {
