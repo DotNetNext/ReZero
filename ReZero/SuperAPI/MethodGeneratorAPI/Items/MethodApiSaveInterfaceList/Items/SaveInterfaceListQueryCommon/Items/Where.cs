@@ -36,6 +36,13 @@ namespace ReZero.SuperAPI
                         Description = json.Columns.FirstOrDefault(s=>s.PropertyName==it.PropertyName)?.DbColumnName,
                         ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
                     });
+                    var currentParameter=zeroInterfaceList.DataModel!.DefaultParameters.Last();
+                    if (it.ValueType == WhereValueType.ClaimKey) 
+                    {
+                       currentParameter.Value = it.Value;
+                       currentParameter.ValueType =PubConst.Orm_WhereValueTypeClaimKey;                      
+                       currentParameter.ValueIsReadOnly = true;
+                    }
                 }
             }
         }

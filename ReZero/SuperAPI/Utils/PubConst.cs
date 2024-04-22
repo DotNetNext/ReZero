@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
         public readonly static string Orm_TableDefaultMasterTableShortName = Orm_TableDefaultPreName + 0;
         public const string Orm_ApiParameterJsonArray = "json array";
         public const string Orm_SubqueryKey = "`SqlFunc`.`Key`.['010203']";
+        public const string Orm_WhereValueTypeClaimKey = "Orm_WhereValueTypeClaimKey['16125']";
 
         public const string Namespace_ResultService = "ReZero.SuperAPI.Items.";
           

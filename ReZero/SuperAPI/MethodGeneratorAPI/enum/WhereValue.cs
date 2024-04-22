@@ -7,6 +7,7 @@ namespace ReZero.SuperAPI
     public enum WhereValueType
     {
         Value=0,
-        Parameter=1
+        Parameter=1,
+        ClaimKey= 2,
     }
 }

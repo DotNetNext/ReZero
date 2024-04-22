@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
@@ -56,6 +57,7 @@ namespace ReZero.SuperAPI
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
          
         public Func<object,object>? MergeDataToStandardDtoFunc { get; set; }
+        public List<string>? ClaimDetails { get; set; }
     }
 
     /// <summary>
@@ -80,7 +82,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Callback function to retrieve the current user information.
         /// </summary>
-        public Func<CallBackUserInfo> GetCurrentUserCallback { get; set; } = () => new CallBackUserInfo { UserId = "1", UserName = "Admin" };
+        internal Func<CallBackUserInfo> GetCurrentUserCallback { get; set; } = () => new CallBackUserInfo { UserId = "1", UserName = "Admin" };
     }
 
     /// <summary>

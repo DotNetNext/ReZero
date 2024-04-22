@@ -36,5 +36,9 @@ namespace ReZero.SuperAPI
         public string? WhereRelationTemplate { get;  set; }
         public string? CurrentDataString { get;   set; }
         #endregion
+
+        #region Http
+        internal Dictionary<string, object>? ClaimList { get; set; } = new Dictionary<string, object>();
+        #endregion
     }
 }
