@@ -892,6 +892,11 @@
                         return;
                     }
                 }
+                else
+                {
+                    tools.alert("带*的请填写完整");
+                    return;
+                }
                 if (!json.Name)
                 {
                     json.Name = json.ShowField;
