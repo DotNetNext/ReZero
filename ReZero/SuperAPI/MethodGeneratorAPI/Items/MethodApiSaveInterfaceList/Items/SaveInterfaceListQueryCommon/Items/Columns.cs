@@ -51,12 +51,12 @@ namespace ReZero.SuperAPI
                     AddSubquerySelectColums(zeroInterfaceList, subIndex, item, tableInfo);
                 }
             }
-        } 
+        }
 
         private static void AddJoins(ZeroInterfaceList zeroInterfaceList, int index, CommonQueryComplexitycolumn item, ZeroEntityInfo tableInfo)
         {
-
-            zeroInterfaceList.DataModel!.JoinParameters = new List<DataModelJoinParameters>();
+            if (zeroInterfaceList.DataModel!.JoinParameters == null)
+                zeroInterfaceList.DataModel!.JoinParameters = new List<DataModelJoinParameters>();
             zeroInterfaceList!.DataModel!.JoinParameters.Add(new DataModelJoinParameters()
             {
                 JoinTableId = tableInfo!.Id,
@@ -72,8 +72,8 @@ namespace ReZero.SuperAPI
                             }
                         }
             });
-        } 
-        private  void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
+        }
+        private void AddMasterColumns(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList, bool anyColumns, List<ZeroEntityColumnInfo> columns)
         {
             if (anyColumns)
             {
@@ -83,11 +83,11 @@ namespace ReZero.SuperAPI
                     Description = saveInterfaceListModel!.Json!.Columns.FirstOrDefault(z => z.PropertyName == it.PropertyName).DbColumnName,
                     PropertyName = it.PropertyName
                 }).ToList();
-                var isPage=saveInterfaceListModel.PageSize;
+                var isPage = saveInterfaceListModel.PageSize;
                 zeroInterfaceList.DataModel!.SelectParameters = saveInterfaceListModel!.Json!.Columns
                   .Select(it => new DataModelSelectParameters()
                   {
-                      AsName = isPage?it.PropertyName :it.DbColumnName,
+                      AsName = isPage ? it.PropertyName : it.DbColumnName,
                       TableIndex = 0,
                       Name = it.PropertyName,
                   }).ToList();
@@ -130,21 +130,22 @@ namespace ReZero.SuperAPI
                                  .Where(it => it.PropertyName == item.Json!.JoinInfo!.ShowField).First();
             var joinField = item.Json!.JoinInfo!.JoinField;
             var materField = item.Json!.JoinInfo!.MasterField;
-            var asName= item.Json!.JoinInfo!.Name;
+            var asName = item.Json!.JoinInfo!.Name;
             var showField = item.Json!.JoinInfo!.ShowField;
             var subQueryable = App.Db.Queryable<object>();
             var builder = subQueryable.QueryBuilder.Builder;
             var subquerySql = subQueryable
                 .Take(1)
                 .AS(tableInfo.DbTableName)
-                .Where($"{builder.GetTranslationColumnName(joinField)}={builder.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName+0)}.{builder.GetTranslationColumnName(materField)}")
-                .Select(SelectModel.Create(new SelectModel() { 
-                  AsName = asName,
-                  FieldName= showField
+                .Where($"{builder.GetTranslationColumnName(joinField)}={builder.GetTranslationColumnName(PubConst.Orm_TableDefaultPreName + 0)}.{builder.GetTranslationColumnName(materField)}")
+                .Select(SelectModel.Create(new SelectModel()
+                {
+                    AsName = asName,
+                    FieldName = showField
                 })).ToSql().Key;
             DataModelSelectParameters addColumnItem = new DataModelSelectParameters()
             {
-                Name = PubConst.Orm_SubqueryKey, 
+                Name = PubConst.Orm_SubqueryKey,
                 SubquerySQL = $"({subquerySql}) AS {builder.GetTranslationColumnName(asName)} ",
                 AsName = asName,
             };
@@ -180,7 +181,7 @@ namespace ReZero.SuperAPI
         {
             return entityInfos.FirstOrDefault(it => it.DbTableName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower() ||
                                                                                  it.ClassName!.ToLower() == item!.Json!.JoinInfo!.JoinTable!.ToLower());
-        } 
+        }
         private static IEnumerable<CommonQueryComplexitycolumn> GetJoinComplexityColumns(CommonQueryComplexitycolumn[] joinColumns)
         {
             return joinColumns!.Where(it => it.Json!.JoinInfo!.JoinType != ColumnJoinType.SubqueryJoin);
@@ -199,7 +200,7 @@ namespace ReZero.SuperAPI
                                                   joinColumns.Any(it => tableNames.Contains(s.ClassName!.ToLower()))
                                           )
                                 .ToList();
-        } 
+        }
         private static bool IsDefaultColums(bool anyColumns, bool anyJoin)
         {
             return !anyJoin && !anyColumns;
