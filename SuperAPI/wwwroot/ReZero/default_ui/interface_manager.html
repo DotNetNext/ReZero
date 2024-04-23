@@ -773,7 +773,7 @@
                     axios.post(url, formData, jwHeader)
                         .then(response => {
                             if (response.data == true) {
-                                tools.alert("添加成功");
+                                tools.alert("保存成功");
                                 btnAddOrUpdateColse.click();
                                 this.error = null;
                                 th.onSearch();

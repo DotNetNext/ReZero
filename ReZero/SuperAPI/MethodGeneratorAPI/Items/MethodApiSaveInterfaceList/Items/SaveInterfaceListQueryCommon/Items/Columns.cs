@@ -65,7 +65,7 @@ namespace ReZero.SuperAPI
                             new JoinParameter()
                             {
                                 FieldOperator=FieldOperatorType.Equal,
-                                LeftIndex=index-1,
+                                LeftIndex=0,
                                 LeftPropertyName=item.Json!.JoinInfo!.MasterField,
                                 RightPropertyName=item.Json!.JoinInfo!.JoinField,
                                 RightIndex=index

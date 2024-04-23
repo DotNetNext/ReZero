@@ -20,6 +20,7 @@ namespace ReZero.SuperAPI
                 zeroInterfaceList.DataModel!.OrderByFixedParemters  =
                     saveInterfaceListModel.Json!.OrderBys
                     .OrderBy(it => it.SortId.ObjToInt())
+                    .Where(it => !string.IsNullOrEmpty(it.OrderByType) )
                     .Select(it => new DataModelOrderParemter()
                     {
                         FieldName = it.Name,

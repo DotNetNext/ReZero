@@ -14,7 +14,7 @@ namespace ReZero.SuperAPI
     public class DataModelOrderParemter
     {
         public string? FieldName { get; set; }
-        public OrderByType OrderByType { get; set; }
+        public OrderByType  OrderByType { get; set; }
         public int TableIndex { get; set; }
     }
 }
