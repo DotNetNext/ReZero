@@ -369,12 +369,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联显示字段 （一般是Name） <span class="red">*</span></label>
-                                <select v-model="copcol_ShowField" name="joinField" class="form-control">
+                                <select v-model="copcol_ShowFields" multiple @change="changeShowField"  name="joinField" class="form-control">
                                     <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
-                                </select>
+                                </select> 
+                                <input class="form-control" readonly="readonly" v-model="copcol_ShowField"  />
                             </div>
                             <div class="form-group">
-                                <label for="example-nf-email">关联显示字段名称（AS 名称）</label>
+                                <label for="example-nf-email">关联显示字段别名（AS 名称）</label>
                                 <input v-model="copcol_Name" name="Name" placeholder="默认：关联显示字段" class="form-control" />
                             </div>
                             <div class="form-group">
@@ -611,7 +612,8 @@
             copcol_joinField: null,
             copcol_SortId: null,
             copcol_Name: null,
-            copcol_ShowField: null
+            copcol_ShowField: null,
+            copcol_ShowFields:[]
         },
         mounted() {
             this.fetchData("");
@@ -883,6 +885,11 @@
                     tools.alert("带*的请填写完整");
                     return;
                 }
+                if (this.copcol_ShowField) {
+                    if (!this.checkCommas(this.copcol_ShowField, this.copcol_Name)) {
+                        return;
+                    }
+                }
                 var asName = (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField);
                 var addItem = {
                     PropertyName:
@@ -908,7 +915,7 @@
                 };
                 if (this.selectedColumns.some(column => column.DbColumnName== asName)) {
 
-                    tools.alert("【关联显示字段】与主表重复，可以设置【关联显示字段名称】来定义显示名");
+                    tools.alert("【关联显示字段】与主表重复，可以设置【关联显示字段别名】来定义显示名");
                     return;
                 }  
 
@@ -1136,6 +1143,7 @@
                 this.copcol_MasterField = null;
                 this.copcol_JoinTable = null;
                 this.copcol_joinType = null;
+                this.copcol_ShowFields = [];
             },
             validateComplexityColumns: function () {
                 if (this.copcol_joinField == null ||
@@ -1144,11 +1152,38 @@
                     this.copcol_MasterField == null ||
                     this.copcol_JoinTable == null) {
                     return false;
-                }
+                } 
                 return true;
             },
             getWhereModel: function () {
                 return { Id: 1, PropertyName: null, WhereType: "Equal", ValueType: 0, Value: null };
+            },
+            checkCommas: function (str1, str2) {
+
+                if (!str2)
+                {
+                    return true;
+                }
+
+                // 计算两个字符串中的逗号数量
+                var commasInStr1 = (str1.match(/,/g) || []).length;
+                if (commasInStr1 == 0)
+                {
+                    return true;
+                }
+                var commasInStr2 = (str2.match(/,/g) || []).length;
+
+                // 比较两个字符串中的逗号数量是否相等
+                if (commasInStr1 === commasInStr2) { 
+                    return true;
+                } else {
+                    tools.alert("【关联显示字段别名】存在多个要用 “,” 分割开，数量要一样。");
+                    return false;
+                }
+            },
+            changeShowField: function ()
+            {
+                this.copcol_ShowField=this.copcol_ShowFields.join(",");
             }
 
         }
