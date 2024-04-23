@@ -877,51 +877,79 @@
                 this.joinColumns = [];
             },
             saveComplexityColumns: function () {
-                if (this.selectColumnsTabIndex != 1) {
-                    tools.alert("开发中..");
-                    return;
-                }
-                if (!this.validateComplexityColumns()) {
-                    tools.alert("带*的请填写完整");
-                    return;
-                }
-                if (this.copcol_ShowField) {
-                    if (!this.checkCommas(this.copcol_ShowField, this.copcol_Name)) {
+                // 封装以 this.copcol_ 开头的属性到 json 对象中  
+                var json = {
+                    ShowField: this.copcol_ShowField,
+                    Name: this.copcol_Name,
+                    joinType: this.copcol_joinType,
+                    JoinTable: this.copcol_JoinTable,
+                    MasterField: this.copcol_MasterField,
+                    joinField: this.copcol_joinField,
+                    SortId: this.copcol_SortId
+                }; 
+                if (json.ShowField) {
+                    if (!this.checkCommas(json.ShowField, json.Name)) {
                         return;
                     }
                 }
-                var asName = (this.copcol_Name ? this.copcol_Name : this.copcol_ShowField);
-                var addItem = {
-                    PropertyName:
-                        document.querySelectorAll('[name=TableId]')[0].value + " " +
-                        this.copcol_joinType + " " +
-                        this.copcol_JoinTable + " ON " +
-                        document.querySelectorAll('[name=TableId]')[0].value + "." + this.copcol_MasterField + "=" +
-                        this.copcol_JoinTable + "." +
-                        this.copcol_joinField + "",
-                    DbColumnName: this.copcol_JoinTable + "." + this.copcol_ShowField + " AS " + asName,
-                    SortId: 1,
-                    Json: { 
-                        JoinInfo: {
-                            MasterField: this.copcol_MasterField,
-                            JoinTable: this.copcol_JoinTable,
-                            JoinType: this.copcol_joinType,
-                            JoinField: this.copcol_joinField,
-                            ShowField: this.copcol_ShowField,
-                            Name: this.copcol_Name,
-                            SortId: this.copcol_SortId
-                        }
+                if (!json.Name)
+                {
+                    json.Name = json.ShowField;
+                }
+                var newJsons = this.splitJsonByTwoKeys(json, "ShowField", "Name");
+                var isOk = true;
+                newJsons.forEach(copcolJson => {
+                    if (!isOk)
+                    {
+                        return;
                     }
-                };
-                if (this.selectedColumns.some(column => column.DbColumnName== asName)) {
+                    if (this.selectColumnsTabIndex != 1) {
+                        tools.alert("开发中..");
+                        isOk = false;
+                        return;
+                    }
 
-                    tools.alert("【关联显示字段】与主表重复，可以设置【关联显示字段别名】来定义显示名");
-                    return;
-                }  
+                    if (!this.validateComplexityColumns(copcolJson)) {
+                        tools.alert("带*的请填写完整");
+                        isOk = false;
+                        return;
+                    } 
 
-                this.selectedComplexityColumns.push(addItem)
-                btnCloseAddComplexityColumns.click();
-                this.clearOrderBy();
+                    var asName = copcolJson.Name || copcolJson.ShowField;
+
+                    var addItem = {
+                        PropertyName:
+                            document.querySelectorAll('[name=TableId]')[0].value + " " +
+                            copcolJson.joinType + " " +
+                            copcolJson.JoinTable + " ON " +
+                            document.querySelectorAll('[name=TableId]')[0].value + "." + copcolJson.MasterField + "=" +
+                            copcolJson.JoinTable + "." +
+                            copcolJson.joinField,
+                        DbColumnName: copcolJson.JoinTable + "." + copcolJson.ShowField + " AS " + asName,
+                        SortId: 1,
+                        Json: {
+                            JoinInfo: {
+                                MasterField: copcolJson.MasterField,
+                                JoinTable: copcolJson.JoinTable,
+                                JoinType: copcolJson.joinType,
+                                JoinField: copcolJson.joinField,
+                                ShowField: copcolJson.ShowField,
+                                Name: copcolJson.Name,
+                                SortId: copcolJson.SortId
+                            }
+                        }
+                    };
+
+                    if (this.selectedColumns.some(column => column.DbColumnName == asName)) {
+                        tools.alert("【关联显示字段】与主表重复，可以设置【关联显示字段别名】来定义显示名");
+                        isOk = false;
+                        return;
+                    }
+
+                    this.selectedComplexityColumns.push(addItem);
+                    btnCloseAddComplexityColumns.click();
+                    this.clearOrderBy();
+                });
             },
             deleteSelectedColumn: function (item) {
                 this.selectedColumns.removeArrayItem(item)
@@ -1184,7 +1212,43 @@
             changeShowField: function ()
             {
                 this.copcol_ShowField=this.copcol_ShowFields.join(",");
-            }
+            },
+            splitJsonByTwoKeys: function (jsonObj, key1, key2) {
+                // 验证输入对象是否有效  
+                if (typeof jsonObj !== 'object' || jsonObj === null) {
+                    throw new Error('Invalid input: jsonObj must be an object.');
+                }
+
+                // 验证key1和key2是否存在于jsonObj中且为字符串类型  
+                if (!(key1 in jsonObj) || typeof jsonObj[key1] !== 'string') {
+                    throw new Error(`Invalid input: ${key1} must be a string property of jsonObj.`);
+                }
+                if (!(key2 in jsonObj) || typeof jsonObj[key2] !== 'string') {
+                    throw new Error(`Invalid input: ${key2} must be a string property of jsonObj.`);
+                }
+
+                // 分割key1和key2对应的值  
+                const values1 = jsonObj[key1].split(',');
+                const values2 = jsonObj[key2].split(',');
+
+                // 验证两个键的值分割后长度是否一致  
+                if (values1.length !== values2.length) {
+                    throw new Error(`The number of elements in ${key1} and ${key2} must be the same.`);
+                }
+
+                // 创建结果数组  
+                const result = [];
+
+                // 遍历分割后的值，构建新的对象并添加到结果数组中  
+                for (let i = 0; i < values1.length; i++) {
+                    const newObj = Object.assign({}, jsonObj); // 复制原始对象  
+                    newObj[key1] = values1[i].trim(); // 替换key1的值  
+                    newObj[key2] = values2[i].trim(); // 替换key2的值  
+                    result.push(newObj);
+                }
+
+                return result;
+            }  
 
         }
     });
