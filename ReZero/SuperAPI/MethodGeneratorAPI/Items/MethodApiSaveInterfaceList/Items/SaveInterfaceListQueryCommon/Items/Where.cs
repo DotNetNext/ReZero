@@ -21,7 +21,7 @@ namespace ReZero.SuperAPI
                 {
                     if (it.PropertyName == null) 
                     {
-                        throw new Exception(TextHandler.GetCommonText("Condition No column name is configured", "条件没有配置列名"));
+                        throw new Exception(TextHandler.GetCommonText("条件没有配置列名", "Condition No column name is configured"));
                     }
                     var type = this.zeroEntityInfo!
                                        .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
