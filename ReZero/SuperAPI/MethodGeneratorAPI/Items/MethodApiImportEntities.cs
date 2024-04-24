@@ -27,10 +27,10 @@ namespace ReZero.SuperAPI
         private  ZeroEntityInfo CreateEntityInfo(SqlSugarClient db, string tableName, List<SqlSugar.DbTableInfo> tableInfos)
         {
             ZeroEntityInfo entityInfo = new ZeroEntityInfo();
-            entityInfo.ClassName= CapitalizeFirstLetter(tableName);
+            entityInfo.ClassName = CapitalizeFirstLetter(tableName);
             entityInfo.DbTableName = tableName;
-            entityInfo.Description= tableInfos.FirstOrDefault(it => it.Name == tableName)?.Description;
-            entityInfo.CreateTime = DateTime.Now; 
+            entityInfo.Description = tableInfos.FirstOrDefault(it => it.Name == tableName)?.Description;
+            entityInfo.CreateTime = DateTime.Now;
             var columns = db.DbMaintenance.GetColumnInfosByTableName(tableName, false);
             var dataTable = db.Queryable<object>().AS(tableName).Where(GetWhereFalse()).ToDataTable();
             var dtColumns = dataTable.Columns.Cast<DataColumn>().ToList();
@@ -41,17 +41,26 @@ namespace ReZero.SuperAPI
                 new ZeroEntityColumnInfo
                 {
                     DbColumnName = c.DbColumnName,
-                    DataType = c.DataType,
-                    PropertyName= CapitalizeFirstLetter(c.DbColumnName),
+                    DataType = GetDataType(c),
+                    PropertyName = CapitalizeFirstLetter(c.DbColumnName),
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(GetType(c, dtc)),
                     IsNullable = c.IsNullable,
                     IsPrimarykey = c.IsPrimarykey,
                     IsIdentity = c.IsIdentity,
                     Description = c.ColumnDescription,
-                    CreateTime=DateTime.Now
+                    CreateTime = DateTime.Now
                 }).ToList();
             entityInfo.ZeroEntityColumnInfos = joinedColumns;
             return entityInfo;
+        }
+
+        private string GetDataType(SqlSugar.DbColumnInfo c)
+        {
+            if (!string.IsNullOrEmpty(c.OracleDataType)) 
+            {
+                return c.OracleDataType;
+            }
+            return c.DataType;
         }
 
         private static Type GetType(SqlSugar.DbColumnInfo c, DataColumn dtc)
