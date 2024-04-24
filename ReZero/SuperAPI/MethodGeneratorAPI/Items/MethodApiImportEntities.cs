@@ -41,7 +41,7 @@ namespace ReZero.SuperAPI
                 new ZeroEntityColumnInfo
                 {
                     DbColumnName = c.DbColumnName,
-                    DataType = GetDataType(c),
+                    DataType = GetDataType(db.CurrentConnectionConfig.DbType,c),
                     PropertyName = CapitalizeFirstLetter(c.DbColumnName),
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(GetType(c, dtc)),
                     IsNullable = c.IsNullable,
@@ -54,9 +54,9 @@ namespace ReZero.SuperAPI
             return entityInfo;
         }
 
-        private string GetDataType(SqlSugar.DbColumnInfo c)
+        private string GetDataType(SqlSugar.DbType dbType, SqlSugar.DbColumnInfo c)
         {
-            if (!string.IsNullOrEmpty(c.OracleDataType)) 
+            if (dbType==SqlSugar.DbType.Oracle&&!string.IsNullOrEmpty(c.OracleDataType)) 
             {
                 return c.OracleDataType;
             }
