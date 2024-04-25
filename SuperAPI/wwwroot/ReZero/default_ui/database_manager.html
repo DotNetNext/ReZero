@@ -11,13 +11,16 @@
                     <div class="col-md-3">
                         <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
                         <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close" type="submit">清空</button>
-                        <button @click="openAddDiv()" class="btn  btn-primary m-l-15" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus"></i> 新增</button>
-                    </div> 
+                    </div>
                     <div class="col-md-4"></div>
                 </div>
             </div>
         </form>
 
+        <div class="toolbar-btn-action">
+            <button @click="openAddDiv()" class="btn  btn-primary m-r-5" data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus"></i> 新增</button>
+            <button @click="openSynchronousDataDiv()" class="btn btn-success m-r-5" data-toggle="modal" data-target="#btnSynchronousData"><i class="mdi mdi-redo-variant"></i> 同步接口</button>
+        </div>
     </div>
     <div class="card-body">
 
@@ -38,10 +41,10 @@
                         </td>
 
                         <td class="table_opt3">
-                            <button data-toggle="modal" @click="testDatabase(item)"  class="btn btn-link" type="button">
+                            <button data-toggle="modal" @click="testDatabase(item)" class="btn btn-link" type="button">
                                 <i class="mdi mdi-test-tube"></i> 测试
                             </button>
-                            <button data-toggle="modal" @click="createDatabase(item)"   class="btn btn-link" type="button">
+                            <button data-toggle="modal" @click="createDatabase(item)" class="btn btn-link" type="button">
                                 <i class="mdi mdi-cube"></i> 建库
                             </button>
                             <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-link" type="button">
@@ -91,18 +94,71 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="btnSynchronousData" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">同步数据</h4>
+                </div> 
+
+                <div class="card-body">
+                    <p class="alert alert-success">
+                        注意：这儿只同步四张配置表，业务表需要在【菜单：实体表维护】选实体点同步<br />
+                        1、接口数据 : [zero_interface_list]
+                        [zero_interface_category]<br />
+                        2、实体数据 : [zero_entity_info]
+                        [zero_entity_column_info]
+                    </p>
+                    <form class="form-horizontal">
+                        <div class="form-group has-success">
+                            <label class="col-xs-12 text-align-left" for="example-text-input-success">基准库</label>
+                            <div class="col-xs-12">
+                                <select class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
+                                    <option v-for="item in dataAll">{{item.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group has-success">
+                            <label class="col-xs-12  text-align-left" for="example-text-input-success">更新库</label>
+                            <div class="col-xs-12">
+                                <select class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
+                                    <option  v-for="item in dataAll">{{item.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group has-success">
+                            <label class="col-xs-12  text-align-left" for="example-text-input-success">备份表</label>
+                            <div class="col-xs-12">
+                                <label class="lyear-checkbox checkbox-primary text-align-left">
+                                    <input name="rules[]" type="checkbox" class="checkbox-parent checkbox-child" checked="checked" dataid="id-1-6" value="6">
+                                    <span class="m-l-15"> 表名+随机字符</span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="synchronousData" class="btn btn-primary">同步</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var vueObj = new Vue({
         el: '#apibox',
         data: {
             data: null,
+            dataAll:null,
             error: null,
             addTitle: "添加数据库配置",
             editTitle: "修改数据库配置",
-            title:"",
-            dbTypeList:[],
+            title: "",
+            dbTypeList: [],
             formData: {
 
             }
@@ -126,8 +182,17 @@
 
                 axios.get("/PrivateReZeroRoute/100004/GetDbTypeList", jwHeader)
                     .then(response => {
-                        this.dbTypeList = response.data; 
+                        this.dbTypeList = response.data;
                         this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList", jwHeader)
+                    .then(response => {
+                        this.dataAll = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -148,8 +213,7 @@
                     var url = "/PrivateReZeroRoute/100003/DeleteDataBaseInfo?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url, jwHeader)
                         .then(response => {
-                            if (response.data.message)
-                            {
+                            if (response.data.message) {
                                 tools.alert(response.data.message);
                             }
                             this.error = null;
@@ -166,8 +230,7 @@
             },
             openEditDiv: function (item) {
                 var urlById = "/PrivateReZeroRoute/100003/GetDataBaseInfoById?id=" + item.Id;
-                if (item.Id)
-                { 
+                if (item.Id) {
                     this.title = this.editTitle;
                     axios.get(urlById, jwHeader)
                         .then(response => {
@@ -177,7 +240,7 @@
                             this.error = error.message;
                             this.data = null;
                         });
-                } 
+                }
             },
             openAddDiv: function (item) {
                 this.formData = {};
@@ -189,7 +252,7 @@
                 var json = this.formData;
                 var url = json.Id ?
                     "/PrivateReZeroRoute/100003/UpdateDatabaseInfo" :
-                    "/PrivateReZeroRoute/100003/AddDatabaseInfo"; 
+                    "/PrivateReZeroRoute/100003/AddDatabaseInfo";
                 this.addOrUpdateSubmit(url, json);
             },
             addOrUpdateSubmit: function (url, json) {
@@ -211,27 +274,39 @@
                         this.data = null;
                     });
             },
-            testDatabase: function (item)
-            {
+            testDatabase: function (item) {
                 axios.post("/PrivateReZeroRoute/100003/TestDatabaseInfo", { Id: item.Id }, jwHeader)
                     .then(response => {
                         this.error = null;
-                        tools.alert(response.data+"");
+                        tools.alert(response.data + "");
                     })
                     .catch(error => {
                         this.error = error.message;
-                       
+
                     });
             },
-            createDatabase: function (item)
-            {
+            createDatabase: function (item) {
                 axios.post("/PrivateReZeroRoute/100003/CreateDatabaseInfo", { Connection: item.Connection, DbType: item.DbType }, jwHeader)
                     .then(response => {
                         this.error = null;
-                        tools.alert(response.data+"");
+                        tools.alert(response.data + "");
                     })
                     .catch(error => {
-                        this.error = error.message; 
+                        this.error = error.message;
+                    });
+            },
+            openSynchronousDataDiv: function () {
+            },
+            synchronousData: function () {
+                alert("开发中");
+                return;
+                axios.get("/PrivateReZeroRoute/100003/SynchronousDatabaseInfo", jwHeader)
+                    .then(response => {
+                        this.error = null;
+                        tools.alert(response.data + "");
+                    })
+                    .catch(error => {
+                        this.error = error.message;
                     });
             }
         }

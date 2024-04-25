@@ -52,3 +52,6 @@
 .mi-w-100 {
   min-width:100px !important;
 }
+.text-align-left {
+ text-align:left !important
+}
