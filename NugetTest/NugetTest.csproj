@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
 <ItemGroup>  
@@ -274,7 +274,7 @@
   
 
   <ItemGroup>
-    <PackageReference Include="Rezero.Api" Version="1.0.27" />
+    <PackageReference Include="Rezero.Api" Version="1.0.30" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
  

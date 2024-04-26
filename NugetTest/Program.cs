@@ -19,7 +19,11 @@ builder.Services.AddReZeroServices(api =>
     //∆Ù”√≥¨º∂API
     api.EnableSuperApi(new SuperAPIOptions()
     {
-        UiOptions = new UiOptions { DefaultIndexSource="/index.html" }
+       
+        UiOptions = new UiOptions { 
+            DefaultIndexSource= "/rezero/dynamic_interface.html?InterfaceCategoryId=200100",
+             ShowNativeApiDocument = false
+        }
     });
 
 });
