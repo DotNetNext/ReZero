@@ -1,5 +1,5 @@
 # 加群交流
-qq群号：878157334  
+qq群号：472534707
 
 # 一、功能说明
 是一款.NET中间件,让你无需写任何代码也能实现CRUD，也可以发布成exe独立使用于非.NET用户
@@ -16,7 +16,7 @@ Sqlite 、 MySql 、 SqlServer 、 PgSQL 、Oracle 、人大金仓（默认模�
  
 # 三、非.NET用户教程
 通过下载EXE运行
-https://gitee.com/sunkaixuan/ReZero/releases/tag/1.0.0.16
+https://gitee.com/DotNetNext/ReZero/releases
 
 
 # 四、.NET用户教程
