@@ -13,6 +13,10 @@ namespace ReZero.SuperAPI
             _targetDb = targetDb;
             var odb = App.Db;
             var tdb = App.GetDbById(targetDb);
+            if (!tdb!.Ado.IsValidConnection()) 
+            {
+                new Exception(TextHandler.GetCommonText("目标数据库连接失败", "The target database connection failed"));
+            }
             tdb!.CurrentConnectionConfig.MoreSettings=odb.CurrentConnectionConfig.MoreSettings;
             tdb!.CurrentConnectionConfig.ConfigureExternalServices = odb.CurrentConnectionConfig.ConfigureExternalServices;
             try
