@@ -101,7 +101,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title">同步数据</h4>
-                </div> 
+                </div>
 
                 <div class="card-body">
                     <p class="alert alert-success">
@@ -132,7 +132,7 @@
                             <label class="col-xs-12  text-align-left" for="example-text-input-success">备份表</label>
                             <div class="col-xs-12">
                                 <label class="lyear-checkbox checkbox-primary text-align-left">
-                                    <input  v-model="od_isbak"  type="checkbox" class="checkbox-parent checkbox-child"  dataid="id-1-6" value="true">
+                                    <input v-model="od_isbak" type="checkbox" class="checkbox-parent checkbox-child" dataid="id-1-6" value="true">
                                     <span class="m-l-15"> 表名+时间HHmmss</span>
                                 </label>
                             </div>
@@ -153,7 +153,7 @@
         el: '#apibox',
         data: {
             data: null,
-            dataAll:null,
+            dataAll: null,
             error: null,
             addTitle: "添加数据库配置",
             editTitle: "修改数据库配置",
@@ -164,7 +164,8 @@
             },
             od_isbak: false,
             od_originaldb: null,
-            od_targetdb:null
+            od_targetdb: null,
+            lock: false
         },
         mounted() {
             this.fetchData("");
@@ -301,28 +302,37 @@
             openSynchronousDataDiv: function () {
             },
             synchronousData: function () {
-                if (!this.od_originaldb)
-                {
-                    tools.alert("请选择基准库");  
+                if (!this.od_originaldb) {
+                    tools.alert("请选择基准库");
                     return;
                 }
                 if (!this.od_targetdb) {
                     tools.alert("请选择更新库");
                     return;
-                } 
+                }
                 if (this.od_targetdb == this.od_originaldb) {
                     tools.alert("相同库不需要同步");
                     return;
-                } 
-                axios.post("/PrivateReZeroRoute/100003/SynchronousData",  
+                }
+                if (this.lock == true)
+                {
+                    return;
+                }
+                this.lock = true;
+                axios.post("/PrivateReZeroRoute/100003/SynchronousData",
                     {
                         OriginalDb: this.od_originaldb,
                         TargetDb: this.od_targetdb,
                         IsBak: this.od_isbak
                     }, jwHeader)
                     .then(response => {
+                        this.lock = false;
                         this.error = null;
-                        tools.alert(response.data + "");
+                        if (response.data == true) {
+                            tools.alert("同步成功");
+                        } else {
+                            tools.alert(response.data.message);
+                        }
                     })
                     .catch(error => {
                         this.error = error.message;
