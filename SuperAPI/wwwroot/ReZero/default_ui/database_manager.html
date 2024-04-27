@@ -115,7 +115,7 @@
                         <div class="form-group has-success">
                             <label class="col-xs-12 text-align-left" for="example-text-input-success">基准库</label>
                             <div class="col-xs-12">
-                                <select class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
+                                <select v-model="od_originaldb" class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
                                     <option v-for="item in dataAll">{{item.Name}}</option>
                                 </select>
                             </div>
@@ -123,7 +123,7 @@
                         <div class="form-group has-success">
                             <label class="col-xs-12  text-align-left" for="example-text-input-success">更新库</label>
                             <div class="col-xs-12">
-                                <select class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
+                                <select v-model="od_targetdb" class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
                                     <option  v-for="item in dataAll">{{item.Name}}</option>
                                 </select>
                             </div>
@@ -132,7 +132,7 @@
                             <label class="col-xs-12  text-align-left" for="example-text-input-success">备份表</label>
                             <div class="col-xs-12">
                                 <label class="lyear-checkbox checkbox-primary text-align-left">
-                                    <input name="rules[]" type="checkbox" class="checkbox-parent checkbox-child" checked="checked" dataid="id-1-6" value="6">
+                                    <input  v-model="od_isbak"  type="checkbox" class="checkbox-parent checkbox-child"  dataid="id-1-6" value="true">
                                     <span class="m-l-15"> 表名+随机字符</span>
                                 </label>
                             </div>
@@ -161,7 +161,10 @@
             dbTypeList: [],
             formData: {
 
-            }
+            },
+            od_isbak: true,
+            od_originaldb: null,
+            od_targetdb:null
         },
         mounted() {
             this.fetchData("");
@@ -298,9 +301,25 @@
             openSynchronousDataDiv: function () {
             },
             synchronousData: function () {
-                alert("开发中");
-                return;
-                axios.get("/PrivateReZeroRoute/100003/SynchronousDatabaseInfo", jwHeader)
+                if (!this.od_originaldb)
+                {
+                    tools.alert("请选择基准库");  
+                    return;
+                }
+                if (!this.od_targetdb) {
+                    tools.alert("请选择更新库");
+                    return;
+                } 
+                if (this.od_targetdb == this.od_originaldb) {
+                    tools.alert("相同库不需要同步");
+                    return;
+                } 
+                axios.post("/PrivateReZeroRoute/100003/SynchronousDatabaseInfo",  
+                    {
+                        OriginalDb: od_originaldb,
+                        TargetDb: od_targetdb,
+                        IsBak: od_isbak
+                    }, jwHeader)
                     .then(response => {
                         this.error = null;
                         tools.alert(response.data + "");
