@@ -14,6 +14,10 @@ namespace ReZero.SuperAPI
             var tdb = App.GetDbById(targetDb);
             try
             {
+                odb!.CodeFirst.InitTables(typeof(ZeroEntityInfo), 
+                                           typeof(ZeroEntityColumnInfo), 
+                                           typeof(ZeroInterfaceCategory), 
+                                           typeof(ZeroInterfaceList));
                 tdb!.BeginTran(); 
                 var randomNum = +PubConst.Common_Random.Next(1, 999999);
                 SynchronousTable<ZeroEntityInfo>(odb, tdb, isBak, randomNum);
