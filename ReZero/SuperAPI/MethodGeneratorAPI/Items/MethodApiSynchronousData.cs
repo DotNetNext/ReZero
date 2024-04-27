@@ -24,7 +24,7 @@ namespace ReZero.SuperAPI
                                            typeof(ZeroDatabaseInfo),
                                            typeof(ZeroUserInfo));
                 tdb!.BeginTran();
-                var randomNum = +PubConst.Common_Random.Next(1, 999999);
+                var randomNum =Convert.ToInt32( DateTime.Now.ToString("HHmmss"));
                 SynchronousTable<ZeroEntityInfo>(odb, tdb, isBak, randomNum);
                 SynchronousTable<ZeroEntityColumnInfo>(odb, tdb, isBak, randomNum);
                 SynchronousTable<ZeroInterfaceCategory>(odb, tdb, isBak, randomNum);
@@ -55,13 +55,15 @@ namespace ReZero.SuperAPI
         {
 
             var tTableName = tdb!.EntityMaintenance.GetTableName<T>();
-            var newtTableName = tTableName + randomNum;
+            var newtTableName = tTableName.ToLower().Replace("zero_","_bak_") + randomNum;
+            var oldList = odb!.Queryable<T>().ToList();
             if (isBak == true)
             {
-                tdb!.DbMaintenance.BackupTable(tTableName, newtTableName);
+                tdb!.CodeFirst.As<T>(newtTableName).InitTables<T>();
+                tdb.DbMaintenance.TruncateTable(newtTableName);
+                tdb.Insertable(oldList).AS(newtTableName).ExecuteCommand();
             }
-            tdb.DbMaintenance.TruncateTable<T>();
-            var oldList = odb!.Queryable<T>().ToList();
+            tdb.DbMaintenance.TruncateTable<T>(); 
             tdb.Insertable(oldList).ExecuteCommand();
         }
     }
