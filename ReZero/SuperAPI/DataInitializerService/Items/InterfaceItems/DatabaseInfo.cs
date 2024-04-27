@@ -26,8 +26,41 @@ namespace ReZero.SuperAPI
             TestDatabaseInfo();
 
             CreateDatabaseInfo();
-        }
 
+            SynchronousData();
+        }
+        private void SynchronousData()
+        {
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = SynchronousDataId;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(SynchronousDataId);
+                it.Url = GetUrl(it, "SynchronousData");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 3,
+                        ArgsTypes = new Type[] { typeof(long), typeof(long),typeof(bool) },
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.SynchronousData)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="originalDb",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("基准数据库", "Original db") },
+                        new DataModelDefaultParameter() { Name ="targetDb",   FieldOperator=FieldOperatorType.Equal,  ValueType =typeof(long).Name,  Description = TextHandler.GetCommonText("更新数据库", "Target db") },
+                        new DataModelDefaultParameter() { Name ="isBak",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,  Description = TextHandler.GetCommonText("是否备份", "Is bak") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
         private void CreateDatabaseInfo()
         {
             //创建数据库

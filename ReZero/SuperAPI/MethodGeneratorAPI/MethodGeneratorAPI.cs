@@ -78,7 +78,14 @@ namespace ReZero.SuperAPI
                         value = JsonConvert.DeserializeObject(value + "", type);
                     }
                 }
-                value = UtilMethods.ChangeType2(value, p.ParameterType);
+                try
+                {
+                    value = UtilMethods.ChangeType2(value, p.ParameterType);
+                }
+                catch (Exception)
+                {
+                    throw new Exception(TextHandler.GetCommonText(p.Name+"参数类型不匹配 "+value, p.Name + " Parameter type does not match " + value));
+                }
                 parameters[p.Position] = value!;
                 index++;
             });

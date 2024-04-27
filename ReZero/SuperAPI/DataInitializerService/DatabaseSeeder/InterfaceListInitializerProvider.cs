@@ -228,6 +228,11 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Get where type list ")]
         public const long GetWhereTypeListId = 38;
 
+
+        [ChineseTextAttribute("同步数据")]
+        [EnglishTextAttribute("Synchronous Data")]
+        public const long SynchronousDataId = 39;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

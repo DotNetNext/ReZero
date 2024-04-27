@@ -116,7 +116,7 @@
                             <label class="col-xs-12 text-align-left" for="example-text-input-success">基准库</label>
                             <div class="col-xs-12">
                                 <select v-model="od_originaldb" class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
-                                    <option v-for="item in dataAll">{{item.Name}}</option>
+                                    <option :value="item.Id" v-for="item in dataAll">{{item.Name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                             <label class="col-xs-12  text-align-left" for="example-text-input-success">更新库</label>
                             <div class="col-xs-12">
                                 <select v-model="od_targetdb" class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
-                                    <option  v-for="item in dataAll">{{item.Name}}</option>
+                                    <option :value="item.Id" v-for="item in dataAll">{{item.Name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -314,11 +314,11 @@
                     tools.alert("相同库不需要同步");
                     return;
                 } 
-                axios.post("/PrivateReZeroRoute/100003/SynchronousDatabaseInfo",  
+                axios.post("/PrivateReZeroRoute/100003/SynchronousData",  
                     {
-                        OriginalDb: od_originaldb,
-                        TargetDb: od_targetdb,
-                        IsBak: od_isbak
+                        OriginalDb: this.od_originaldb,
+                        TargetDb: this.od_targetdb,
+                        IsBak: this.od_isbak
                     }, jwHeader)
                     .then(response => {
                         this.error = null;
