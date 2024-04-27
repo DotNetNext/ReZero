@@ -116,7 +116,7 @@
                             <label class="col-xs-12 text-align-left" for="example-text-input-success">基准库</label>
                             <div class="col-xs-12">
                                 <select v-model="od_originaldb" class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
-                                    <option :value="item.Id" v-for="item in dataAll">{{item.Name}}</option>
+                                    <option value="1">启动库Rezro</option>
                                 </select>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                             <label class="col-xs-12  text-align-left" for="example-text-input-success">更新库</label>
                             <div class="col-xs-12">
                                 <select v-model="od_targetdb" class="form-control" type="text" id="example-text-input-success" name="example-text-input-success" placeholder="成功状态..">
-                                    <option :value="item.Id" v-for="item in dataAll">{{item.Name}}</option>
+                                    <option :value="item.Id" v-if="item.Id!=1" v-for="item in dataAll">{{item.Name}}</option>
                                 </select>
                             </div>
                         </div>
