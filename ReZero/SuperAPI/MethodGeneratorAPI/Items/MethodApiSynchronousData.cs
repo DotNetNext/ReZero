@@ -2,42 +2,54 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
-        public bool SynchronousData(long originalDb, long targetDb, bool? isBak) 
+        private long _targetDb;
+        public bool SynchronousData(long originalDb, long targetDb, bool? isBak)
         {
-            var odb=App.GetDbById(originalDb);
+            _targetDb = targetDb;
+            var odb = App.GetDbById(originalDb);
             var tdb = App.GetDbById(targetDb);
-            SynchronousTable<ZeroEntityInfo>(odb, tdb,isBak);
-            SynchronousTable<ZeroEntityColumnInfo>(odb, tdb, isBak);
-            SynchronousTable<ZeroInterfaceCategory>(odb, tdb, isBak);
-            SynchronousTable<ZeroInterfaceList>(odb, tdb, isBak);
-            return true;
-        }
-
-        private void SynchronousTable<T>(SqlSugar.SqlSugarClient? odb, SqlSugar.SqlSugarClient? tdb, bool? isBak)
-        {
-            var tTableName = tdb!.EntityMaintenance.GetTableName<T>();
-            var newtTableName= tTableName + PubConst.Common_Random.Next(1,999999);
-            if (isBak==true)
-            {
-                tdb!.DbMaintenance.BackupTable(tTableName, newtTableName);
-            }
             try
             {
-                tdb.BeginTran();
-                tdb.DbMaintenance.TruncateTable<T>();
-                var oldList = odb!.Queryable<T>().ToList();
-                tdb.Insertable(oldList).ExecuteCommand();
+                tdb!.BeginTran(); 
+                var randomNum = +PubConst.Common_Random.Next(1, 999999);
+                SynchronousTable<ZeroEntityInfo>(odb, tdb, isBak, randomNum);
+                SynchronousTable<ZeroEntityColumnInfo>(odb, tdb, isBak, randomNum);
+                SynchronousTable<ZeroInterfaceCategory>(odb, tdb, isBak, randomNum);
+                SynchronousTable<ZeroInterfaceList>(odb, tdb, isBak, randomNum);
                 tdb.CommitTran();
             }
             catch (Exception)
             {
-                tdb.CommitTran();
+                tdb!.CommitTran();
                 throw;
             }
+            return true;
+        }
+
+        private void SynchronousTable<T>(SqlSugar.SqlSugarClient? odb, SqlSugar.SqlSugarClient? tdb, bool? isBak, int randomNum)
+        {
+           
+            var tTableName = tdb!.EntityMaintenance.GetTableName<T>();
+            var newtTableName = tTableName + randomNum;
+            if (isBak == true)
+            {
+                tdb!.DbMaintenance.BackupTable(tTableName, newtTableName);
+            } 
+            tdb.DbMaintenance.TruncateTable<T>();
+            var oldList = odb!.Queryable<T>().ToList();
+            if (typeof(T) == typeof(ZeroEntityInfo))
+            {
+                foreach (var item in oldList as List<ZeroEntityInfo>??new List<ZeroEntityInfo>())
+                { 
+                    item.DataBaseId = _targetDb;
+                }
+            }
+            tdb.Insertable(oldList).ExecuteCommand();
+
         }
     }
 }
