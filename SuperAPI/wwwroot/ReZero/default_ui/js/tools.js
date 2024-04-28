@@ -91,7 +91,15 @@
                 console.warn(`Property '${key}' does not exist in the target object.`);
             }
         });  
-}
+    },
+    openLoading: function () {
+        var loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.style.display = 'flex';
+    },
+    closeLoading: function () {
+        var loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.style.display = 'none';
+    }
 }
 Array.prototype.removeArrayItem = function (item) {
     const index = this.indexOf(item);
@@ -99,4 +107,24 @@ Array.prototype.removeArrayItem = function (item) {
         this.splice(index, 1);
     }
     return this;
-};  
+};
+setTimeout(function () {
+    // 设置请求拦截器  
+    axios.interceptors.request.use(function (config) {
+        tools.openLoading();
+        return config;
+    }, function (error) {
+        // 对请求错误做些什么  
+        return Promise.reject(error);
+    });
+
+    // 设置响应拦截器  
+    axios.interceptors.response.use(function (response) {
+        tools.closeLoading();
+        return response;
+    }, function (error) {
+        // 对响应错误做点什么  
+        return Promise.reject(error);
+    });  
+
+},2000)

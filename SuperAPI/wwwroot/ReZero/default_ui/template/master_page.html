@@ -21,14 +21,14 @@
             headers: {
                 "Authorization": 'Bearer ' + localStorage.getItem('@@authorizationLocalStorageName') 
             }
-        }
+        } 
     </script>
 </head> 
 <body data-theme="default">
     <div class="lyear-layout-web">
         <div class="lyear-layout-container">
             <!--左侧导航-->
-            <aside class="lyear-layout-sidebar"> 
+            <aside class="lyear-layout-sidebar">
                 <!-- logo -->
                 <div id="logo" class="sidebar-header">
                     <a href="index.html"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
@@ -39,8 +39,8 @@
                         <ul class="nav nav-drawer">
                             @@left-menu
                         </ul>
-                    </nav> 
-                </div> 
+                    </nav>
+                </div>
             </aside>
             <!--End 左侧导航-->
             <!--头部信息-->
@@ -132,6 +132,13 @@
                     <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="loadingOverlay">
+        <div id="loadingMessage">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
         </div>
     </div>
 </body>
