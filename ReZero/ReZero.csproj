@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>1.0.32</AssemblyVersion>
-    <Version>1.0.32</Version>
+    <AssemblyVersion>1.0.33</AssemblyVersion>
+    <Version>1.0.33</Version>
   </PropertyGroup>
 
   <ItemGroup>
