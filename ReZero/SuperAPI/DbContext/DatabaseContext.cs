@@ -23,7 +23,11 @@ namespace ReZero.SuperAPI
             {
                 DbType = rezeroConnectionConfig.DbType,
                 ConnectionString = rezeroConnectionConfig.ConnectionString,
-                IsAutoCloseConnection = true
+                IsAutoCloseConnection = true,
+                MoreSettings=new ConnMoreSettings() 
+                {
+                    SqlServerCodeFirstNvarchar=true
+                }
             };
 
             InitializeExternalServices(connectionConfig);
