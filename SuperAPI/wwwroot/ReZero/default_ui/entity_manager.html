@@ -160,10 +160,10 @@
                                     <th>列名</th>
                                     <th width="200">C#类型</th>
                                     <th>备注</th>
-                                    <th>可空</th>
-                                    <th>主键</th>
-                                    <th>自增</th>
-                                    <th width="200"></th>
+                                    <th width="50">可空</th>
+                                    <th width="50">主键</th>
+                                    <th width="50">自增</th>
+                                    <th width="250"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -192,6 +192,8 @@
                                     <td>
                                         <span @click="pushColumns(item)" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
                                         <span @click="removeColumns(index)" class="pointer"><i class="mdi  mdi-window-close"></i>删除</span>
+                                        <span @click="move(index,true)" class="pointer"><i class="mdi  mdi-arrow-up"></i>上移</span>
+                                        <span @click="move(index,false)" class="pointer"><i class="mdi mdi-arrow-down"></i>下移</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -531,6 +533,25 @@
             classNameInput: function ()
             {
                 this.formData.DbTableName = this.formData.ClassName;
+            },
+            move: function (index, tyep)
+            {
+               if (tyep) {
+                    if (index == 0) {
+                        return;
+                    }
+                    var temp = this.columns[index];
+                    this.columns.splice(index, 1);
+                    this.columns.splice(index - 1, 0, temp);
+                }
+                else {
+                    if (index == this.columns.length - 1) {
+                        return;
+                    }
+                    var temp = this.columns[index];
+                    this.columns.splice(index, 1);
+                    this.columns.splice(index + 1, 0, temp);
+                }
             }
         }
     });
