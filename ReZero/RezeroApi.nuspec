@@ -11,7 +11,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description> 从零开始 </description>
 		<copyright>Copyright 2016</copyright>
-		<tags>rezero 零 低代码 zero</tags>
+		<tags>rezero api 包含UI </tags>
 		<dependencies> 
 			<dependency id="Rezero" version="1.0.34" />
 		</dependencies>

@@ -11,7 +11,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description> 从零开始 </description>
 		<copyright>Copyright 2016</copyright>
-		<tags>rezero 零 低代码 zero</tags>
+		<tags>rezero 核心库 不包含UI</tags>
 		<dependencies>
 			<dependency id="SqlSugarCore" version="5.1.4.152" />
 		</dependencies> 
