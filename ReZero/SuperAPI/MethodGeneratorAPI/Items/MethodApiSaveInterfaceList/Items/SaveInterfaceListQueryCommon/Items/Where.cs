@@ -85,14 +85,14 @@ namespace ReZero.SuperAPI
             zeroInterfaceList!.DataModel!.MergeDefaultParameters!.Add(item);
         }
 
-        private static void InitItem(ZeroInterfaceList zeroInterfaceList)
+        private  void InitItem(ZeroInterfaceList zeroInterfaceList)
         {
             if (zeroInterfaceList.DataModel!.MergeDefaultParameters == null)
             {
                 zeroInterfaceList.DataModel!.MergeDefaultParameters = new List<DataModelDefaultParameter>();
             }
         } 
-        private static bool IsMergeWhere(CommonQueryWhere it)
+        private  bool IsMergeWhere(CommonQueryWhere it)
         {
             return it.PropertyName!.Contains(" AS ") && it.PropertyName.Contains(".");
         }
