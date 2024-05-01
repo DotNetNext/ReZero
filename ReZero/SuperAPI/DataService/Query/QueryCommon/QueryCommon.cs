@@ -25,7 +25,7 @@ namespace ReZero.SuperAPI
                 var queryObject = _sqlSugarClient.QueryableByObject(type, PubConst.Orm_TableDefaultMasterTableShortName);
                 queryObject = Join(type, dataModel, queryObject);
                 queryObject = Where(type, dataModel, queryObject);
-                queryObject = OrderBy(type, dataModel, queryObject);
+                queryObject = OrderBySelectBefore(type, dataModel, queryObject);
                 queryObject = GroupBy(type, dataModel, queryObject);
                 queryObject = Select(type, dataModel, queryObject); 
                 queryObject = MergeTable(type,dataModel,queryObject);

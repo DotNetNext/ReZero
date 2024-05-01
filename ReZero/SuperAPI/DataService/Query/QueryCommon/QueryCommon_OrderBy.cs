@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private QueryMethodInfo OrderBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
+        private QueryMethodInfo OrderBySelectBefore(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (IsMergeTable(dataModel))
             {
@@ -63,7 +63,7 @@ namespace ReZero.SuperAPI
             queryObject = queryObject.OrderBy(orderByModels);
             return queryObject;
         }
-        private QueryMethodInfo OrderBy2(Type type, DataModel dataModel, QueryMethodInfo queryObject)
+        private QueryMethodInfo OrderBySelectAfter(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (!IsMergeTable(dataModel))
             {
