@@ -18,7 +18,9 @@ namespace ReZero.SuperAPI
 
         public List<DataModelDynamicOrderParemter>? OrderDynamicParemters { get; set; }
         public List<DataModelOrderParemter>? OrderByFixedParemters  { get; set; }
+        public List<DataModelOrderParemter>? MergeOrderByFixedParemters { get; set; }
         public List<DataModelDefaultParameter>? DefaultParameters { get; set; }
+        public List<DataModelDefaultParameter>? MergeDefaultParameters { get; set; }
         public DataModelPageParameter? CommonPage { get; set; }
         public DataModelTreeParameter? TreeParameter { get; set; }
         public List<DataModelJoinParameters>? JoinParameters { get; set; }

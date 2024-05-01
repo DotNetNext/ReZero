@@ -19,32 +19,71 @@ namespace ReZero.SuperAPI
                 zeroInterfaceList.DataModel.WhereRelationTemplate = json.WhereRelationTemplate; 
                 foreach (var it in json.Where??new CommonQueryWhere[] { })
                 {
-                    if (it.PropertyName == null) 
+                    if (it.PropertyName == null)
                     {
                         throw new Exception(TextHandler.GetCommonText("条件没有配置列名", "Condition No column name is configured"));
                     }
-                    var type = this.zeroEntityInfo!
-                                       .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
-                    zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
+                    if (IsMergeWhere(it))
                     {
-                        Id=it.Id, 
-                        Name = it.PropertyName, 
-                        ValueType= EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
-                        Value = it.ValueType == WhereValueType.Value ? it.Value:null,
-                        FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
-                        DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
-                        Description = json.Columns.FirstOrDefault(s=>s.PropertyName==it.PropertyName)?.DbColumnName,
-                        ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
-                    });
-                    var currentParameter=zeroInterfaceList.DataModel!.DefaultParameters.Last();
-                    if (it.ValueType == WhereValueType.ClaimKey) 
-                    {
-                       currentParameter.Value = it.Value;
-                       currentParameter.ValueType =PubConst.Orm_WhereValueTypeClaimKey;                      
-                       currentParameter.ValueIsReadOnly = true;
+                        AddMergeWhereItem(zeroInterfaceList, it, json);
                     }
+                    else
+                    {
+                        AddDefaultWhere(zeroInterfaceList, json, it);
+                    } 
                 }
             }
+        }
+
+        private void AddDefaultWhere(ZeroInterfaceList zeroInterfaceList, CommonConfig json, CommonQueryWhere it)
+        {
+            var type = this.zeroEntityInfo!
+                               .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
+            zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
+            {
+                Id = it.Id,
+                Name = it.PropertyName,
+                ValueType = EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
+                Value = it.ValueType == WhereValueType.Value ? it.Value : null,
+                FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
+                DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
+                Description = json.Columns.FirstOrDefault(s => s.PropertyName == it.PropertyName)?.DbColumnName,
+                ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
+            });
+            var currentParameter = zeroInterfaceList.DataModel!.DefaultParameters.Last();
+            if (it.ValueType == WhereValueType.ClaimKey)
+            {
+                currentParameter.Value = it.Value;
+                currentParameter.ValueType = PubConst.Orm_WhereValueTypeClaimKey;
+                currentParameter.ValueIsReadOnly = true;
+            }
+        }
+
+        private void AddMergeWhereItem(ZeroInterfaceList zeroInterfaceList, CommonQueryWhere it, CommonConfig json)
+        {
+            if (zeroInterfaceList.DataModel!.MergeDefaultParameters == null)
+            {
+                zeroInterfaceList.DataModel!.MergeDefaultParameters = new List<DataModelDefaultParameter>();
+            }
+            var type = this.zeroEntityInfo!
+                   .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
+            zeroInterfaceList.DataModel.MergeDefaultParameters.Add
+                (new DataModelDefaultParameter()
+                {
+                    Id = it.Id,
+                    Name = it.PropertyName,
+                    ValueType = EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
+                    Value = it.ValueType == WhereValueType.Value ? it.Value : null,
+                    FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
+                    DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
+                    Description = json.Columns.FirstOrDefault(s => s.PropertyName == it.PropertyName)?.DbColumnName,
+                    ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
+                });
+        }
+
+        private static bool IsMergeWhere(CommonQueryWhere it)
+        {
+            return it.PropertyName!.Contains(" AS ") && it.PropertyName.Contains(".");
         }
 
         private static bool IsWhere(CommonConfig json)
