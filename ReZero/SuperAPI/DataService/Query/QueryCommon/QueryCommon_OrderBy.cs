@@ -48,13 +48,7 @@ namespace ReZero.SuperAPI
                         if (dataModel.MergeOrderByFixedParemters == null)
                         {
                             dataModel.MergeOrderByFixedParemters = new List<DataModelOrderParemter>();
-                        }
-                        dataModel.MergeOrderByFixedParemters.Add(new DataModelOrderParemter()
-                        {
-                            FieldName = item.FieldName,
-                            OrderByType = item.OrderByType,
-                            TableIndex = 0
-                        });
+                        } 
                     }
                     else
                     {
