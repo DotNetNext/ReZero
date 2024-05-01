@@ -27,7 +27,7 @@ namespace ReZero.SuperAPI
                 queryObject = Where(type, dataModel, queryObject);
                 queryObject = OrderBy(type, dataModel, queryObject);
                 queryObject = GroupBy(type, dataModel, queryObject);
-                queryObject = Select(type, dataModel, queryObject);
+                queryObject = Select(type, dataModel, queryObject); 
                 queryObject = MergeTable(type,dataModel,queryObject);
                 object? result = await ToList(dataModel, count, type, queryObject);
                 return result;

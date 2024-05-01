@@ -19,7 +19,8 @@ namespace ReZero.SuperAPI
             }
             queryObject = queryObject.MergeTable();
             queryObject=MergeTableWhere(type,dataModel,queryObject);
-            queryObject=MergeTableOrderBy(type, dataModel, queryObject);
+            queryObject = OrderBy2(type, dataModel, queryObject);
+            queryObject =MergeTableOrderBy(type, dataModel, queryObject);
             return queryObject;
         }
 
@@ -33,7 +34,7 @@ namespace ReZero.SuperAPI
             var oldType = queryObject.EntityType;
             dataModel.OrderByFixedParemters = dataModel.MergeOrderByFixedParemters;
             queryObject.EntityType = resultType;
-            OrderBy(resultType, dataModel, queryObject);
+            OrderBy2(resultType, dataModel, queryObject);
             dataModel.OrderByFixedParemters = old;
             queryObject.EntityType = oldType;
             return queryObject;
