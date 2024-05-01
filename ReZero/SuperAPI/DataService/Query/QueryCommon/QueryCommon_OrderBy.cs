@@ -44,10 +44,17 @@ namespace ReZero.SuperAPI
             return queryObject;
         }
 
-        private  string GetFieldName(QueryMethodInfo queryObject, DataModelDynamicOrderParemter item)
+        private string GetFieldName(QueryMethodInfo queryObject, DataModelDynamicOrderParemter item)
         {
             var name = _sqlSugarClient!.EntityMaintenance.GetDbColumnName(item.FieldName, queryObject.EntityType);
-            return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
+            if (this.resultType != null)
+            {
+                return item.FieldName;
+            }
+            else
+            {
+                return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + name;
+            }
         }
     }
 }

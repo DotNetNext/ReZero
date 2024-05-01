@@ -40,7 +40,7 @@ namespace ReZero.SuperAPI
                     var type = columnInfo.PropertyType;
                     var result = new DataModelOrderParemter()
                     {
-                        FieldName = joinPropertyName,
+                        FieldName = asName,
                         OrderByType = it.OrderByType!.EqualsCase("asc") ? OrderByType.Asc : OrderByType.Desc,
                         TableIndex = 0
                     }; 

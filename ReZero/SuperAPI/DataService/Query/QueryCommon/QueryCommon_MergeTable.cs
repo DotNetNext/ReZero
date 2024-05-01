@@ -25,10 +25,17 @@ namespace ReZero.SuperAPI
 
         private QueryMethodInfo MergeTableOrderBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
-            if (!IsMergeOrderBy(dataModel))
+            if (!IsMergeOrderBy(dataModel) || resultType == null)
             {
                 return queryObject;
             }
+            var old = dataModel.OrderByFixedParemters;
+            var oldType = queryObject.EntityType;
+            dataModel.OrderByFixedParemters = dataModel.MergeOrderByFixedParemters;
+            queryObject.EntityType = resultType;
+            OrderBy(resultType, dataModel, queryObject);
+            dataModel.OrderByFixedParemters = old;
+            queryObject.EntityType = oldType;
             return queryObject;
         }
 

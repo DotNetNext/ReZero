@@ -74,7 +74,7 @@ namespace ReZero.SuperAPI
             var item = new DataModelDefaultParameter()
             {
                 Id = it.Id,
-                Name = joinPropertyName,
+                Name = asName,
                 ValueType = EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
                 Value = it.ValueType == WhereValueType.Value ? it.Value : null,
                 FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
