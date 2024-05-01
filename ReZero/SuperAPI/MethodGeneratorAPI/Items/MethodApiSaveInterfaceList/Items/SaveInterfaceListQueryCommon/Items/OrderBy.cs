@@ -24,7 +24,7 @@ namespace ReZero.SuperAPI
         private void AddMergeOrderBy(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
 
-            zeroInterfaceList.DataModel!.OrderByFixedParemters =
+            zeroInterfaceList.DataModel!.MergeOrderByFixedParemters =
                 saveInterfaceListModel.Json!.OrderBys
                 .OrderBy(it => it.SortId.ObjToInt())
                 .Where(it => IsMergeOrder(it))
