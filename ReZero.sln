@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperAPITest", "SuperAPI\Su
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NugetTest", "NugetTest\NugetTest.csproj", "{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextTemplateTest", "TextTemplateTest\TextTemplateTest.csproj", "{EA58EB55-47DD-44FD-A12A-0231F97F06C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextTemplateTest", "TextTemplateTest\TextTemplateTest.csproj", "{EA58EB55-47DD-44FD-A12A-0231F97F06C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{1032E893-22CF-4883-8857-049526541333}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
