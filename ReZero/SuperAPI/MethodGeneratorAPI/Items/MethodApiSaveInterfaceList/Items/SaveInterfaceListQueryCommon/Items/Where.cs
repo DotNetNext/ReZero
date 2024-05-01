@@ -2,6 +2,7 @@
 using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Text;
 using System.Transactions;
@@ -61,26 +62,36 @@ namespace ReZero.SuperAPI
 
         private void AddMergeWhereItem(ZeroInterfaceList zeroInterfaceList, CommonQueryWhere it, CommonConfig json)
         {
+            InitItem(zeroInterfaceList);
+
+            var left= it.PropertyName!.Split(" AS ")[0];
+            var joinClassName = left.Split(".").First().Trim();
+            var joinPropertyName = left.Split(".").Last().Trim();
+            var asName = it.PropertyName!.Split(" AS ")[1];
+            var joinEntity = App.Db.Queryable<ZeroEntityInfo>().Includes(it=>it.ZeroEntityColumnInfos).Where(it => it.ClassName == joinClassName).First();
+            var entityColumns= joinEntity.ZeroEntityColumnInfos;
+            var type = entityColumns.FirstOrDefault(x => x.PropertyName == joinPropertyName).PropertyType;
+            var item = new DataModelDefaultParameter()
+            {
+                Id = it.Id,
+                Name = joinPropertyName,
+                ValueType = EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
+                Value = it.ValueType == WhereValueType.Value ? it.Value : null,
+                FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
+                DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
+                Description = asName,
+                ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
+            };
+            zeroInterfaceList!.DataModel!.MergeDefaultParameters!.Add(item);
+        }
+
+        private static void InitItem(ZeroInterfaceList zeroInterfaceList)
+        {
             if (zeroInterfaceList.DataModel!.MergeDefaultParameters == null)
             {
                 zeroInterfaceList.DataModel!.MergeDefaultParameters = new List<DataModelDefaultParameter>();
             }
-            var type = this.zeroEntityInfo!
-                   .ZeroEntityColumnInfos.FirstOrDefault(x => x.PropertyName == it.PropertyName).PropertyType;
-            zeroInterfaceList.DataModel.MergeDefaultParameters.Add
-                (new DataModelDefaultParameter()
-                {
-                    Id = it.Id,
-                    Name = it.PropertyName,
-                    ValueType = EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
-                    Value = it.ValueType == WhereValueType.Value ? it.Value : null,
-                    FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
-                    DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
-                    Description = json.Columns.FirstOrDefault(s => s.PropertyName == it.PropertyName)?.DbColumnName,
-                    ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
-                });
-        }
-
+        } 
         private static bool IsMergeWhere(CommonQueryWhere it)
         {
             return it.PropertyName!.Contains(" AS ") && it.PropertyName.Contains(".");
