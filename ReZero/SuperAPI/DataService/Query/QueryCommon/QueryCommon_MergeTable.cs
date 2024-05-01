@@ -34,10 +34,17 @@ namespace ReZero.SuperAPI
 
         private QueryMethodInfo MergeTableWhere(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
-            if (!IsMergeTableWhere(dataModel))
+            if (!IsMergeTableWhere(dataModel)|| resultType==null)
             {
                 return queryObject;
             }
+            var old=dataModel.DefaultParameters;
+            var oldType = queryObject.EntityType;
+            dataModel.DefaultParameters = dataModel.MergeDefaultParameters;
+            queryObject.EntityType = resultType; 
+            Where(this.resultType, dataModel, queryObject);
+            dataModel.DefaultParameters = old;
+            queryObject.EntityType = oldType;
             return queryObject;
         }
 

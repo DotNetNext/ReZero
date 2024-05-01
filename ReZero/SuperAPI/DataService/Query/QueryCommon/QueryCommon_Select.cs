@@ -13,7 +13,8 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        public List<ResultTypeInfo> resultTypeInfos = new List<ResultTypeInfo>(); 
+        public List<ResultTypeInfo> resultTypeInfos = new List<ResultTypeInfo>();
+        private Type? resultType;
         private QueryMethodInfo Select(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             if (IsAnySelect(dataModel))
@@ -60,6 +61,7 @@ namespace ReZero.SuperAPI
             }
             var  resultType=new DynamicTypeBuilder(_sqlSugarClient!,"ViewModel_"+dataModel.ApiId, resultTypeInfos).BuildDynamicType();
             queryObject = queryObject.Select(string.Join(",", selectLists), resultType);
+            this.resultType = resultType;
             return queryObject;
         }
 

@@ -206,7 +206,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, DataModelDefaultParameter item, List<DataModelDefaultParameter> forNames)
+        private  void ConvetConditionalModelForNames(List<IConditionalModel> conditionalModels, DataModelDefaultParameter item, List<DataModelDefaultParameter> forNames)
         {
             var colItem = new ConditionalModel() { FieldName = GetFieldName(item), ConditionalType = ConditionalType.Like, CSharpTypeName = item.ValueType, FieldValue = item.Value + "" };
             var conditionalCollections = new ConditionalCollections()
@@ -224,7 +224,7 @@ namespace ReZero.SuperAPI
             conditionalModels.Add(conditionalCollections);
         }
          
-        private static void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
+        private void ConvetConditionalModelDefault(List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
         {
             switch (item?.FieldOperator)
             {
@@ -269,9 +269,16 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static string GetFieldName(DataModelDefaultParameter item)
+        private  string GetFieldName(DataModelDefaultParameter item)
         {
-            return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + item.Name;
+            if (this.resultType != null)
+            {
+                return item.Name;
+            }
+            else
+            {
+                return PubConst.Orm_TableDefaultPreName + item.TableIndex + "." + item.Name;
+            }
         }
     }
 }
