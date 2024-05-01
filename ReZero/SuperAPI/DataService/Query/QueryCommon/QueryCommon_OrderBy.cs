@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Linq;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -13,9 +13,9 @@ namespace ReZero.SuperAPI
         private QueryMethodInfo OrderBy(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<OrderByModel> orderByModels = new List<OrderByModel>();
-            if (dataModel.OrderByFixedParemters  != null)
+            if (dataModel.OrderByFixedParemters != null)
             {
-                foreach (var item in dataModel.OrderByFixedParemters )
+                foreach (var item in dataModel.OrderByFixedParemters)
                 {
                     orderByModels.Add(new OrderByModel()
                     {
@@ -31,13 +31,35 @@ namespace ReZero.SuperAPI
             }
             if (dataModel.OrderDynamicParemters != null)
             {
+                var columns = App.Db.EntityMaintenance.GetEntityInfo(queryObject.EntityType).Columns;
                 foreach (var item in dataModel.OrderDynamicParemters)
                 {
-                    orderByModels.Add(new OrderByModel()
+                    var isAny = columns.Any(it => it.PropertyName?.ToLower() == item.FieldName?.ToLower() || it.DbColumnName?.ToLower() == item.FieldName?.ToLower());
+                    if (isAny)
                     {
-                        FieldName = GetFieldName(queryObject, item),
-                        OrderByType = item.OrderByType
-                    });
+                        orderByModels.Add(new OrderByModel()
+                        {
+                            FieldName = GetFieldName(queryObject, item),
+                            OrderByType = item.OrderByType
+                        });
+                    }
+                    else if (dataModel?.SelectParameters?.Where(it => it.AsName?.ToLower() == item.FieldName?.ToLower()).Any() == true)
+                    {
+                        if (dataModel.MergeOrderByFixedParemters == null)
+                        {
+                            dataModel.MergeOrderByFixedParemters = new List<DataModelOrderParemter>();
+                        }
+                        dataModel.MergeOrderByFixedParemters.Add(new DataModelOrderParemter()
+                        {
+                            FieldName = item.FieldName,
+                            OrderByType = item.OrderByType,
+                            TableIndex = 0
+                        });
+                    }
+                    else
+                    {
+                        throw new Exception(TextHandler.GetCommonText("排序字段 " + item.FieldName + "不存在实体", "OrderBy " + item.FieldName + " is not exist"));
+                    }
                 }
             }
             queryObject = queryObject.OrderBy(orderByModels);
