@@ -44,13 +44,14 @@ namespace ReZero.SuperAPI
             if (!IsMergeTableWhere(dataModel)|| resultType==null)
             {
                 return queryObject;
+            } 
+            var oldType = queryObject.EntityType; 
+            foreach (var item in dataModel.DefaultParameters!)
+            {
+                item.IsMergeWhere = false;
             }
-            var old=dataModel.DefaultParameters;
-            var oldType = queryObject.EntityType;
-            dataModel.DefaultParameters = dataModel.MergeDefaultParameters;
             queryObject.EntityType = resultType; 
-            Where(this.resultType, dataModel, queryObject);
-            dataModel.DefaultParameters = old;
+            Where(this.resultType, dataModel, queryObject); 
             queryObject.EntityType = oldType;
             return queryObject;
         }

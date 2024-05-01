@@ -25,6 +25,7 @@ namespace ReZero.SuperAPI
         public string?  DefaultValue { get; set; }
         public int TableIndex { get; set; }
         public int? Id { get;  set; }
+        public bool IsMergeWhere { get; set; }
     }
     public class ParameterValidate
     {

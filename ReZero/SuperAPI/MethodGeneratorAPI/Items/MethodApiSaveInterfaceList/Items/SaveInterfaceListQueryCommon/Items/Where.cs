@@ -80,9 +80,19 @@ namespace ReZero.SuperAPI
                 FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
                 DefaultValue = it.ValueType == WhereValueType.Value ? it.Value : null,
                 Description = asName,
-                ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false
+                ValueIsReadOnly = it.ValueType == WhereValueType.Value ? true : false,
+                IsMergeWhere=true
             };
             zeroInterfaceList!.DataModel!.MergeDefaultParameters!.Add(item);
+
+            var currentParameter = zeroInterfaceList.DataModel!.MergeDefaultParameters.Last();
+            if (it.ValueType == WhereValueType.ClaimKey)
+            {
+                currentParameter.Value = it.Value;
+                currentParameter.ValueType = PubConst.Orm_WhereValueTypeClaimKey;
+                currentParameter.ValueIsReadOnly = true;
+            } 
+            zeroInterfaceList!.DataModel!.DefaultParameters!.Add(item);
         }
 
         private  void InitItem(ZeroInterfaceList zeroInterfaceList)

@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
 
         private   void And(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
-            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+            foreach (var item in dataModel.DefaultParameters.Where(it => it.IsMergeWhere!=true&&string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
@@ -58,7 +58,7 @@ namespace ReZero.SuperAPI
         
         private   void AndAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
-            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
+            foreach (var item in dataModel.DefaultParameters.Where(it => it.IsMergeWhere != true&& string.IsNullOrEmpty(it.MergeForName)))
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
@@ -66,7 +66,7 @@ namespace ReZero.SuperAPI
         
         private   void Or(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
-            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
+            foreach (var item in dataModel.DefaultParameters.Where(it => it.IsMergeWhere != true&& string.IsNullOrEmpty(it.MergeForName)).Where(it => it.Value + "" != ""))
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
@@ -90,7 +90,7 @@ namespace ReZero.SuperAPI
         
         private   void OrAll(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
         {
-            foreach (var item in dataModel.DefaultParameters.Where(it => string.IsNullOrEmpty(it.MergeForName)))
+            foreach (var item in dataModel.DefaultParameters.Where(it => it.IsMergeWhere != true&& string.IsNullOrEmpty(it.MergeForName)))
             {
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
             }
@@ -117,7 +117,7 @@ namespace ReZero.SuperAPI
             var temp = dataModel.WhereRelationTemplate+string.Empty;
             List<SugarParameter> sugarParameters = new List<SugarParameter>();
             var index = 0;
-            foreach (var item in dataModel.DefaultParameters!)
+            foreach (var item in dataModel.DefaultParameters!.Where(it => it.IsMergeWhere != true))
             {
                 index++;
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
@@ -147,7 +147,7 @@ namespace ReZero.SuperAPI
             var temp = dataModel.WhereRelationTemplate + string.Empty;
             List<SugarParameter> sugarParameters = new List<SugarParameter>();
             var index = 0;
-            foreach (var item in dataModel.DefaultParameters!)
+            foreach (var item in dataModel.DefaultParameters.Where(it=>it.IsMergeWhere!=true)!)
             {
                 index++;
                 ConvetConditional(dataModel, queryObject, conditionalModels, item);
