@@ -110,4 +110,37 @@
         transform: scale(0.7);
         opacity: 0.7;
     }
-}  
+}
+.caret-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.sort-desc .descending {
+    color: #666
+}
+.sort-asc .ascending {
+    color: #666
+}
+.sort-caret{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 10px;
+    color: #ccc
+}
+
+    .sort-caret.ascending {
+        bottom: 0; /* 调整位置 */
+        cursor:pointer
+    }
+
+    .sort-caret.descending {
+        top: -10px; /* 调整位置 */
+        cursor:pointer
+    }
+
+    .sort-caret i {
+        font-size: 1rem; /* 可以根据需要调整图标大小 */
+        color: #333; /* 调整图标颜色 */
+    }

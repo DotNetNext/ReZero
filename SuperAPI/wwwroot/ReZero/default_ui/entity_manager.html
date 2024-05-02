@@ -31,8 +31,7 @@
                     <a class="btn btn-warning m-r-5" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
                 </div>
             </div>
-            <div class="card-body">
-
+            <div class="card-body"> 
                 <div class="table-responsive">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -43,9 +42,15 @@
                                             <input type="checkbox" @change="selectAll" id="check-all"><span></span>
                                         </label>
                                     </th>
-                                    <template v-for="column in data.Columns" v-if="column.PropertyName !== 'Id'">
+                                    <template v-for="(column,thIndex) in data.Columns" v-if="column.PropertyName !== 'Id'">
                                         <th>
-                                            {{ column.ColumnDescription }}
+                                            {{ column.ColumnDescription }} 
+                                            <span :class="sortClass">
+                                                <span v-if="thIndex == 1" class="caret-wrapper">
+                                                    <i @click="sortAsc" class="sort-caret ascending mdi mdi-chevron-up"></i>
+                                                    <i @click="sortDesc" class="sort-caret descending mdi mdi-chevron-down"></i>
+                                                </span>
+                                            </span>
                                         </th>
                                     </template>
                                     <th>操作</th>
@@ -279,6 +284,8 @@
             addTitle: "添加实体",
             editTitle: "修改实体",
             title: "",
+            sort: 0,
+            sortClass:"",
             editTable: "",
             formData: {},
             database: [],
@@ -311,7 +318,8 @@
                 var urlParameters = "&" + tools.objectToQueryString({
                     ClassName: txtSearch.value,
                     PageNumber: page,
-                    DataBaseId: selDataBaseId.value
+                    DataBaseId: selDataBaseId.value,
+                    Sort: this.sort
                 });
                 this.fetchData(urlParameters);
             },
@@ -552,6 +560,18 @@
                     this.columns.splice(index, 1);
                     this.columns.splice(index + 1, 0, temp);
                 }
+            },
+            sortAsc: function ()
+            {
+                this.sort = 1;
+                this.sortClass = "sort-asc";
+                this.onSearch(1);
+            },
+            sortDesc: function ()
+            {
+                this.sort = 2;
+                this.sortClass = "sort-desc";
+                this.onSearch(1);
             }
         }
     });
