@@ -234,7 +234,7 @@ namespace ReZero.SuperAPI
 
                           }
                        },  
-                    },
+                    }, 
                     Columns = new List<DataColumnParameter>()
                     {
 
@@ -284,7 +284,9 @@ namespace ReZero.SuperAPI
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.DbTableName),MergeForName=nameof(ZeroEntityInfo.ClassName)  },
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.Description),MergeForName=nameof(ZeroEntityInfo.ClassName)  },
                              new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
-                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
+                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") },
+                             new DataModelDefaultParameter() { Name="OrderByType" ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name, Description = TextHandler.GetCommonText("排序类型", "SortType") },
+                             new DataModelDefaultParameter() { Name="OrderByName" ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name, Description = TextHandler.GetCommonText("排序字段", "SortName") }
                     }
                 };
             });

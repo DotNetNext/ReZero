@@ -17,10 +17,11 @@ namespace ReZero.SuperAPI
             List<IFuncModel> funcModels = new List<IFuncModel>();
             if (dataModel.DefaultParameters != null)
             {
+                AddDynamicOrderBy(dataModel);
                 dataModel.WhereRelation = dataModel.WhereRelation ?? WhereRelation.And;
                 switch (dataModel.WhereRelation)
                 {
-                    case WhereRelation.And: 
+                    case WhereRelation.And:
                         And(dataModel, queryObject, conditionalModels);
                         break;
                     case WhereRelation.AndAll:
@@ -38,7 +39,7 @@ namespace ReZero.SuperAPI
                     case WhereRelation.CustomAll:
                         CustomAll(dataModel, queryObject, conditionalModels);
                         break;
-                } 
+                }
             }
             queryObject = queryObject.Where(conditionalModels,true);
             foreach (var item in funcModels)
@@ -46,6 +47,34 @@ namespace ReZero.SuperAPI
                 queryObject = queryObject.Where(item);
             }
             return queryObject;
+        }
+
+        private static void AddDynamicOrderBy(DataModel dataModel)
+        {
+            if (IsOrderByParameters(dataModel))
+            {
+                if (dataModel.OrderDynamicParemters == null)
+                {
+                    dataModel.OrderDynamicParemters = new List<DataModelDynamicOrderParemter>();
+                }
+                var name = dataModel.DefaultParameters.FirstOrDefault(it => it.Name == "OrderByName").Value?.ToString();
+                var sortType = Convert.ToInt32(dataModel.DefaultParameters.FirstOrDefault(it => it.Name == "OrderByType").Value);
+                if (!string.IsNullOrEmpty(name))
+                {
+                    dataModel.OrderDynamicParemters = new List<DataModelDynamicOrderParemter>();
+                    dataModel.OrderDynamicParemters.Add(new DataModelDynamicOrderParemter()
+                    {
+                        FieldName = name,
+                        OrderByType = sortType == 0 ? OrderByType.Asc : OrderByType.Desc
+                    });
+                }
+                dataModel.DefaultParameters!.RemoveAll(it => it.Name == "OrderByName" || it.Name == "OrderByType");
+            }
+        }
+
+        private static bool IsOrderByParameters(DataModel dataModel)
+        {
+            return dataModel.DefaultParameters.Any(it => it.Name == "OrderByType") && dataModel.DefaultParameters.Any(it => it.Name == "OrderByName");
         }
 
         private   void And(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels)
