@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         Columns=3, 
         Select = 4,
         Hidden = 5,
-        Page=6
-
+        Page=6,
+        SqlText=7 
     }
 }

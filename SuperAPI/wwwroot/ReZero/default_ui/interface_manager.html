@@ -209,7 +209,11 @@
                                                 </template>
                                                 <!--Page-->
                                                 <template v-if="item.ElementType==6">
-                                                    <label class="lyear-checkbox   t_a_l "><input v-model="item.Value"  :name="item.Name" value="true" type="checkbox"> <span class="p-l-15">是否分页</span></label>
+                                                    <label class="lyear-checkbox   t_a_l "><input v-model="item.Value" :name="item.Name" value="true" type="checkbox"> <span class="p-l-15">是否分页</span></label>
+                                                </template>
+                                                <!--SqlTest-->
+                                                <template v-if="item.ElementType==7">
+                                                    <textarea rows="30" :name="item.Name" v-model="item.Value" type="hidden"   class="form-control" ></textarea>
                                                 </template>
                                             </div>
                                         </div>
