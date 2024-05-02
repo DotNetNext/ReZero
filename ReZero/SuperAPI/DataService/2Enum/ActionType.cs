@@ -80,8 +80,13 @@ namespace ReZero.SuperAPI
 
 
         #region 自定义方法
-        [ChineseText("自定义方法")]
-        [EnglishText("My method")]
+        [ChineseText("SQL脚本")]
+        [EnglishText("SQL Script")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_MyMethodCN, PubConst.DataSource_ActionTypeGroupName_MyMethodEN)]
+        SqlScript = 90000,
+
+        [ChineseText("C#方法")]
+        [EnglishText("C# Script")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_MyMethodCN, PubConst.DataSource_ActionTypeGroupName_MyMethodEN)]
         MethodGeneratorAPI = 99999, 
         #endregion
