@@ -17,6 +17,7 @@ namespace ReZero.SuperAPI
         public const string Orm_ApiParameterJsonArray = "json array";
         public const string Orm_SubqueryKey = "`SqlFunc`.`Key`.['010203']";
         public const string Orm_WhereValueTypeClaimKey = "Orm_WhereValueTypeClaimKey['16125']";
+        public const string Orm_ClaimkeyName = "claimkey";
 
         public const string Namespace_ResultService = "ReZero.SuperAPI.Items.";
           

@@ -42,6 +42,13 @@ namespace ReZero.SuperAPI
                     Name=name, 
                     ValueType=type
                 });
+                if (type?.ToLower() == PubConst.Orm_ClaimkeyName) 
+                {
+                    var currentParameter=zeroInterfaceList!.DataModel!.DefaultParameters.Last();
+                    currentParameter.Value =null;
+                    currentParameter.ValueType = PubConst.Orm_WhereValueTypeClaimKey;
+                    currentParameter.ValueIsReadOnly = true;
+                }
             }
             zeroInterfaceList!.DataModel.Sql = sqlQuery;
         }

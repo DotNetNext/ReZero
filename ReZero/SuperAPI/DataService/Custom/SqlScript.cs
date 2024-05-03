@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,11 @@ namespace ReZero.SuperAPI
             foreach (var item in dataModel.DefaultParameters??new List<DataModelDefaultParameter>())
             {
                 var p = new SugarParameter("@"+item.Name,UtilMethods.ConvertDataByTypeName(item.ValueType, item.Value?.ToString()));
+                if (item.ValueIsReadOnly) 
+                {
+                   var claimItem=dataModel.ClaimList.FirstOrDefault(it => it.Key?.ToLower() == item.Name?.ToLower());
+                    p = new SugarParameter("@" + item.Name, claimItem.Value);
+                }
                 pars.Add(p);
             }
             switch (dataModel.ResultType)
