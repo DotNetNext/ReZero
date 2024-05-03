@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
             var pars = new List<SugarParameter>();
             foreach (var item in dataModel.DefaultParameters??new List<DataModelDefaultParameter>())
             {
-                var p = new SugarParameter("@"+item.Name,item.Value);
+                var p = new SugarParameter("@"+item.Name,UtilMethods.ConvertDataByTypeName(item.ValueType, item.Value?.ToString()));
                 pars.Add(p);
             }
             switch (dataModel.ResultType)
