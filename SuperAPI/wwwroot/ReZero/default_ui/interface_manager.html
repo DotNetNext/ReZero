@@ -213,7 +213,9 @@
                                                 </template>
                                                 <!--SqlTest-->
                                                 <template v-if="item.ElementType==7">
-                                                    <textarea rows="10" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value"    class="form-control" ></textarea>
+                                                    <p><code>接口参数：{string:name} 等于 @name=string类型的参数 ，C#类型有string、int、DateTime等</code></p>
+                                                    <p><code>授权参数：{ClaimKey:OrgId} 等于 你授权的Claim[OrgId]</code></p>
+                                                    <textarea rows="10" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
                                                 </template>
                                             </div>
                                         </div>
