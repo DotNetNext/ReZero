@@ -18,7 +18,7 @@ namespace ReZero.SuperAPI
 
             }
         }
-        protected void SetCommonProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
+        protected virtual void SetCommonProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
             // Set default values for ZeroInterfaceList
             zeroInterfaceList.IsInitialized = false;
@@ -106,7 +106,7 @@ namespace ReZero.SuperAPI
             } 
         }
 
-        private static string GetUrl(SaveInterfaceListModel? saveInterfaceListModel)
+        public  string GetUrl(SaveInterfaceListModel? saveInterfaceListModel)
         {
             if (string.IsNullOrEmpty(saveInterfaceListModel?.Url))
             {

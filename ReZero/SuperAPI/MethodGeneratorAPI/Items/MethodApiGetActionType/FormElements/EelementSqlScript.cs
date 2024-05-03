@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReZero.SuperAPI 
+namespace ReZero.SuperAPI
 {
     public class ElementSqlScript : BaseElement, IEelementActionType
     {
@@ -12,11 +12,33 @@ namespace ReZero.SuperAPI
             base.AddActionTypeFormElementModels(result);
             base.AddActionTypeElementModel(result, this);
             RemoveCommonItem(result);
-            result.Insert(3,new ActionTypeFormElementModel()
+            result.Insert(2, new ActionTypeFormElementModel()
             {
-                Text="SQL脚本",
+                Text = TextHandler.GetCommonText("返回类型", "Result type"),
+                ElementType = ElementType.Select,
+                Name = nameof(SaveInterfaceListModel.Sql),
+                Value = "1",
+                IsRequired=true,
+                SelectDataSource = new List<ActionTypeFormElementSelectDataSourceModel>() {
+                 new ActionTypeFormElementSelectDataSourceModel(){
+                    Key=((int)SqlResultType.Query).ToString(),
+                    Value=TextHandler.GetCommonText("查询", "Query"),
+                 },
+                  new ActionTypeFormElementSelectDataSourceModel(){
+                    Key=((int)SqlResultType.AffectedRows).ToString(),
+                    Value=TextHandler.GetCommonText("受影响行数", "Affected rows"),
+                 },
+                 new ActionTypeFormElementSelectDataSourceModel(){
+                    Key=((int)SqlResultType.DataSet).ToString(),
+                    Value=TextHandler.GetCommonText("DataSet", "DataSet"),
+                 }
+                }, 
+            });
+            result.Insert(3, new ActionTypeFormElementModel()
+            {
+                Text = TextHandler.GetCommonText("Sql脚本", "Sql script"),
                 ElementType = ElementType.SqlText,
-                Name = nameof(SaveInterfaceListModel.ActionType),
+                Name = nameof(SaveInterfaceListModel.ResultType),
                 Value = "select * from tableName  where  id={int:1} "
             });
             return result;

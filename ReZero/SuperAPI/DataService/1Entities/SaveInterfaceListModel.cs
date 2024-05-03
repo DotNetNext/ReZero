@@ -16,8 +16,14 @@ namespace ReZero.SuperAPI
         public string? InterfaceCategoryId { get; set; }
         public ActionType? ActionType { get; set; }
         public CommonConfig? Json { get; set; }
+        public string? Sql { get; set; }
         public bool PageSize { get; set; }
-        public string? CurrentDataString { get;  set; }
+        /// <summary>
+        /// Used for binding interface controls during interface editing. It can be left unassigned if interface editing is not used.
+        /// </summary>
+        public string? CurrentDataString { get; set; }
+
+        public string? ResultType { get; set; }
     }
 
 
@@ -32,6 +38,7 @@ namespace ReZero.SuperAPI
         public bool OrderBysEnableSort { get; set; }
         public string? CurrentDataString { get; set; }
         public long? Id { get; set; }
+        public long? DataBaseId{get;set;}
     }
 
     public class CommonQueryColumn

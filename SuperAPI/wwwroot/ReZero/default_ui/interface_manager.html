@@ -213,7 +213,7 @@
                                                 </template>
                                                 <!--SqlTest-->
                                                 <template v-if="item.ElementType==7">
-                                                    <textarea rows="30" :name="item.Name" v-model="item.Value" type="hidden"   class="form-control" ></textarea>
+                                                    <textarea rows="10" :name="item.Name" v-model="item.Value" type="hidden"   class="form-control" ></textarea>
                                                 </template>
                                             </div>
                                         </div>
@@ -773,7 +773,8 @@
                         WhereRelationTemplate: this.selectedWhereRelationTemplate,
                         OrderBys: this.selectedOrderBys,
                         OrderBysEnableSort: this.selectedOrderBys_EnableSort,
-                        CurrentDataString: JSON.stringify(this.$data)
+                        CurrentDataString: JSON.stringify(this.$data),
+                        DataBaseId: this.databaseId
                     };
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData, jwHeader)
