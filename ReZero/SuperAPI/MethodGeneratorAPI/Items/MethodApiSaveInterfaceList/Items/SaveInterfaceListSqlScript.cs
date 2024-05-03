@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using SqlSugar;
 
@@ -14,7 +15,7 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             this.SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
             this.SetGroupName(zeroInterfaceList);
-            this.SetDataBaseId(saveInterfaceListModel, zeroInterfaceList);
+            this.SetDataModel(saveInterfaceListModel, zeroInterfaceList);
             this.SetParameters(zeroInterfaceList);
             return base.SaveData(zeroInterfaceList);
         }
@@ -22,13 +23,35 @@ namespace ReZero.SuperAPI
         private  void SetParameters(ZeroInterfaceList zeroInterfaceList)
         {
             zeroInterfaceList!.DataModel!.DefaultParameters = new List<DataModelDefaultParameter>();
-        }
+            // 定义正则表达式
+            Regex regex = new Regex(@"{(?<type>\w+):(?<name>\w+)}");
 
-        private  void SetDataBaseId(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
+            var sqlQuery = zeroInterfaceList!.DataModel.Sql+string.Empty;
+            // 匹配所有的 {type:name} 格式
+            MatchCollection matches = regex.Matches(sqlQuery);
+             
+            // 循环替换匹配的内容
+            foreach (Match match in matches)
+            {
+                string type = match.Groups["type"].Value;
+                string name = match.Groups["name"].Value; 
+                string replacement = "@" + name;   
+                sqlQuery = sqlQuery.Replace(match.Value, replacement);
+                zeroInterfaceList!.DataModel!.DefaultParameters.Add(new DataModelDefaultParameter() {
+                    ValueIsReadOnly=false,
+                    Name=name, 
+                    ValueType=type
+                });
+            }
+            zeroInterfaceList!.DataModel.Sql = sqlQuery;
+        }
+        
+        private  void SetDataModel(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
-            zeroInterfaceList.DataModel!.TableId = saveInterfaceListModel!.Json!.DataBaseId ?? 0;
+            zeroInterfaceList.DataModel!.DataBaseId = saveInterfaceListModel!.Json!.DataBaseId ?? 0;
             zeroInterfaceList.DataModel.ActionType = ActionType.SqlScript;
-            zeroInterfaceList.DataModel.Data = saveInterfaceListModel.Sql;
+            zeroInterfaceList.DataModel.Sql = saveInterfaceListModel.Sql;
+            zeroInterfaceList.DataModel.ResultType = saveInterfaceListModel?.ResultType;
         }
 
         private  void SetGroupName(ZeroInterfaceList zeroInterfaceList)

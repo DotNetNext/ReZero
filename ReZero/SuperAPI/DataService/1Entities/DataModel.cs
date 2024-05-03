@@ -11,7 +11,10 @@ namespace ReZero.SuperAPI
         public ActionType ActionType { get; set; }
         public object? Data { get; set; }
         public long TableId { get; set; }
+        public long DataBaseId { get; set; }
         public MyMethodInfo? MyMethodInfo { get; set; }
+        public string? Sql { get; set; }
+        public SqlResultType? ResultType { get; set; }
         #endregion
 
         #region Paremters

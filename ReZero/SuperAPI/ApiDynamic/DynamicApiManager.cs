@@ -65,6 +65,9 @@ namespace ReZero.SuperAPI
                 {
                     DataService dataService = new DataService();
                     interInfo!.DataModel!.ApiId = interInfo.Id;
+                    interInfo!.DataModel!.ResultType = interInfo.DataModel?.ResultType;
+                    interInfo!.DataModel!.Sql = interInfo.DataModel?.Sql;
+                    interInfo!.DataModel!.DataBaseId = interInfo.DataModel?.DataBaseId??0;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
                     dynamicInterfaceContext.DataModel= interInfo.DataModel;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);

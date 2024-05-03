@@ -23,7 +23,7 @@ namespace ReZero.SuperAPI
         /// </summary>
         public string? CurrentDataString { get; set; }
 
-        public string? ResultType { get; set; }
+        public SqlResultType? ResultType { get; set; }
     }
 
 
