@@ -1,5 +1,5 @@
 ﻿@@master_page.html
-<link href="css/page_interface.css" rel="stylesheet" />
+<link href="css/page_interface.css?v=1" rel="stylesheet" />
 <div id="apibox">
     <div class="form-group row">
         <form id="frmSearch" onsubmit="return false;">
@@ -127,7 +127,9 @@
                     return 'endpoint endpointDelete';
                 } else if (actionType.startsWith('4')) {
                     return 'endpoint endpointPut';
-                } else {
+                }else if (actionType.startsWith('9')) {
+                    return 'endpoint endpointSql';
+                }else {
                     return 'endpoint endpointOther';
                 }
             },

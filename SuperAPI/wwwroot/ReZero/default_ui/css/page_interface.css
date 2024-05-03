@@ -69,6 +69,15 @@ section {
     .endpointDelete .method {
         background: #f93e3e
     }
+.endpointSql {
+    background-color: #673ab7;
+    color: #fff;
+    border: 1px solid #9c27b0;
+}
+
+    .endpointSql .method {
+        background: #9c27b0
+    }
 .method {
     padding: 5px 10px;
     background-color: #61affe;
