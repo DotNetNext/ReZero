@@ -13,6 +13,8 @@ namespace SuperAPITest
             //{ 
             //    throw new Expception("Unauthorized"); 
             //}
+            //Add Claim value
+            //aopContext.AttachClaimToHttpContext("UserId", "1");
             await base.OnExecutingAsync(aopContext);
         } 
     }
