@@ -128,9 +128,9 @@ builder.Services.AddReZeroServices(api =>
 ![输入图片说明](READMEIMG/image16.png)
 
 # 五、功能预览
-## 预览1：配置列
+## 预览1：查询配置显示列
 ![输入图片说明](READMEIMG/21.png)
-## 预览2：配置联表
+## 预览2：查询配置联表
 ![输入图片说明](READMEIMG/22.png) 
 ## 预览3：SQL直接生成接口
 ![输入图片说明](READMEIMG/23.png)
