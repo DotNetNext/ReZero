@@ -7,18 +7,14 @@ namespace DependencyInjectionTest.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-      
-
-        public WeatherForecastController( )
-        {
-        
-        }
+        [PropertyInjection]
+        public Class2? Class2 { get; set; }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public object Get()
         {
-            var class1=DependencyResolver.GetService<Class1>();
-            var class2 = DependencyResolver.GetService<IClass1>();
+            var class1=DependencyResolver.GetHttpContextService<Class1>();
+            var class2 = DependencyResolver.GetHttpContextService<Class1>();
             return 1;
         }
     }

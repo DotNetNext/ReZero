@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // builder.Services.AddScoped(typeof(IClass1),typeof(Class1));
 //Register: Register the super API service
+ 
 //×¢²á£º×¢²á³¬¼¶API·þÎñ
 builder.Services.AddReZeroServices(api =>
 { 

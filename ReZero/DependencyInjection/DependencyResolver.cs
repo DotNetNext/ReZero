@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,15 @@ namespace ReZero.DependencyInjection
         public static T GetService<T>()
         {
             return Provider!.GetService<T>();
-        } 
+        }
+        public static T GetHttpContextService<T>()
+        {
+            if (Provider!.GetService<IHttpContextAccessor>()?.HttpContext == null) 
+            {
+                throw new Exception("Requires builder.Services.AddHttpContextAccessor()");
+            }
+            return Provider!.GetService<IHttpContextAccessor>()!.HttpContext!.RequestServices!.GetService<T>();
+        }
         public static T GetRequiredService<T>() where T:class
         {
             return Provider?.GetRequiredService<T>();

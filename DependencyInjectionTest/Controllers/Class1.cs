@@ -7,7 +7,10 @@ namespace DependencyInjectionTest.Controllers
     {
         public string? a { get; set; } = "a";
     }
-
+    public class Class2 : IScopeContract
+    {
+        public string? a2 { get; set; } = "a2";
+    }
     public interface IClass1
     {
     }
