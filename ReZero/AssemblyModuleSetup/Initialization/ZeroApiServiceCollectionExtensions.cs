@@ -31,9 +31,7 @@ namespace ReZero
         {
             var options = new ReZeroOptions();
             ServiceLocator.Services = services; 
-            superAPIOptions(options.SuperApiOptions);
-            AddDependencyInjection(options, options.SuperApiOptions);
-            DependencyInjectionModule.Init(services, options);
+            superAPIOptions(options.SuperApiOptions); 
             return services.AddReZeroServices(options);
         }
         internal static void AddDependencyInjection(ReZeroOptions options, SuperAPIOptions superAPIOptions)
