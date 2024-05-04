@@ -20,31 +20,13 @@ namespace ReZero.SuperAPI
             if (IsInitSupperApi(options))
             {
                 var apiOptions = options.SuperApiOptions;
-                _apiOptions = InitializeOptions(apiOptions);
-                //InitUi(options);
+                _apiOptions = InitializeOptions(apiOptions); 
                 InitZeroStaticFileMiddleware();
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
                 AddTransientServices(services, _apiOptions); 
             }
-        } 
-
-        private static void InitUi(ReZeroOptions options)
-        { 
-            Assembly assembly = Assembly.GetExecutingAssembly(); 
-            Version version = assembly.GetName().Version;
-            var path = Path.Combine(options.SuperApiOptions.UiOptions.NugetPackagesPath, "rezero", version+"", "wwwroot","rezero");
-            if (Directory.Exists(path))
-            {
-                var destDir= Path.Combine(AppContext.BaseDirectory, "wwwroot", "rezero");
-                PubMethod.CopyDirectory(path,destDir);
-            }
-            else if(!Directory.Exists(path))  
-            {
-                throw new Exception(TextHandler.GetCommonText("初始化UI失败，可以手动将NGUET包中的wwwroot文件夹手动复制到API,没找到路径"+ path, "Failed to initialize UI, you can manually copy the wwwroot folder in the NGUET package to the API manually. no found "+path));
-            } 
-        }
-
+        }  
 
         /// <summary>
         /// Initializes ZeroStaticFileMiddleware.

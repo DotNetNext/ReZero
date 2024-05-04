@@ -7,13 +7,13 @@ namespace ReZero.DependencyInjection
 {
     public class DependencyInjectionOptions
     {
-        public Assembly[]? Assembly { get; set; }
-        public  bool InitDependencyInjection => Assembly?.Any() == true;
-        public DependencyInjectionOptions(params Assembly[] assembly) 
+        public Assembly[]? Assemblies { get; set; }
+        public  bool InitDependencyInjection => Assemblies?.Any() == true;
+        public DependencyInjectionOptions(params Assembly[] assemblies) 
         {
             if (this.InitDependencyInjection == false)
             {
-                this.Assembly = assembly;
+                this.Assemblies = assemblies;
             }
         } 
     }

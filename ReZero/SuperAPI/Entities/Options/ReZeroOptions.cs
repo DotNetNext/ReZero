@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -59,7 +59,17 @@ namespace ReZero.SuperAPI
     }
     public class DependencyInjectionOptions
     {
-        public Assembly[]? Assembly { get;  set; }
+        public Assembly[]? Assemblies { get;  set; }
+
+        public bool InitDependencyInjection => Assemblies?.Any() ?? false;
+
+        public DependencyInjectionOptions(params Assembly[] assemblies)
+        {
+            if (!InitDependencyInjection)
+            {
+                this.Assemblies = assemblies;
+            }
+        }
     }
     public class InterfaceOptions 
     {

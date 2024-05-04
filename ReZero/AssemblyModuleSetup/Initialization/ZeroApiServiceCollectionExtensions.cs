@@ -36,13 +36,13 @@ namespace ReZero
         }
         internal static void AddDependencyInjection(ReZeroOptions options, SuperAPIOptions superAPIOptions)
         {
-            if (options.DependencyInjectionOptions?.Assembly?.Any()!=true)
+            if (options.DependencyInjectionOptions?.Assemblies?.Any()!=true)
             {
                 if (options.DependencyInjectionOptions == null)
                 {
                     options.DependencyInjectionOptions = new DependencyInjection.DependencyInjectionOptions();
                 }
-                options.DependencyInjectionOptions!.Assembly = superAPIOptions?.DependencyInjectionOptions?.Assembly;
+                options.DependencyInjectionOptions!.Assemblies = superAPIOptions?.DependencyInjectionOptions?.Assemblies;
             }
         }
     }

@@ -9,11 +9,11 @@ namespace ReZero.DependencyInjection
     {
         public static void Init(IServiceCollection services, ReZeroOptions options)
         {
-            if (options.DependencyInjectionOptions?.Assembly?.Any()!=true) 
+            if (options.DependencyInjectionOptions?.Assemblies?.Any()!=true) 
             {
                 return;
             }
-            var types = options.DependencyInjectionOptions.Assembly.SelectMany(it=>it.GetTypes()).Where(type => !type.IsAbstract && !type.IsInterface);
+            var types = options.DependencyInjectionOptions.Assemblies.SelectMany(it=>it.GetTypes()).Where(type => !type.IsAbstract && !type.IsInterface);
             foreach (var type in types)
             {
                 var interfaces = type.GetInterfaces();
