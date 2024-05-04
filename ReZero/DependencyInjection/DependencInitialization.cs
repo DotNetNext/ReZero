@@ -39,17 +39,7 @@ namespace ReZero.DependencyInjection
                             services.AddSingleton(item, type);
                         }
                     }
-                }
-                //var properties = type.GetProperties().Where(prop => prop.GetCustomAttribute<PropertyInjectionAttribute>() != null);
-                //foreach (var property in properties)
-                //{
-                //    var serviceType = property.PropertyType;
-                //    var service = services.BuildServiceProvider().GetService(serviceType);
-                //    if (service != null)
-                //    {
-                //        property.SetValue(null, service);
-                //    }
-                //}
+                } 
             } 
         }
     }
