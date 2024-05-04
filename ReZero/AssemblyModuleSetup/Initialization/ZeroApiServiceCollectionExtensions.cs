@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder.Extensions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using ReZero.DependencyInjection;
 using ReZero.SuperAPI;
@@ -19,7 +20,8 @@ namespace ReZero
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
         { 
             ServiceLocator.Services = services;
-            SuperAPIModule.Init(services, options); 
+            SuperAPIModule.Init(services, options);
+            AddDependencyInjection(options, options.SuperApiOptions);
             DependencyInjectionModule.Init(services, options);
             return services;
         }
@@ -30,8 +32,20 @@ namespace ReZero
             var options = new ReZeroOptions();
             ServiceLocator.Services = services; 
             superAPIOptions(options.SuperApiOptions);
+            AddDependencyInjection(options, options.SuperApiOptions);
             DependencyInjectionModule.Init(services, options);
             return services.AddReZeroServices(options);
+        }
+        internal static void AddDependencyInjection(ReZeroOptions options, SuperAPIOptions superAPIOptions)
+        {
+            if (options.DependencyInjectionOptions?.Assembly == null)
+            {
+                if (options.DependencyInjectionOptions == null)
+                {
+                    options.DependencyInjectionOptions = new DependencyInjection.DependencyInjectionOptions();
+                }
+                options.DependencyInjectionOptions!.Assembly = superAPIOptions?.DependencyInjectionOptions?.Assembly;
+            }
         }
     }
 }

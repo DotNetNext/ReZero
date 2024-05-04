@@ -25,23 +25,9 @@ namespace ReZero.SuperAPI
                 InitZeroStaticFileMiddleware();
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
-                AddTransientServices(services, _apiOptions);
-                //Supper API Register external services
-                AddDependencyInjection(options);
+                AddTransientServices(services, _apiOptions); 
             }
-        }
-
-        private static void AddDependencyInjection(ReZeroOptions options)
-        {
-            if (options.DependencyInjectionOptions?.Assembly == null)
-            {
-                if (options.DependencyInjectionOptions == null) 
-                {
-                    options.DependencyInjectionOptions = new DependencyInjection.DependencyInjectionOptions();
-                }
-                options.DependencyInjectionOptions!.Assembly = _apiOptions?.DependencyInjectionOptions?.Assembly;
-            }
-        }
+        } 
 
         private static void InitUi(ReZeroOptions options)
         { 
