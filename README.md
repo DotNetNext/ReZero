@@ -136,6 +136,10 @@ builder.Services.AddReZeroServices(api =>
 ![输入图片说明](READMEIMG/23.png)
 ## 预览4：配置完显的接口列表
 ![输入图片说明](READMEIMG/24.png)
+## 预览5: 创建实体
+![输入图片说明](READMEIMG/25.png)
+## 预览6: 更新表结构对比
+![输入图片说明](READMEIMG/26.png)
 
 # 六、打赏作者
 
