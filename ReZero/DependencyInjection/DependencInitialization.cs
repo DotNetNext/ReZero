@@ -13,12 +13,13 @@ namespace ReZero.DependencyInjection
             foreach (var type in types)
             {
                 var interfaces = type.GetInterfaces();
+                var interfacesNoRezero = type.GetInterfaces().Where(it => !it.FullName.StartsWith("ReZero"));
                 foreach (var @interface in interfaces)
                 {
                     if (@interface == typeof(ITransientContract))
                     {
                         services.AddTransient(type, type);
-                        foreach (var item in type.GetInterfaces().Where(it=>!it.FullName.StartsWith("ReZero")))
+                        foreach (var item in interfacesNoRezero)
                         {
                             services.AddTransient(item, type);
                         }
@@ -26,7 +27,7 @@ namespace ReZero.DependencyInjection
                     else if (@interface == typeof(IScopeContract))
                     { 
                         services.AddScoped(type, type);
-                        foreach (var item in type.GetInterfaces().Where(it => !it.FullName.StartsWith("ReZero")))
+                        foreach (var item in interfacesNoRezero)
                         {
                             services.AddScoped(item, type);
                         }
@@ -34,7 +35,7 @@ namespace ReZero.DependencyInjection
                     else if (@interface == typeof(ISingletonContract))
                     { 
                         services.AddSingleton(type, type);
-                        foreach (var item in type.GetInterfaces().Where(it => !it.FullName.StartsWith("ReZero")))
+                        foreach (var item in interfacesNoRezero)
                         {
                             services.AddSingleton(item, type);
                         }
