@@ -37,7 +37,7 @@ namespace ReZero.DependencyInjection
                 }
                 httpContextAccessor = Provider!.GetService<IHttpContextAccessor>();
             }
-            return httpContextAccessor!.HttpContext!.RequestServices!.GetService<T>();
+            return httpContextAccessor!.HttpContext!.RequestServices!.GetRequiredService<T>();
         }
         public static T GetRequiredService<T>() where T : class
         {
