@@ -17,8 +17,9 @@ namespace ReZero
         /// <param name="options">The <see cref="ReZeroOptions"/> to configure the services.</param>
         /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
-        {
-            SuperAPIModule.Init(services, options);
+        { 
+            ServiceLocator.Services = services;
+            SuperAPIModule.Init(services, options); 
             DependencyInjectionModule.Init(services, options);
             return services;
         }
