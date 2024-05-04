@@ -8,5 +8,6 @@ namespace ReZero
     internal class ServiceLocator
     {
         public static ServiceProvider? Provider { get;   set; }
+        public static IServiceCollection? Services { get;  set; }
     }
 }

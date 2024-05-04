@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using ReZero.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ReZero.SuperAPI
@@ -29,6 +31,11 @@ namespace ReZero.SuperAPI
             this.DatabaseOptions = options.DatabaseOptions;
             this.InterfaceOptions = options.InterfaceOptions;
             this.UiOptions = options.UiOptions; 
+        }
+
+        public void EnableDependencyInjection(params Assembly[] assemblies) 
+        {
+            new DependencInitialization().Init(assemblies);
         }
 
         /// <summary>
