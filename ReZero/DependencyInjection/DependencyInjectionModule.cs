@@ -17,7 +17,7 @@ namespace ReZero.DependencyInjection
             foreach (var type in types)
             {
                 var interfaces = type.GetInterfaces();
-                var interfacesNoRezero = type.GetInterfaces().Where(it => !it.FullName.StartsWith("ReZero"));
+                var interfacesNoRezero = type.GetInterfaces().Where(it => !it.FullName.StartsWith("ReZero."));
                 foreach (var @interface in interfaces)
                 {
                     if (@interface == typeof(ITransientContract))
