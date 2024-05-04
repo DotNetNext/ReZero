@@ -13,7 +13,6 @@
 		<copyright>Copyright 2016</copyright>
 		<tags>rezero api 包含UI </tags>
 		<dependencies>
-			<dependency id="SqlSugarCore" version="5.1.4.154" />
 			<dependency id="Rezero" version="1.0.37" />
 		</dependencies>
 		<contentFiles>
