@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextTemplateTest", "TextTem
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{1032E893-22CF-4883-8857-049526541333}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjectionTest", "DependencyInjectionTest\DependencyInjectionTest.csproj", "{E7355DEA-E652-4C6A-960C-CECF4B4EB673}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DE5AE4AE-44E0-496C-806B-581C052A259B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,9 +41,19 @@ Global
 		{EA58EB55-47DD-44FD-A12A-0231F97F06C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA58EB55-47DD-44FD-A12A-0231F97F06C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA58EB55-47DD-44FD-A12A-0231F97F06C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7355DEA-E652-4C6A-960C-CECF4B4EB673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7355DEA-E652-4C6A-960C-CECF4B4EB673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7355DEA-E652-4C6A-960C-CECF4B4EB673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7355DEA-E652-4C6A-960C-CECF4B4EB673}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A04287D1-F1AF-4102-924A-A9EB3B9B7A66} = {1032E893-22CF-4883-8857-049526541333}
+		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C} = {1032E893-22CF-4883-8857-049526541333}
+		{EA58EB55-47DD-44FD-A12A-0231F97F06C5} = {1032E893-22CF-4883-8857-049526541333}
+		{E7355DEA-E652-4C6A-960C-CECF4B4EB673} = {1032E893-22CF-4883-8857-049526541333}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C3ACCBAF-6C08-4037-A398-1D5A9188B7E9}
