@@ -20,6 +20,6 @@ namespace ReZero
         /// <summary>
         /// Gets or sets the options for the DependencyInjection.
         /// </summary>
-        public DependencyInjectionOptions DependencyInjectionOptions { get; set; } = new DependencyInjectionOptions();
+        public ReZero.DependencyInjection.DependencyInjectionOptions DependencyInjectionOptions { get; set; } = new ReZero.DependencyInjection.DependencyInjectionOptions();
     }
 }
