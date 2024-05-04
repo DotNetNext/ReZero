@@ -17,7 +17,8 @@ namespace DependencyInjectionTest.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public object Get()
         {
-            var class1=DependencyResolver.GetService<IClass1>();
+            var class1=DependencyResolver.GetService<Class1>();
+            var class2 = DependencyResolver.GetService<IClass1>();
             return 1;
         }
     }

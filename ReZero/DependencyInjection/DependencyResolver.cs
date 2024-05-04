@@ -8,7 +8,7 @@ namespace ReZero.DependencyInjection
 {
     public class DependencyResolver
     {
-        public static ServiceProvider? Provider { get => ServiceLocator.Provider; }
+        public static ServiceProvider? Provider { get => ServiceLocator.Services!.BuildServiceProvider(); }
 
         public static T GetService<T>()
         {
