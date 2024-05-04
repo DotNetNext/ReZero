@@ -129,7 +129,7 @@ builder.Services.AddReZeroServices(api =>
 
 # 六、功能预览
 ![输入图片说明](READMEIMG/21.png)
-![输入图片说明](READMEIMG/22.png)
+![输入图片说明](READMEIMG/22.png) 
 ![输入图片说明](READMEIMG/23.png)
 ![输入图片说明](READMEIMG/24.png)
 
