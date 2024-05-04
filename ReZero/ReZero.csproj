@@ -9,14 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AssemblyModuleSetup\新文件夹\**" />
     <Compile Remove="SuperAPI\DatabseModels\Public\**" />
     <Compile Remove="SuperAPI\DatabseModels\Table\**" />
     <Compile Remove="SuperAPI\Entities\DTO\**" />
     <Compile Remove="VueTemplate\**" />
+    <EmbeddedResource Remove="AssemblyModuleSetup\新文件夹\**" />
     <EmbeddedResource Remove="SuperAPI\DatabseModels\Public\**" />
     <EmbeddedResource Remove="SuperAPI\DatabseModels\Table\**" />
     <EmbeddedResource Remove="SuperAPI\Entities\DTO\**" />
     <EmbeddedResource Remove="VueTemplate\**" />
+    <None Remove="AssemblyModuleSetup\新文件夹\**" />
     <None Remove="SuperAPI\DatabseModels\Public\**" />
     <None Remove="SuperAPI\DatabseModels\Table\**" />
     <None Remove="SuperAPI\Entities\DTO\**" />
