@@ -10,20 +10,24 @@ namespace ReZero.DependencyInjection
     public class DependencyResolver
     {
         public static ServiceProvider? Provider { get => ServiceLocator.Services!.BuildServiceProvider(); }
-
+        public static IHttpContextAccessor? httpContextAccessor = null;
         public static T GetService<T>()
         {
             return Provider!.GetService<T>();
         }
         public static T GetHttpContextService<T>()
         {
-            if (Provider!.GetService<IHttpContextAccessor>()?.HttpContext == null) 
+            if (httpContextAccessor == null)
             {
-                throw new Exception("Requires builder.Services.AddHttpContextAccessor()");
+                if (Provider!.GetService<IHttpContextAccessor>()?.HttpContext == null)
+                {
+                    throw new Exception("Requires builder.Services.AddHttpContextAccessor()");
+                }
+                httpContextAccessor = Provider!.GetService<IHttpContextAccessor>();
             }
-            return Provider!.GetService<IHttpContextAccessor>()!.HttpContext!.RequestServices!.GetService<T>();
+            return httpContextAccessor!.HttpContext!.RequestServices!.GetService<T>();
         }
-        public static T GetRequiredService<T>() where T:class
+        public static T GetRequiredService<T>() where T : class
         {
             return Provider?.GetRequiredService<T>();
         }
@@ -36,6 +40,6 @@ namespace ReZero.DependencyInjection
         {
             using var scope = Provider?.CreateScope();
             return scope?.ServiceProvider?.GetRequiredService<T>();
-        } 
+        }
     }
 }
