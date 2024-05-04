@@ -11,11 +11,11 @@ namespace ReZero.DependencyInjection
     {
         public static ServiceProvider? Provider { get => ServiceLocator.Services!.BuildServiceProvider(); }
         public static IHttpContextAccessor? httpContextAccessor = null;
-        public static T GetService<T>()
+        public static T GetService<T>() where T : class
         {
             return Provider!.GetService<T>();
         }
-        public static T GetHttpContextService<T>()
+        public static T GetHttpContextService<T>() where T : class
         {
             if (httpContextAccessor == null)
             {
@@ -27,7 +27,7 @@ namespace ReZero.DependencyInjection
             }
             return httpContextAccessor!.HttpContext!.RequestServices!.GetService<T>();
         }
-        public static T GetHttpContextRequiredService<T>()
+        public static T GetHttpContextRequiredService<T>() where T : class
         {
             if (httpContextAccessor == null)
             {
