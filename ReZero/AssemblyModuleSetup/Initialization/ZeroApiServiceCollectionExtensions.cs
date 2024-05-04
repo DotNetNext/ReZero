@@ -25,6 +25,7 @@ namespace ReZero
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, Action<SuperAPIOptions> superAPIOptions)
         {
             var options = new ReZeroOptions();
+            ServiceLocator.Provider = services.BuildServiceProvider();
             superAPIOptions(options.SuperApiOptions);
             return services.AddReZeroServices(options);
         }
