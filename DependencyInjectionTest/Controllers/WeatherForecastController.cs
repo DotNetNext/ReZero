@@ -15,7 +15,7 @@ namespace DependencyInjectionTest.Controllers
         {
             var class1=DependencyResolver.GetHttpContextService<Class1>();
             var class2 = DependencyResolver.GetHttpContextService<Class1>();
-            return 1;
+            return  class1.GetHashCode()+"_"+class2.GetHashCode()  ;
         }
     }
 }
