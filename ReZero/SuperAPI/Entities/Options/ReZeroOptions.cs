@@ -42,7 +42,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Gets or sets the database configuration options.
         /// </summary>
-        public DatabaseOptions DatabaseOptions { get; set; } = new DatabaseOptions();
+        public DatabaseOptions? DatabaseOptions { get; set; }  
 
 
         public InterfaceOptions InterfaceOptions { get; set; } = new InterfaceOptions();

@@ -61,6 +61,10 @@ namespace ReZero.SuperAPI
         /// <param name="options">ReZero options.</param>
         private static void InitializeDataBase(SuperAPIOptions options)
         {
+            if (options.DatabaseOptions == null) 
+            {
+                options.DatabaseOptions = new DatabaseOptions();
+            }
             if (options.DatabaseOptions!.InitializeTables == false)
             {
                 return;
