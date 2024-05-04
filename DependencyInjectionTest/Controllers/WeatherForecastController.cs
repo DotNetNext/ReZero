@@ -7,8 +7,12 @@ namespace DependencyInjectionTest.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        [PropertyInjection]
-        public Class2? Class2 { get; set; }
+        Class2 class2;
+        public WeatherForecastController(Class2 class2) 
+        {
+            this.class2 = class2;
+        }
+         
 
         [HttpGet(Name = "GetWeatherForecast")]
         public object Get()
