@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 
@@ -25,6 +26,20 @@ namespace ReZero.SuperAPI
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
                 AddTransientServices(services, _apiOptions);
+                //Supper API Register external services
+                AddDependencyInjection(options);
+            }
+        }
+
+        private static void AddDependencyInjection(ReZeroOptions options)
+        {
+            if (options.DependencyInjectionOptions?.Assembly == null)
+            {
+                if (options.DependencyInjectionOptions == null) 
+                {
+                    options.DependencyInjectionOptions = new DependencyInjection.DependencyInjectionOptions();
+                }
+                options.DependencyInjectionOptions!.Assembly = _apiOptions?.DependencyInjectionOptions?.Assembly;
             }
         }
 

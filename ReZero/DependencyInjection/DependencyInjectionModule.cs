@@ -8,8 +8,12 @@ namespace ReZero.DependencyInjection
     public class DependencyInjectionModule
     {
         public static void Init(IServiceCollection services, ReZeroOptions options)
-        { 
-            var types = options.DependencyInjectionOptions.assembly.SelectMany(it=>it.GetTypes()).Where(type => !type.IsAbstract && !type.IsInterface);
+        {
+            if (options.DependencyInjectionOptions?.Assembly?.Any()!=true) 
+            {
+                return;
+            }
+            var types = options.DependencyInjectionOptions.Assembly.SelectMany(it=>it.GetTypes()).Where(type => !type.IsAbstract && !type.IsInterface);
             foreach (var type in types)
             {
                 var interfaces = type.GetInterfaces();

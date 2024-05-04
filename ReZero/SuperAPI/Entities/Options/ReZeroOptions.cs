@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using ReZero.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http; 
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -25,12 +24,12 @@ namespace ReZero.SuperAPI
             this.InterfaceOptions = options.InterfaceOptions;
             this.UiOptions = options.UiOptions;
         }
-        public void EnableSuperApi(SuperAPIOptions  options)
+        public void EnableSuperApi(SuperAPIOptions options)
         {
             IsEnableSuperAPI = true;
             this.DatabaseOptions = options.DatabaseOptions;
             this.InterfaceOptions = options.InterfaceOptions;
-            this.UiOptions = options.UiOptions; 
+            this.UiOptions = options.UiOptions;
         }
 
         /// <summary>
@@ -45,14 +44,21 @@ namespace ReZero.SuperAPI
 
 
         public InterfaceOptions InterfaceOptions { get; set; } = new InterfaceOptions();
-         
+
+        /// <summary>
+        /// Gets or sets the options for the DependencyInjection.
+        /// </summary>
+        public DependencyInjectionOptions DependencyInjectionOptions { get; set; } = new DependencyInjectionOptions();
 
         /// <summary>
         /// Gets or sets the UI configuration options.
         /// </summary>
         public UiOptions UiOptions { get; set; } = new UiOptions();
     }
-
+    public class DependencyInjectionOptions
+    {
+        public Assembly[]? Assembly { get;  set; }
+    }
     public class InterfaceOptions 
     {
         public string? AuthorizationLocalStorageName { get; set; } = "RezeroLocalStorage";
