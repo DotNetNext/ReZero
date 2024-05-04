@@ -21,7 +21,8 @@ namespace ReZero.SuperAPI
             SuperAPIOptions options = new SuperAPIOptions();
             IsEnableSuperAPI = true;
             this.DatabaseOptions = options.DatabaseOptions;
-            this.InterfaceOptions = options.InterfaceOptions;
+            this.InterfaceOptions = options.InterfaceOptions; 
+            this.DependencyInjectionOptions = options.DependencyInjectionOptions;
             this.UiOptions = options.UiOptions;
         }
         public void EnableSuperApi(SuperAPIOptions options)
@@ -29,6 +30,7 @@ namespace ReZero.SuperAPI
             IsEnableSuperAPI = true;
             this.DatabaseOptions = options.DatabaseOptions;
             this.InterfaceOptions = options.InterfaceOptions;
+            this.DependencyInjectionOptions = options.DependencyInjectionOptions;
             this.UiOptions = options.UiOptions;
         }
 

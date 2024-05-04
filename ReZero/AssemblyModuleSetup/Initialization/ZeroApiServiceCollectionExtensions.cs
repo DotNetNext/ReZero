@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReZero.DependencyInjection;
 using ReZero.SuperAPI;
 using System;
-
+using System.Linq;
 namespace ReZero 
 {
 
@@ -38,7 +38,7 @@ namespace ReZero
         }
         internal static void AddDependencyInjection(ReZeroOptions options, SuperAPIOptions superAPIOptions)
         {
-            if (options.DependencyInjectionOptions?.Assembly == null)
+            if (options.DependencyInjectionOptions?.Assembly?.Any()!=true)
             {
                 if (options.DependencyInjectionOptions == null)
                 {
