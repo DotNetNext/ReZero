@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Rezero.Api</id>
-		<version>1.0.36</version>
+		<version>1.0.37</version>
 		<authors>sunkaixuan</authors>
 		<owners>果糖大数据科技</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
@@ -12,8 +12,9 @@
 		<description> 从零开始 </description>
 		<copyright>Copyright 2016</copyright>
 		<tags>rezero api 包含UI </tags>
-		<dependencies> 
-			<dependency id="Rezero" version="1.0.36" />
+		<dependencies>
+			<dependency id="SqlSugarCore" version="5.1.4.154" />
+			<dependency id="Rezero" version="1.0.37" />
 		</dependencies>
 		<contentFiles>
 			<files include="any/any/wwwroot/rezero/**" buildAction="None" copyToOutput="true" flatten="false" />

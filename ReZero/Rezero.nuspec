@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Rezero</id>
-		<version>1.0.36</version>
+		<version>1.0.37</version>
 		<authors>sunkaixuan</authors>
 		<owners>果糖大数据科技</owners>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
@@ -13,7 +13,6 @@
 		<copyright>Copyright 2016</copyright>
 		<tags>rezero 核心库 不包含UI</tags>
 		<dependencies>
-			<dependency id="SqlSugarCore" version="5.1.4.154" />
 			<dependency id="System.Linq.Dynamic.Core" version="1.3.13" />
 		</dependencies> 
 	</metadata>
