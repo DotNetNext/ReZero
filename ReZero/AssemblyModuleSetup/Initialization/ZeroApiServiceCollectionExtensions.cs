@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
+using ReZero.DependencyInjection;
 using ReZero.SuperAPI;
 using System;
 
@@ -18,6 +19,7 @@ namespace ReZero
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
         {
             SuperAPIModule.Init(services, options);
+            DependencyInjectionModule.Init(services, options);
             return services;
         }
 

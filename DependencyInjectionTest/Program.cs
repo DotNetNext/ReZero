@@ -14,11 +14,9 @@ builder.Services.AddSwaggerGen();
 //Register: Register the super API service
 builder.Services.AddHttpContextAccessor();
 //注册：注册超级API服务
-builder.Services.AddReZeroServices(api =>
-{ 
-    //启用IOC
-   api.EnableDependencyInjection(typeof(Program).Assembly);
-
+builder.Services.AddReZeroServices(new ReZeroOptions()
+{
+    DependencyInjectionOptions = new DependencyInjectionOptions(typeof(Program).Assembly)
 });
 var app = builder.Build();
 

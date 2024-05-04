@@ -33,11 +33,6 @@ namespace ReZero.SuperAPI
             this.UiOptions = options.UiOptions; 
         }
 
-        public void EnableDependencyInjection(params Assembly[] assemblies) 
-        {
-            new DependencInitialization().Init(assemblies);
-        }
-
         /// <summary>
         /// Enable super api
         /// </summary>
