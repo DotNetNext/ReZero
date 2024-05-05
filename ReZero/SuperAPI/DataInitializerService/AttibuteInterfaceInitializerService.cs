@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
             var url = methodAttribute.Url ?? $"/api/{classAttribute.InterfaceCategoryId}/{type.Name?.ToLower()}/{method.Name?.ToLower()}";
             var methodDesc = methodAttribute.Description ?? string.Empty;
             ZeroInterfaceList it = new ZeroInterfaceList();
-            it.HttpMethod = HttpRequestMethod.All.ToString();
+            it.HttpMethod = methodAttribute.HttpMethod.ToString();
             it.Id = SnowFlakeSingle.Instance.NextId();
             it.GroupName = groupName;
             it.InterfaceCategoryId = classAttribute.InterfaceCategoryId;

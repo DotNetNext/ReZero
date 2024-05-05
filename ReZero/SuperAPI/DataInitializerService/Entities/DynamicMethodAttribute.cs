@@ -18,10 +18,10 @@ namespace ReZero.SuperAPI
         }
     }
     public enum HttpType
-    {
-        Get,
-        Post,
-        Put,
-        Delete
+    { 
+        Post=0,
+        Get=1,
+        Put=2,
+        Delete=3
     }
 }
