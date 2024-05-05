@@ -1,11 +1,11 @@
-﻿using ReZero.SuperAPI;
-using ReZero.SuperAPI.ApiDynamic.Entities;
+﻿using ReZero.SuperAPI; 
 namespace SuperAPITest.Controllers
 {
-    [DynamicApi(21000)]
+ 
+    [Api(21000, Description ="哈哈")]
     public class MyApiController
-    {
-        [DynamicMethod()]
+    { 
+        [ApiMethod()]
         public int A(int i) 
         {
             return 1;

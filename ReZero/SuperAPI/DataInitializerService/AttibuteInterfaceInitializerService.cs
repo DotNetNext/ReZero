@@ -1,13 +1,59 @@
-﻿using ReZero.SuperAPI.ApiDynamic.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Linq;
-namespace ReZero.SuperAPI 
+using SqlSugar;
+using System.Reflection.Emit;
+namespace ReZero.SuperAPI
 {
     public class AttibuteInterfaceInitializerService
     {
+        internal static ZeroInterfaceList GetZeroInterfaceItem(Type type, MethodInfo method)
+        {
+            var classAttribute = type.GetCustomAttribute<ApiAttribute>();
+            var methodAttribute = type.GetCustomAttribute<ApiMethodAttribute>();
+            var url = "";
+            var methodDesc = "";
+            ZeroInterfaceList it = new ZeroInterfaceList(); 
+            it.HttpMethod = HttpRequestMethod.All.ToString();
+            it.Id = SnowFlakeSingle.Instance.NextId();
+            it.GroupName = nameof(ZeroInterfaceList);
+            it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+            it.Name = TextHandler.GetInterfaceListText(methodDesc);
+            it.Url = url;
+            it.DataModel = new DataModel()
+            {
+                TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
+                ActionType = ActionType.MethodGeneratorAPI,
+                MyMethodInfo = new MyMethodInfo()
+                {
+                    MethodArgsCount = method.GetGenericArguments().Count(),
+                    MethodClassFullName = type.FullName,
+                    MethodName = method.Name
+                } 
+            }; 
+            return it;
+        }
+        internal static void InitDynamicAttributeApi(List<Type>? types)
+        {
+            types = AttibuteInterfaceInitializerService.GetTypesWithDynamicApiAttribute(types ?? new List<Type>());
+            List<ZeroInterfaceList> zeroInterfaceLists = new List<ZeroInterfaceList>();
+            foreach (var type in types)
+            {
+                var methods = AttibuteInterfaceInitializerService.GetMethodsWithDynamicMethodAttribute(type);
+                if (methods.Any())
+                {
+                    foreach (var method in methods)
+                    {
+                        var addItem = AttibuteInterfaceInitializerService.GetZeroInterfaceItem(type, method);
+                        zeroInterfaceLists.Add(addItem);
+                    }
+                }
+            }
+            App.Db.Insertable(zeroInterfaceLists).ExecuteCommand();
+        }
+
         /// <summary>
         /// Get the list of types with the DynamicApiAttribute
         /// </summary>
@@ -20,7 +66,7 @@ namespace ReZero.SuperAPI
             foreach (var type in types)
             {
                 // Check if the type has the DynamicApiAttribute
-                if (type.GetCustomAttributes(typeof(DynamicApiAttribute), true).Length > 0)
+                if (type.GetCustomAttributes(typeof(ApiAttribute), true).Length > 0)
                 {
                     typesWithDynamicApiAttribute.Add(type);
                 }
@@ -43,37 +89,13 @@ namespace ReZero.SuperAPI
 
             foreach (var method in methods)
             {
-                if (method.GetCustomAttributes(typeof(DynamicMethodAttribute), true).Length > 0)
+                if (method.GetCustomAttributes(typeof(ApiMethodAttribute), true).Length > 0)
                 {
                     methodsWithDynamicMethodAttribute.Add(method);
                 }
             }
 
             return methodsWithDynamicMethodAttribute;
-        }
-
-        internal static ZeroInterfaceList GetZeroInterfaceItem(Type type, MethodInfo method)
-        {
-            ZeroInterfaceList result = new ZeroInterfaceList();
-            return result;
-        } 
-        public static void InitDynamicAttributeApi(List<Type>? types)
-        {
-            types = AttibuteInterfaceInitializerService.GetTypesWithDynamicApiAttribute(types ?? new List<Type>());
-            List<ZeroInterfaceList> zeroInterfaceLists = new List<ZeroInterfaceList>();
-            foreach (var type in types)
-            {
-                var methods = AttibuteInterfaceInitializerService.GetMethodsWithDynamicMethodAttribute(type);
-                if (methods.Any())
-                {
-                    foreach (var method in methods)
-                    {
-                        var addItem = AttibuteInterfaceInitializerService.GetZeroInterfaceItem(type, method);
-                        zeroInterfaceLists.Add(addItem);
-                    }
-                }
-            }
-            App.Db.Insertable(zeroInterfaceLists).ExecuteCommand();
         }
     }
 }

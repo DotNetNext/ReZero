@@ -5,34 +5,34 @@ using System.Text;
 namespace ReZero.SuperAPI 
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class DynamicMethodAttribute : Attribute
+    public class ApiMethodAttribute : Attribute
     {
         private string url { get; set; }
         private long InterfaceCategoryId { get; set; }
         private string GroupName { get; set; }
-        public DynamicMethodAttribute(string url,long interfaceCategoryId, string groupName) 
+        public ApiMethodAttribute(string url, long interfaceCategoryId, string groupName)
         {
             this.url = url;
-            this.InterfaceCategoryId = interfaceCategoryId;
-            this.GroupName = groupName; 
+            InterfaceCategoryId = interfaceCategoryId;
+            GroupName = groupName;
         }
         public DynamicMethodAttribute(string url, long interfaceCategoryId)
         {
             this.url = url;
-            this.InterfaceCategoryId = interfaceCategoryId;
-            this.GroupName =string.Empty;
+            InterfaceCategoryId = interfaceCategoryId;
+            GroupName = string.Empty;
         }
         public DynamicMethodAttribute(string url)
         {
             this.url = url;
-            this.InterfaceCategoryId = 0;
-            this.GroupName = string.Empty;
+            InterfaceCategoryId = 0;
+            GroupName = string.Empty;
         }
         public DynamicMethodAttribute()
         {
-            this.url = string.Empty;
-            this.InterfaceCategoryId = 0;
-            this.GroupName = string.Empty;
+            url = string.Empty;
+            InterfaceCategoryId = 0;
+            GroupName = string.Empty;
         }
     }
 }
