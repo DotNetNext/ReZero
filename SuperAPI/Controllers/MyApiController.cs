@@ -1,6 +1,9 @@
 ﻿using ReZero.SuperAPI; 
 namespace SuperAPITest.Controllers
 { 
+    /// <summary>
+    /// 动态接口
+    /// </summary>
     [Api(200100)]
     public class MyApiController
     { 
