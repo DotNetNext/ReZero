@@ -1,11 +1,10 @@
 ﻿using ReZero.SuperAPI; 
 namespace SuperAPITest.Controllers
-{
- 
-    [Api(21000, Description ="哈哈")]
+{ 
+    [Api(21000)]
     public class MyApiController
     { 
-        [ApiMethod()]
+        [ApiMethod("我是A方法")]
         public int A(int i) 
         {
             return 1;

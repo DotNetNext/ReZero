@@ -7,32 +7,12 @@ namespace ReZero.SuperAPI
     [AttributeUsage(AttributeTargets.Method)]
     public class ApiMethodAttribute : Attribute
     {
-        private string url { get; set; }
-        private long InterfaceCategoryId { get; set; }
-        private string GroupName { get; set; }
-        public ApiMethodAttribute(string url, long interfaceCategoryId, string groupName)
+        public string? Url { get; set; }
+        public string? GroupName { get; set; }
+        internal string? Description { get; set; } 
+        public ApiMethodAttribute(string description) 
         {
-            this.url = url;
-            InterfaceCategoryId = interfaceCategoryId;
-            GroupName = groupName;
-        }
-        public ApiMethodAttribute(string url, long interfaceCategoryId)
-        {
-            this.url = url;
-            InterfaceCategoryId = interfaceCategoryId;
-            GroupName = string.Empty;
-        }
-        public ApiMethodAttribute(string url)
-        {
-            this.url = url;
-            InterfaceCategoryId = 0;
-            GroupName = string.Empty;
-        }
-        public ApiMethodAttribute()
-        {
-            url = string.Empty;
-            InterfaceCategoryId = 0;
-            GroupName = string.Empty;
+            this.Description = description;
         }
     }
 }
