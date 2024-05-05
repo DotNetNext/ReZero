@@ -41,26 +41,42 @@ namespace ReZero.SuperAPI
             {
                 DataModelDefaultParameter dataModelDefaultParameter = new DataModelDefaultParameter();
                 dataModelDefaultParameter.Name= item.Name;
-                if (IsDefaultType(item))
+                if (IsDefaultType(item.ParameterType))
                 {
                     dataModelDefaultParameter.ValueType = item.ParameterType.Name;
                 }
-                else if (item.ParameterType == typeof(byte[])) 
+                else if (item.ParameterType == typeof(byte[]))
                 {
-                    dataModelDefaultParameter.ValueType = "ByteArray";
+                    dataModelDefaultParameter.ValueType = "Byte[]";
                 }
-                else
+                else if (IsObject(item.ParameterType))
                 {
                     dataModelDefaultParameter.ValueType = "Json";
+                    object obj = Activator.CreateInstance(item.ParameterType);
+                    dataModelDefaultParameter.Value = new SerializeService().SerializeObject(obj);
+                }
+                else if (method.GetParameters().Count() == 1)
+                {
+                    var paramters = item.ParameterType.GetProperties();
+                    foreach (var p in paramters)
+                    {
+
+                    }
+                }
+                else 
+                {
+                    dataModelDefaultParameter.ValueType = "Json";
+                    object obj = Activator.CreateInstance(item.ParameterType);
+                    dataModelDefaultParameter.Value = new SerializeService().SerializeObject(obj);
                 }
                 it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
             }
             return it;
         }
 
-        private static bool IsDefaultType(ParameterInfo item)
+        private static bool IsDefaultType(Type type)
         {
-            return item.ParameterType.IsValueType || item.ParameterType == typeof(string);
+            return type.IsValueType || type == typeof(string);
         }
 
         internal static void InitDynamicAttributeApi(List<Type>? types)
@@ -128,6 +144,11 @@ namespace ReZero.SuperAPI
             }
 
             return methodsWithDynamicMethodAttribute;
+        }
+
+        private static bool IsObject(Type type)
+        {
+            return (type.IsArray || type.FullName.StartsWith("System.Collections.Generic.List"));
         }
     }
 }
