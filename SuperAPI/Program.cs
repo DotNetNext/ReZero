@@ -34,7 +34,7 @@ builder.Services.AddReZeroServices(api =>
         //启用IOC: 注入IOC所需要的所有程序集 
         DependencyInjectionOptions=new DependencyInjectionOptions(Assembly
                                          .GetExecutingAssembly()
-                                         //根据条件过滤
+                                         //根据条件过滤这儿只用到一个类库
                                          .GetAllDependentAssemblies(it =>it.Contains("SuperAPITest")) 
                                          .ToArray())
     }); 
