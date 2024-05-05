@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using ReZero.SuperAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +16,10 @@ namespace ReZero.DependencyInjection
         /// <param name="classType">The type of the class to create an instance of.</param>
         /// <param name="nonPublic">Specifies whether to include non-public constructors.</param>
         /// <returns>The created instance of the class.</returns>
-        internal static object CreateInstance(Type? classType, bool nonPublic)
+        internal static object CreateInstance(Type classType, bool nonPublic)
         {
-            var isIoc = false;
-            foreach (var item in classType!.GetConstructors())
-            {
-                if (item.GetParameters().Any(it => it.ParameterType.GetInterfaces().Any(i => typeof(IDependencyInjection) == i)))
-                {
-                    isIoc = true; break;
-                }
-            }
-            if (isIoc)
+           
+            if (classType.GetCustomAttribute<ApiAttribute>()!=null)
             {
                 return DependencyResolver.Provider!.GetService(classType);
             }
