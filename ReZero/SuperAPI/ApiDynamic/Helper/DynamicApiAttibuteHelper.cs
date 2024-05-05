@@ -51,5 +51,11 @@ namespace ReZero.SuperAPI
 
             return methodsWithDynamicMethodAttribute;
         }
+
+        internal static ZeroInterfaceList GetZeroInterfaceItem(Type type, MethodInfo method)
+        {
+            ZeroInterfaceList result = new ZeroInterfaceList();
+            return result;
+        }
     }
 }

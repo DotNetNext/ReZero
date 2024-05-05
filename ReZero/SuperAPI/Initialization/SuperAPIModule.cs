@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
-
+using System.Linq;
 namespace ReZero.SuperAPI
 {
     public static partial class SuperAPIModule
@@ -24,9 +24,37 @@ namespace ReZero.SuperAPI
                 InitZeroStaticFileMiddleware();
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
-                AddTransientServices(services, _apiOptions); 
+                AddTransientServices(services, _apiOptions);
+                InitDynamicAttributeApi();
             }
-        }  
+        }
+
+        private static void InitDynamicAttributeApi()
+        {
+            if (_apiOptions?.DependencyInjectionOptions?.Assemblies?.Any() != true) 
+            {
+                return;
+            }
+            var types = _apiOptions?
+                        .DependencyInjectionOptions
+                        .Assemblies!
+                        .SelectMany(it => it.GetTypes()).ToList();
+            types = DynamicApiAttibuteHelper.GetTypesWithDynamicApiAttribute(types??new List<Type>());
+            List<ZeroInterfaceList> zeroInterfaceLists = new List<ZeroInterfaceList>();
+            foreach (var type in types)
+            {
+                var methods = DynamicApiAttibuteHelper.GetMethodsWithDynamicMethodAttribute(type);
+                if (methods.Any()) 
+                {
+                    foreach (var method in methods)
+                    {
+                        var addItem=DynamicApiAttibuteHelper.GetZeroInterfaceItem(type,method);
+                        zeroInterfaceLists.Add(addItem);
+                    }
+                }
+            }
+            App.Db.Insertable(zeroInterfaceLists).ExecuteCommand();
+        }
 
         /// <summary>
         /// Initializes ZeroStaticFileMiddleware.

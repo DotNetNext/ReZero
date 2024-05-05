@@ -5,7 +5,7 @@ namespace SuperAPITest.Controllers
     [DynamicApi(21000)]
     public class MyApiController
     {
-        [DynamicMethod("/aa/yyy")]
+        [DynamicMethod()]
         public int A(int i) 
         {
             return 1;

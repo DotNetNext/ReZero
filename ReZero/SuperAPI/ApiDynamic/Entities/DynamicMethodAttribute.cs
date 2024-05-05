@@ -28,5 +28,11 @@ namespace ReZero.SuperAPI
             this.InterfaceCategoryId = 0;
             this.GroupName = string.Empty;
         }
+        public DynamicMethodAttribute()
+        {
+            this.url = string.Empty;
+            this.InterfaceCategoryId = 0;
+            this.GroupName = string.Empty;
+        }
     }
 }
