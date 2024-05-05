@@ -5,7 +5,7 @@ using System.Text;
 namespace ReZero.DependencyInjection
 {
 
-    public interface ISingletonContract
+    public interface ISingletonContract: IDependencyInjection
     {
     }
 }

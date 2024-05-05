@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ReZero.DependencyInjection 
 {
-    public interface ITransientContract
+    public interface ITransientContract: IDependencyInjection
     {
     } 
 }
