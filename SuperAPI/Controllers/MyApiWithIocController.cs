@@ -2,7 +2,7 @@
 using ReZero.SuperAPI;
 namespace SuperAPITest.Controllers
 {
-    [Api(200100)]
+    [Api(200100,GroupName = "分组1")]
     public class MyApiWithIocController
     {
         MyService MyService;

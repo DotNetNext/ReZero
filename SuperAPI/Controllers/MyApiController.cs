@@ -4,7 +4,7 @@ namespace SuperAPITest.Controllers
     /// <summary>
     /// 动态接口
     /// </summary>
-    [Api(200100)]
+    [Api(200100, GroupName = "分组2")]
     public class MyApiController
     { 
         [ApiMethod("我是A方法")]
