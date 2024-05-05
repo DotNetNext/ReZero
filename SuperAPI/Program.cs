@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Forms;
 using ReZero;
 using ReZero.SuperAPI;
 using SuperAPITest;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -28,8 +30,9 @@ builder.Services.AddReZeroServices(api =>
         InterfaceOptions = new InterfaceOptions()
         { 
             SuperApiAop = new JwtAop()//ÊÚÈ¨À¹½ØÆ÷
-        }
-    }); ;
+        },
+        DependencyInjectionOptions=new DependencyInjectionOptions(Assembly.GetExecutingAssembly())
+    }); 
 
 });
  
