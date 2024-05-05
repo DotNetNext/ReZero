@@ -31,7 +31,12 @@ builder.Services.AddReZeroServices(api =>
         { 
             SuperApiAop = new JwtAop()//授权拦截器
         },
-        DependencyInjectionOptions=new DependencyInjectionOptions(Assembly.GetExecutingAssembly())
+        //启用IOC: 注入IOC所需要的所有程序集 
+        DependencyInjectionOptions=new DependencyInjectionOptions(Assembly
+                                         .GetExecutingAssembly()
+                                         //根据条件过滤
+                                         .GetAllDependentAssemblies(it =>it.Contains("SuperAPITest")) 
+                                         .ToArray())
     }); 
 
 });
