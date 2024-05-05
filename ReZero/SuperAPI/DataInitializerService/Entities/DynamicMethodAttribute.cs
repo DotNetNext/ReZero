@@ -16,19 +16,19 @@ namespace ReZero.SuperAPI
             InterfaceCategoryId = interfaceCategoryId;
             GroupName = groupName;
         }
-        public DynamicMethodAttribute(string url, long interfaceCategoryId)
+        public ApiMethodAttribute(string url, long interfaceCategoryId)
         {
             this.url = url;
             InterfaceCategoryId = interfaceCategoryId;
             GroupName = string.Empty;
         }
-        public DynamicMethodAttribute(string url)
+        public ApiMethodAttribute(string url)
         {
             this.url = url;
             InterfaceCategoryId = 0;
             GroupName = string.Empty;
         }
-        public DynamicMethodAttribute()
+        public ApiMethodAttribute()
         {
             url = string.Empty;
             InterfaceCategoryId = 0;
