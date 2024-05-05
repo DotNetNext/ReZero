@@ -14,7 +14,7 @@ namespace ReZero.SuperAPI
             var classAttribute = type.GetCustomAttribute<ApiAttribute>();
             var methodAttribute = method.GetCustomAttribute<ApiMethodAttribute>();
             var groupName = methodAttribute.GroupName ?? classAttribute.GroupName ?? type.Name;
-            var url = methodAttribute.Url??$"/api/{classAttribute.InterfaceCategoryId}/{type.Name?.ToLower()}/{method.Name?.ToLower()}";
+            var url = methodAttribute.Url ?? $"/api/{classAttribute.InterfaceCategoryId}/{type.Name?.ToLower()}/{method.Name?.ToLower()}";
             var methodDesc = methodAttribute.Description ?? string.Empty;
             ZeroInterfaceList it = new ZeroInterfaceList();
             it.HttpMethod = HttpRequestMethod.All.ToString();
@@ -37,13 +37,14 @@ namespace ReZero.SuperAPI
                 }
             };
             it.DataModel.DefaultParameters = new List<DataModelDefaultParameter>();
+            var isAdd = true;
             foreach (var item in method.GetParameters())
             {
                 DataModelDefaultParameter dataModelDefaultParameter = new DataModelDefaultParameter();
-                dataModelDefaultParameter.Name= item.Name;
+                dataModelDefaultParameter.Name = item.Name;
                 if (IsDefaultType(item.ParameterType))
                 {
-                    dataModelDefaultParameter.ValueType = item.ParameterType.Name;
+                    dataModelDefaultParameter.ValueType = item.ParameterType.GetNonNullableType().Name;
                 }
                 else if (item.ParameterType == typeof(byte[]))
                 {
@@ -52,31 +53,55 @@ namespace ReZero.SuperAPI
                 else if (IsObject(item.ParameterType))
                 {
                     dataModelDefaultParameter.ValueType = "Json";
-                    object obj = Activator.CreateInstance(item.ParameterType);
+                    object obj = Activator.CreateInstance(item.ParameterType); 
                     dataModelDefaultParameter.Value = new SerializeService().SerializeObject(obj);
                 }
                 else if (method.GetParameters().Count() == 1)
                 {
-                    var paramters = item.ParameterType.GetProperties();
-                    foreach (var p in paramters)
-                    {
-
-                    }
+                    isAdd = false;
+                    it.DataModel.MyMethodInfo.ArgsTypes = new Type[] {typeof(SingleModel) };
+                    var paramters = item.ParameterType.GetProperties();  
+                    AddSingleClassParameters(it, paramters);
                 }
-                else 
+                else
                 {
                     dataModelDefaultParameter.ValueType = "Json";
                     object obj = Activator.CreateInstance(item.ParameterType);
                     dataModelDefaultParameter.Value = new SerializeService().SerializeObject(obj);
                 }
-                it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
+                if (isAdd)
+                    it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
             }
             return it;
         }
 
+        private static void AddSingleClassParameters(ZeroInterfaceList it, PropertyInfo[] paramters)
+        {
+            foreach (var p in paramters)
+            {
+                DataModelDefaultParameter addItem = new DataModelDefaultParameter();
+                addItem.Name = p.Name;
+                if (IsDefaultType(p.PropertyType))
+                {
+                    addItem.ValueType = p.PropertyType.GetNonNullableType().Name;
+                }
+                else if (p.PropertyType == typeof(byte[]))
+                {
+                    addItem.ValueType = "Byte[]";
+                }
+                else
+                {
+                    addItem.ValueType = "Json";
+                    object obj = Activator.CreateInstance(p.PropertyType);
+                    addItem.Value = new SerializeService().SerializeObject(obj);
+                }
+                it!.DataModel!.DefaultParameters!.Add(addItem);
+            }
+        }
+
         private static bool IsDefaultType(Type type)
         {
-            return type.IsValueType || type == typeof(string);
+            return type.GetNonNullableType().IsValueType || type.GetNonNullableType() == typeof(string);
         }
 
         internal static void InitDynamicAttributeApi(List<Type>? types)

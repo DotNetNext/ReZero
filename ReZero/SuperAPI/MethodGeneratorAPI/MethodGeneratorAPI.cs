@@ -31,6 +31,10 @@ namespace ReZero.SuperAPI
             {
                 FillJObjectParameters(dataModel, methodInfo, parameters, argsTypes);
             }
+            else if (IsSingleModel(dataModel))
+            {
+                parameters = FillSingleModelParameters(dataModel, methodInfo);
+            }
             else
             {
                 FillDefaultParameters(dataModel, methodInfo, parameters, argsTypes);
@@ -44,6 +48,25 @@ namespace ReZero.SuperAPI
             {
                 return await Task.FromResult(result);
             }
+        }
+
+        private static object[] FillSingleModelParameters(DataModel dataModel, MethodInfo methodInfo)
+        {
+            object[] parameters;
+            var type = methodInfo.GetParameters().First().ParameterType;
+            var parameterOjb = Activator.CreateInstance(type, nonPublic: true);
+            foreach (var item in type!.GetProperties())
+            {
+                var p = dataModel.DefaultParameters.First(it => it.Name == item.Name);
+                item.SetValue(parameterOjb, UtilMethods.ChangeType2(p.Value, item.PropertyType));
+            }
+            parameters = new object[] { parameterOjb };
+            return parameters;
+        }
+
+        private static bool IsSingleModel(DataModel dataModel)
+        {
+            return dataModel.MyMethodInfo?.ArgsTypes?.Any(it => typeof(SingleModel) == it) == true;
         }
 
         private static Type? GetTypeByAttribute(DataModel dataModel, Type? classType)

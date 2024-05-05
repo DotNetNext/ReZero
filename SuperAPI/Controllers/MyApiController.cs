@@ -8,9 +8,9 @@ namespace SuperAPITest.Controllers
     public class MyApiController
     { 
         [ApiMethod("我是A方法")]
-        public int A(int num) 
+        public int A(int num,int num2) 
         {
-            return num;
+            return num+num2;
         }
 
         [ApiMethod("我是B方法")]
