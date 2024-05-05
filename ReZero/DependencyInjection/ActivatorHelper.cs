@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using ReZero.SuperAPI;
+using ReZero.SuperAPI; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +18,16 @@ namespace ReZero.DependencyInjection
         /// <returns>The created instance of the class.</returns>
         internal static object CreateInstance(Type classType, bool nonPublic)
         {
-           
             if (classType.GetCustomAttribute<ApiAttribute>()!=null)
             {
-                return DependencyResolver.Provider!.GetService(classType);
+                var p = DependencyResolver.Provider;
+                var result= p!.GetService(classType);
+                var diProperties = classType.GetProperties().Where(it => it.GetCustomAttribute<DIAttribute>() != null);
+                foreach (var item in diProperties)
+                {
+                    item.SetValue(result, p!.GetService(item.PropertyType));
+                } 
+                return result;
             }
             else
             {

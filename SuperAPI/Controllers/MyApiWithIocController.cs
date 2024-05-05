@@ -5,16 +5,14 @@ namespace SuperAPITest.Controllers
     [Api(200100,GroupName = "分组1")]
     public class MyApiWithIocController
     {
-        MyService MyService;
-        public MyApiWithIocController(MyService myService)
-        {
-            this.MyService = myService;
-        }
+        //属性注入
+        [DI]
+        public MyService? MyService { get; set; }
 
         [ApiMethod("我是A方法")]
         public int A(int num, int num2)
         {
-            return this.MyService.CalculateSum(num, num2);
+            return this.MyService!.CalculateSum(num, num2);
         }
     }
     public class MyService : IScopeContract
