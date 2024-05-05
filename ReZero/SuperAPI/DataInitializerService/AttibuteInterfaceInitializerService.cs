@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-
+using System.Linq;
 namespace ReZero.SuperAPI 
 {
-    public class DynamicApiAttibuteHelper
+    public class AttibuteInterfaceInitializerService
     {
         /// <summary>
         /// Get the list of types with the DynamicApiAttribute
@@ -56,6 +56,24 @@ namespace ReZero.SuperAPI
         {
             ZeroInterfaceList result = new ZeroInterfaceList();
             return result;
+        } 
+        public static void InitDynamicAttributeApi(List<Type>? types)
+        {
+            types = AttibuteInterfaceInitializerService.GetTypesWithDynamicApiAttribute(types ?? new List<Type>());
+            List<ZeroInterfaceList> zeroInterfaceLists = new List<ZeroInterfaceList>();
+            foreach (var type in types)
+            {
+                var methods = AttibuteInterfaceInitializerService.GetMethodsWithDynamicMethodAttribute(type);
+                if (methods.Any())
+                {
+                    foreach (var method in methods)
+                    {
+                        var addItem = AttibuteInterfaceInitializerService.GetZeroInterfaceItem(type, method);
+                        zeroInterfaceLists.Add(addItem);
+                    }
+                }
+            }
+            App.Db.Insertable(zeroInterfaceLists).ExecuteCommand();
         }
     }
 }

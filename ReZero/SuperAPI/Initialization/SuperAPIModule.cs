@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +31,7 @@ namespace ReZero.SuperAPI
 
         private static void InitDynamicAttributeApi()
         {
-            if (_apiOptions?.DependencyInjectionOptions?.Assemblies?.Any() != true) 
+            if (_apiOptions?.DependencyInjectionOptions?.Assemblies?.Any() != true)
             {
                 return;
             }
@@ -39,23 +39,8 @@ namespace ReZero.SuperAPI
                         .DependencyInjectionOptions
                         .Assemblies!
                         .SelectMany(it => it.GetTypes()).ToList();
-            types = DynamicApiAttibuteHelper.GetTypesWithDynamicApiAttribute(types??new List<Type>());
-            List<ZeroInterfaceList> zeroInterfaceLists = new List<ZeroInterfaceList>();
-            foreach (var type in types)
-            {
-                var methods = DynamicApiAttibuteHelper.GetMethodsWithDynamicMethodAttribute(type);
-                if (methods.Any()) 
-                {
-                    foreach (var method in methods)
-                    {
-                        var addItem=DynamicApiAttibuteHelper.GetZeroInterfaceItem(type,method);
-                        zeroInterfaceLists.Add(addItem);
-                    }
-                }
-            }
-            App.Db.Insertable(zeroInterfaceLists).ExecuteCommand();
-        }
-
+           AttibuteInterfaceInitializerService.InitDynamicAttributeApi(types);
+        } 
         /// <summary>
         /// Initializes ZeroStaticFileMiddleware.
         /// </summary>
