@@ -24,6 +24,8 @@ namespace ReZero.SuperAPI
         [SugarColumn(IsNullable =true)]
         public string? EasyDescription { get; set; }
         public bool IsInitialized { get; set; }
+        [SugarColumn(IsNullable =true)]
+        public bool IsAttributeMethod { get; set; }
     }
 
 }

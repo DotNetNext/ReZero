@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 
 namespace ReZero.SuperAPI 
@@ -9,6 +10,7 @@ namespace ReZero.SuperAPI
     {
         public string? Url { get; set; }
         public string? GroupName { get; set; }
+        public HttpMethod? HttpMethod { get; set; }
         internal string? Description { get; set; } 
         public ApiMethodAttribute(string description) 
         {

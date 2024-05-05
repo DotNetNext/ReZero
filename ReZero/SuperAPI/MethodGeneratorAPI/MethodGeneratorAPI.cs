@@ -22,6 +22,7 @@ namespace ReZero.SuperAPI
             if (dataModel.MyMethodInfo == null) return null;
 
             var classType = Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
+            classType = GetTypeByAttribute(dataModel, classType);
             var methodInfo = classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
             var classObj = Activator.CreateInstance(classType, nonPublic: true);
             object[] parameters = new object[methodInfo.GetParameters().Length];
@@ -43,6 +44,19 @@ namespace ReZero.SuperAPI
             {
                 return await Task.FromResult(result);
             }
+        }
+
+        private static Type? GetTypeByAttribute(DataModel dataModel, Type? classType)
+        {
+            if (classType == null)
+            {
+                var ass = SuperAPIModule._apiOptions?.DependencyInjectionOptions?.Assemblies;
+                if (ass?.Any() == true)
+                {
+                    classType = ass.Select(it => it.GetType(dataModel.MyMethodInfo?.MethodClassFullName)).Where(it => it != null).FirstOrDefault();
+                }
+            } 
+            return classType;
         }
 
         private void FillJObjectParameters(DataModel dataModel, MethodInfo methodInfo, object[] parameters, Type[]? argsTypes)

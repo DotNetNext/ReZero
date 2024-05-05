@@ -12,29 +12,57 @@ namespace ReZero.SuperAPI
         internal static ZeroInterfaceList GetZeroInterfaceItem(Type type, MethodInfo method)
         {
             var classAttribute = type.GetCustomAttribute<ApiAttribute>();
-            var methodAttribute = type.GetCustomAttribute<ApiMethodAttribute>();
-            var url = "";
-            var methodDesc = "";
-            ZeroInterfaceList it = new ZeroInterfaceList(); 
+            var methodAttribute = method.GetCustomAttribute<ApiMethodAttribute>();
+            var groupName = methodAttribute.GroupName ?? classAttribute.GroupName ?? type.Name;
+            var url = methodAttribute.Url??$"/api/{classAttribute.InterfaceCategoryId}/{type.Name?.ToLower()}/{method.Name?.ToLower()}";
+            var methodDesc = methodAttribute.Description ?? string.Empty;
+            ZeroInterfaceList it = new ZeroInterfaceList();
             it.HttpMethod = HttpRequestMethod.All.ToString();
             it.Id = SnowFlakeSingle.Instance.NextId();
-            it.GroupName = nameof(ZeroInterfaceList);
-            it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
-            it.Name = TextHandler.GetInterfaceListText(methodDesc);
+            it.GroupName = groupName;
+            it.InterfaceCategoryId = classAttribute.InterfaceCategoryId;
+            it.Name = methodDesc;
             it.Url = url;
+            it.IsInitialized = false;
+            it.IsAttributeMethod = true;
             it.DataModel = new DataModel()
             {
                 TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                 ActionType = ActionType.MethodGeneratorAPI,
                 MyMethodInfo = new MyMethodInfo()
                 {
-                    MethodArgsCount = method.GetGenericArguments().Count(),
+                    MethodArgsCount = method.GetParameters().Count(),
                     MethodClassFullName = type.FullName,
                     MethodName = method.Name
-                } 
-            }; 
+                }
+            };
+            it.DataModel.DefaultParameters = new List<DataModelDefaultParameter>();
+            foreach (var item in method.GetParameters())
+            {
+                DataModelDefaultParameter dataModelDefaultParameter = new DataModelDefaultParameter();
+                dataModelDefaultParameter.Name= item.Name;
+                if (IsDefaultType(item))
+                {
+                    dataModelDefaultParameter.ValueType = item.ParameterType.Name;
+                }
+                else if (item.ParameterType == typeof(byte[])) 
+                {
+                    dataModelDefaultParameter.ValueType = "ByteArray";
+                }
+                else
+                {
+                    dataModelDefaultParameter.ValueType = "Json";
+                }
+                it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
+            }
             return it;
         }
+
+        private static bool IsDefaultType(ParameterInfo item)
+        {
+            return item.ParameterType.IsValueType || item.ParameterType == typeof(string);
+        }
+
         internal static void InitDynamicAttributeApi(List<Type>? types)
         {
             types = AttibuteInterfaceInitializerService.GetTypesWithDynamicApiAttribute(types ?? new List<Type>());
@@ -51,7 +79,11 @@ namespace ReZero.SuperAPI
                     }
                 }
             }
-            App.Db.Insertable(zeroInterfaceLists).ExecuteCommand();
+            var db = App.PreStartupDb;
+            db!.QueryFilter.ClearAndBackup();
+            db.Deleteable<ZeroInterfaceList>().Where(it => it.IsAttributeMethod == true).ExecuteCommand();
+            db.Insertable(zeroInterfaceLists).ExecuteCommand();
+            db!.QueryFilter.Restore();
         }
 
         /// <summary>

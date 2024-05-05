@@ -27,9 +27,7 @@ namespace ReZero.SuperAPI
                 enumItemInfos.Add(new EnumItemInfo() { Name = item.Key, Value = Convert.ToInt32(item.Value) + "" });
             }
             return enumItemInfos.ToList();
-        }
-
-
+        } 
         public static object GetWhereTypeList()
         {
             return SqlSugar.UtilMethods.EnumToDictionary<FieldOperatorType>()
