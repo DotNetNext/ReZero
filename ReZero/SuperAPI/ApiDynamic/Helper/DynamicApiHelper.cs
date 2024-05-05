@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http; 
+﻿using Microsoft.AspNetCore.Http;
 using System;
 
-namespace ReZero.SuperAPI
+namespace ReZero.SuperAPI 
 {
     /// <summary>
     /// Helper class for handling API requests and determining appropriate request method handlers.
@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
         public bool IsHttpMethod(string requestMethodString, out HttpRequestMethod requestMethod)
         {
             // Try to parse the request method string into HttpRequestMethod enum.
-            return Enum.TryParse<HttpRequestMethod>(requestMethodString, ignoreCase: true, out requestMethod);
+            return Enum.TryParse(requestMethodString, ignoreCase: true, out requestMethod);
         }
 
         /// <summary>
@@ -48,4 +48,3 @@ namespace ReZero.SuperAPI
         }
     }
 }
- 
