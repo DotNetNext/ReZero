@@ -23,14 +23,14 @@ builder.Services.AddReZeroServices(api =>
         {
             ConnectionConfig = new SuperAPIConnectionConfig()
             {
-                ConnectionString = "server=.;uid=sa;pwd=sasa;database=SuperAPI",
+                ConnectionString = "server=.;uid=sa;pwd=sasa;database=SuperAPI122",
                 DbType = SqlSugar.DbType.SqlServer,
             },
         },
         UiOptions=new UiOptions 
         {
-            //默认不加载Swagger,如果纯ReZero开发没有Swagger设为false
-            ShowNativeApiDocument = false
+            //不加载Swagger设为false
+            ShowNativeApiDocument = true
         },
         InterfaceOptions = new InterfaceOptions()
         { 
