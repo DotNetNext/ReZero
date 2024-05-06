@@ -6,8 +6,8 @@ namespace ReZero.SuperAPI
     {
         ISqlSugarClient? db { get; set; }
 
-        void BeginTran();
-        void Close();
-        void Commit();
+        void BeginTran(); 
+        void CommitTran();
+        void RollbackTran();
     }
 }

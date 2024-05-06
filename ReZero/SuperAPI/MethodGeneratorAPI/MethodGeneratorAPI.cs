@@ -29,8 +29,30 @@ namespace ReZero.SuperAPI
             object[] parameters = new object[methodInfo.GetParameters().Length];
             var argsTypes = dataModel.MyMethodInfo.ArgsTypes;
             parameters = GetParameters(dataModel, methodInfo, parameters, argsTypes);
-            object result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
-            return result;
+            var unitType = methodInfo.GetCustomAttributes().FirstOrDefault(it => it.GetType().GetInterfaces().Any(s => s == typeof(IUnitOfWork)));
+            if (unitType != null)
+            {
+                var unitObj =(IUnitOfWork)ReZero.DependencyInjection.ActivatorHelper.CreateInstance(unitType!.GetType(), nonPublic: true, (ServiceProvider)dataModel.ServiceProvider!);
+                unitObj.db = ((ServiceProvider)dataModel.ServiceProvider!).GetRequiredService<ISqlSugarClient>();
+                try
+                {
+                    unitObj.BeginTran();
+                    object result = new object();
+                    result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
+                    unitObj.CommitTran();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    unitObj.RollbackTran();
+                    throw;
+                } 
+            }
+            else
+            {
+                object result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
+                return result;
+            }
         }
 
         private object[] GetParameters(DataModel dataModel, MethodInfo methodInfo, object[] parameters, Type[]? argsTypes)

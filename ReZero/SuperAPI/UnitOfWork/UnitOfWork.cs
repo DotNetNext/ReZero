@@ -7,21 +7,19 @@ using System.Threading.Tasks;
 namespace ReZero.SuperAPI
 {
     public class UnitOfWork : Attribute, IUnitOfWork
-    {
-        [DI]
-        public ISqlSugarClient? db { get; set; }
+    { 
+        public ISqlSugarClient?  db { get; set; }
         public virtual void BeginTran()
         {
             db!.AsTenant().BeginTran();
         }
-        public virtual void Commit()
+        public virtual void CommitTran()
         {
             db!.AsTenant().CommitTran(); ;
         }
-        public virtual void Close()
+        public virtual void RollbackTran()
         {
-            if (db!.CurrentConnectionConfig.IsAutoCloseConnection)
-                db!.AsTenant().Close(); ;
-        }
+            db!.AsTenant().RollbackTran(); ;
+        } 
     }
 }
