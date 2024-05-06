@@ -42,7 +42,7 @@ namespace ReZero.SuperAPI
             var result = methodInfo.Invoke(classObj, parameters);
             if (result is Task)
             {
-                throw new NotSupportedException();
+               return  await GetTask((Task)result);
             }
             else
             {
@@ -128,7 +128,13 @@ namespace ReZero.SuperAPI
             });
             return index;
         }
-
+        private static async Task<object> GetTask(Task task)
+        {
+            await task.ConfigureAwait(false); // 等待任务完成
+            var resultProperty = task.GetType().GetProperty("Result");
+            var result = resultProperty.GetValue(task);
+            return result;
+        }
         private static bool IsObject(object? value, Type type)
         {
             return (type.IsArray || type.FullName.StartsWith("System.Collections.Generic.List")) && value != null;

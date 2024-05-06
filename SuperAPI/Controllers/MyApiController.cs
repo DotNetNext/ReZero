@@ -24,6 +24,13 @@ namespace SuperAPITest.Controllers
         {
             return classA;
         }
+
+        [ApiMethod("我是D方法", HttpMethod = HttpType.Post)]
+        public async Task<ClassA> D(ClassA classA)
+        {
+             await Task.Delay(1);
+            return classA;
+        }
     }
 
     public class ClassA 
