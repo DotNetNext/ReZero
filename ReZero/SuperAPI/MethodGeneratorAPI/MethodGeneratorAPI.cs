@@ -28,6 +28,13 @@ namespace ReZero.SuperAPI
             var classObj = ReZero.DependencyInjection.ActivatorHelper.CreateInstance(classType!, nonPublic: true, (ServiceProvider)dataModel.ServiceProvider!);
             object[] parameters = new object[methodInfo.GetParameters().Length];
             var argsTypes = dataModel.MyMethodInfo.ArgsTypes;
+            parameters = GetParameters(dataModel, methodInfo, parameters, argsTypes);
+            object result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
+            return result;
+        }
+
+        private object[] GetParameters(DataModel dataModel, MethodInfo methodInfo, object[] parameters, Type[]? argsTypes)
+        {
             if (IsJObject(dataModel, parameters))
             {
                 FillJObjectParameters(dataModel, methodInfo, parameters, argsTypes);
@@ -40,8 +47,8 @@ namespace ReZero.SuperAPI
             {
                 FillDefaultParameters(dataModel, methodInfo, parameters, argsTypes);
             }
-            object result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
-            return result;
+
+            return parameters;
         }
 
         private static async Task<object> ExecuteMethodAsync(MethodInfo methodInfo, object classObj, object[] parameters)

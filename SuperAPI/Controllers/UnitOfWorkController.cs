@@ -16,6 +16,7 @@ namespace SuperAPITest.Controllers
 
         //工作单元，可以用自带的也可以重新写
         [UnitOfWork]
+        [ApiMethod("我是QueryTest方法")]
         public bool QueryTest() 
         {
             db!.Ado.ExecuteCommand("select 1 as id");
