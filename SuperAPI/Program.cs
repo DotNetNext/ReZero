@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Forms;
 using ReZero;
 using ReZero.SuperAPI;
+using SqlSugar;
 using SuperAPITest;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -10,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
+ 
 //Register: Register the super API service
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
@@ -45,7 +45,19 @@ builder.Services.AddReZeroServices(api =>
     }); 
 
 });
- 
+
+//注册: 业务代码用的SqlSugar对象（非低代码模式）
+builder.Services.AddScoped<ISqlSugarClient>(it =>
+{
+    return new SqlSugarClient(new ConnectionConfig()
+    {
+        DbType = DbType.SqlServer,
+        ConnectionString = "server=.;uid=sa;pwd=sasa;database=SuperAPI122",
+        IsAutoCloseConnection = true
+    });
+});
+
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

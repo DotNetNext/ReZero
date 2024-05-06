@@ -25,7 +25,7 @@ namespace ReZero.SuperAPI
             var classType = Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
             classType = GetTypeByAttribute(dataModel, classType);
             var methodInfo = classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
-            var classObj = ReZero.DependencyInjection.ActivatorHelper.CreateInstance(classType!, nonPublic: true,(ServiceProvider)dataModel.ServiceProvider!);
+            var classObj = ReZero.DependencyInjection.ActivatorHelper.CreateInstance(classType!, nonPublic: true, (ServiceProvider)dataModel.ServiceProvider!);
             object[] parameters = new object[methodInfo.GetParameters().Length];
             var argsTypes = dataModel.MyMethodInfo.ArgsTypes;
             if (IsJObject(dataModel, parameters))
@@ -40,15 +40,23 @@ namespace ReZero.SuperAPI
             {
                 FillDefaultParameters(dataModel, methodInfo, parameters, argsTypes);
             }
+            object result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
+            return result;
+        }
+
+        private static async Task<object> ExecuteMethodAsync(MethodInfo methodInfo, object classObj, object[] parameters)
+        {
             var result = methodInfo.Invoke(classObj, parameters);
             if (result is Task)
             {
-               return  await GetTask((Task)result);
+                result = await GetTask((Task)result);
             }
             else
             {
-                return await Task.FromResult(result);
+                result = await Task.FromResult(result);
             }
+
+            return result;
         }
 
         private static object[] FillSingleModelParameters(DataModel dataModel, MethodInfo methodInfo)
