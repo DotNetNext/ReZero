@@ -181,6 +181,7 @@ namespace ReZero.SuperAPI
                             new DataModelDefaultParameter(){ Name="GroupName", FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("接口分组","Group Name") },
                             new DataModelDefaultParameter() { Name = "IsInitialized",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否内置数据", "Is initialized") },
                             new DataModelDefaultParameter() { Name = "IsDeleted",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否删除", "Is deleted") },
+                            new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceList.IsAttributeMethod),Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否是特性方法", "Is attribute method") },
                             new DataModelDefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("Url","Url") },
                     }
                 };

@@ -22,6 +22,10 @@ namespace ReZero.SuperAPI
             InitInterfaceList(db);
             InitIcon();
             InitDatabase(db);
+            db!.Updateable<ZeroInterfaceList>()
+                .SetColumns(it => it.IsAttributeMethod == false)
+                .Where(it => it.IsAttributeMethod==null)
+                .ExecuteCommand();
             App.PreStartupDb!.QueryFilter.Restore();
         }
 
