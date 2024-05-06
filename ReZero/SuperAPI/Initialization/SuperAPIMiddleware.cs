@@ -50,8 +50,20 @@ namespace ReZero.SuperAPI
             // If the requested URL doesn't match any specific API, pass the request to the next middleware
             else
             {
-                await next();
+                if (IsShowNativeApiDocument(requestedUrl))
+                {
+                    context.Response.Redirect("/rezero/dynamic_interface.html?InterfaceCategoryId=200100");
+                }
+                else
+                {
+                    await next();
+                }
             }
+        }
+
+        private static bool IsShowNativeApiDocument(PathString requestedUrl)
+        {
+            return requestedUrl.ToString().TrimStart('/').TrimEnd('/').ToLower() == "rezero" && SuperAPIModule._apiOptions?.UiOptions?.ShowNativeApiDocument != true;
         }
 
         /// <summary>
