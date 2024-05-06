@@ -5,10 +5,10 @@ using SqlSugar;
 namespace SuperAPITest.Controllers
 {
     /// <summary>
-    /// 动态接口
+    /// 动态接口+工作单元
     /// </summary>
     [Api(200100, GroupName = "分组2")]
-    public class UnitOfWorkController
+    public class MyApiWithUnitOfWorkController
     {
         //属性注入
         [DI]

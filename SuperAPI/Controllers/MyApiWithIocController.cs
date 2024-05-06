@@ -2,6 +2,9 @@
 using ReZero.SuperAPI;
 namespace SuperAPITest.Controllers
 {
+    /// <summary>
+    /// 动态接口+IOC
+    /// </summary>
     [Api(200100,GroupName = "分组1")]
     public class MyApiWithIocController
     {
@@ -15,6 +18,7 @@ namespace SuperAPITest.Controllers
             return this.MyService!.CalculateSum(num, num2);
         }
     }
+    //继承IScopeContract 、ISingletonContract或者ITransientContract就可以自动注入 
     public class MyService : IScopeContract
     {
         public int CalculateSum(int num, int num2)
