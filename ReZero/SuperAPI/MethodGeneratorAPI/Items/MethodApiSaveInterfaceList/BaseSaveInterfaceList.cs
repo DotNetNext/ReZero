@@ -23,6 +23,7 @@ namespace ReZero.SuperAPI
             // Set default values for ZeroInterfaceList
             zeroInterfaceList.IsInitialized = false;
             zeroInterfaceList.IsDeleted = false;
+            zeroInterfaceList.IsAttributeMethod = false;
             zeroInterfaceList.Name = saveInterfaceListModel.Name;
             zeroInterfaceList.Url = GetUrl(saveInterfaceListModel);
             zeroInterfaceList.DatabaseId = saveInterfaceListModel?.Json?.DataBaseId;
