@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace ReZero.SuperAPI
         public DataModel? DataModel { get; internal set; }
         public ZeroInterfaceList? InterfaceInfo { get; internal set; }
         public Exception? Exception { get; internal set; }
+        public ServiceProvider? ServiceProvider { get; internal set; }
 
         public void AttachClaimToHttpContext(string claimKey, object claimValue)
         {

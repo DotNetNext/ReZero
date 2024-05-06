@@ -47,6 +47,9 @@ namespace ReZero.SuperAPI
                     DataService dataService = new DataService();
                     interInfo!.DataModel!.ApiId = interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
+                    var service = DependencyInjection.DependencyResolver.Provider;
+                    systemInterfaceContext.ServiceProvider = service;
+                    interInfo!.DataModel!.ServiceProvider = service;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(systemInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(systemInterfaceContext);

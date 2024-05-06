@@ -43,6 +43,8 @@ namespace ReZero.SuperAPI
         #endregion
 
         #region Http
+
+        internal object? ServiceProvider { get; set; }
         internal Dictionary<string, object>? ClaimList { get; set; } = new Dictionary<string, object>();
         #endregion
     }

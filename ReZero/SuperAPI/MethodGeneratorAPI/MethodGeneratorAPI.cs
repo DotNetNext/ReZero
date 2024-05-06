@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SqlSugar;
 using System;
@@ -24,7 +25,7 @@ namespace ReZero.SuperAPI
             var classType = Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
             classType = GetTypeByAttribute(dataModel, classType);
             var methodInfo = classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
-            var classObj = ReZero.DependencyInjection.ActivatorHelper.CreateInstance(classType!, nonPublic: true);
+            var classObj = ReZero.DependencyInjection.ActivatorHelper.CreateInstance(classType!, nonPublic: true,(ServiceProvider)dataModel.ServiceProvider!);
             object[] parameters = new object[methodInfo.GetParameters().Length];
             var argsTypes = dataModel.MyMethodInfo.ArgsTypes;
             if (IsJObject(dataModel, parameters))

@@ -16,11 +16,11 @@ namespace ReZero.DependencyInjection
         /// <param name="classType">The type of the class to create an instance of.</param>
         /// <param name="nonPublic">Specifies whether to include non-public constructors.</param>
         /// <returns>The created instance of the class.</returns>
-        internal static object CreateInstance(Type classType, bool nonPublic)
+        internal static object CreateInstance(Type classType, bool nonPublic, Microsoft.Extensions.DependencyInjection.ServiceProvider serviceProvider)
         {
             if (classType.GetCustomAttribute<ApiAttribute>()!=null)
             {
-                var p = DependencyResolver.Provider;
+                var p = serviceProvider;
                 var result= p!.GetService(classType);
                 var diProperties = classType.GetProperties().Where(it => it.GetCustomAttribute<DIAttribute>() != null);
                 foreach (var item in diProperties)

@@ -70,6 +70,9 @@ namespace ReZero.SuperAPI
                     interInfo!.DataModel!.DataBaseId = interInfo.DataModel?.DataBaseId??0;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
                     dynamicInterfaceContext.DataModel= interInfo.DataModel;
+                    var service=DependencyInjection.DependencyResolver.Provider;
+                    dynamicInterfaceContext.ServiceProvider = service;
+                    interInfo.DataModel!.ServiceProvider = service;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);

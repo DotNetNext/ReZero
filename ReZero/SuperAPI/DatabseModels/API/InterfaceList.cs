@@ -18,5 +18,6 @@ namespace ReZero.SuperAPI
         public string? HttpMethod { get; set; }
         [SugarColumn(IsJson = true,ColumnDataType = StaticConfig.CodeFirst_BigString)]
         public DataModel? DataModel { get; set; }
+
     }
 }
