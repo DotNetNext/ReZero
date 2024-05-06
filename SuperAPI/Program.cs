@@ -27,6 +27,11 @@ builder.Services.AddReZeroServices(api =>
                 DbType = SqlSugar.DbType.SqlServer,
             },
         },
+        UiOptions=new UiOptions 
+        {
+            //默认不加载Swagger,如果纯ReZero开发没有Swagger设为false
+            ShowNativeApiDocument = false
+        },
         InterfaceOptions = new InterfaceOptions()
         { 
             SuperApiAop = new JwtAop()//授权拦截器
