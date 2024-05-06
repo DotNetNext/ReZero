@@ -19,7 +19,7 @@ namespace SuperAPITest.Controllers
             return "文件长度"+ file.Length;
         } 
 
-        [ApiMethod("我是C方法", HttpMethod = HttpType.Post)]
+        [ApiMethod("我是C方法", HttpMethod = HttpType.Get)]
         public Object C(ClassA classA)
         {
             return classA;

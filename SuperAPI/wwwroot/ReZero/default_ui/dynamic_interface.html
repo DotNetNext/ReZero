@@ -119,13 +119,13 @@
             },
             getEndpointType(item) {
                 var actionType =item.DataModel.ActionType;
-                if (actionType.startsWith('1')) {
+                if (actionType.startsWith('1') || item.HttpMethod=="Get") {
                     return 'endpoint endpointGet';
-                } else if (actionType.startsWith('2')) {
+                } else if (actionType.startsWith('2') || item.HttpMethod == "Post") {
                     return 'endpoint endpointPost';
-                } else if (actionType.startsWith('3')) {
+                } else if (actionType.startsWith('3') ||  item.HttpMethod == "Delete") {
                     return 'endpoint endpointDelete';
-                } else if (actionType.startsWith('4')) {
+                } else if (actionType.startsWith('4') || item.HttpMethod == "Put") {
                     return 'endpoint endpointPut';
                 }else if (actionType.startsWith('9')) {
                     return 'endpoint endpointSql';
