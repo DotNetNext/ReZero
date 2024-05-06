@@ -171,7 +171,7 @@ namespace ReZero.SuperAPI
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroInterfaceList.Url) ,
                             Description=TextHandler.GetCommonText("接口地址", "Url")
-                        }
+                        } 
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroInterfaceList,
                     ActionType = ActionType.QueryCommon,
@@ -183,6 +183,7 @@ namespace ReZero.SuperAPI
                             new DataModelDefaultParameter() { Name = "IsDeleted",Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否删除", "Is deleted") },
                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceList.IsAttributeMethod),Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否是特性方法", "Is attribute method") },
                             new DataModelDefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("Url","Url") },
+                            new DataModelDefaultParameter(){ Name="DatabaseId", FieldOperator=FieldOperatorType.Equal, ValueType=typeof(long).Name, Description=TextHandler.GetCommonText("数据库Id","Database id") },
                     }
                 };
             });
