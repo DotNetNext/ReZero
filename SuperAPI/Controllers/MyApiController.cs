@@ -31,6 +31,13 @@ namespace SuperAPITest.Controllers
              await Task.Delay(1);
             return classA;
         }
+
+        [ApiMethod("我是E方法")]
+        public async Task<int?> E(int? num)
+        {
+            await Task.Delay(1);
+            return num;
+        }
     }
 
     public class ClassA 

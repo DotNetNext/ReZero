@@ -58,6 +58,7 @@ namespace ReZero.SuperAPI
             foreach (var item in type!.GetProperties())
             {
                 var p = dataModel.DefaultParameters.First(it => it.Name == item.Name);
+                p.Value = ConvetEmptyValue(item.PropertyType, p.Value);
                 item.SetValue(parameterOjb, UtilMethods.ChangeType2(p.Value, item.PropertyType));
             }
             parameters = new object[] { parameterOjb };
@@ -117,6 +118,7 @@ namespace ReZero.SuperAPI
                 }
                 try
                 {
+                    value = ConvetEmptyValue(p.ParameterType, value);
                     value = UtilMethods.ChangeType2(value, p.ParameterType);
                 }
                 catch (Exception)
@@ -127,6 +129,16 @@ namespace ReZero.SuperAPI
                 index++;
             });
             return index;
+        }
+
+        private static object? ConvetEmptyValue(Type type, object? value)
+        {
+            if (value?.Equals("") == true && type != typeof(string))
+            {
+                value = null;
+            }
+
+            return value;
         }
         private static async Task<object> GetTask(Task task)
         {
