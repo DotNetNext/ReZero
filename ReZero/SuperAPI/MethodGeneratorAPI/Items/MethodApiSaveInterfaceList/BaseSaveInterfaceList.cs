@@ -25,6 +25,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.IsDeleted = false;
             zeroInterfaceList.Name = saveInterfaceListModel.Name;
             zeroInterfaceList.Url = GetUrl(saveInterfaceListModel);
+            zeroInterfaceList.DatabaseId = saveInterfaceListModel?.Json?.DataBaseId;
             zeroInterfaceList.GroupName = !string.IsNullOrEmpty(saveInterfaceListModel?.GroupName)? saveInterfaceListModel?.GroupName!:saveInterfaceListModel?.TableId!;
             zeroInterfaceList.InterfaceCategoryId = Convert.ToInt64(saveInterfaceListModel?.InterfaceCategoryId);
 

@@ -8,7 +8,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-1"><label class="form-control">数据库:</label></div>
-                    <div class="col-md-2"><select v-model="databaseId" id="selDatabase" class="form-control"><option v-for="item in database" :value="item.Id">{{item.Name}}</option></select></div>
+                    <div class="col-md-2"><select @change="changeDatabase" v-model="databaseId" id="selDatabase" class="form-control"><option v-for="item in database" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-2"><input class="form-control" type="text" id="txtName" name="example-text-input" placeholder="接口名 或者 URL"></div>
                     <div class="col-md-2"><select id="selGroupName" class="form-control"><option value=""> ==分组==</option> <option v-for="item in groupList">{{item.GroupName}}</option></select></div>
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option value="">==分类==</option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
@@ -654,6 +654,10 @@
                     InterfaceCategoryId: selInterfaceCategoryId.value,
                 });
                 this.fetchData(urlParameters);
+            },
+            changeDatabase: function ()
+            {
+                this.onSearch(1);
             },
             selectAll(event) {
                 if (event.target.checked) {
