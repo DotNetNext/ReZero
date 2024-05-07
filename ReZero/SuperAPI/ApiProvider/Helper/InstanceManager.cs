@@ -38,7 +38,7 @@ namespace ReZero.SuperAPI
                         foreach (var claim in claims)
                         {
                             object value = claim.Value;
-                            var type=jsonClaims.FirstOrDefault(it => claim.Type?.ToLower() == it.FieldName)?.Type;
+                            var type=jsonClaims.FirstOrDefault(it => claim.Type?.ToLower() == it.FieldName?.ToLower())?.Type;
                             if (!string.IsNullOrEmpty(type)) 
                             {
                                 value = UtilMethods.ConvertDataByTypeName(type,value+"");
