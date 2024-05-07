@@ -48,41 +48,13 @@ var app = builder.Build();
 http://localhost:5267/rezero 
 ![输入图片说明](READMEIMG/image8.png)
 
-## 4.4 jwt授权
-
-```cs
-//注册：注册超级API服务
-builder.Services.AddReZeroServices(api =>
-{
-    //启用超级API
-    api.EnableSuperApi(new SuperAPIOptions()
-    { 
-        InterfaceOptions = new InterfaceOptions()
-        {   
-            //授权拦截器 
-            SuperApiAop = new JwtAop()
-        }
-    }); ;
-
-});
-public class JwtAop : DefaultSuperApiAop
-{
-    public async override Task OnExecutingAsync(InterfaceContext aopContext)
-    {
+## 4.4 授权
+打开appsettings.json配置jwt参数
+![输入图片说明](READMEIMG/55.png)
+界面完成登录
+![输入图片说明](READMEIMG/56.png) 
  
-         //注意：html页面的url里面加token=xxx可以让内部接口也支持jwt授权
-         var authenticateResult = await aopContext.HttpContext.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
-         if (!authenticateResult.Succeeded)
-         { 
-             throw new Expception("Unauthorized"); 
-         }
-        await base.OnExecutingAsync(aopContext);
-    } 
-}
 
-```
-界面配置ToKen
-![输入图片说明](READMEIMG/image14.png)
 ## 4.5 集成到自已系统
 只要在url加上model=small 就会隐藏头部菜单和左边的菜单<br>
 如果跨域或者端口需要url加token这样可以让内部接口也支持jwt授权
