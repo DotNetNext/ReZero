@@ -1,8 +1,10 @@
 ﻿using ReZero.SuperAPI;
+using System.Data;
 using System.Diagnostics;
 
 namespace SuperAPITest
 {
+
     public class JwtAop : DefaultSuperApiAop
     {
         public async override Task OnExecutingAsync(InterfaceContext aopContext)
@@ -16,6 +18,6 @@ namespace SuperAPITest
             //Add Claim value
             //aopContext.AttachClaimToHttpContext("UserId", "1");
             await base.OnExecutingAsync(aopContext);
-        } 
+        }
     }
 }

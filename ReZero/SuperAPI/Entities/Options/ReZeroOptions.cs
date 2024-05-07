@@ -1,27 +1,44 @@
-﻿using Microsoft.AspNetCore.Http; 
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq;
+using ReZero.Configuration;
 namespace ReZero.SuperAPI
 {
     /// <summary>
     /// Represents configuration options for the ReZero SuperAPI.
     /// </summary>
     public class SuperAPIOptions
-    {
-        //public void EnableSuperApi(Action<SuperAPIOptions> func) 
-        //{
-        //    IsEnableSuperAPI = true;
-        //    func(this);
-        //}
+    { 
+        public static SuperAPIOptions GetOptions( string fileName = "appsettings.json")
+        {
+            string key = "ReZero";
+            ReZeroJson configuration=ApiConfiguration.GetJsonValue<ReZeroJson>(key,fileName);
+            SuperAPIOptions superAPIOptions = new SuperAPIOptions();
+            superAPIOptions.IsEnableSuperAPI = true;
+            superAPIOptions.DatabaseOptions = new DatabaseOptions()
+            {
+                ConnectionConfig = new SuperAPIConnectionConfig()
+                {
+                    ConnectionString = configuration.BasicDatabase?.ConnectionString,
+                    DbType = configuration?.BasicDatabase?.DbType ?? SqlSugar.DbType.Sqlite
+                }
+            };
+            superAPIOptions.UiOptions = new UiOptions()
+            {
+                ShowNativeApiDocument = configuration?.Ui?.ShowNativeApiDocument ?? true,
+            };
+            return superAPIOptions;
+        }
+
         public void EnableSuperApi()
         {
             SuperAPIOptions options = new SuperAPIOptions();
             IsEnableSuperAPI = true;
             this.DatabaseOptions = options.DatabaseOptions;
-            this.InterfaceOptions = options.InterfaceOptions; 
+            this.InterfaceOptions = options.InterfaceOptions;
             this.DependencyInjectionOptions = options.DependencyInjectionOptions;
             this.UiOptions = options.UiOptions;
         }
@@ -42,7 +59,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Gets or sets the database configuration options.
         /// </summary>
-        public DatabaseOptions? DatabaseOptions { get; set; }  
+        public DatabaseOptions? DatabaseOptions { get; set; }
 
 
         public InterfaceOptions InterfaceOptions { get; set; } = new InterfaceOptions();
@@ -56,10 +73,11 @@ namespace ReZero.SuperAPI
         /// Gets or sets the UI configuration options.
         /// </summary>
         public UiOptions UiOptions { get; set; } = new UiOptions();
+        public ReZeroJson Configuration { get; }
     }
     public class DependencyInjectionOptions
     {
-        public Assembly[]? Assemblies { get;  set; }
+        public Assembly[]? Assemblies { get; set; }
 
         public bool InitDependencyInjection => Assemblies?.Any() ?? false;
 
@@ -71,12 +89,12 @@ namespace ReZero.SuperAPI
             }
         }
     }
-    public class InterfaceOptions 
+    public class InterfaceOptions
     {
         public string? AuthorizationLocalStorageName { get; set; } = "RezeroLocalStorage";
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
-         
-        public Func<object,object>? MergeDataToStandardDtoFunc { get; set; }
+
+        public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
         public List<string>? ClaimDetails { get; set; }
     }
 
@@ -132,7 +150,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Show system api document
         /// </summary>
-        public bool  ShowSystemApiDocument { get; set; } = false;
+        public bool ShowSystemApiDocument { get; set; } = false;
         /// <summary>
         /// Show native api document
         /// </summary>
@@ -140,10 +158,10 @@ namespace ReZero.SuperAPI
     }
 
 
-    public class AopOptions 
+    public class AopOptions
     {
         public Func<HttpContext, Task>? DynamicApiBeforeInvokeAsync { get; set; }
-        public Func<HttpContext,  Task>? DynamicApiAfterInvokeAsync { get; set; }
+        public Func<HttpContext, Task>? DynamicApiAfterInvokeAsync { get; set; }
 
         public Func<HttpContext, Task>? SystemApiBeforeInvokeAsync { get; set; }
         public Func<HttpContext, Task>? SystemApiAfterInvokeAsync { get; set; }
