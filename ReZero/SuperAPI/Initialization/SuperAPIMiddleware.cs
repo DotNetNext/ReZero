@@ -35,13 +35,7 @@ namespace ReZero.SuperAPI
         {
             // Get the requested URL path from the context
             var requestedUrl = context.Request.Path;
-
-            //Jwt authorization
-            if (!await AuthorizationHtmlAsync(context)) 
-            {
-                return;
-            }
-
+  
             // Check if the requested URL corresponds to Internal API
             if (IsInternalApi(requestedUrl))
             {  
@@ -70,56 +64,56 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private async Task<bool> AuthorizationHtmlAsync(HttpContext context)
-        {
-            if (SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true) 
-            {
-                return true;
-            }
-            var url = context.Request.Path.ToString().ToLower();
-            if (url.EndsWith(".html") == true && url != PubConst.Jwt_PageUrl)
-            {
-                var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
-                if (authHeader != null && authHeader.StartsWith("Bearer "))
-                {
-                    var token = authHeader.Split(' ')[1];
-                    try
-                    {
-                        // 进行JWT令牌验证，例如使用Microsoft.AspNetCore.Authentication.JwtBearer包提供的验证器
-                        var authResult = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
-                        if (authResult.Succeeded)
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            // 用户未通过身份验证，可能需要进行一些处理，例如返回未经授权的错误
-                            context.Response.StatusCode = 401;
-                            context.Response.Redirect(PubConst.Jwt_PageUrl);
-                            return false;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        // JWT验证失败
-                        context.Response.StatusCode = 401;
-                        context.Response.Redirect(PubConst.Jwt_PageUrl);
-                        return false;
-                    }
-                }
-                else
-                {
-                    // Authorization标头缺失或格式不正确
-                    context.Response.StatusCode = 401;
-                    context.Response.Redirect(PubConst.Jwt_PageUrl);
-                    return false;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
+        //private async Task<bool> AuthorizationHtmlAsync(HttpContext context)
+        //{
+        //    if (SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true) 
+        //    {
+        //        return true;
+        //    }
+        //    var url = context.Request.Path.ToString().ToLower();
+        //    if (url.EndsWith(".html") == true && url != PubConst.Jwt_PageUrl)
+        //    {
+        //        var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
+        //        if (authHeader != null && authHeader.StartsWith("Bearer "))
+        //        {
+        //            var token = authHeader.Split(' ')[1];
+        //            try
+        //            {
+        //                // 进行JWT令牌验证，例如使用Microsoft.AspNetCore.Authentication.JwtBearer包提供的验证器
+        //                var authResult = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+        //                if (authResult.Succeeded)
+        //                {
+        //                    return true;
+        //                }
+        //                else
+        //                {
+        //                    // 用户未通过身份验证，可能需要进行一些处理，例如返回未经授权的错误
+        //                    context.Response.StatusCode = 401;
+        //                    context.Response.Redirect(PubConst.Jwt_PageUrl);
+        //                    return false;
+        //                }
+        //            }
+        //            catch (Exception)
+        //            {
+        //                // JWT验证失败
+        //                context.Response.StatusCode = 401;
+        //                context.Response.Redirect(PubConst.Jwt_PageUrl);
+        //                return false;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // Authorization标头缺失或格式不正确
+        //            context.Response.StatusCode = 401;
+        //            context.Response.Redirect(PubConst.Jwt_PageUrl);
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
 
         private static bool IsShowNativeApiDocument(PathString requestedUrl)
         {

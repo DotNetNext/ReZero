@@ -74,6 +74,7 @@ namespace ReZero.SuperAPI
                     dynamicInterfaceContext.ServiceProvider = service;
                     interInfo.DataModel!.ServiceProvider = service;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);
+                    await InstanceManager.AuthorizationAsync(context,dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();

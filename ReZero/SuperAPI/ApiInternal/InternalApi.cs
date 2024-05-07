@@ -51,6 +51,7 @@ namespace ReZero.SuperAPI
                     systemInterfaceContext.ServiceProvider = service;
                     interInfo!.DataModel!.ServiceProvider = service;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(systemInterfaceContext);
+                    await InstanceManager.AuthorizationAsync(context, systemInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(systemInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
