@@ -37,5 +37,8 @@ namespace ReZero.SuperAPI
         public const string DataSource_ActionTypeGroupName_DDLEN = "DLL";
         public const string DataSource_ActionTypeGroupName_MyMethodCN = "自定义方法";
         public const string DataSource_ActionTypeGroupName_MyMethodEN = "My method";
+
+        public const string Jwt_TokenUrl = "/api/rezero/token";
+        public const string Jwt_PageUrl = "/rezero/authorization.html";
     }
 }
