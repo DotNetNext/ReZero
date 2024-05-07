@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace ReZero.SuperAPI
                 return true;
             }
             var url = context.Request.Path.ToString().ToLower();
-
+            var jsonClaims = SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt.Claim ?? new List<Configuration.ClaimItem>(); ;
             var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
             if (authHeader != null && authHeader.StartsWith("Bearer "))
             {
@@ -36,7 +37,13 @@ namespace ReZero.SuperAPI
                         var claims = authResult.Principal.Claims.ToList(); 
                         foreach (var claim in claims)
                         {
-                            dynamicInterfaceContext.AttachClaimToHttpContext(claim.Type, claim.Value);
+                            object value = claim.Value;
+                            var type=jsonClaims.FirstOrDefault(it => claim.Type?.ToLower() == it.FieldName)?.Type;
+                            if (!string.IsNullOrEmpty(type)) 
+                            {
+                                value = UtilMethods.ConvertDataByTypeName(type,value+"");
+                            }
+                            dynamicInterfaceContext.AttachClaimToHttpContext(claim.Type, value);
                         }
                         return true;
                     }
