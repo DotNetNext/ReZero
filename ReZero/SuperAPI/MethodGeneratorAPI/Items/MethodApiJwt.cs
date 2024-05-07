@@ -1,5 +1,6 @@
 ﻿using Kdbndp.TypeHandlers;
 using Microsoft.IdentityModel.Tokens;
+using ReZero.Configuration;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,8 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             var options = SuperAPIModule._apiOptions;
             var jwt=options?.InterfaceOptions?.Jwt??new Configuration.ReZeroJwt();
-
-            if (string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.UserTableName))
+             
+            if (string.IsNullOrEmpty(jwt.Secret)||string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.UserTableName))
             {
                 throw new Exception(TextHandler.GetCommonText("请到json文件配置jwt信息", "Go to the json file to configure the jwt information"));
             } 
@@ -33,22 +34,23 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
             }
-           return GenerateJwtToken(dt.Rows[0]);
+           return GenerateJwtToken(dt.Rows[0],jwt);
         } 
-        private string GenerateJwtToken(DataRow user)
+        private string GenerateJwtToken(DataRow user,ReZeroJwt jwt)
         {
             var options= SuperAPIModule._apiOptions;
             var tokenHandler = new JwtSecurityTokenHandler(); 
-            var key = Encoding.ASCII.GetBytes(options?.InterfaceOptions?.Jwt?.Secret);
-            var claims = new List<Claim>(); 
-            foreach (var claim in options?.InterfaceOptions?.Jwt?.Claim??new List<Configuration.ClaimItem>() ) 
+            var key = Encoding.ASCII.GetBytes(jwt.Secret);
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, user[jwt.UserNameFieldName]+""));
+            foreach (var claim in jwt.Claim??new List<Configuration.ClaimItem>() ) 
             {
                 claims.Add(new Claim(claim.Key, user[claim.FieldName]+""));
             }
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
-                Expires = DateTime.UtcNow.AddMinutes(options?.InterfaceOptions?.Jwt?.Expires??1000),
+                Expires = DateTime.UtcNow.AddMinutes(jwt?.Expires??1000),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
