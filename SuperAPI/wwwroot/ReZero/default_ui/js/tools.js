@@ -126,7 +126,7 @@ setTimeout(function () {
         if (error.response) {
             // 请求已发出，但服务器响应的状态码不在 2xx 范围内  
             if (error.response.status === 401) {
-
+                tools.closeLoading();
                 tools.alert("授权失败，自动跳到授权页面");
                 // 如果是401错误（未授权），则跳转到登录页面  
                 setTimeout(function () {
