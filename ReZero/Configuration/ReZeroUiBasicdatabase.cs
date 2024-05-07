@@ -6,7 +6,7 @@ namespace ReZero.Configuration
 {
     public class ReZeroUiBasicdatabase
     {
-        public SqlSugar.DbType? DbType { get; set; }
+        public SqlSugar.DbType  DbType { get; set; }
         public string? ConnectionString { get; set; }
     }
 }

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder.Extensions;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ReZero.DependencyInjection;
 using ReZero.SuperAPI;
 using System;
 using System.Linq;
+using System.Text;
 namespace ReZero 
 {
 
@@ -18,14 +21,40 @@ namespace ReZero
         /// <param name="options">The <see cref="ReZeroOptions"/> to configure the services.</param>
         /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
-        { 
+        {
             ServiceLocator.Services = services;
             SuperAPIModule.Init(services, options);
             AddDependencyInjection(options, options.SuperApiOptions);
-            DependencyInjectionModule.Init(services, options);
+            DependencyInjectionModule.Init(services, options); 
+            JwtInit(services, options); 
             return services;
         }
 
+        private static void JwtInit(IServiceCollection services, ReZeroOptions options)
+        {
+            var key = options.SuperApiOptions.InterfaceOptions?.Jwt?.Secret + "";
+            if (string.IsNullOrEmpty(key)|| options.SuperApiOptions.InterfaceOptions?.Jwt?.Enable!=true) 
+            {
+                return;
+            }
+            var keyBytes = Encoding.ASCII.GetBytes(key);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
+                };
+            });
+        }
 
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, Action<SuperAPIOptions> superAPIOptions)
         {
