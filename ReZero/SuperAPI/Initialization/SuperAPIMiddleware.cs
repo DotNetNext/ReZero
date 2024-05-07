@@ -72,7 +72,10 @@ namespace ReZero.SuperAPI
 
         private async Task<bool> AuthorizationHtmlAsync(HttpContext context)
         {
-
+            if (SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true) 
+            {
+                return true;
+            }
             var url = context.Request.Path.ToString().ToLower();
             if (url.EndsWith(".html") == true && url != PubConst.Jwt_PageUrl)
             {
