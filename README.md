@@ -94,10 +94,7 @@ builder.Services.AddReZeroServices(api =>
 
 });
 
-```
-## 4.7 Where=Claim[key]
-![输入图片说明](READMEIMG/image15.png)
-![输入图片说明](READMEIMG/image16.png)
+``` 
 
 # 五、功能预览
 ## 预览1：查询配置显示列
