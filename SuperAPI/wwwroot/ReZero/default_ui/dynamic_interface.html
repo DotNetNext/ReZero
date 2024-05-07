@@ -12,8 +12,16 @@
                     <button @click="onSearch()" id="btnSearch" class="btn btn-success" type="submit"><i class="mdi mdi-magnify"></i>搜索</button>
                     <button onclick="frmSearch.reset()" id="btnSearch" class="btn btn-close" type="submit">清空</button>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            接口分类 <span class="caret"></span>
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            数据库 <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li v-for="item in database"><a :href="getDynamicApiDocUrlByDatabase(item)">{{item.Name}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group m-l-10">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            分类 <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li v-for="item in interfaceCategroyList"><a :href="getDynamicApiDocUrl(item)">{{item.Name}}</a></li>
@@ -63,21 +71,25 @@
         data: {
             data: null,
             error: null,
-            interfaceCategroyList:[]
+            interfaceCategroyList: [],
+            database: [],
         },
         mounted() {
             // 在组件加载时触发数据获取
             this.fetchData(null);
             this.bindInterfaceCategroySelect();
+            this.bindDatabaseSelect();
         },
         methods: {
             fetchData(name) {
                 var urlParams = new URLSearchParams(window.location.search);
                 var idFromUrl = urlParams.get('InterfaceCategoryId');
+                var databaseIdFromUrl = urlParams.get('DatabaseId');
                 var url = url = '/PrivateReZeroRoute/100003/GetInternalInterfaceList?IsInitialized=0';
                 var urlParameters = "&" + tools.objectToQueryString({
                     Name: txtSearch.value,
-                    InterfaceCategoryId: idFromUrl
+                    InterfaceCategoryId: idFromUrl,
+                    DatabaseId:databaseIdFromUrl
                 });
                 url = url + urlParameters;
                 axios.get(url, jwHeader)
@@ -117,6 +129,21 @@
                         this.data = null;
                     });
             },
+            bindDatabaseSelect: function () {
+                axios.get("/PrivateReZeroRoute/100004/GetDatabaseInfoAllList", jwHeader)
+                    .then(response => {
+                        this.database = response.data;
+                        this.databaseId = this.database[0].Id;
+                        var th = this;
+                        setTimeout(function () {
+                            th.onSearch();
+                        }, 50);
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
             getEndpointType(item) {
                 var actionType =item.DataModel.ActionType;
                 if (actionType.startsWith('1') || item.HttpMethod=="Get") {
@@ -139,6 +166,12 @@
                 var token = urlParams.get('token');
                 var model = urlParams.get('model');
                 return "/rezero/dynamic_interface.html?InterfaceCategoryId=" + item.Id + "&model=" + model + "&token=" + token;
+            },
+            getDynamicApiDocUrlByDatabase: function (item) {
+                var urlParams = new URLSearchParams(window.location.search);
+                var token = urlParams.get('token');
+                var model = urlParams.get('model');
+                return "/rezero/dynamic_interface.html?DatabaseId=" + item.Id + "&model=" + model + "&token=" + token;
             }
         }
     });
