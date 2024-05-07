@@ -232,7 +232,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("同步数据")]
         [EnglishTextAttribute("Synchronous Data")]
         public const long SynchronousDataId = 39;
-
+        [ChineseTextAttribute("获取token")]
+        [EnglishTextAttribute("Get 获取token")]
+        public const long GetTokenId = 40;
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

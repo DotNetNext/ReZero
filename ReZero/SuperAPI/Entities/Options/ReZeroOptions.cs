@@ -30,6 +30,10 @@ namespace ReZero.SuperAPI
             {
                 ShowNativeApiDocument = configuration?.Ui?.ShowNativeApiDocument ?? true,
             };
+            superAPIOptions.InterfaceOptions = new InterfaceOptions()
+            {
+                  Jwt=configuration?.Jwt
+            };
             return superAPIOptions;
         }
 
@@ -72,8 +76,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// Gets or sets the UI configuration options.
         /// </summary>
-        public UiOptions UiOptions { get; set; } = new UiOptions();
-        public ReZeroJson Configuration { get; }
+        public UiOptions UiOptions { get; set; } = new UiOptions(); 
     }
     public class DependencyInjectionOptions
     {
@@ -95,7 +98,7 @@ namespace ReZero.SuperAPI
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
 
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
-        public List<string>? ClaimDetails { get; set; }
+        public  ReZeroJwt?  Jwt { get; set; }
     }
 
     /// <summary>

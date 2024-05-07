@@ -18,15 +18,15 @@
         <div class="card-body">
             <div class="form-group">
                 <label for="example-text-input">用户名</label>
-                <input v-model="UserName" class="form-control" type="text" name="role-input" placeholder="用户名">
+                <input v-model="userName" class="form-control" type="text" name="role-input" placeholder="用户名">
             </div>
             <div class="form-group">
                 <label for="example-text-input">密码</label>
-                <input v-model="Password" class="form-control" type="text" name="role-input" placeholder="前端加密好的密码">
+                <input v-model="password" class="form-control" type="text" name="role-input" placeholder="前端加密好的密码">
             </div>
             <div class="form-group">
                 <label for="example-text-input">结果:</label>
-                {{Result}}
+                {{result}}
             </div>
             <div class="form-group">
                 <button type="button" @click="getToken" class="btn btn-primary ajax-post" target-form="add-form">确 定</button>
@@ -42,9 +42,9 @@
             data: null,
             error: null,
             txtToken: null,
-            UserName: null,
-            Password: null,
-            Result:null
+            userName: null,
+            password: null,
+            result:null
         },
         mounted() {
             if (jwHeader && jwHeader.headers) {
@@ -64,20 +64,13 @@
             },
             getToken: function ()
             {
-                if (!this.UserName || !this.Password) {
+                if (!this.userName || !this.password) {
                     tools.alert("用户名或者密码不能为空");
                 } else {
-                    axios.post("/api/rezero/token", { UserName: this.UserName, Password: this.Password }, jwHeader)
+                    axios.post("/api/rezero/token", { userName: this.userName, password: this.password }, jwHeader)
                         .then(response => {
                             this.error = null;
-                            this.onSearch();
-                            if (response.data == true) {
-                                frmEdit.reset();
-                                btnCloseEdit.click();
-                            }
-                            else {
-                                tools.highlightErrorFields(response.data)
-                            }
+                            this.result = response.data;
                         })
                         .catch(error => {
                             this.error = error.message;

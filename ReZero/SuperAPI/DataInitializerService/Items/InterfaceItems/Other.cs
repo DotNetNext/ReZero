@@ -15,6 +15,7 @@ namespace ReZero.SuperAPI
             GetAllTables();
             SaveInterfaceList();
             GetWhereTypeList();
+            GetToKen();
         }
 
         private void SaveInterfaceList()
@@ -158,6 +159,43 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
 
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        } 
+        private void GetToKen()
+        {
+            //获取数据库所有
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.All.ToString();
+                it.Id = GetTokenId;
+                it.GroupName = nameof(MethodApi);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300;
+                it.Name = TextHandler.GetInterfaceListText(GetTokenId);
+                it.Url = "/api/rezero/token";
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 2,
+                        ArgsTypes=new Type[] {typeof(string),typeof(string) },
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetToken)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                         new DataModelDefaultParameter()
+                         {
+                              Name="UserName",ParameterValidate=new ParameterValidate(){ IsRequired=true }, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("用户名","User name")
+                         },
+                          new DataModelDefaultParameter()
+                         {
+                              Name="Password",ParameterValidate=new ParameterValidate(){ IsRequired=true }, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("密码","Password")
+                         }
                     }
                 };
             });
