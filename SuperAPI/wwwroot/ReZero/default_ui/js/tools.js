@@ -123,8 +123,29 @@ setTimeout(function () {
         tools.closeLoading();
         return response;
     }, function (error) {
-        // 对响应错误做点什么  
-        return Promise.reject(error);
+        if (error.response) {
+            // 请求已发出，但服务器响应的状态码不在 2xx 范围内  
+            if (error.response.status === 401) {
+
+                tools.alert("授权失败，自动跳到授权页面");
+                // 如果是401错误（未授权），则跳转到登录页面  
+                setTimeout(function () {
+                    window.location.href = '/rezero/Authorization.html'; // 替换为你想要跳转的地址  
+                }, 2000);
+
+            } else {
+                // 处理其他状态码  
+                return Promise.reject(error);
+            }
+        } else if (error.request) {
+            // 请求已发出，但没有收到响应  
+            console.log('Request:', error.request);
+            return Promise.reject(error);
+        } else {
+            // 发生一些其他问题在设置请求时触发了一个错误  
+            console.log('Error', error.message);
+            return Promise.reject(error);
+        }  
     });  
 
 },2000)
