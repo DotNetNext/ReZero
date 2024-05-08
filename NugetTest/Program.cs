@@ -56,13 +56,20 @@ app.UseAuthorization();
 app.MapControllers();
 
 #if !DEBUG 
-// 假设您的应用程序在本地5000端口上运行  
-string url = "http://localhost:5000/rezero/dynamic_interface.html?InterfaceCategoryId=200100";
-Process.Start(new ProcessStartInfo
-{
-    FileName = url,
-    UseShellExecute = true
-}); 
+try 
+	{	        
+		    // 假设您的应用程序在本地5000端口上运行  
+            string url = "http://localhost:5000/rezero/dynamic_interface.html?InterfaceCategoryId=200100";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            }); 
+	}
+	catch (global::System.Exception)
+	{
+     //docker中不能打开浏览器，出错不处理
+	}
 #endif
 // 启动默认的网页浏览器并打开指定的URL  
 
