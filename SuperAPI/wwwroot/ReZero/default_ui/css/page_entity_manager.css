@@ -75,4 +75,10 @@
     display: inline;
     height: 25px;
     margin-left: 10px;
-} 
+}
+
+.removedatalist {
+    position: relative !important;
+    top: -30px;
+    left: 370px;
+}

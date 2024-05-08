@@ -218,20 +218,28 @@
     <!--复制列-->
     <div id="divCopy" class="modal fade bs-example-modal-sm inC" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnCopy" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divCopy"></button>
-        <div class="modal-dialog modal-sm  border3CCC" role="document">
+        <div class="modal-dialog modal-sm  border3CCC width500" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myLargeModalLabel">复制列</h4>
                 </div>
-                <div class="modal-body"> 
-                    <select class="form-control">
-                        <option v-for="item in allTables" :value="item.Id">{{item.Name}}</option>
-                    </select>
+                <div class="modal-body">
+                     <div class="form-group">
+                         <div class="alert alert-success">技巧: 建一个只有 创建时间、创建人 这样的表 作为模版表</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">表名：</label>
+                        <input v-model="tableName"  @change="changeTable" class="form-control" list="browsers" name="joinTable">
+                        <datalist id="browsers">
+                            <option v-if="allTables&&allTables.length>0" v-for="item in allTables" :value="item.Name">{{item.Name}}</option>
+                        </datalist>
+                        <button class="btn btn-xs btn-primary removedatalist" @click="clearTable"><i class="mdi mdi-do-not-disturb"></i>删除选定项</button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button"  class="btn btn-primary">确定</button>
+                    <button type="button" @click="submitCopy"  class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
@@ -259,7 +267,8 @@
             columns: [{}],
             columnsCompareResult: null,
             tables: [],
-            allTables:[]
+            allTables: [],
+            tableName:null
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -550,6 +559,26 @@
             { 
                 this.bindAllTables();
                 btnCopy.click();
+            },
+            submitCopy: function ()
+            {
+                var tableName = this.tableName;
+                var table = this.allTables.find(table => table.Name === tableName);
+                var tableId = table ? table.Id : null;
+                if (tableId == null)
+                {
+                    tools.alert("请选择表");
+                    return; 
+                }
+                alert(tableId);
+            },
+            changeTable: function ()
+            {
+                 
+            },
+            clearTable: function ()
+            {
+                this.tableName = null;
             }
         }
     });
