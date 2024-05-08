@@ -121,4 +121,6 @@ builder.Services.AddReZeroServices(api =>
 
 工作量很大 ，功能复杂 ，对标的是收费软件，相信未来将会成长的很好
 
+坚持用开源做出高品质的免费软件
+
 ![输入图片说明](READMEIMG/image6.png)
