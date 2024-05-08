@@ -31,7 +31,7 @@
                     <a class="btn btn-warning m-r-5" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
                 </div>
             </div>
-            <div class="card-body"> 
+            <div class="card-body">
                 <div class="table-responsive">
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -44,7 +44,7 @@
                                     </th>
                                     <template v-for="(column,thIndex) in data.Columns" v-if="column.PropertyName !== 'Id'">
                                         <th>
-                                            {{ column.ColumnDescription }} 
+                                            {{ column.ColumnDescription }}
                                             <span :class="sortClass">
                                                 <span v-if="thIndex == 1" class="caret-wrapper">
                                                     <i @click="sortAsc" class="sort-caret ascending mdi mdi-chevron-up"></i>
@@ -102,7 +102,7 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">实体名：</label>
-                            <input type="text"  @input="classNameInput" @change="classNameInput" v-model="formData.ClassName" name="ClassName" class="form-control">
+                            <input type="text" @input="classNameInput" @change="classNameInput" v-model="formData.ClassName" name="ClassName" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">表名：</label>
@@ -168,7 +168,10 @@
                                     <th width="50">可空</th>
                                     <th width="50">主键</th>
                                     <th width="50">自增</th>
-                                    <th width="250"></th>
+                                    <th width="250">
+                                        <a class="btn  btn-secondary m-r-5" @click="openCopy" href="#!"><i class="mdi mdi-content-copy"></i> 复制列</a>
+                                        <a class="btn  btn-secondary m-r-5" href="#!" onclick="alert('开发中')"><i class="mdi mdi-lead-pencil"></i> 配置索引</a>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -212,81 +215,41 @@
             </div>
         </div>
     </div>
-    <!--导入实体--> 
-    <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
-        <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
-        <div class="modal-dialog modal-lg" role="document">
+    <!--复制列-->
+    <div id="divCopy" class="modal fade bs-example-modal-sm inC" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnCopy" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divCopy"></button>
+        <div class="modal-dialog modal-sm  border3CCC" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">复制列</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="tablebox">
-                        <div>
-                            <label>名称:</label>
-                            <input id="txtTableName" class="form-control" type="text" />
-                            <button @click="bindImportTables()" data-toggle="modal" type="button" class="btn btn-red">
-                                搜索
-                            </button>
-                            <button onclick="txtTableName.value=''" data-toggle="modal" type="button" class="btn btn-red">
-                                清空
-                            </button>
-                        </div>
-                    </div>
-                    <div class="table-container2">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="width30">
-                                        <label class="lyear-checkbox checkbox-primary">
-                                            <input type="checkbox" @change="selectAllTables" id="check-all2"><span></span>
-                                        </label>
-                                    </th>
-                                    <th>
-                                        表名
-                                    </th>
-                                    <th>描述</th>
-                                </tr>
-                            </thead>
-                            <tbody v-if="tables">
-                                <tr v-for="item in tables">
-                                    <td>
-                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item.Name">
-                                    </td>
-                                    <td>
-                                        {{ item.Name }}
-                                    </td>
-                                    <td>
-                                        {{ item.Description  }}
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="modal-body"> 
+                    <select class="form-control">
+                        <option v-for="item in allTables" :value="item.Id">{{item.Name}}</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnImportEntityClose" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="importEntitySubmit()" class="btn btn-primary">导入表</button>
+                    <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button"  class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
 </div>
 <script>
     var vueObj = new Vue({
         el: '#apibox',
         data: {
-            databaseId:0,
+            databaseId: 0,
             data: null,
             error: null,
             addTitle: "添加实体",
             editTitle: "修改实体",
             title: "",
             sort: 0,
-            sortName:null,
-            sortClass:"",
+            sortName: null,
+            sortClass: "",
             editTable: "",
             formData: {},
             database: [],
@@ -295,7 +258,8 @@
             selectedTables: [],
             columns: [{}],
             columnsCompareResult: null,
-            tables: []
+            tables: [],
+            allTables:[]
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -360,7 +324,7 @@
                 }
             },
             openAddDiv: function (item) {
-                this.title = this.addTitle; 
+                this.title = this.addTitle;
                 this.formData = { DataBaseId: this.databaseId };
             },
             addOrUpdate: function () {
@@ -397,7 +361,7 @@
                         this.database = response.data;
                         this.databaseId = this.database[0].Id;
                         var th = this;
-                        setTimeout(function () { 
+                        setTimeout(function () {
                             th.onSearch();
                         }, 50);
                     })
@@ -437,7 +401,7 @@
             addOrUpdateColumnInfoSubmit: function () {
                 var url = "/PrivateReZeroRoute/100003/SaveEntityColumnInfos"
                 var th = this;
-                axios.post(url, { Columns: this.columns },jwHeader)
+                axios.post(url, { Columns: this.columns }, jwHeader)
                     .then(response => {
                         this.error = null;
                         if (response.data == true) {
@@ -483,24 +447,22 @@
                         this.error = error.message;
                         this.data = null;
                     });
-            }, 
-            openImportEntity: function () { 
+            },
+            openImportEntity: function () {
                 btnImportEntity.click();
                 this.bindImportTables();
             },
-            importEntitySubmit: function ()
-            {
+            importEntitySubmit: function () {
                 var url = " /PrivateReZeroRoute/100003/ImportEntities";
                 axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables }, jwHeader)
-                    .then(response => { 
+                    .then(response => {
                         this.error = null;
                         if (response.data == true) {
                             btnImportEntityClose.click();
                             this.onSearch(1);
                             tools.alert("导入成功，删除实体可以重新导入。");
                         }
-                        else
-                        {
+                        else {
                             tools.alert(response.data.message);
                         }
                     })
@@ -516,6 +478,17 @@
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.tables = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            },
+            bindAllTables: function () {
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId ;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.allTables = response.data;
                         this.error = null;
                     })
                     .catch(error => {
@@ -540,13 +513,11 @@
                     this.selectedTables = [];
                 }
             },
-            classNameInput: function ()
-            {
+            classNameInput: function () {
                 this.formData.DbTableName = this.formData.ClassName;
             },
-            move: function (index, tyep)
-            {
-               if (tyep) {
+            move: function (index, tyep) {
+                if (tyep) {
                     if (index == 0) {
                         return;
                     }
@@ -563,19 +534,22 @@
                     this.columns.splice(index + 1, 0, temp);
                 }
             },
-            sortAsc: function ()
-            {
+            sortAsc: function () {
                 this.sort = 0;
                 this.sortName = "ClassName";
                 this.sortClass = "sort-asc";
                 this.onSearch(1);
             },
-            sortDesc: function ()
-            {
+            sortDesc: function () {
                 this.sort = 1;
                 this.sortName = "ClassName";
                 this.sortClass = "sort-desc";
                 this.onSearch(1);
+            },
+            openCopy: function ()
+            { 
+                this.bindAllTables();
+                btnCopy.click();
             }
         }
     });
