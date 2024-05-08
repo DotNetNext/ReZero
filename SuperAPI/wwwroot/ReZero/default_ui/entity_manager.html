@@ -225,12 +225,12 @@
                     <h4 class="modal-title" id="myLargeModalLabel">复制列</h4>
                 </div>
                 <div class="modal-body">
-                     <div class="form-group">
-                         <div class="alert alert-success">技巧: 建一个只有 创建时间、创建人 这样的表 作为模版表</div>
+                    <div class="form-group">
+                        <div class="alert alert-success">技巧: 建一个只有 创建时间、创建人 这样的表 作为模版表</div>
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="control-label">表名：</label>
-                        <input v-model="tableName"  @change="changeTable" class="form-control" list="browsers" name="joinTable">
+                        <input v-model="tableName" @change="changeTable" class="form-control" list="browsers" name="joinTable">
                         <datalist id="browsers">
                             <option v-if="allTables&&allTables.length>0" v-for="item in allTables" :value="item.Name">{{item.Name}}</option>
                         </datalist>
@@ -238,12 +238,73 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"  class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="submitCopy"  class="btn btn-primary">确定</button>
+                    <button type="button" id="btnCloseCopy" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="submitCopy" class="btn btn-primary">确定</button>
                 </div>
             </div>
         </div>
-    </div>  
+    </div> 
+    <!--导入实体-->
+    <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="tablebox">
+                        <div>
+                            <label>名称:</label>
+                            <input id="txtTableName" class="form-control" type="text" />
+                            <button @click="bindImportTables()" data-toggle="modal" type="button" class="btn btn-red">
+                                搜索
+                            </button>
+                            <button onclick="txtTableName.value=''" data-toggle="modal" type="button" class="btn btn-red">
+                                清空
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container2">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="width30">
+                                        <label class="lyear-checkbox checkbox-primary">
+                                            <input type="checkbox" @change="selectAllTables" id="check-all2"><span></span>
+                                        </label>
+                                    </th>
+                                    <th>
+                                        表名
+                                    </th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="tables">
+                                <tr v-for="item in tables">
+                                    <td>
+                                        <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item.Name">
+                                    </td>
+                                    <td>
+                                        {{ item.Name }}
+                                    </td>
+                                    <td>
+                                        {{ item.Description  }}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnImportEntityClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="importEntitySubmit()" class="btn btn-primary">导入表</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var vueObj = new Vue({
@@ -579,7 +640,8 @@
                         response.data.forEach(item => {
                             item.TableId = editId;
                             item.Id = 0;
-                           this.columns.push(item); 
+                            this.columns.push(item);
+                            btnCloseCopy.click();
                         }); 
                     })
                     .catch(error => {
