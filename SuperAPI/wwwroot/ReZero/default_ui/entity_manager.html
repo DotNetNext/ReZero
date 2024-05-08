@@ -268,7 +268,8 @@
             columnsCompareResult: null,
             tables: [],
             allTables: [],
-            tableName:null
+            tableName: null,
+            editTableId:0
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -319,7 +320,7 @@
                 }
             },
             openEditDiv: function (item) {
-                var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id;
+                var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id; 
                 if (item.Id) {
                     this.title = this.editTitle;
                     axios.get(urlById, jwHeader)
@@ -390,7 +391,8 @@
                     });
             },
             openColumns: function (item) {
-                btnEditColumns.click();
+                btnEditColumns.click(); 
+                this.editTableId = item.Id;
                 this.editTable = item.ClassName + " -  " + item.DataBaseName;
                 var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + item.Id;
                 axios.get(url, jwHeader)
@@ -570,7 +572,19 @@
                     tools.alert("请选择表");
                     return; 
                 }
-                alert(tableId);
+                var editId = this.editTableId;
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
+                axios.get(url, jwHeader)
+                    .then(response => { 
+                        response.data.forEach(item => {
+                            item.TableId = editId;
+                            item.Id = 0;
+                           this.columns.push(item); 
+                        }); 
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
             changeTable: function ()
             {
