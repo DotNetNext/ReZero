@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Diagnostics;
 namespace ReZero.Configuration
 {
     public class ApiConfiguration
@@ -22,6 +23,18 @@ namespace ReZero.Configuration
             return new Uri(assembly.CodeBase).LocalPath;
         }
 
+        // 获取当前执行程序（EXE）的完整路径  
+        public static string GetCurrentExeFullPath()
+        {
+            return Process.GetCurrentProcess().MainModule.FileName;
+        }
+
+        // 获取当前执行程序（EXE）的目录  
+        public static string GetCurrentExeDirectory()
+        {
+            return Path.GetDirectoryName(GetCurrentExeFullPath());
+        }
+
         /// <summary>  
         /// 从JSON文件中读取并反序列化指定键的值到泛型类型T。  
         /// </summary>  
@@ -33,7 +46,13 @@ namespace ReZero.Configuration
         {
             // 获取DLL的目录路径  
             string dllPath = Path.GetDirectoryName(GetCurrentDllFullPath());
-            string fullPath = Path.Combine(dllPath, fileName);
+            string fullPath = Path.Combine(GetCurrentExeDirectory(), fileName);
+
+
+            if (!File.Exists(fullPath))
+            {
+                fullPath=Path.Combine(dllPath, fileName);
+            }
 
             // 读取JSON文件内容  
             string jsonContent = File.ReadAllText(fullPath, Encoding.UTF8);
