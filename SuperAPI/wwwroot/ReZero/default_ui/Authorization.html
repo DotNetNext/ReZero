@@ -1,10 +1,10 @@
 ﻿@@master_page.html
-<div id="apibox" class="col-lg-12"> 
+<div id="apibox" class="col-lg-12">
     <div class="card">
         <div class="card-header"><h4>授权说明</h4></div>
         <div class="card-body">
             <div class="form-group">
-                <div class="alert alert-success">一、用户表不存需要创建表</div> 
+                <div class="alert alert-success">一、用户表不存需要创建表</div>
                 <p>  1、Json文件禁用授权 </p>
                 <p>  2、实体管理创建【用户实体】,然后点同步生成【用户表】 </p>
                 <p>  3、创建【用户插入接口】 </p>
@@ -40,7 +40,8 @@
             </div>
             <div class="form-group">
                 <label for="example-text-input">密码</label>
-                <input v-model="password" class="form-control" type="text" name="role-input" placeholder="前端加密好的密码">
+                <input id="txtpassword" v-model="password" class="form-control" type="text" name="role-input" placeholder="前端加密好的密码">
+                <button class="btn btn-xs btn-primary m-t-10" @click="MD5" >MD5</button> 
             </div>
             <div class="form-group">
                 <label for="example-text-input">结果:</label>
@@ -52,7 +53,9 @@
         </div>
     </div>
 </div>
-<script>
+<script src="js/crypto/core.js"></script>
+<script src="js/crypto/md5.js"></script>
+<script> 
     var vueObj = new Vue({
         el: '#apibox',
         data: {
@@ -61,7 +64,8 @@
             txtToken: null,
             userName: null,
             password: null,
-            result: null
+            result: null,
+            hashedPasswords: []  
         },
         mounted() {
             if (jwHeader && jwHeader.headers) {
@@ -92,6 +96,18 @@
                             this.error = error.message;
                             this.data = null;
                         });
+                }
+            },
+            MD5: function ()
+            {
+                if (this.password) {
+                    // No need to hash if password is already hashed
+                    var existingHash = this.hashedPasswords.find(entry => entry.password === this.password);
+                    if (!existingHash) {
+                        var hashedPassword = CryptoJS.MD5(this.password);
+                        this.password = hashedPassword;
+                        this.hashedPasswords.push({ password: this.password, hashedPassword });
+                    }
                 }
             }
         }
