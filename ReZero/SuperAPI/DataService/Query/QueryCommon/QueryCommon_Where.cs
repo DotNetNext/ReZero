@@ -218,7 +218,7 @@ namespace ReZero.SuperAPI
             {
                 if (!dataModel.ClaimList.Any(it => it.Key?.ToLower() == item.Value?.ToString()?.ToLower()))
                 {
-                    throw new SqlSugarException(TextHandler.GetCommonText("没有找到Claim Key 请在AOP中 aopContext.AttachClaimToHttpContext(key,value)" + item.Value, "ClaimList Not Found Key:" + item.Value));
+                    throw new SqlSugarException(TextHandler.GetCommonText("授权失败，没有找到Claim Key" + item.Value, "Authorization failure ,ClaimList Not Found Key:" + item.Value));
                 }
                 var value = dataModel.ClaimList.FirstOrDefault(it => it.Key?.ToLower() == item.Value?.ToString()?.ToLower()).Value;
                 item.Value = value;
