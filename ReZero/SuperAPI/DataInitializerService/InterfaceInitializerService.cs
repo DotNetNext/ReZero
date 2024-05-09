@@ -22,23 +22,28 @@ namespace ReZero.SuperAPI
             InitInterfaceList(db);
             InitIcon();
             InitDatabase(db);
+            UpgradeCompatibility(db);
+            App.PreStartupDb!.QueryFilter.Restore();
+        }
+
+        private static void UpgradeCompatibility(ISqlSugarClient? db)
+        {
             db!.Updateable<ZeroInterfaceList>()
                 .SetColumns(it => it.IsAttributeMethod == false)
-                .Where(it => it.IsAttributeMethod==null)
+                .Where(it => it.IsAttributeMethod == null)
                 .ExecuteCommand();
-            var list=db!.Queryable<ZeroInterfaceList>()
-                 .Where(it=>it.IsInitialized==false)
+            var list = db!.Queryable<ZeroInterfaceList>()
+                 .Where(it => it.IsInitialized == false)
                  .Where(it => it.DatabaseId == null).ToList();
-            foreach (var item in list) 
+            foreach (var item in list)
             {
                 if (item?.DataModel?.TableId > 0)
                 {
-                   var entity=db.Queryable<ZeroEntityInfo>().InSingle(item?.DataModel?.TableId);
+                    var entity = db.Queryable<ZeroEntityInfo>().InSingle(item?.DataModel?.TableId);
                     item!.DatabaseId = entity.DataBaseId;
-                    db.Updateable(item).ExecuteCommand(); 
+                    db.Updateable(item).ExecuteCommand();
                 }
             }
-            App.PreStartupDb!.QueryFilter.Restore();
         }
 
         /// <summary>
