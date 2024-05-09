@@ -20,7 +20,9 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(TextHandler.GetCommonText(type.Name + "没有IsDeleted属性不能逻辑删除", type.Name + "Cannot be logically deleted without IsDeleted attribute"));
             }
-            CheckSystemData(db,dataModel, type, entity);
+            CheckSystemData(db,dataModel, type, entity); 
+            var column = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted)));
+            column.PropertyInfo.SetValue(dataModel.Data, true);
             await db.UpdateableByObject(dataModel.Data)
                     .UpdateColumns("isdeleted")
                     .ExecuteCommandAsync();
