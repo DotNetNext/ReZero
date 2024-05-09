@@ -105,7 +105,7 @@
             tryItOut(item) {
                 var urlParams = new URLSearchParams(window.location.search);
                 var token = urlParams.get('token');
-                window.open('/rezero/TryApi.html?id=' + item.Id + "&token=" + token, '_blank');
+                window.open('/rezero/try_api.html?id=' + item.Id + "&token=" + token, '_blank');
             },
             onSearch: function () {
                 this.fetchData(txtSearch.value);
