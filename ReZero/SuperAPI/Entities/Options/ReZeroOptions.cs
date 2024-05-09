@@ -28,12 +28,16 @@ namespace ReZero.SuperAPI
             };
             superAPIOptions.UiOptions = new UiOptions()
             {
-                ShowNativeApiDocument = configuration?.Ui?.ShowNativeApiDocument ?? true,
+                ShowNativeApiDocument = configuration?.Ui?.ShowNativeApiDocument ?? true
             };
             superAPIOptions.InterfaceOptions = new InterfaceOptions()
             {
                   Jwt=configuration?.Jwt
             };
+            if (!string.IsNullOrEmpty(configuration?.Ui?.DefaultIndexSource)) 
+            {
+                superAPIOptions.UiOptions.DefaultIndexSource = configuration.Ui.DefaultIndexSource;
+            }
             return superAPIOptions;
         }
 

@@ -7,5 +7,6 @@ namespace ReZero.Configuration
     public class ReZeroUi
     {
         public bool ShowNativeApiDocument { get; set; }
+        public string? DefaultIndexSource { get;  set; }
     }
 }
