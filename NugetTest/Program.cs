@@ -2,6 +2,7 @@ using ReZero;
 using ReZero.SuperAPI;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,8 @@ builder.Services.AddReZeroServices(api =>
     //启用超级API
     //有重载可换json文件
     var apiObj = SuperAPIOptions.GetOptions();
-     
+
+    apiObj!.DependencyInjectionOptions = new DependencyInjectionOptions(Assembly.GetExecutingAssembly());
     //启用超级API
     api.EnableSuperApi(apiObj);
 
