@@ -44,14 +44,13 @@ namespace ReZero.Configuration
         /// <returns>反序列化后的对象。</returns>  
         public static T GetJsonValue<T>(string key, string fileName = "appsettings.json")
         {
-            // 获取DLL的目录路径  
-            string dllPath = Path.GetDirectoryName(GetCurrentDllFullPath());
-            string fullPath = Path.Combine(GetCurrentExeDirectory(), fileName);
-
-
+           
+            string fullPath = Path.Combine(GetCurrentExeDirectory(), fileName); 
             if (!File.Exists(fullPath))
             {
-                fullPath=Path.Combine(dllPath, fileName);
+                // 获取DLL的目录路径  
+                string dllPath = Path.GetDirectoryName(GetCurrentDllFullPath());
+                fullPath =Path.Combine(dllPath, fileName);
             }
 
             // 读取JSON文件内容  
