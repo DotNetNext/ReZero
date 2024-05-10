@@ -81,13 +81,15 @@ namespace ReZero.SuperAPI
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel); 
                     data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
-                    var json = JsonHelper.SerializeObject(data); 
+                    var json = JsonHelper.SerializeObject(data);
+                    context.Response.ContentType =PubConst.DataSource_ApplicationJson; 
                     await context.Response.WriteAsync(json);
                 }
                 catch (Exception ex)
                 {
                     object data =new ErrorResponse { message = ex.Message } ;
                     data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
+                    context.Response.ContentType = PubConst.DataSource_ApplicationJson;
                     await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
                     dynamicInterfaceContext.Exception = ex;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
