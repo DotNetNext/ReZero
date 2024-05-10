@@ -20,7 +20,7 @@ namespace ReZero.Configuration
         public static string GetCurrentDllFullPath()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            return new Uri(assembly.CodeBase).LocalPath;
+            return assembly.Location;
         }
 
         // 获取当前执行程序（EXE）的完整路径  
