@@ -64,6 +64,10 @@ namespace ReZero.SuperAPI
             {
                 return;
             }
+            if (options.DatabaseOptions?.ConnectionConfig?.DbType==SqlSugar.DbType.Sqlite&& options.DatabaseOptions?.ConnectionConfig?.ConnectionString == null) 
+            {
+                options.DatabaseOptions!.ConnectionConfig.ConnectionString = "datasource=rezero.db";
+            }
             var types = PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
             var db = new DatabaseContext(options.DatabaseOptions!.ConnectionConfig).SugarClient;
             App.PreStartupDb = db;
