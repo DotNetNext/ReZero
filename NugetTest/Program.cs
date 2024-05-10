@@ -1,6 +1,7 @@
 using ReZero;
 using ReZero.SuperAPI;
 using System.Diagnostics;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,14 +28,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi(new SuperAPIOptions()
-    {
-       
-        UiOptions = new UiOptions { 
-            DefaultIndexSource= "/rezero/dynamic_interface.html?InterfaceCategoryId=200100",
-             ShowNativeApiDocument = false
-        }
-    });
+    //有重载可换json文件
+    var apiObj = SuperAPIOptions.GetOptions();
+     
+    //启用超级API
+    api.EnableSuperApi(apiObj);
 
 });
 
