@@ -60,6 +60,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList!.DataModel!.JoinParameters.Add(new DataModelJoinParameters()
             {
                 JoinTableId = tableInfo!.Id,
+                JoinType= (item.Json?.JoinInfo?.JoinType== ColumnJoinType.LeftJoin)?JoinType.Left:JoinType.Inner,
                 OnList = new List<JoinParameter>()
                         {
                             new JoinParameter()
