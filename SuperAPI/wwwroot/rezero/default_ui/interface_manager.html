@@ -1,6 +1,8 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css" rel="stylesheet" />
 <link href="css/page_interface_manager.css" rel="stylesheet" />
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script> 
 <div id="apibox" class="card">
     <!--主列表搜索-->
     <div class="search-bar">
@@ -1264,7 +1266,30 @@
                 }
 
                 return result;
-            }  
+            },
+            showEditSql: function () {
+                $("#divAceEditor").show();
+                var editor = ace.edit("divAceEditor");
+                editor.setOption("showPrintMargin", false);
+                editor.setTheme("ace/theme/monokai"); // 设置主题
+                editor.getSession().setMode("ace/mode/sql"); // 设置语言模式为SQL
+                editor.setOption("enableBasicAutocompletion", true);
+                editor.setOption("enableSnippets", true);
+                editor.setOption("enableLiveAutocompletion", true)
+                var $sql = $("[name='Sql']");
+                editor.setValue($sql.val());
+                function updateTextarea() {
+                    $sql.val(editor.getValue());
+                }
+                // 监听编辑器内容变化  
+                editor.on('change', updateTextarea);
+            },
+            closeEditSql: function () {
+
+                var editor = ace.edit("divAceEditor");
+                editor.destroy();
+            },
+
 
         }
     });
