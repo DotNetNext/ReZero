@@ -10,10 +10,17 @@ Rezero是一款.NET中间件,无需写代码也能实现CRUD，无破坏性，�
 qq群号：472534707
 
 ## 1.2 功能截图
+### 创建接口
+
 ![输入图片说明](READMEIMG/image1.png)
-查看创建后的接口
+
+### 查看创建后的接口
+
 ![输入图片说明](READMEIMG/image5.png)
- 
+
+### 在线调试接口
+
+![输入图片说明](READMEIMG/232131.png)
 
 # 二、数据库支持
 Sqlite 、 MySql 、 SqlServer 、 PgSQL 、Oracle 、人大金仓（默认模式）、 达梦
@@ -107,7 +114,7 @@ builder.Services.AddReZeroServices(api =>
 ## 预览2：查询配置联表
 ![输入图片说明](READMEIMG/22.png) 
 ## 预览3：SQL直接生成接口
-![输入图片说明](READMEIMG/88.png)
+![输入图片说明](READMEIMG/656.png)
 ## 预览4：配置完显的接口列表
 ![输入图片说明](READMEIMG/24.png)
 ## 预览5: 创建实体
