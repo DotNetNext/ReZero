@@ -29,7 +29,7 @@ namespace ReZero.SuperAPI
                     context.Response.StatusCode = 401;
                     throw new Exception(TextHandler.GetCommonText("系统接口被禁用无法访问，修改JWT参数DisableSystemInterface", "If the system interface is disabled and cannot be accessed, modify the JWT parameter DisableSystemInterface"));
                 }
-            }
+            } 
             var url = context.Request.Path.ToString().ToLower();
             var jsonClaims = SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt.Claim ?? new List<Configuration.ClaimItem>(); ;
             var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();

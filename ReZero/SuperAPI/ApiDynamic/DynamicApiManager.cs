@@ -67,22 +67,23 @@ namespace ReZero.SuperAPI
                     interInfo!.DataModel!.ApiId = interInfo.Id;
                     interInfo!.DataModel!.ResultType = interInfo.DataModel?.ResultType;
                     interInfo!.DataModel!.Sql = interInfo.DataModel?.Sql;
-                    interInfo!.DataModel!.DataBaseId = interInfo.DataModel?.DataBaseId??0;
+                    interInfo!.DataModel!.DataBaseId = interInfo.DataModel?.DataBaseId ?? 0;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
-                    dynamicInterfaceContext.DataModel= interInfo.DataModel;
-                    var service=DependencyInjection.DependencyResolver.Provider;
+                    dynamicInterfaceContext.DataModel = interInfo.DataModel;
+                    var service = DependencyInjection.DependencyResolver.Provider;
                     dynamicInterfaceContext.ServiceProvider = service;
                     interInfo.DataModel!.ServiceProvider = service;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);
-                    await InstanceManager.AuthorizationAsync(context,dynamicInterfaceContext);
+                    await InstanceManager.AuthorizationAsync(context, dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
+                    data = GetUserInfo(path, interInfo, data);
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
-                    data = new ResultService().GetResult(data, resultModel); 
-                    data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
+                    data = new ResultService().GetResult(data, resultModel);
+                    data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
                     var json = JsonHelper.SerializeObject(data);
-                    context.Response.ContentType =PubConst.DataSource_ApplicationJson; 
+                    context.Response.ContentType = PubConst.DataSource_ApplicationJson;
                     await context.Response.WriteAsync(json);
                 }
                 catch (Exception ex)
@@ -95,6 +96,15 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }
             }
+        }
+
+        private static object? GetUserInfo(string? path, ZeroInterfaceList interInfo, object? data)
+        {
+            if (path == "/api/rezero/getuserinfo")
+            {
+                data = interInfo?.DataModel?.ClaimList;
+            } 
+            return data;
         }
 
 

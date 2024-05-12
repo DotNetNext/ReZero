@@ -213,7 +213,7 @@ namespace ReZero.SuperAPI
                 it.GroupName = nameof(MethodApi);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300;
                 it.Name = TextHandler.GetInterfaceListText(GetUserInfoId);
-                it.Url = "/api/rezero/GetUserInfo";
+                it.Url = "/api/rezero/getuserinfo";
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
