@@ -75,7 +75,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.IsInitialized = false;
             zeroInterfaceList.IsDeleted = false;
             zeroInterfaceList.Name = saveInterfaceListModel.Name;
-            zeroInterfaceList.Url = base.GetUrl(saveInterfaceListModel);
+            zeroInterfaceList.Url = base.GetUrl(saveInterfaceListModel).Replace("//","/");
             zeroInterfaceList.DatabaseId = saveInterfaceListModel?.Json?.DataBaseId;
             zeroInterfaceList.IsAttributeMethod = false;
             zeroInterfaceList.GroupName = !string.IsNullOrEmpty(saveInterfaceListModel?.GroupName) ? saveInterfaceListModel?.GroupName! : saveInterfaceListModel?.TableId!;

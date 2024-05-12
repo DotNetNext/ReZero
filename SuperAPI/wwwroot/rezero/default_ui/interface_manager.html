@@ -215,7 +215,8 @@
                                                 <template v-if="item.ElementType==7">
                                                     <p><code>接口参数：{string:name} 等于 @name=string类型的参数 ，C#类型有string、int、DateTime等</code></p>
                                                     <p><code>授权参数：{ClaimKey:OrgId} 等于 你授权的Claim[OrgId]</code></p>
-                                                    <textarea rows="10" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
+                                                    <textarea rows="10" style="display:none" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
+                                                    <div id="divAceEditor" style="width:100%;height:300px;"></div>
                                                 </template>
                                             </div>
                                         </div>
@@ -726,6 +727,7 @@
                                 }
                             }
                             btnSave.click();
+                            this.showEditSql()
                         })
                         .catch(error => {
                             this.error = error.message;
@@ -754,6 +756,7 @@
                 btnSave.click();
                 this.currentActionTypeContext = this.currentActionType.Items[0];
                 this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
+                this.showEditSql();
             },
             addOrUpdateInterfaceList: function () {
 
@@ -769,9 +772,10 @@
                     }
                 });
 
-                if (isSuccess) {
+                if (isSuccess) { 
+                    this.setValueEditSql();
                     var formData = tools.formToJson("frmSave");
-                    formData.DatabaseId = this.DatabaseId;
+                    formData.DatabaseId = this.DatabaseId; 
                     formData.Json = {
                         Id: this.editId,
                         Columns:this.selectedColumns,
@@ -805,7 +809,9 @@
             interfaceListTabClick: function (index, item) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
-                this.currentActionTypeContext.FormElements[0].Value = item.Text;
+                if (this.currentActionTypeContext.FormElements.length>0)
+                    this.currentActionTypeContext.FormElements[0].Value = item.Text;
+                this.showEditSql();
             },
             //2.选择表逻辑-添加接口
             openImportEntity: function () {
@@ -1267,22 +1273,32 @@
 
                 return result;
             },
-            showEditSql: function () {
-                $("#divAceEditor").show();
-                var editor = ace.edit("divAceEditor");
-                editor.setOption("showPrintMargin", false);
-                editor.setTheme("ace/theme/monokai"); // 设置主题
-                editor.getSession().setMode("ace/mode/sql"); // 设置语言模式为SQL
-                editor.setOption("enableBasicAutocompletion", true);
-                editor.setOption("enableSnippets", true);
-                editor.setOption("enableLiveAutocompletion", true)
+            showEditSql: function () { 
+
+                setTimeout(function () {
+                     
+                    var $sql = $("[name='Sql']");
+                    if ($sql.size() > 0) {
+                        var editor = ace.edit("divAceEditor");
+                        editor.setOption("showPrintMargin", false);
+                        editor.setTheme("ace/theme/monokai"); // 设置主题
+                        editor.getSession().setMode("ace/mode/sql"); // 设置语言模式为SQL
+                        editor.setOption("enableBasicAutocompletion", true);
+                        editor.setOption("enableSnippets", true);
+                        editor.setOption("enableLiveAutocompletion", true)
+                        editor.setValue($sql.val());
+                    }
+
+                }, 100);
+            },
+            setValueEditSql: function ()
+            {
                 var $sql = $("[name='Sql']");
-                editor.setValue($sql.val());
-                function updateTextarea() {
+                if ($sql.size() > 0) {
+                    var editor = ace.edit("divAceEditor");
+                    this.currentActionTypeContext.FormElements[3].Value = editor.getValue();
                     $sql.val(editor.getValue());
                 }
-                // 监听编辑器内容变化  
-                editor.on('change', updateTextarea);
             },
             closeEditSql: function () {
 
