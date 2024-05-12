@@ -80,7 +80,7 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
-                    data = new ResultService().GetResult(data, resultModel);
+                    data = new ResultService().GetResult(data??new object(), resultModel)??new object();
                     data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
                     var json = JsonHelper.SerializeObject(data);
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
