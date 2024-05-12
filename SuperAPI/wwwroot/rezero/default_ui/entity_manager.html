@@ -677,7 +677,18 @@
             },
             executeSql: function () {
                 var editor = ace.edit("divAceEditor");
-                var sql=editor.getValue("\r\n");
+                var sql = editor.getValue("\r\n");
+                var url = "/PrivateReZeroRoute/100003/ExecuetSql";
+                axios.post(url, { databaseId: this.databaseId, sql: sql }, jwHeader)
+                    .then(response => { 
+                        var editorResult = ace.edit("divAceEditorResult");
+                        editorResult.setValue(JSON.stringify(response.data, null, 4)); 
+                        editorResult.selection.clearSelection();
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
             openSqlTool: function () {
                 var editor = ace.edit("divAceEditor");
@@ -696,6 +707,10 @@
                 var editor = ace.edit("divAceEditor");
                 editor.setValue("\r\n");
                 editor.selection.clearSelection();
+
+                var editorResult = ace.edit("divAceEditorResult");
+                editorResult.setValue("\r\n");
+                editorResult.selection.clearSelection()
             },
             bindSqlResult: function ()
             {

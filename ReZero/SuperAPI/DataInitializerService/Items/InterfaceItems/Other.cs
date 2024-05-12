@@ -17,6 +17,7 @@ namespace ReZero.SuperAPI
             GetWhereTypeList();
             GetToKen();
             GetUserInfo();
+            ExecuetSql();
         }
 
         private void SaveInterfaceList()
