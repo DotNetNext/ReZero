@@ -22,6 +22,10 @@ namespace ReZero.SuperAPI
             {
                 return true;
             }
+            if (context.Request.Path.ToString()?.ToLower()  == PubConst.Jwt_GetJwtInfo) 
+            {
+                return true;
+            }
             if (SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.DisableSystemInterface == true) 
             {
                 if (dynamicInterfaceContext.InterfaceType == InterfaceType.SystemApi) 

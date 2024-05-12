@@ -100,7 +100,7 @@ namespace ReZero.SuperAPI
 
         private static object? GetUserInfo(string? path, ZeroInterfaceList interInfo, object? data)
         {
-            if (path == "/api/rezero/getuserinfo")
+            if (path == PubConst.Jwt_GetJwtInfo)
             { 
                 data = interInfo?.DataModel?.ClaimList;
                 if (interInfo?.DataModel?.ClaimList?.Any()!=true&&SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true)
