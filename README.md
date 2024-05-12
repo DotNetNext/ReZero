@@ -14,7 +14,7 @@ qq群号：472534707
 查看创建后的接口
 ![输入图片说明](READMEIMG/image5.png)
 在线调试
-![输入图片说明](READMEIMG/99.png)
+![输入图片说明](READMEIMG/88.png)
 
 # 二、数据库支持
 Sqlite 、 MySql 、 SqlServer 、 PgSQL 、Oracle 、人大金仓（默认模式）、 达梦
