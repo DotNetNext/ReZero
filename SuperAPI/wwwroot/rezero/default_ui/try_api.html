@@ -132,6 +132,7 @@
                 editor.setOption("showPrintMargin", false);
                 editor.session.setMode("ace/mode/json5");
                 editor.setValue(formattedJson);
+                editor.selection.clearSelection();
                 editor.resize();
 
             },
