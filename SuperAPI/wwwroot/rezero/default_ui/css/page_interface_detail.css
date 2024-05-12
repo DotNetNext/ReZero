@@ -1,47 +1,16 @@
-﻿#app {
-    font-family: Arial, sans-serif;
-    padding: 35px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+﻿#app {  
+    background:#fff;
+    padding:35px;
+} 
 .url 
 {
     font-size:20px;
     padding:30px;
     padding-left:0;
-}
-input, textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-#response {
-    width: 100%;
-    height: 200px;
-}
-
+}  
 .readonly 
 {
     background:#ccc
 }
 
-button {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-    button:hover {
-        background-color: #45a049;
-    }
-
-.btn-close {
-     margin-left:10px
-}
+ 

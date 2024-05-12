@@ -1,6 +1,7 @@
 ﻿@@master_page.html
-<link href="css/page_interface_detail.css" rel="stylesheet" />
+<link href="css/page_interface_detail.css" rel="stylesheet" /> 
 <div id="app">
+    <div class="alert alert-success">注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表</div>
     <div v-if="data">
         <h1>
             {{data.Name}}
@@ -9,17 +10,17 @@
             {{ data.HttpMethod }}: {{data.Url}}
         </div>
         <div class="parameter" v-if="data.DataModel.DefaultParameters && data.DataModel.DefaultParameters.length > 0">
-            <div v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
-                <label :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
+            <div class="form-group" v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
+                <label class="control-label" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
 
                 <div v-if="param.ValueType=='Byte[]'">
                     <input @change="handleFileChange($event, param)" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
                 </div>
                 <div v-else-if="param.ValueIsReadOnly==false">
-                    <input v-model="param.Value" type="text" id="param1" :placeholder="param.ValueType">
+                    <input v-model="param.Value" type="text" id="param1" class="form-control" :placeholder="param.ValueType">
                 </div>
                 <div v-else-if="param.ValueIsReadOnly==true" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">
-                    <input v-model="param.Value" type="text" class="readonly" readonly="readonly" id="param1" placeholder="">
+                    <input v-model="param.Value" type="text" class="readonly form-control" readonly="readonly" id="param1" placeholder="">
                 </div>
             </div>
         </div>
@@ -35,18 +36,18 @@
         </div>
         <button class="btn btn-success" v-on:click="submitRequest">提交</button>
         <button class="btn btn-close" v-on:click="submitClose">关闭</button>
-        <label for="response">结果:</label> 
-        <div id="editor" style="width: 100%; height: 300px;"></div>
-        <div class="alert alert-success">注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表</div>
+
+        <div id="editor" class="m-t-10" style="padding:10px;width: 100%; height: 300px;"></div>
+
     </div>
     <div v-else>
         <!-- 处理 data 为 null 的情况，可以显示加载中或错误信息 -->
         <p>Loading...</p>
     </div>
 </div>
-<script src="js/ace/src-min/ace.js"></script> 
+<script src="js/ace/src-min/ace.js"></script>
 <script>
-   var vueObj= new Vue({
+    var vueObj = new Vue({
         el: '#app',
         data: {
             data: null,
@@ -83,7 +84,7 @@
                 axios.post(fullUrl, postData, jwHeader)
                     .then(function (response) {
                         // 更新响应
-                        vm.response = JSON.stringify(response.data,null,4);
+                        vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditValue(vm.response);
                     }.bind(vm))
                     .catch(function (error) {
@@ -118,13 +119,14 @@
                 };
                 reader.readAsDataURL(file);
             },
-            setEditValue: function (formattedJson)
-            {
-                var editor = ace.edit("editor"); 
-                editor.setTheme("ace/theme/monokai");  
+            setEditValue: function (formattedJson) {
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/twilight");
                 editor.setOption("showPrintMargin", false);
-                editor.session.setMode("ace/mode/json5");  
+                editor.session.setMode("ace/mode/json5");
                 editor.setValue(formattedJson);
+                editor.resize();
+
             }
         }
     });
