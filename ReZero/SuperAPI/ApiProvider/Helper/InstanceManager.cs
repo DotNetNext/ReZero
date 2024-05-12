@@ -56,11 +56,7 @@ namespace ReZero.SuperAPI
                         return true;
                     }
                     else
-                    {
-                        if (context.Request.Path.ToString()?.ToLower() == PubConst.Jwt_GetJwtInfo)
-                        {
-                            return true;
-                        }
+                    { 
                         // 用户未通过身份验证，可能需要进行一些处理，例如返回未经授权的错误
                         context.Response.StatusCode = 401;
                         throw new Exception(TextHandler.GetCommonText("用户未通过身份验证", "The user is not authenticated"));
