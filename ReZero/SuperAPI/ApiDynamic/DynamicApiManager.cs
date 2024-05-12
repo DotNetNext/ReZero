@@ -103,9 +103,9 @@ namespace ReZero.SuperAPI
             if (path == PubConst.Jwt_GetJwtInfo)
             { 
                 data = interInfo?.DataModel?.ClaimList;
-                if (interInfo?.DataModel?.ClaimList?.Any()!=true&&SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true)
+                if (interInfo?.DataModel?.ClaimList?.Any()!=true)
                 {
-                    throw new Exception(TextHandler.GetCommonText( "你没有启用JWT授权", "You have not enabled JWT authorization"));
+                    throw new Exception(TextHandler.GetCommonText("你没有启用JWT授权或者没有配置Claim", "You did not enable JWT authorization or did not configure Claim"));
                 }
             } 
             return data;

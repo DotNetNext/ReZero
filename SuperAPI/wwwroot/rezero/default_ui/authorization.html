@@ -96,6 +96,9 @@
                 } else {
                     localStorage["@@authorizationLocalStorageName"] = this.txtToken;
                     tools.alert("设置成功");
+                    setTimeout(function () {
+                        window.location.href = "/rezero/Authorization.html";
+                    }, 1000);
                 }
             },
             getToken: function () {
