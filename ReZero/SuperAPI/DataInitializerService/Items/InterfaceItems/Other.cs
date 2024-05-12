@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
             SaveInterfaceList();
             GetWhereTypeList();
             GetToKen();
+            GetUserInfo();
         }
 
         private void SaveInterfaceList()
@@ -196,6 +197,37 @@ namespace ReZero.SuperAPI
                          {
                               Name="Password",ParameterValidate=new ParameterValidate(){ IsRequired=true }, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("密码","Password")
                          }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+
+        private void GetUserInfo()
+        {
+             
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.All.ToString();
+                it.Id = GetUserInfoId;
+                it.GroupName = nameof(MethodApi);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id300;
+                it.Name = TextHandler.GetInterfaceListText(GetUserInfoId);
+                it.Url = "/api/rezero/GetUserInfo";
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 0,
+                        ArgsTypes = new Type[] {  },
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetUserInfo)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                          
                     }
                 };
             });

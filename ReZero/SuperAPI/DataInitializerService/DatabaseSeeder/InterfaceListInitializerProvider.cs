@@ -235,6 +235,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("获取token")]
         [EnglishTextAttribute("Get 获取token")]
         public const long GetTokenId = 40;
+        [ChineseTextAttribute("获取用户信息")]
+        [EnglishTextAttribute("Get user info")]
+        public const long GetUserInfoId = 41;
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

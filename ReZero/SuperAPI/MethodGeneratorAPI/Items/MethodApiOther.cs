@@ -52,6 +52,10 @@ namespace ReZero.SuperAPI
             }
             return result;
         }
+        public object GetUserInfo() 
+        {
+            return null;
+        }
         public object GetTables(long databaseId, string tableName)
         {
             var db = App.GetDbById(databaseId);
