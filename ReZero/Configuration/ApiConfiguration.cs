@@ -74,16 +74,16 @@ namespace ReZero.Configuration
                 }
                 else
                 {
-                    throw new ArgumentException($"The specified key '{key}' was not found in the JSON file.");
+                    throw new ArgumentException($"GetJsonValue<{typeof(T).Name}>() error。The specified key '{key}' was not found in the JSON file.");
                 }
             }
             catch (JsonReaderException ex)
             {
-                throw new InvalidOperationException($"Error parsing JSON file at path: {fullPath}", ex);
+                throw new InvalidOperationException($"GetJsonValue<{typeof(T).Name}>() error。Error parsing JSON file at path: {fullPath}", ex);
             }
             catch (FileNotFoundException ex)
             {
-                throw new FileNotFoundException($"The JSON file was not found at path: {fullPath}", ex);
+                throw new FileNotFoundException($"GetJsonValue<{typeof(T).Name}>() error。The JSON file was not found at path: {fullPath}", ex);
             }
         }
     }

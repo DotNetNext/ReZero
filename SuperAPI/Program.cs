@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 //注册db: 这个不写代码可以不注册
 builder.Services.AddScoped<ISqlSugarClient>(it =>
 {
-    var config = ApiConfiguration.GetJsonValue<ReZeroJson>("Rezero");
+    var config = ApiConfiguration.GetJsonValue<ReZeroJson>("ReZero");
     return new SqlSugarClient(new ConnectionConfig()
     {
         DbType = config!.BasicDatabase!.DbType,
