@@ -1,5 +1,5 @@
 ﻿@@master_page.html
-<link href="css/page_interface_detail.css" rel="stylesheet" /> 
+<link href="css/page_interface_detail.css?v=1" rel="stylesheet" /> 
 <div id="app">
     <div class="alert alert-success">注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表</div>
     <div v-if="data">
@@ -34,8 +34,12 @@
         <div class="parameter" v-if="!data.DataModel.OrderDynamicParemters">
             <input id="txtOrderDynamicParemters" type="hidden" />
         </div>
-        <button class="btn btn-success" v-on:click="submitRequest">提交</button>
-        <button class="btn btn-close" v-on:click="submitClose">关闭</button>
+        <div class="form-group">
+            <button class="btn   btn-primary m-r-10" v-on:click="submitRequest"><i class="mdi mdi-check-circle-outline"></i>提交</button>
+            <button class="btn   btn-info m-r-10" v-on:click="savePars"><i class="mdi-content-save mdi"></i> 保存参数</button>
+            <button class="btn   btn btn-pink m-r-10" v-on:click="loadPars"><i class="mdi-autorenew mdi"></i>加载参数</button> 
+            <button class="btn   btn btn-secondary m-r-10" v-on:click="submitClose"><i class="mdi-close mdi"></i>关闭页面</button>
+        </div> 
 
         <div id="editor" class="m-t-10" style="padding:10px;width: 100%; height: 300px;"></div>
 
