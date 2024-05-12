@@ -35,17 +35,18 @@
         </div>
         <button class="btn btn-success" v-on:click="submitRequest">提交</button>
         <button class="btn btn-close" v-on:click="submitClose">关闭</button>
-        <label for="response">结果:</label>
-        <textarea id="response" v-model="response" readonly></textarea>
-        <span class="alert alert-success">注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表</span>
-    </div>  
+        <label for="response">结果:</label> 
+        <div id="editor" style="width: 100%; height: 300px;"></div>
+        <div class="alert alert-success">注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表</div>
+    </div>
     <div v-else>
         <!-- 处理 data 为 null 的情况，可以显示加载中或错误信息 -->
         <p>Loading...</p>
     </div>
 </div>
+<script src="js/ace/src-min/ace.js"></script> 
 <script>
-    new Vue({
+   var vueObj= new Vue({
         el: '#app',
         data: {
             data: null,
@@ -55,32 +56,35 @@
         mounted() {
             // 在组件加载时触发数据获取
             this.fetchData();
+            setTimeout(function () {
+                vueObj.setEditValue("{}");
+            }, 100);
         },
         methods: {
             submitClose: function () {
                 window.close();
             },
             submitRequest: function () {
-                
+
                 var vm = this;
                 var json = vm.data; // Uncomment this line
                 // 构造请求
                 var fullUrl = json.Url;
-                var postData = {}; 
+                var postData = {};
                 if (json.DataModel.DefaultParameters) {
                     json.DataModel.DefaultParameters.forEach(function (param) {
                         postData[param.Name] = param.Value;
                     });
                 }
-                if (txtOrderDynamicParemters.value)
-                {
+                if (txtOrderDynamicParemters.value) {
                     postData["OrderDynamicParemters"] = txtOrderDynamicParemters.value;
                 }
                 // 发送 POST 请求
                 axios.post(fullUrl, postData, jwHeader)
                     .then(function (response) {
                         // 更新响应
-                        vm.response = JSON.stringify(response.data);
+                        vm.response = JSON.stringify(response.data,null,4);
+                        this.setEditValue(vm.response);
                     }.bind(vm))
                     .catch(function (error) {
                         // 处理错误
@@ -94,7 +98,7 @@
                 axios.get('/PrivateReZeroRoute/100003/GetInternalDetail?id=' + idFromUrl, jwHeader)
                     .then(function (response) {
                         this.data = response.data;
-                        this.error = null; 
+                        this.error = null;
                         document.body.classList.add("lyear-layout-sidebar-close");
                     }.bind(this))
                     .catch(function (error) {
@@ -114,6 +118,14 @@
                 };
                 reader.readAsDataURL(file);
             },
+            setEditValue: function (formattedJson)
+            {
+                var editor = ace.edit("editor"); 
+                editor.setTheme("ace/theme/monokai");  
+                editor.setOption("showPrintMargin", false);
+                editor.session.setMode("ace/mode/json5");  
+                editor.setValue(formattedJson);
+            }
         }
     });
 </script>
