@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextTemplateTest", "TextTem
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoTest", "DemoTest", "{1032E893-22CF-4883-8857-049526541333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjectionTest", "DependencyInjectionTest\DependencyInjectionTest.csproj", "{E7355DEA-E652-4C6A-960C-CECF4B4EB673}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjectionTest", "DependencyInjectionTest\DependencyInjectionTest.csproj", "{E7355DEA-E652-4C6A-960C-CECF4B4EB673}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DE5AE4AE-44E0-496C-806B-581C052A259B}"
 EndProject
@@ -50,7 +50,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C} = {1032E893-22CF-4883-8857-049526541333}
 		{EA58EB55-47DD-44FD-A12A-0231F97F06C5} = {1032E893-22CF-4883-8857-049526541333}
 		{E7355DEA-E652-4C6A-960C-CECF4B4EB673} = {1032E893-22CF-4883-8857-049526541333}
 	EndGlobalSection
