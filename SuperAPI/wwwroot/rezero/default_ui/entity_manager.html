@@ -26,9 +26,10 @@
             <div class="card-toolbar clearfix">
 
                 <div class="toolbar-btn-action">
-                    <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
-                    <a class="btn btn-success m-r-5" @click="openImportEntity()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
-                    <a class="btn btn-warning m-r-5" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
+                    <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-10" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+                    <a class="btn btn-success m-r-10" @click="openImportEntity()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
+                    <a class="btn btn-warning m-r-10" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
+                    <a class="btn btn-pink m-r-10" @click="openSqlTool()" data-toggle="tooltip" data-original-title="可以方便执行SQL，让你不需要打开数据库" href="#!"><i class="mdi mdi-database"></i>SQL</a>
                 </div>
             </div>
             <div class="card-body">
@@ -243,7 +244,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <!--导入实体-->
     <div id="divImportEntity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnImportEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divImportEntity"></button>
@@ -301,6 +302,17 @@
                 <div class="modal-footer">
                     <button type="button" id="btnImportEntityClose" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="importEntitySubmit()" class="btn btn-primary">导入表</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--SQL工具--> 
+    <div id="divDatabaseTool" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnDatabaseTool" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divDatabaseTool"></button>
+        <div class="modal-dialog  " role="document">
+            <div class="modal-content">
+                <div class="modal-footer">
+                    <button type="button" id="btnDatabaseTooClose" class="btn btn-default" data-dismiss="modal">关闭</button> 
                 </div>
             </div>
         </div>
@@ -655,6 +667,10 @@
             clearTable: function ()
             {
                 this.tableName = null;
+            },
+            openSqlTool: function ()
+            {
+                btnDatabaseTool.click();
             }
         }
     });
