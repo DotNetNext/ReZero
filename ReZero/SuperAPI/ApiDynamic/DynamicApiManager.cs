@@ -101,8 +101,12 @@ namespace ReZero.SuperAPI
         private static object? GetUserInfo(string? path, ZeroInterfaceList interInfo, object? data)
         {
             if (path == "/api/rezero/getuserinfo")
-            {
+            { 
                 data = interInfo?.DataModel?.ClaimList;
+                if (interInfo?.DataModel?.ClaimList?.Any()!=true&&SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true)
+                {
+                    throw new Exception(TextHandler.GetCommonText( "你没有启用JWT授权", "You have not enabled JWT authorization"));
+                }
             } 
             return data;
         }
