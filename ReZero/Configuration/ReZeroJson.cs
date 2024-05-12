@@ -9,7 +9,7 @@ namespace ReZero.Configuration
     {
         public ReZeroUiBasicdatabase? BasicDatabase { get; set; }
         public ReZeroJwt? Jwt { get; set; }
-        public ReZeroUi? Ui { get; set; }
+        public ReZeroUi? Ui { get; set; } 
     }
 
 }

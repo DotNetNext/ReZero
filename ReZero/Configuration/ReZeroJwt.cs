@@ -13,6 +13,7 @@ namespace ReZero.Configuration
         public string? PasswordFieldName { get; set; }
         public long? Expires { get; set; }
         public List<ClaimItem>? Claim { get; set; }
+        public bool? DisableSystemInterface { get; set; }
     }
 
     public class ClaimItem
