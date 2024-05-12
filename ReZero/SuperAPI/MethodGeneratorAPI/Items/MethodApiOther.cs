@@ -72,5 +72,59 @@ namespace ReZero.SuperAPI
             return result;
         }
 
+        public object ExecuetSql(long databaseId,string sql)
+        {
+            var db = App.GetDbById(databaseId);
+            sql = sql + string.Empty;
+            if (db!.CurrentConnectionConfig.DbType == DbType.Oracle&& sql.Contains(";") && !sql.ToLower().Contains("begin"))
+            {
+                var sqls=sql.Split(';');
+                List<object> result = new List<object>();
+                foreach (var item in sqls)
+                {
+                    if (!string.IsNullOrEmpty(item.Trim().Replace("\r","").Replace("\n", "")))
+                    {
+                        result.Add(GetObject(item, db));
+                    }
+                }
+                if (result.Count == 1)
+                {
+                    return result.FirstOrDefault();
+                }
+                else 
+                {
+                    return result;
+                }
+            }
+            else
+            {
+                var result = GetObject(sql, db); 
+                return result;
+            }
+        }
+
+        private static object GetObject(string sql, SqlSugarClient? db)
+        {
+            if (sql.ToLower().Contains("select"))
+            {
+                var ds = db!.Ado.GetDataSetAll(sql);
+                if (ds.Tables.Count == 1)
+                {
+                    return ds.Tables[0];
+                }
+                else
+                {
+                    return ds;
+                }
+            }
+            else if (db!.CurrentConnectionConfig.DbType == DbType.SqlServer && sql.ToLower().Contains("go"))
+            {
+                return db!.Ado.ExecuteCommandWithGo(sql);
+            }
+            else
+            {
+                return db!.Ado.ExecuteCommand(sql) + " affected rows";
+            }
+        }
     }
 }
