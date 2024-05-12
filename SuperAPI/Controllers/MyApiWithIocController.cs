@@ -5,7 +5,7 @@ namespace SuperAPITest.Controllers
     /// <summary>
     /// 动态接口+IOC
     /// </summary>
-    [Api(200100,GroupName = "分组1")]
+    [Api(200100,GroupName = "分组2")]
     public class MyApiWithIocController
     {
         //属性注入

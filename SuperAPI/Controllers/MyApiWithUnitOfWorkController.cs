@@ -7,7 +7,7 @@ namespace SuperAPITest.Controllers
     /// <summary>
     /// 动态接口+工作单元
     /// </summary>
-    [Api(200100, GroupName = "分组2")]
+    [Api(200100, GroupName = "分组3")]
     public class MyApiWithUnitOfWorkController
     {
         //属性注入
