@@ -1,6 +1,8 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css?v=1" rel="stylesheet" />
 <link href="css/page_entity_manager.css?v=1" rel="stylesheet" />
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script>
 <div id="apibox" class="card">
     <!--正文-->
     <div class="card">
@@ -306,13 +308,23 @@
             </div>
         </div>
     </div>
-    <!--SQL工具--> 
+    <!--SQL工具-->
     <div id="divDatabaseTool" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnDatabaseTool" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divDatabaseTool"></button>
-        <div class="modal-dialog  " role="document">
+        <div class="modal-dialog  width1000 " role="document"> 
             <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">简化版SQL工具</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="divAceEditor" style="width:100%; height:200px"> </div>
+                    <button @click="executeSql" class="btn btn-danger m-10 m-b-0"><i class="mdi mdi-play-circle-outline"></i>运行</button>
+                    <button @click="clearSql" class="btn btn-cyan m-10 m-b-0"><i class="mdi-restart mdi"></i>清空</button>
+                    <div id="divAceEditorResult" style="width:100%; height:200px"> </div>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnDatabaseTooClose" class="btn btn-default" data-dismiss="modal">关闭</button> 
+                    <button type="button" id="btnDatabaseTooClose" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -342,7 +354,7 @@
             tables: [],
             allTables: [],
             tableName: null,
-            editTableId:0
+            editTableId: 0
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -393,7 +405,7 @@
                 }
             },
             openEditDiv: function (item) {
-                var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id; 
+                var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id;
                 if (item.Id) {
                     this.title = this.editTitle;
                     axios.get(urlById, jwHeader)
@@ -464,7 +476,7 @@
                     });
             },
             openColumns: function (item) {
-                btnEditColumns.click(); 
+                btnEditColumns.click();
                 this.editTableId = item.Id;
                 this.editTable = item.ClassName + " -  " + item.DataBaseName;
                 var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + item.Id;
@@ -569,7 +581,7 @@
                     });
             },
             bindAllTables: function () {
-                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId ;
+                var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId;
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.allTables = response.data;
@@ -630,47 +642,72 @@
                 this.sortClass = "sort-desc";
                 this.onSearch(1);
             },
-            openCopy: function ()
-            { 
+            openCopy: function () {
                 this.bindAllTables();
                 btnCopy.click();
             },
-            submitCopy: function ()
-            {
+            submitCopy: function () {
                 var tableName = this.tableName;
                 var table = this.allTables.find(table => table.Name === tableName);
                 var tableId = table ? table.Id : null;
-                if (tableId == null)
-                {
+                if (tableId == null) {
                     tools.alert("请选择表");
-                    return; 
+                    return;
                 }
                 var editId = this.editTableId;
                 var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
                 axios.get(url, jwHeader)
-                    .then(response => { 
+                    .then(response => {
                         response.data.forEach(item => {
                             item.TableId = editId;
                             item.Id = 0;
                             this.columns.push(item);
                             btnCloseCopy.click();
-                        }); 
+                        });
                     })
                     .catch(error => {
                         this.error = error.message;
                     });
             },
-            changeTable: function ()
-            {
-                 
+            changeTable: function () {
+
             },
-            clearTable: function ()
-            {
+            clearTable: function () {
                 this.tableName = null;
             },
-            openSqlTool: function ()
-            {
+            executeSql: function () {
+                var editor = ace.edit("divAceEditor");
+                var sql=editor.getValue("\r\n");
+            },
+            openSqlTool: function () {
+                var editor = ace.edit("divAceEditor");
+                editor.setOption("showPrintMargin", false);
+                editor.setTheme("ace/theme/twilight"); // 设置主题
+                editor.getSession().setMode("ace/mode/sql"); // 设置语言模式为SQL
+                editor.setOption("enableBasicAutocompletion", true);
+                editor.setOption("enableSnippets", true);
+                editor.setOption("enableLiveAutocompletion", true)
+                editor.setValue("\r\n");
+                editor.selection.clearSelection();
+                this.bindSqlResult();
                 btnDatabaseTool.click();
+            },
+            clearSql: function() {
+                var editor = ace.edit("divAceEditor");
+                editor.setValue("\r\n");
+                editor.selection.clearSelection();
+            },
+            bindSqlResult: function ()
+            {
+                var editor = ace.edit("divAceEditorResult");
+                editor.setOption("showPrintMargin", false);
+                editor.setTheme("ace/theme/twilight"); // 设置主题
+                editor.getSession().setMode("ace/mode/json5"); // 设置语言模式为SQL
+                editor.setOption("enableBasicAutocompletion", true);
+                editor.setOption("enableSnippets", true);
+                editor.setOption("enableLiveAutocompletion", true)
+                editor.setValue("\r\n");
+                editor.selection.clearSelection();
             }
         }
     });
