@@ -39,7 +39,7 @@ namespace ReZero.SuperAPI
                 Text = TextHandler.GetCommonText("Sql脚本", "Sql script"),
                 ElementType = ElementType.SqlText,
                 Name = nameof(SaveInterfaceListModel.Sql),
-                Value = "select * from tableName  where  id={int:id} and name={string:name} "
+                Value = "\r\nselect * from tableName  where  id={int:id} and name={string:name} "
             });
             return result;
         }

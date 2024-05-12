@@ -1287,6 +1287,7 @@
                         editor.setOption("enableSnippets", true);
                         editor.setOption("enableLiveAutocompletion", true)
                         editor.setValue($sql.val());
+                        editor.selection.clearSelection();
                     }
 
                 }, 100);
