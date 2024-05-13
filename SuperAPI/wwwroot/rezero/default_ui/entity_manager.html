@@ -105,11 +105,11 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">实体名：</label>
-                            <input type="text" @input="classNameInput" @change="classNameInput" v-model="formData.ClassName" name="ClassName" class="form-control">
+                            <input type="text" placeholder="类的名字" @input="classNameInput" @change="classNameInput" v-model="formData.ClassName" name="ClassName" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">表名：</label>
-                            <input type="text" v-model="formData.DbTableName" name="DbTableName" class="form-control">
+                            <input type="text" placeholder="数据库中表的名称" v-model="formData.DbTableName" name="DbTableName" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">数据库：</label>
@@ -119,7 +119,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">表备注：</label>
-                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
+                            <textarea placeholder="数据库中表的备注" class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
                         </div>
                     </form>
                 </div>
