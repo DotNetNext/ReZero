@@ -107,6 +107,36 @@ builder.Services.AddReZeroServices(api =>
 });
 
 ``` 
+## 4.7 AOP实现日志记录 或者 授权（不用自带的JWT）
+
+```cs
+//注册ReZero.Api
+builder.Services.AddReZeroServices(api =>
+{
+    //有重载可换json文件
+    var apiObj = SuperAPIOptions.GetOptions();
+    //IOC业务等所有需要的所有集程集
+    apiObj!.DependencyInjectionOptions = new DependencyInjectionOptions(assemblyList);
+    apiObj.InterfaceOptions.SuperApiAop = new MyAop();//这一行配置AOP
+   //启用超级API
+   api.EnableSuperApi(apiObj); 
+
+}); 
+
+//自定义一个AOP类
+public class MyAop : DefaultSuperApiAop
+{
+    public override Task OnExecutingAsync(InterfaceContext context)
+    {
+        //也可以用AOP实现JWT授权，不用使自带的JWT授权，适用于已存在JWT的情况
+        //JWT验证
+        //context.AttachClaimToHttpContext("Claim", 1);
+        return base.OnExecutingAsync(context);
+    }
+}
+```
+
+
 
 # 五、功能预览
 ## 预览1：查询配置显示列
