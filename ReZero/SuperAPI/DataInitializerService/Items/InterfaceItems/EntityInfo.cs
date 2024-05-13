@@ -244,7 +244,7 @@ namespace ReZero.SuperAPI
                         },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroEntityInfo.ClassName) ,
-                            Description=TextHandler.GetCommonText("类名", "Class name")
+                            Description=TextHandler.GetCommonText("实体名", "Class name")
                         },
                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroEntityInfo.DbTableName) ,
