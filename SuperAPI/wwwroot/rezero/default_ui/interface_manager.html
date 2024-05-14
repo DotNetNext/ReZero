@@ -218,6 +218,11 @@
                                                     <textarea rows="10" style="display:none" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
                                                     <div id="divAceEditor" style="width:100%;height:300px;"></div>
                                                 </template>
+                                                <!--DefaultValueColumns-->
+                                                <template v-if="item.ElementType==8">
+                                                    <span class="btn btn-primary m-b-10" @click="openDefaultValue"><i class="mdi-account-settings-variant mdi"></i> 配置 </span>
+                                                    <textarea rows="5" class="form-control" readonly="readonly">{{saveDefaultValueColumns}}</textarea> 
+                                                </template>
                                             </div>
                                         </div>
                                     </form>
@@ -576,7 +581,7 @@
     </div>
     <!--创建接口子窗体：默认值-->
     <div class="modal fade  bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divDefaultValue" style="display: none;">
-        <button id="btnDefaultValue" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divDefaultValue"></button>
+        <button id="btnDafeultValue" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divDefaultValue"></button>
         <div class="modal-dialog  width800 border3CCC" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
@@ -589,23 +594,24 @@
                             <thead>
                                 <tr>
                                     <th>列名</th>
-                                    <th>排序方式</th>
+                                    <th>默认值类型</th>
                                     <th>值</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr  >
-                                    <td> xx </td>
+                                <tr v-if="selectDefaultValueColumns&&selectDefaultValueColumns.length>0"  v-for="x in  selectDefaultValueColumns" >
+                                    <td> {{x.PropertyName}} </td>
                                     <td>
-                                        <select class="form-control">
-                                            <option> </option>
-                                            <option value="0">固定值</option>
-                                            <option value="1">默认值</option>
-                                            <option value="2">ClaimKey</option>
+                                        <select v-model="x.Type" class="form-control">
+                                            <option value="0">无</option>
+                                            <option value="1">固定值</option>
+                                            <option value="2">默认值(int等于0，空字符串等于空等)</option>
+                                            <option value="3">当前时间</option>
+                                            <option value="4">ClaimKey</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <input   class="form-control" />
+                                        <input  v-model="x.Value"  class="form-control" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -613,7 +619,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnDafaultValue" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" id="btnDafeultValueClose" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="saveDefaultValue" class="btn btn-primary">确定</button>
                 </div>
             </div>
@@ -657,7 +663,8 @@
             selectedWhereRelationTemplate: "( {1} and {2} ) ",
             selectedWheresConditionalRelation: "AND",
             selectdWherePreviewString: null,
-            savaDefaultValueColumns:[],
+            selectDefaultValueColumns: [],
+            saveDefaultValueColumns:[],
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -1129,7 +1136,36 @@
             },
             //7.配置插入或者更新默认值
             saveDefaultValue: function () {
-
+                var th = this;
+                th.saveDefaultValueColumns = [];
+                th.selectDefaultValueColumns.forEach(function (item) {
+                    th.saveDefaultValueColumns.push({ PropertyName: item.PropertyName, Type: item.Type, Value: item.Value });
+                });
+            },
+            openDefaultValue: function () {
+                var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
+                if (!tableValue) {
+                    tools.alert("请先选择主表");
+                    return;
+                }
+                var th = this;
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        th.selectDefaultValueColumns = [];
+                        response.data.forEach(function (item) {
+                            if (th.saveDefaultValueColumns.some(it => it.PropertyName == item.PropertyName)) { 
+                                var match = th.saveDefaultValueColumns.find(it => it.PropertyName == item.PropertyName);
+                                th.selectDefaultValueColumns.push({ PropertyName: match.PropertyName, Value: match.Value, Type: match.Type });  
+                            } else{
+                                th.selectDefaultValueColumns.push({ PropertyName: item.PropertyName, Type: 0, Value: null });
+                            }
+                        });
+                        btnDafeultValue.click();
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
 
             /*
@@ -1200,7 +1236,7 @@
                             this.error = error.message;
                         });
                 }
-            },
+            }, 
             setJoinColumns: function () {
                 var th = this;
                 var tableId = this.copcol_JoinTable;

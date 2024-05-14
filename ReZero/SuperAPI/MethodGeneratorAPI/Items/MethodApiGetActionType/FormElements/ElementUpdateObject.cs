@@ -13,6 +13,12 @@ namespace ReZero.SuperAPI
             var result = new List<ActionTypeFormElementModel>();
             base.AddActionTypeFormElementModels(result);
             base.AddActionTypeElementModel(result, this);
+            result.Insert(3, new ActionTypeFormElementModel()
+            {
+                ElementType = ElementType.DefaultValueColumn,
+                Name = "DefaultValueColumns", 
+                Text = TextHandler.GetCommonText("默认值", "Dafault value")
+            });
             return result;
         } 
     }
