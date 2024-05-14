@@ -126,7 +126,7 @@
                                 <div class="tab-pane active">
 
                                     <form id="frmSave" action="#!" method="post" name="edit-form" class="edit-form">
-                                        <input   v-model="editId" type="hidden" value="0" /> 
+                                        <input v-model="editId" type="hidden" value="0" />
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
                                             <label v-if="item.ElementType!=5" for="type">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
                                             <div class="form-controls">
@@ -376,10 +376,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联显示字段 （一般是Name） <span class="red">*</span></label>
-                                <select v-model="copcol_ShowFields" multiple @change="changeShowField"  name="joinField" class="form-control">
+                                <select v-model="copcol_ShowFields" multiple @change="changeShowField" name="joinField" class="form-control">
                                     <option v-if="joinColumns&&joinColumns.length>0" v-for="item in joinColumns">{{item.PropertyName}}</option>
-                                </select> 
-                                <input class="form-control" readonly="readonly" v-model="copcol_ShowField"  />
+                                </select>
+                                <input class="form-control" readonly="readonly" v-model="copcol_ShowField" />
                             </div>
                             <div class="form-group">
                                 <label for="example-nf-email">关联显示字段别名（AS 名称）</label>
@@ -446,7 +446,7 @@
                                     <td>
                                         <input v-model="item.SortId" onchange="tools.ensureNumeric(this)" class="form-control" />
                                     </td>
-                                </tr> 
+                                </tr>
                             </tbody>
                         </table>
                         <div>
@@ -574,6 +574,51 @@
             </div>
         </div>
     </div>
+    <!--创建接口子窗体：默认值-->
+    <div class="modal fade  bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="divDefaultValue" style="display: none;">
+        <button id="btnDefaultValue" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divDefaultValue"></button>
+        <div class="modal-dialog  width800 border3CCC" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">配置列默认值</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body tabbox">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>列名</th>
+                                    <th>排序方式</th>
+                                    <th>值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  >
+                                    <td> xx </td>
+                                    <td>
+                                        <select class="form-control">
+                                            <option> </option>
+                                            <option value="0">固定值</option>
+                                            <option value="1">默认值</option>
+                                            <option value="2">ClaimKey</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input   class="form-control" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnDafaultValue" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="saveDefaultValue" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var vueObj = new Vue({
@@ -612,6 +657,7 @@
             selectedWhereRelationTemplate: "( {1} and {2} ) ",
             selectedWheresConditionalRelation: "AND",
             selectdWherePreviewString: null,
+            savaDefaultValueColumns:[],
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -1081,7 +1127,10 @@
                     this.selectdWherePreviewString = wheres;
                 } 
             },
+            //7.配置插入或者更新默认值
+            saveDefaultValue: function () {
 
+            },
 
             /*
                   次要方法
