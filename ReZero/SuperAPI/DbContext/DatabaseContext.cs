@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Microsoft.Extensions.Logging;
+using SqlSugar;
 using System;
 
 namespace ReZero.SuperAPI
@@ -39,7 +40,7 @@ namespace ReZero.SuperAPI
             {
                 db.QueryFilter.AddTableFilter<IDeleted>(it => it.IsDeleted == false);
                 db.Aop.OnLogExecuting = (s, p) =>
-                Console.WriteLine(UtilMethods.GetNativeSql(s, p));
+                ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>().LogInformation(UtilMethods.GetNativeSql(s, p));
             });
 
 
