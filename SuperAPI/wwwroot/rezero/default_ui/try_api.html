@@ -1,6 +1,6 @@
 ﻿@@master_page.html
-<link href="css/page_interface_detail.css?v=1" rel="stylesheet" /> 
-<div id="app"> 
+<link href="css/page_interface_detail.css?v=1" rel="stylesheet" />
+<div id="app">
     <div v-if="data">
         <h1>
             {{data.Name}}
@@ -36,20 +36,20 @@
         <div class="form-group">
             <button class="btn   btn-primary m-r-10" v-on:click="submitRequest"><i class="mdi mdi-check-circle-outline"></i>提交</button>
             <button class="btn   btn-info m-r-10" v-on:click="saveParameters"><i class="mdi-content-save mdi"></i> 保存参数</button>
-            <button class="btn   btn btn-pink m-r-10" v-on:click="loadParameters"><i class="mdi-autorenew mdi"></i>加载参数</button> 
+            <button class="btn   btn btn-pink m-r-10" v-on:click="loadParameters"><i class="mdi-autorenew mdi"></i>加载参数</button>
             <button class="btn   btn btn-secondary m-r-10" v-on:click="submitClose"><i class="mdi-close mdi"></i>关闭页面</button>
-        </div> 
+        </div>
         <div>
             <code>{{message}}</code>
         </div>
-        <div id="editor" class="m-t-10" style="padding:10px;width: 100%; height: 300px;"></div>
 
     </div>
     <div v-else>
         <!-- 处理 data 为 null 的情况，可以显示加载中或错误信息 -->
         <p>Loading...</p>
-    </div>
-</div>
+    </div> 
+    <div id="editor" class="m-t-10" style="padding:10px;width: 100%; height: 300px;"></div>
+</div> 
 <script src="js/ace/src-min/ace.js"></script>
 <script>
     var vueObj = new Vue({
@@ -58,14 +58,14 @@
             data: null,
             error: null,
             response: "",
-            message:"注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表"
+            message: "注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表"
         },
         mounted() {
             // 在组件加载时触发数据获取
             this.fetchData();
-            setTimeout(function () {
-                vueObj.setEditorValue("{}");
-            }, 100);
+            var th = this;
+            th.setEditorValue("{}");
+             
         },
         methods: {
             submitClose: function () {
@@ -86,7 +86,7 @@
                 if (txtOrderDynamicParemters.value) {
                     postData["OrderDynamicParemters"] = txtOrderDynamicParemters.value;
                 }
-                this.message ="结果:"
+                this.message = "结果:"
                 // 发送 POST 请求
                 axios.post(fullUrl, postData, jwHeader)
                     .then(function (response) {
@@ -145,13 +145,12 @@
                 var key = "Parameters:" + this.data.Url;
                 if (localStorage.getItem(key)) {
                     var items = JSON.parse(localStorage.getItem(key));
-                    vueObj.data.DataModel.DefaultParameters = []; // 清空数组  
+                    vueObj.data.DataModel.DefaultParameters = []; // 清空数组
                     items.forEach(function (item) {
-                        vueObj.data.DataModel.DefaultParameters.push(item); // 向数组中添加元素  
+                        vueObj.data.DataModel.DefaultParameters.push(item); // 向数组中添加元素
                     });
                 }
-                else
-                {
+                else {
                     this.message = ("浏览器没有找到保存，请先保存");
                 }
             }
