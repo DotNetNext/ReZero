@@ -798,6 +798,8 @@
                 this.title = this.addTitle;
                 btnNext.click();
                 this.currentActionTypeContext = [];
+                this.selectDefaultValueColumns = [];
+                this.saveDefaultValueColumns = [];
                 this.editId = 0;
             },
             openAdd: function (item) {
@@ -1141,6 +1143,7 @@
                 th.selectDefaultValueColumns.forEach(function (item) {
                     th.saveDefaultValueColumns.push({ PropertyName: item.PropertyName, Type: item.Type, Value: item.Value });
                 });
+                btnDafeultValueClose.click();
             },
             openDefaultValue: function () {
                 var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
