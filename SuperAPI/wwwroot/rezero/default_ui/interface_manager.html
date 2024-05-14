@@ -594,8 +594,8 @@
                             <thead>
                                 <tr>
                                     <th>列名</th>
-                                    <th>默认值类型</th>
-                                    <th>值</th>
+                                    <th width="300">默认值类型</th>
+                                    <th width="200">值</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -611,7 +611,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input  v-model="x.Value"  class="form-control" />
+                                        <input  v-model="x.Value"  :class="[x.Type != 1&&x.Type != 4 ? 'hidden' : '', 'form-control'].join(' ')" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -1156,7 +1156,7 @@
                 axios.get(url, jwHeader)
                     .then(response => {
                         th.selectDefaultValueColumns = [];
-                        response.data.forEach(function (item) {
+                        response.data.filter(it => !it.IsPrimarykey).forEach(function (item) {
                             if (th.saveDefaultValueColumns.some(it => it.PropertyName == item.PropertyName)) { 
                                 var match = th.saveDefaultValueColumns.find(it => it.PropertyName == item.PropertyName);
                                 th.selectDefaultValueColumns.push({ PropertyName: match.PropertyName, Value: match.Value, Type: match.Type });  
