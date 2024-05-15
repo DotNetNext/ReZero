@@ -3,7 +3,7 @@
 <div id="app">
     <div v-if="data">
         <h1>
-            {{data.Name}}
+            {{data.Name}} <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom"><i class="mdi-toggle-switch mdi"></i>切换模式</button>
         </h1>
         <div class="url">
             {{ data.HttpMethod }}: {{data.Url}}
@@ -22,8 +22,7 @@
                     <input v-model="param.Value" type="text" class="readonly form-control" readonly="readonly" id="param1" placeholder="">
                 </div>
             </div>
-        </div>
-
+        </div> 
         <div class="parameter" v-if="data.DataModel.OrderDynamicParemters">
             <label>
                 排序:
