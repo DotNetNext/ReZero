@@ -1,7 +1,9 @@
 ﻿using SqlSugar;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -11,6 +13,70 @@ namespace ReZero.SuperAPI
         public Action<ZeroEntityInfo>? TableInfoConvertFunc { get; set; }
 
         public Action<ZeroEntityColumnInfo>? TableColumnInfoConvertFunc { get; set; }
+
+        internal static object? GetDataByDefaultValueParameters(Type type,ISqlSugarClient db, DataModel dataModel)
+        {
+            if (dataModel.Data == null)
+                return dataModel.Data;
+            var entityInfo=db.EntityMaintenance.GetEntityInfo(type);
+            if (dataModel.Data is IList list)
+            {
+                foreach (var item in list)
+                {
+                    SetDatefaultValue(item, entityInfo, db, dataModel);
+                }
+            }
+            else 
+            {
+                SetDatefaultValue(dataModel.Data, entityInfo, db, dataModel);
+            } 
+            return dataModel.Data;
+        }
+
+        private static void SetDatefaultValue(object item, EntityInfo entityInfo, ISqlSugarClient db, DataModel dataModel)
+        {
+            foreach (var DefaultValue in dataModel.DefaultValueColumns??new List<DataModelDefaultValueColumnParameter>())
+            {
+                var columnInfo = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(DefaultValue.PropertyName!));
+                var value = columnInfo.PropertyInfo.GetValue(item);
+                if (columnInfo != null&& (value == null||(value is string && value?.ToString()==""))) 
+                {
+                    switch (DefaultValue.Type!)
+                    {
+                        case DefaultValueType.None:
+                            break;
+                        case DefaultValueType.FixedValue:
+                            columnInfo.PropertyInfo.SetValue(item, UtilMethods.ChangeType2(DefaultValue.Value, columnInfo.UnderType));
+                            break;
+                        case DefaultValueType.DefaultValue:
+                            columnInfo.PropertyInfo.SetValue(item, UtilMethods.GetDefaultValue(columnInfo.UnderType));
+                            break;
+                        case DefaultValueType.CurrentTime:
+                            if (columnInfo.UnderType == typeof(DateTime))
+                            {
+                                columnInfo.PropertyInfo.SetValue(item, DateTime.Now);
+                            }
+                            else
+                            {
+                                throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName+"默认值配置错，只能在时间类型配置：当前时间" , columnInfo.PropertyName + " The default value is incorrectly configured and can only be configured for the time type: current time"));
+                            }
+                            break;
+                        case DefaultValueType.ClaimKey:
+                            var claim=dataModel.ClaimList.FirstOrDefault(it => it.Key.EqualsCase(DefaultValue.Value!));
+                            if (claim.Key != null)
+                            {
+                                columnInfo.PropertyInfo.SetValue(item, claim.Value);
+                            }
+                            else 
+                            {
+                                throw new Exception(TextHandler.GetCommonText("默认值赋值失败，没有找到 Claim key"+ DefaultValue.Value, "Default assignment failed, claim key not found " + DefaultValue.Value));
+                            }
+                            break;
+                    }
+
+                }
+            }
+        }
 
         public ZeroEntityInfo ConvertDbToEntityInfo(Type type)
         {

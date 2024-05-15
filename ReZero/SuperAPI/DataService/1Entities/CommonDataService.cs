@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Reflection;
 namespace ReZero.SuperAPI 
 {
     public class CommonDataService
@@ -10,8 +11,8 @@ namespace ReZero.SuperAPI
         internal void InitData(Type type, ISqlSugarClient db, DataModel dataModel)
         {
             var datas = dataModel.DefaultParameters.ToDictionary(it => it.Name, it => it.Value);
-            var entityInfo = db.EntityMaintenance.GetEntityInfo(type);
-            dataModel.Data = db.DynamicBuilder().CreateObjectByType(type, datas);
+            var entityInfo = db.EntityMaintenance.GetEntityInfo(type); 
+            dataModel.Data = CreateObjectByType(type, datas);
             var columnInfos = entityInfo.Columns.Where(it => it.IsPrimarykey).ToList();
             if (IsSinglePrimaryKey(columnInfos))
             {
@@ -21,6 +22,32 @@ namespace ReZero.SuperAPI
                     SetIsSnowFlakeSingle(entityInfo.Columns, type,dataModel, columnInfo);
                 }
             }
+        }
+        public object CreateObjectByType(Type type, Dictionary<string, object> dict)
+        {
+            object obj = Activator.CreateInstance(type);
+            foreach (KeyValuePair<string, object> pair in dict)
+            {
+                PropertyInfo propertyInfo = type.GetProperty(pair.Key);
+                if (propertyInfo == null)
+                {
+                    propertyInfo = type.GetProperties().FirstOrDefault((PropertyInfo it) => it.Name.EqualsCase(pair.Key));
+                }
+
+                if (propertyInfo != null)
+                {
+                    if (propertyInfo.PropertyType != typeof(string) && pair.Value?.Equals("") == true)
+                    { 
+                        propertyInfo.SetValue(obj, UtilMethods.GetDefaultValue(propertyInfo.PropertyType));
+                    }
+                    else
+                    {
+                        propertyInfo.SetValue(obj, UtilMethods.ChangeType2(pair.Value, propertyInfo.PropertyType));
+                    }
+                }
+            }
+
+            return obj;
         }
         internal void InitDb(Type type, SqlSugar.ISqlSugarClient _sqlSugarClient)
         {
