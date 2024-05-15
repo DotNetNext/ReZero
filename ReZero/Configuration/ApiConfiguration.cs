@@ -55,10 +55,7 @@ namespace ReZero.Configuration
 
             // 读取JSON文件内容  
             string jsonContent = File.ReadAllText(fullPath, Encoding.UTF8);
-            if (typeof(T).IsValueType || typeof(T) == typeof(string))
-            {
-                return (T)UtilMethods.ChangeType2(jsonContent, typeof(T));
-            }
+       
             try
             {
                 // 解析JSON内容为JObject  
