@@ -3,45 +3,57 @@
 <div id="app">
     <div v-if="data">
         <h1>
-            {{data.Name}} <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom"><i class="mdi-toggle-switch mdi"></i>切换模式</button>
+            {{data.Name}} <button @click="changeTag" type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom"><i class="mdi-toggle-switch mdi"></i>切换模式</button>
         </h1>
         <div class="url">
             {{ data.HttpMethod }}: {{data.Url}}
         </div>
-        <div class="parameter" v-if="data.DataModel.DefaultParameters && data.DataModel.DefaultParameters.length > 0">
-            <div class="form-group" v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
-                <label class="control-label" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
+        <div :class="{'hidden': !toggle}" >
+            <div class="parameter" v-if="data.DataModel.DefaultParameters && data.DataModel.DefaultParameters.length > 0">
+                <div class="form-group" v-for="param in data.DataModel.DefaultParameters" :key="param.Name">
+                    <label class="control-label" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
 
-                <div v-if="param.ValueType=='Byte[]'">
-                    <input @change="handleFileChange($event, param)" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
-                </div>
-                <div v-else-if="param.ValueIsReadOnly==false">
-                    <input v-model="param.Value" type="text" id="param1" class="form-control" :placeholder="param.ValueType">
-                </div>
-                <div v-else-if="param.ValueIsReadOnly==true" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">
-                    <input v-model="param.Value" type="text" class="readonly form-control" readonly="readonly" id="param1" placeholder="">
+                    <div v-if="param.ValueType=='Byte[]'">
+                        <input @change="handleFileChange($event, param)" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
+                    </div>
+                    <div v-else-if="param.ValueIsReadOnly==false">
+                        <input v-model="param.Value" type="text" id="param1" class="form-control" :placeholder="param.ValueType">
+                    </div>
+                    <div v-else-if="param.ValueIsReadOnly==true" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">
+                        <input v-model="param.Value" type="text" class="readonly form-control" readonly="readonly" id="param1" placeholder="">
+                    </div>
                 </div>
             </div>
-        </div> 
-        <div class="parameter" v-if="data.DataModel.OrderDynamicParemters">
-            <label>
-                排序:
-            </label>
-            <textarea id="txtOrderDynamicParemters" placeholder="格式：[{FieldName:FieldName,OrderByType:0}] ，其中： 0 升序, 1 倒序，FieldName是列表中的列">  </textarea>
+            <div class="parameter" v-if="data.DataModel.OrderDynamicParemters">
+                <label>
+                    排序:
+                </label>
+                <textarea id="txtOrderDynamicParemters" placeholder="格式：[{FieldName:FieldName,OrderByType:0}] ，其中： 0 升序, 1 倒序，FieldName是列表中的列">  </textarea>
+            </div>
+            <div class="parameter" v-if="!data.DataModel.OrderDynamicParemters">
+                <input id="txtOrderDynamicParemters" type="hidden" />
+            </div>
+            <div class="form-group">
+                <button class="btn   btn-primary m-r-10" v-on:click="submitRequest"><i class="mdi mdi-check-circle-outline"></i>提交</button>
+                <button class="btn   btn-info m-r-10" v-on:click="saveParameters"><i class="mdi-content-save mdi"></i> 保存参数</button>
+                <button class="btn   btn btn-pink m-r-10" v-on:click="loadParameters"><i class="mdi-autorenew mdi"></i>加载参数</button>
+                <button class="btn   btn btn-secondary m-r-10" v-on:click="submitClose"><i class="mdi-close mdi"></i>关闭页面</button>
+            </div>
+            <div>
+                <code>{{message}}</code>
+            </div>
         </div>
-        <div class="parameter" v-if="!data.DataModel.OrderDynamicParemters">
-            <input id="txtOrderDynamicParemters" type="hidden" />
+        <div :class="{'hidden': toggle}">
+            <div class="form-group">
+                <label class="control-label">
+                    Json参数:
+                </label>
+                <div id="editorJson" class="m-t-10" style="padding:10px;width: 100%; height: 300px;"></div>
+            </div>
+            <div class="form-group">
+                <button class="btn   btn-primary m-r-10" v-on:click="submitRequestJson"><i class="mdi mdi-check-circle-outline"></i>提交</button>
+            </div>
         </div>
-        <div class="form-group">
-            <button class="btn   btn-primary m-r-10" v-on:click="submitRequest"><i class="mdi mdi-check-circle-outline"></i>提交</button>
-            <button class="btn   btn-info m-r-10" v-on:click="saveParameters"><i class="mdi-content-save mdi"></i> 保存参数</button>
-            <button class="btn   btn btn-pink m-r-10" v-on:click="loadParameters"><i class="mdi-autorenew mdi"></i>加载参数</button>
-            <button class="btn   btn btn-secondary m-r-10" v-on:click="submitClose"><i class="mdi-close mdi"></i>关闭页面</button>
-        </div>
-        <div>
-            <code>{{message}}</code>
-        </div>
-
     </div>
     <div v-else>
         <!-- 处理 data 为 null 的情况，可以显示加载中或错误信息 -->
@@ -57,6 +69,7 @@
             data: null,
             error: null,
             response: "",
+            toggle:true,
             message: "注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表"
         },
         mounted() {
@@ -64,11 +77,42 @@
             this.fetchData();
             var th = this;
             th.setEditorValue("{}");
+            setTimeout(function () {
+                var value = th.transformJsonArrayToObject(th.data.DataModel.DefaultParameters);
+                th.setEditorJsonValue(JSON.stringify(value,null,4));
+            },2000);
              
         },
         methods: {
             submitClose: function () {
                 window.close();
+            },
+            submitRequestJson: function () {
+                var vm = this;
+                var json = vm.data; // Uncomment this line
+                // 构造请求
+                var fullUrl = json.Url;
+                var json = ace.edit("editorJson").getValue(); 
+                try {
+                    json = JSON.parse(json);
+                    if (Array.isArray(json))
+                    {
+                        json = { data:json }
+                    }
+                } catch (e) {
+                    tools.alert("json格式不标准");
+                }
+                // 发送 POST 请求
+                axios.post(fullUrl, json , jwHeader)
+                    .then(function (response) {
+                        // 更新响应
+                        vm.response = JSON.stringify(response.data, null, 4);
+                        this.setEditorValue(vm.response);
+                    }.bind(vm))
+                    .catch(function (error) {
+                        // 处理错误
+                        vm.response = "网络错误";
+                    }.bind(vm));
             },
             submitRequest: function () {
 
@@ -135,6 +179,16 @@
                 editor.resize();
 
             },
+            setEditorJsonValue: function (formattedJson) {
+                var editor = ace.edit("editorJson");
+                editor.setTheme("ace/theme/twilight");
+                editor.setOption("showPrintMargin", false);
+                editor.session.setMode("ace/mode/json5");
+                editor.setValue(formattedJson);
+                editor.selection.clearSelection();
+                editor.resize();
+
+            },
             saveParameters: function () {
                 this.message = ("保存成功，点加载可以还原参数");
                 localStorage.setItem("Parameters:" + this.data.Url, JSON.stringify(vueObj.$data.data.DataModel.DefaultParameters));
@@ -152,7 +206,20 @@
                 else {
                     this.message = ("浏览器没有找到保存，请先保存");
                 }
-            }
+            },
+            changeTag: function ()
+            {
+                this.toggle = !this.toggle;
+            },
+            transformJsonArrayToObject: function (jsonArray) {
+                let result = {};
+                jsonArray.forEach(item => {
+                    if ('Name' in item) {
+                        result[item.Name] = null;
+                    }
+                });
+                return result;   
+            }  
         }
     });
 </script>
