@@ -14,6 +14,10 @@ namespace ReZero.SuperAPI
 
         public Action<ZeroEntityColumnInfo>? TableColumnInfoConvertFunc { get; set; }
 
+        internal static bool IsAnyDefaultValue(DataModel dataModel)
+        {
+            return dataModel.DefaultValueColumns?.Any() == true;
+        }
         internal static object? GetDataByDefaultValueParameters(Type type,ISqlSugarClient db, DataModel dataModel)
         {
             if (dataModel.Data == null)
