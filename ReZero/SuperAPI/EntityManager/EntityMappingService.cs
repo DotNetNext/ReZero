@@ -65,7 +65,7 @@ namespace ReZero.SuperAPI
                                 }
                                 else
                                 {
-                                    throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName + "默认值配置错，只能在时间类型配置：当前时间", columnInfo.PropertyName + " The default value is incorrectly configured and can only be configured for the time type: current time"));
+                                    throw new Exception(TextHandler.GetCommonText("[001]" + columnInfo.PropertyName + "默认值配置错，只能在时间类型配置：当前时间", "[001]" + columnInfo.PropertyName + " The default value is incorrectly configured and can only be configured for the time type: current time"));
                                 }
                                 break;
                             case DefaultValueType.ClaimKey:
@@ -76,14 +76,17 @@ namespace ReZero.SuperAPI
                                 }
                                 else
                                 {
-                                    throw new Exception(TextHandler.GetCommonText("默认值赋值失败，没有找到 Claim key" + DefaultValue.Value, "Default assignment failed, claim key not found " + DefaultValue.Value));
+                                    throw new Exception(TextHandler.GetCommonText("[001]默认值赋值失败，没有找到 Claim key" + DefaultValue.Value, "[001] Default assignment failed, claim key not found " + DefaultValue.Value));
                                 }
                                 break;
                         }
                     }
                     catch (Exception ex)
-                    { 
-                        throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName+"默认值赋值失败 "+ex.Message, columnInfo.PropertyName + "Default assignment failed " + ex.Message));
+                    {
+                        if (!ex.Message.Contains("[001]"))
+                            throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName + "默认值赋值失败 " + ex.Message, columnInfo.PropertyName + "Default assignment failed " + ex.Message));
+                        else
+                            throw ex;
                     }
 
                 }
