@@ -42,5 +42,7 @@ namespace ReZero.SuperAPI
         public const string Jwt_TokenUrl = "/api/rezero/token";
         public const string Jwt_GetJwtInfo = "/api/rezero/getuserinfo";
         public const string Jwt_PageUrl = "/rezero/authorization.html";
+
+        public const string ErrorCode_001 = "[001]";
     }
 }
