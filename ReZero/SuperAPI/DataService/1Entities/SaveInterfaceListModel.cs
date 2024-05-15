@@ -32,6 +32,7 @@ namespace ReZero.SuperAPI
 
     public class CommonConfig
     {
+        public List<DataModelDefaultValueColumnParameter>? DefaultValueColumns { get; set; }
         public CommonQueryColumn[]? Columns { get; set; }
         public CommonQueryComplexitycolumn[]? ComplexityColumns { get; set; }
         public CommonQueryWhere[]? Where { get; set; }

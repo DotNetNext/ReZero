@@ -18,7 +18,7 @@ namespace ReZero.SuperAPI
         #endregion
 
         #region Paremters
-
+        public List<DataModelDefaultValueColumnParameter>? DefaultValueColumns { get; set; } 
         public List<DataModelDynamicOrderParemter>? OrderDynamicParemters { get; set; }
         public List<DataModelOrderParemter>? OrderByFixedParemters  { get; set; }
         public List<DataModelOrderParemter>? MergeOrderByFixedParemters { get; set; }

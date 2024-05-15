@@ -30,6 +30,7 @@ namespace ReZero.SuperAPI
                     ValueType = item.UnderType.Name
                 });
             }
+            zeroInterfaceList.DataModel.DefaultValueColumns = saveInterfaceListModel.Json?.DefaultValueColumns;
         }
     }
 }

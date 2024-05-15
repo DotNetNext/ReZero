@@ -841,7 +841,8 @@
                         OrderBys: this.selectedOrderBys,
                         OrderBysEnableSort: this.selectedOrderBys_EnableSort,
                         CurrentDataString: JSON.stringify(this.$data),
-                        DataBaseId: this.databaseId
+                        DataBaseId: this.databaseId,
+                        DefaultValueColumns: this.saveDefaultValueColumns
                     };
                     var url = "/PrivateReZeroRoute/100003/SaveInterfaceList";
                     axios.post(url, formData, jwHeader)
