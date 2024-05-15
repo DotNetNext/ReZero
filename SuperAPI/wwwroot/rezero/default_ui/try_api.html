@@ -52,6 +52,12 @@
             </div>
             <div class="form-group">
                 <button class="btn   btn-primary m-r-10" v-on:click="submitRequestJson"><i class="mdi mdi-check-circle-outline"></i>提交</button>
+                <button class="btn   btn-info m-r-10" v-on:click="saveParametersJson"><i class="mdi-content-save mdi"></i> 保存参数</button>
+                <button class="btn   btn btn-pink m-r-10" v-on:click="loadParametersJson"><i class="mdi-autorenew mdi"></i>加载参数</button>
+                <button class="btn   btn btn-secondary m-r-10" v-on:click="submitClose"><i class="mdi-close mdi"></i>关闭页面</button>
+            </div>
+            <div>
+                <code>{{message}}</code>
             </div>
         </div>
     </div>
@@ -97,7 +103,7 @@
                     json = JSON.parse(json);
                     if (Array.isArray(json))
                     {
-                        json = { data:json }
+                        json = { data: json };
                     }
                 } catch (e) {
                     tools.alert("json格式不标准");
@@ -202,6 +208,23 @@
                     items.forEach(function (item) {
                         vueObj.data.DataModel.DefaultParameters.push(item); // 向数组中添加元素
                     });
+                }
+                else {
+                    this.message = ("浏览器没有找到保存，请先保存");
+                }
+            },
+            saveParametersJson: function () {
+                this.message = ("保存成功，点加载可以还原参数");
+                var editor = ace.edit("editorJson");
+                localStorage.setItem("ParametersJson:" + this.data.Url,  editor.getValue() );
+            },
+            loadParametersJson: function () {
+                this.message = ("加载成功，修改后可以保存");
+                var key = "ParametersJson:" + this.data.Url;
+                if (localStorage.getItem(key)) { 
+                    var editor = ace.edit("editorJson");
+                    editor.setValue(localStorage.getItem(key));
+                    editor.selection.clearSelection();
                 }
                 else {
                     this.message = ("浏览器没有找到保存，请先保存");
