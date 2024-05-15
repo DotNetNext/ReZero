@@ -43,39 +43,47 @@ namespace ReZero.SuperAPI
             {
                 var columnInfo = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(DefaultValue.PropertyName!));
                 var value = columnInfo.PropertyInfo.GetValue(item);
-                if (columnInfo != null&& (value == null||(value is string && value?.ToString()==""))) 
+                var defauleValue = UtilMethods.GetDefaultValue(columnInfo.UnderType);
+                if (columnInfo != null&& (value == null||value.Equals(defauleValue) || (value is string && value?.ToString()==""))) 
                 {
-                    switch (DefaultValue.Type!)
+                    try
                     {
-                        case DefaultValueType.None:
-                            break;
-                        case DefaultValueType.FixedValue:
-                            columnInfo.PropertyInfo.SetValue(item, UtilMethods.ChangeType2(DefaultValue.Value, columnInfo.UnderType));
-                            break;
-                        case DefaultValueType.DefaultValue:
-                            columnInfo.PropertyInfo.SetValue(item, UtilMethods.GetDefaultValue(columnInfo.UnderType));
-                            break;
-                        case DefaultValueType.CurrentTime:
-                            if (columnInfo.UnderType == typeof(DateTime))
-                            {
-                                columnInfo.PropertyInfo.SetValue(item, DateTime.Now);
-                            }
-                            else
-                            {
-                                throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName+"默认值配置错，只能在时间类型配置：当前时间" , columnInfo.PropertyName + " The default value is incorrectly configured and can only be configured for the time type: current time"));
-                            }
-                            break;
-                        case DefaultValueType.ClaimKey:
-                            var claim=dataModel.ClaimList.FirstOrDefault(it => it.Key.EqualsCase(DefaultValue.Value!));
-                            if (claim.Key != null)
-                            {
-                                columnInfo.PropertyInfo.SetValue(item, claim.Value);
-                            }
-                            else 
-                            {
-                                throw new Exception(TextHandler.GetCommonText("默认值赋值失败，没有找到 Claim key"+ DefaultValue.Value, "Default assignment failed, claim key not found " + DefaultValue.Value));
-                            }
-                            break;
+                        switch (DefaultValue.Type!)
+                        {
+                            case DefaultValueType.None:
+                                break;
+                            case DefaultValueType.FixedValue:
+                                columnInfo.PropertyInfo.SetValue(item, UtilMethods.ChangeType2(DefaultValue.Value, columnInfo.UnderType));
+                                break;
+                            case DefaultValueType.DefaultValue:
+                                columnInfo.PropertyInfo.SetValue(item, defauleValue);
+                                break;
+                            case DefaultValueType.CurrentTime:
+                                if (columnInfo.UnderType == typeof(DateTime))
+                                {
+                                    columnInfo.PropertyInfo.SetValue(item, DateTime.Now);
+                                }
+                                else
+                                {
+                                    throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName + "默认值配置错，只能在时间类型配置：当前时间", columnInfo.PropertyName + " The default value is incorrectly configured and can only be configured for the time type: current time"));
+                                }
+                                break;
+                            case DefaultValueType.ClaimKey:
+                                var claim = dataModel.ClaimList.FirstOrDefault(it => it.Key.EqualsCase(DefaultValue.Value!));
+                                if (claim.Key != null)
+                                {
+                                    columnInfo.PropertyInfo.SetValue(item, claim.Value);
+                                }
+                                else
+                                {
+                                    throw new Exception(TextHandler.GetCommonText("默认值赋值失败，没有找到 Claim key" + DefaultValue.Value, "Default assignment failed, claim key not found " + DefaultValue.Value));
+                                }
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    { 
+                        throw new Exception(TextHandler.GetCommonText(columnInfo.PropertyName+"默认值赋值失败 "+ex.Message, columnInfo.PropertyName + "Default assignment failed " + ex.Message));
                     }
 
                 }
