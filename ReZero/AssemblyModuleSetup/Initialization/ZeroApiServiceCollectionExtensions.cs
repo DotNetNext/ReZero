@@ -22,7 +22,8 @@ namespace ReZero
         /// <returns>The modified <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, ReZeroOptions options)
         {
-            ServiceLocator.Services = services;
+            ServiceLocator.Services = services; 
+            services.AddHttpContextAccessor();
             SuperAPIModule.Init(services, options);
             AddDependencyInjection(options, options.SuperApiOptions);
             DependencyInjectionModule.Init(services, options); 
@@ -59,7 +60,7 @@ namespace ReZero
         public static IServiceCollection AddReZeroServices(this IServiceCollection services, Action<SuperAPIOptions> superAPIOptions)
         {
             var options = new ReZeroOptions();
-            ServiceLocator.Services = services; 
+            ServiceLocator.Services = services;
             superAPIOptions(options.SuperApiOptions); 
             return services.AddReZeroServices(options);
         }
