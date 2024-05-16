@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
 namespace ReZero.DependencyInjection
@@ -14,6 +17,40 @@ namespace ReZero.DependencyInjection
         public static T GetService<T>() where T : class
         {
             return Provider!.GetService<T>();
+        }
+
+        public static ClaimsPrincipal GetClaims()
+        {
+            if (httpContextAccessor == null)
+            {
+                if (Provider!.GetService<IHttpContextAccessor>()?.HttpContext == null)
+                {
+                    throw new Exception("Requires builder.Services.AddHttpContextAccessor()");
+                }
+                httpContextAccessor = Provider!.GetService<IHttpContextAccessor>();
+            }
+            HttpContext httpContext = httpContextAccessor!.HttpContext;
+            var authHeader = httpContext.Request.Headers["Authorization"].FirstOrDefault();
+
+            if (authHeader != null && authHeader.StartsWith("Bearer "))
+            {
+                var token = authHeader.Substring("Bearer ".Length).Trim();
+                var handler = new JwtSecurityTokenHandler();
+
+                try
+                {
+                    var jwtToken = handler.ReadJwtToken(token);
+                    var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(jwtToken.Claims));
+                    return claimsPrincipal;
+                }
+                catch (Exception ex)
+                {
+                    // Handle token parsing error
+                    return null;
+                }
+            }
+
+            return null;
         }
         public static T GetHttpContextService<T>() where T : class
         {
