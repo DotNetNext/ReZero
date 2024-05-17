@@ -38,6 +38,7 @@ namespace ReZero.SuperAPI
             {
                 superAPIOptions.UiOptions.DefaultIndexSource = configuration.Ui.DefaultIndexSource;
             }
+            superAPIOptions.CorsOptions = configuration.Cors??new ReZeroCorsOptions();
             return superAPIOptions;
         }
 
@@ -57,6 +58,7 @@ namespace ReZero.SuperAPI
             this.InterfaceOptions = options.InterfaceOptions;
             this.DependencyInjectionOptions = options.DependencyInjectionOptions;
             this.UiOptions = options.UiOptions;
+            this.CorsOptions = options.CorsOptions;
         }
 
         /// <summary>
@@ -81,6 +83,8 @@ namespace ReZero.SuperAPI
         /// Gets or sets the UI configuration options.
         /// </summary>
         public UiOptions UiOptions { get; set; } = new UiOptions(); 
+
+        public ReZeroCorsOptions CorsOptions { get; set; } = new ReZeroCorsOptions();
     }
     public class DependencyInjectionOptions
     {
