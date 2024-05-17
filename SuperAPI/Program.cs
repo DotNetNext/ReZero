@@ -46,22 +46,7 @@ builder.Services.AddReZeroServices(api =>
 
     apiObj!.DependencyInjectionOptions = new DependencyInjectionOptions(assemblyList);
 
-    apiObj.InterfaceOptions.MergeDataToStandardDtoFunc= (data) =>
-    {
-        if (data is ErrorResponse err)
-        {
-            return new { code = 500, message = err.message };
-        }
-        else
-        {
-            return new
-            {
-                code = 200,
-                result = data
-            };
-        }
-    };
-     
+  
    //∆Ù”√≥¨º∂API
    api.EnableSuperApi(apiObj); 
 
