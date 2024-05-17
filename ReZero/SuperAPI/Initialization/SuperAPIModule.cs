@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Linq;
+using ReZero.Configuration;
 namespace ReZero.SuperAPI
 {
     public static partial class SuperAPIModule
@@ -22,10 +23,25 @@ namespace ReZero.SuperAPI
                 var apiOptions = options.SuperApiOptions;
                 _apiOptions = InitializeOptions(apiOptions); 
                 InitZeroStaticFileMiddleware();
+                InitCors(services,_apiOptions);
                 InitializeDataBase(_apiOptions);
                 InitializeData(_apiOptions);
                 AddTransientServices(services, _apiOptions);
                 InitDynamicAttributeApi();
+            }
+        }
+
+        private static void InitCors(IServiceCollection services, SuperAPIOptions apiOptions)
+        {
+            if (apiOptions.CorsOptions?.Enable == true)
+            {
+                var corsOptions = apiOptions.CorsOptions;
+                services.AddCors(option =>
+                option.AddPolicy(corsOptions.PolicyName,
+                policy => policy.WithHeaders(corsOptions.Headers).WithMethods(corsOptions.Methods).WithOrigins(corsOptions.Origins))
+                );
+                services.AddSingleton(provider=>corsOptions);
+                services.AddTransient<IStartupFilter,SuperAPICorsFilter>();
             }
         }
 
@@ -86,6 +102,7 @@ namespace ReZero.SuperAPI
             // Add transient services to the IServiceCollection.
             services.AddTransient<IDynamicApi, DynamicApiManager>();
             services.AddTransient<InternalApi, InternalApi>();
+
             services.AddTransient<IStartupFilter, SuperAPIRequestSetOptionsStartupFilter>();
 
             // Create an instance of ORM with the specified connection configuration and add it as a transient service.
