@@ -33,9 +33,9 @@ namespace ReZero.SuperAPI
 
         private static void InitCors(IServiceCollection services, SuperAPIOptions apiOptions)
         {
-            if (apiOptions.CorsOptions?.Enable == true)
+            if (apiOptions?.InterfaceOptions.CorsOptions?.Enable == true)
             {
-                var corsOptions = apiOptions.CorsOptions;
+                var corsOptions = apiOptions.InterfaceOptions.CorsOptions;
                 services.AddCors(option =>
                 option.AddPolicy(corsOptions.PolicyName,
                 policy => policy.WithHeaders(corsOptions.Headers).WithMethods(corsOptions.Methods).WithOrigins(corsOptions.Origins))

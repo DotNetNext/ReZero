@@ -57,8 +57,7 @@ namespace ReZero.SuperAPI
             this.DatabaseOptions = options.DatabaseOptions;
             this.InterfaceOptions = options.InterfaceOptions;
             this.DependencyInjectionOptions = options.DependencyInjectionOptions;
-            this.UiOptions = options.UiOptions;
-            this.CorsOptions = options.CorsOptions;
+            this.UiOptions = options.UiOptions; 
         }
 
         /// <summary>
@@ -107,7 +106,7 @@ namespace ReZero.SuperAPI
 
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
         public  ReZeroJwt?  Jwt { get; set; }
-        public ReZeroCors CorsOptions { get; set; } = new ReZeroCorsOptions();
+        public ReZeroCors CorsOptions { get; set; } = new ReZeroCors();
     }
 
     /// <summary>

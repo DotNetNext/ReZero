@@ -11,12 +11,12 @@ namespace ReZero.SuperAPI
 {
     public class SuperAPICorsFilter : IStartupFilter
     {
-        public SuperAPICorsFilter(ReZeroCorsOptions options)
+        public SuperAPICorsFilter(ReZeroCors options)
         {
             Options = options;
         }
 
-        public ReZeroCorsOptions Options { get; }
+        public ReZeroCors  Options { get; }
 
         public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next)
         {
