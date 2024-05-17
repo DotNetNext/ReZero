@@ -32,13 +32,13 @@ namespace ReZero.SuperAPI
             };
             superAPIOptions.InterfaceOptions = new InterfaceOptions()
             {
-                  Jwt=configuration?.Jwt
+                  Jwt=configuration?.Jwt,
+                  CorsOptions = configuration?.Cors?? new ReZeroCors()
             };
             if (!string.IsNullOrEmpty(configuration?.Ui?.DefaultIndexSource)) 
             {
                 superAPIOptions.UiOptions.DefaultIndexSource = configuration.Ui.DefaultIndexSource;
-            }
-            superAPIOptions.CorsOptions = configuration.Cors??new ReZeroCorsOptions();
+            } 
             return superAPIOptions;
         }
 
@@ -84,7 +84,7 @@ namespace ReZero.SuperAPI
         /// </summary>
         public UiOptions UiOptions { get; set; } = new UiOptions(); 
 
-        public ReZeroCorsOptions CorsOptions { get; set; } = new ReZeroCorsOptions();
+        
     }
     public class DependencyInjectionOptions
     {
@@ -107,6 +107,7 @@ namespace ReZero.SuperAPI
 
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
         public  ReZeroJwt?  Jwt { get; set; }
+        public ReZeroCors CorsOptions { get; set; } = new ReZeroCorsOptions();
     }
 
     /// <summary>
