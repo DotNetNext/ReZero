@@ -22,4 +22,13 @@ namespace ReZero.Configuration
         public string? FieldName { get; set; }
         public string? Type { get; set; }
     }
+
+    public class ReZeroCorsOptions
+    {
+        public bool Enable { get; set; }
+        public string? PolicyName { get; set; }
+        public string[]? Origins { get; set; }
+        public string[]? Headers { get; set; }
+        public string[]? Methods { get; set; }
+    }
 }

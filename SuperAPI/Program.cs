@@ -10,12 +10,13 @@ using SuperAPITest;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+ 
 
 //注册db: 这个不写代码可以不注册
 builder.Services.AddScoped<ISqlSugarClient>(it =>
@@ -28,7 +29,9 @@ builder.Services.AddScoped<ISqlSugarClient>(it =>
         IsAutoCloseConnection = true
     });
 });
- 
+//builder.Services.AddCors();
+
+
 //注册ReZero.Api
 builder.Services.AddReZeroServices(api =>
 {
@@ -42,6 +45,22 @@ builder.Services.AddReZeroServices(api =>
                         .ToArray(); 
 
     apiObj!.DependencyInjectionOptions = new DependencyInjectionOptions(assemblyList);
+
+    apiObj.InterfaceOptions.MergeDataToStandardDtoFunc= (data) =>
+    {
+        if (data is ErrorResponse err)
+        {
+            return new { code = 500, message = err.message };
+        }
+        else
+        {
+            return new
+            {
+                code = 200,
+                result = data
+            };
+        }
+    };
      
    //启用超级API
    api.EnableSuperApi(apiObj); 
