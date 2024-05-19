@@ -12,5 +12,7 @@
 {
     background:#ccc
 }
-
+.ace_editor {
+ z-index:99999999
+}
  

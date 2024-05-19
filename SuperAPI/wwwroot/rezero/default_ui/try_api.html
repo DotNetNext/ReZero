@@ -106,7 +106,9 @@
                         json = { data: json };
                     }
                 } catch (e) {
-                    tools.alert("json格式不标准");
+                    var editor = ace.edit("editor")
+                    editor.setValue(JSON.stringify({ message: "json格式不标准" },null,4));
+                    return;
                 }
                 // 发送 POST 请求
                 axios.post(fullUrl, json , jwHeader)
