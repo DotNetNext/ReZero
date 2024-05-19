@@ -13,17 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("MyCorsPolicy", builder =>
-    {
-        builder.AllowAnyOrigin() // 允许任何来源  
-               .AllowAnyHeader() // 允许任何头  
-               .AllowAnyMethod(); // 允许任何方法，如GET, POST, PUT等  
-    });
-});
-
+ 
 //Register: Register the super API service
 //注册：注册超级API服务
 builder.Services.AddReZeroServices(api =>
@@ -46,8 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors("MyCorsPolicy"); // 使用定义的跨域策略  
+ 
 
 app.UseHttpsRedirection();
 
