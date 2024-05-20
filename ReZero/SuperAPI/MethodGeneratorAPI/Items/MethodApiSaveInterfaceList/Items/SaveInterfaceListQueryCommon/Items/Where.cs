@@ -43,7 +43,8 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
             {
                 Id = it.Id,
-                Name = it.PropertyName,
+                Name = it.Value, 
+                PropertyName=it.PropertyName,
                 ValueType = EntityGeneratorManager.GetTypeByNativeTypes(type).Name,
                 Value = it.ValueType == WhereValueType.Value ? it.Value : null,
                 FieldOperator = Enum.Parse<FieldOperatorType>(it.WhereType),
