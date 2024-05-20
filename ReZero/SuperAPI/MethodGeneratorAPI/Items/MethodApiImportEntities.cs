@@ -18,6 +18,7 @@ namespace ReZero.SuperAPI
             {
                 ZeroEntityInfo entityInfo = CreateEntityInfo(db, tableName,tableInfos); 
                 entityInfo.DataBaseId = databasdeId;
+                entityInfo.ColumnCount = entityInfo.ZeroEntityColumnInfos?.Count??0;
                 entityInfos.Add(entityInfo);
             }
             App.Db.InsertNav(entityInfos).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
