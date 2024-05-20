@@ -165,3 +165,6 @@ public class MyAop : DefaultSuperApiAop
 坚持用开源做出高品质的免费软件
 
 ![输入图片说明](READMEIMG/image6.png)
+
+# 七、详细文档
+https://www.donet5.com/Doc/32/2580
