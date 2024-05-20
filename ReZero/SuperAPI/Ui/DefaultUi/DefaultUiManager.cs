@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks; 
@@ -25,6 +26,7 @@ namespace ReZero.SuperAPI
         private readonly string pageControlPlaceholder = "@@page_control.html";
         private readonly string pageControlName = "page_control.html";
         private readonly string authorizationLocalStorageName = "@@authorizationLocalStorageName";
+        private readonly string version = "@@version";
         public DefaultUiManager()
         {
         }
@@ -72,6 +74,9 @@ namespace ReZero.SuperAPI
 
             //token
             masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
+
+            //version
+            masterPageHtml= masterPageHtml.Replace(version, $" {Assembly.GetExecutingAssembly().GetName().Version} ");
             return masterPageHtml;
         }
 
