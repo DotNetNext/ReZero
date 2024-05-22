@@ -76,7 +76,7 @@ namespace ReZero.SuperAPI
             masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
 
             //version
-            masterPageHtml= masterPageHtml.Replace(version, $" {Assembly.GetExecutingAssembly().GetName().Version} ");
+            masterPageHtml= masterPageHtml.Replace(version, $"{Assembly.GetExecutingAssembly().GetName().Version}");
             return masterPageHtml;
         }
 
