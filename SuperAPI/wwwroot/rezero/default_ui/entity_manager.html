@@ -281,7 +281,7 @@
                                         </label>
                                     </th>
                                     <th>
-                                       索引号
+                                        索引号
                                     </th>
                                     <th>
                                         表名
@@ -317,7 +317,7 @@
     <!--SQL工具-->
     <div id="divDatabaseTool" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
         <button id="btnDatabaseTool" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divDatabaseTool"></button>
-        <div class="modal-dialog  width1000 " role="document"> 
+        <div class="modal-dialog  width1000 " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -331,6 +331,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnDatabaseTooClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--通用配置-->
+    <div id="divSetting" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnSetting" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divSetting"></button>
+        <div class="modal-dialog  width300 " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">个性化配置</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="example-box">
+                        <label class="lyear-checkbox">
+                            <input type="checkbox" v-model="setting.importUnunderline" value="true">
+                            <span class="p-l-15">导入实体去掉下划线</span>
+                        </label> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnSettingClose" class="btn btn-default" data-dismiss="modal">关闭</button> 
+                    <button type="button" @click="saveSetting()" class="btn btn-primary">保存</button>
                 </div>
             </div>
         </div>
@@ -360,7 +384,10 @@
             tables: [],
             allTables: [],
             tableName: null,
-            editTableId: 0
+            editTableId: 0,
+            setting: {
+                importUnunderline: false
+            }
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -732,6 +759,7 @@
             },
             openSetting: function ()
             {
+                btnSetting.click();
             },
             saveSetting: function () {
 
