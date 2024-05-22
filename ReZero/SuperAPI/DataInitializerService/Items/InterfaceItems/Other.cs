@@ -232,8 +232,7 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data1);
-        }
-
+        } 
         private void GetUserInfo()
         {
              
