@@ -36,8 +36,13 @@
                 <tbody v-if="data &&data.Data">
                     <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
 
-                        <td v-for="column in data.Columns"  class="word-all">
-                            {{ item[column.PropertyName] }}
+                        <td v-for="(column,index) in data.Columns" class="word-all">
+                            <div v-if="index == 0" class="mi-w-150">
+                                {{ item[column.PropertyName] }}
+                            </div>
+                            <div v-else>
+                                {{ item[column.PropertyName] }}
+                            </div>
                         </td>
 
                         <td class="table_opt3">
