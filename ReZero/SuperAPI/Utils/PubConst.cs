@@ -44,5 +44,8 @@ namespace ReZero.SuperAPI
         public const string Jwt_PageUrl = "/rezero/authorization.html";
 
         public const string ErrorCode_001 = "[001]";
+
+        public const int Setting_EntityType = 1;
+        public const int Setting_ImportUnunderlineType = 1;
     }
 }

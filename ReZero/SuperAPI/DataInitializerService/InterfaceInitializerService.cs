@@ -22,10 +22,38 @@ namespace ReZero.SuperAPI
             InitInterfaceList(db);
             InitIcon();
             InitDatabase(db);
+            InitSetting(db);
             UpgradeCompatibility(db);
             App.PreStartupDb!.QueryFilter.Restore();
         }
 
+        /// <summary>
+        /// Initializes the setting.
+        /// </summary>
+        /// <param name="db">The database client.</param>
+        private void InitSetting(ISqlSugarClient? db)
+        {
+            var entityType = PubConst.Setting_EntityType;
+            var importUnunderlineType = PubConst.Setting_ImportUnunderlineType;
+            var entityExport = db!.Queryable<ZeroSysSetting>().First(it => it.ChildTypeId == entityType && it.TypeId == importUnunderlineType);
+            if (entityExport == null)
+            {
+                db!.Insertable(new ZeroSysSetting()
+                {
+                    BoolValue = false,
+                    ChildTypeId = entityType,
+                    EasyDescription = TextHandler.GetCommonText("实体-导入实体是不是去掉下划线", "Entity-Importing entity is not without underline"),
+                    TypeId = importUnunderlineType,
+                    Creator = DataBaseInitializerProvider.UserName,
+                    Id = DataBaseInitializerProvider.Id
+                }).ExecuteCommand();
+            }
+        }
+
+        /// <summary>
+        /// Upgrades compatibility.
+        /// </summary>
+        /// <param name="db">The database client.</param>
         private static void UpgradeCompatibility(ISqlSugarClient? db)
         {
             db!.Updateable<ZeroInterfaceList>()
@@ -71,7 +99,7 @@ namespace ReZero.SuperAPI
         private void InitEntityInfo(ISqlSugarClient? db)
         {
             var entity = new EntityInfoInitializerProvider();
-            var datas = entity.GetDatas(); 
+            var datas = entity.GetDatas();
             db!.UpdateNav(datas, new UpdateNavRootOptions() { IsInsertRoot = true }).Include(x => x.ZeroEntityColumnInfos).ExecuteCommand();
         }
 
