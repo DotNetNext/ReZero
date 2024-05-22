@@ -36,7 +36,7 @@
                 <tbody v-if="data &&data.Data">
                     <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
 
-                        <td v-for="column in data.Columns">
+                        <td v-for="column in data.Columns"  class="word-all">
                             {{ item[column.PropertyName] }}
                         </td>
 

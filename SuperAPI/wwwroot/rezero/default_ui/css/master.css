@@ -144,3 +144,9 @@
         font-size: 1rem; /* 可以根据需要调整图标大小 */
         color: #333; /* 调整图标颜色 */
     }
+
+
+.word-all {
+    word-wrap: break-word;
+    word-break: break-all;
+}
