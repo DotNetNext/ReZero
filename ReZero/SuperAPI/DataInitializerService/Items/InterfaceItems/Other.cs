@@ -271,7 +271,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = GetSettingId;
-                it.GroupName = nameof(DbTableInfo);
+                it.GroupName = nameof(ZeroSysSetting);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(GetSettingId);
                 it.Url = GetUrl(it, "GetSetting");
@@ -300,7 +300,7 @@ namespace ReZero.SuperAPI
             {
                 it.HttpMethod = HttpRequestMethod.GET.ToString();
                 it.Id = UpdateSettingId;
-                it.GroupName = nameof(DbTableInfo);
+                it.GroupName = nameof(ZeroSysSetting);
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(UpdateSettingId);
                 it.Url = GetUrl(it, "UpdateSetting");
