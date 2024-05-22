@@ -18,6 +18,8 @@ namespace ReZero.SuperAPI
             GetToKen();
             GetUserInfo();
             ExecuetSql();
+            GetSetting();
+            UpdateSetting();
         }
 
         private void SaveInterfaceList()
@@ -258,6 +260,65 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                           
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void GetSetting()
+        { 
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetSettingId;
+                it.GroupName = nameof(DbTableInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetSettingId);
+                it.Url = GetUrl(it, "GetSetting");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 2,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetSetting)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="typeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("分类ID", "Type id") },
+                        new DataModelDefaultParameter() { Name ="childTypeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("子分类Id", "Child type id") }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void UpdateSetting()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = UpdateSettingId;
+                it.GroupName = nameof(DbTableInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(UpdateSettingId);
+                it.Url = GetUrl(it, "UpdateSetting");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 3,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.UpdateSetting)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="typeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("分类ID", "Type id") },
+                        new DataModelDefaultParameter() { Name ="childTypeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("子分类Id", "Child type id") },
+                        new DataModelDefaultParameter() { Name ="value",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("值", "Value") }
                     }
                 };
             });

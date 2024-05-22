@@ -242,6 +242,13 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("执行SQL")]
         [EnglishTextAttribute("Execuet sql")]
         public const long ExecuetSqlId = 42;
+
+        [ChineseTextAttribute("获取配置")]
+        [EnglishTextAttribute("Get setting")]
+        public const long GetSettingId = 43;
+        [ChineseTextAttribute("更新配置")]
+        [EnglishTextAttribute("Update setting")]
+        public const long UpdateSettingId = 44;
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()
