@@ -760,13 +760,42 @@
             openSetting: function ()
             {
                 btnSetting.click();
+                this.getSettingItem(1, 1);
+               
             },
             saveSetting: function () {
 
+                this.saveSettingItem(1, 1, this.setting.importUnunderline);
             },
             exportExcel: function ()
             {
                 tools.alert("开发中..");
+            },
+            getSettingItem: function (typeId, childTypeId)
+            {
+                var url = "/PrivateReZeroRoute/100003/GetSetting";
+                axios.post(url, { typeId: typeId, childTypeId: childTypeId }, jwHeader)
+                    .then(response => {
+                        this.setting.importUnunderline = response.data.BoolValue;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            saveSettingItem: function (typeId, childTypeId,value) {
+                var url = "/PrivateReZeroRoute/100003/UpdateSetting";
+                axios.post(url, { typeId: typeId, childTypeId: childTypeId, value: value }, jwHeader)
+                    .then(response => {
+                        tools.alert("保存成功"); 
+                        btnSettingClose.click();
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             }
         }
     });
