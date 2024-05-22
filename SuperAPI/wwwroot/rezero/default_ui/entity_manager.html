@@ -279,16 +279,20 @@
                                         </label>
                                     </th>
                                     <th>
+                                       索引号
+                                    </th>
+                                    <th>
                                         表名
                                     </th>
                                     <th>描述</th>
                                 </tr>
                             </thead>
                             <tbody v-if="tables">
-                                <tr v-for="item in tables">
+                                <tr v-for="(item,index) in tables">
                                     <td>
                                         <input type="checkbox" name="ids[]" v-model="selectedTables" :alt="item.Name" :value="item.Name">
                                     </td>
+                                    <td>{{index+1}}</td>
                                     <td>
                                         {{ item.Name }}
                                     </td>
