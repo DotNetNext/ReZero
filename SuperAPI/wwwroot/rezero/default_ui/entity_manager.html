@@ -32,6 +32,8 @@
                     <a class="btn btn-success m-r-10" @click="openImportEntity()" data-toggle="tooltip" data-original-title="从数据库导入实体" href="#!"><i class="mdi mdi-format-vertical-align-bottom"></i>导入</a>
                     <a class="btn btn-warning m-r-10" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
                     <a class="btn btn-pink m-r-10" @click="openSqlTool()" data-toggle="tooltip" data-original-title="可以方便执行SQL，让你不需要打开数据库" href="#!"><i class="mdi mdi-database"></i>SQL</a>
+                    <a class="btn btn-danger m-r-10" @click="exportExcel()" data-toggle="tooltip" data-original-title="导出表文档" href="#!"><i class="mdi mdi-file-export"></i> 导出文档</a>
+                    <a class="btn btn-cyan m-r-10" @click="openSetting()" data-toggle="tooltip" data-original-title="实体管理个性化配置" href="#!"><i class="mdi mdi-account-settings-variant"></i> 配置</a>
                 </div>
             </div>
             <div class="card-body">
@@ -727,6 +729,16 @@
                 editor.setOption("enableLiveAutocompletion", true)
                 editor.setValue("\r\n");
                 editor.selection.clearSelection();
+            },
+            openSetting: function ()
+            {
+            },
+            saveSetting: function () {
+
+            },
+            exportExcel: function ()
+            {
+                tools.alert("开发中..");
             }
         }
     });
