@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -28,7 +29,8 @@ namespace ReZero.SuperAPI
         private  ZeroEntityInfo CreateEntityInfo(SqlSugarClient db, string tableName, List<SqlSugar.DbTableInfo> tableInfos)
         {
             ZeroEntityInfo entityInfo = new ZeroEntityInfo();
-            entityInfo.ClassName = CapitalizeFirstLetter(tableName);
+            var setting = App.Db.Queryable<ZeroSysSetting>().First(it => it.TypeId == PubConst.Setting_EntityType && it.ChildTypeId == PubConst.Setting_ImportUnunderlineType);
+            entityInfo.ClassName = CapitalizeFirstLetter(tableName,setting.BoolValue);
             entityInfo.DbTableName = tableName;
             entityInfo.Description = tableInfos.FirstOrDefault(it => it.Name == tableName)?.Description;
             entityInfo.CreateTime = DateTime.Now;
@@ -43,7 +45,7 @@ namespace ReZero.SuperAPI
                 {
                     DbColumnName = c.DbColumnName,
                     DataType = GetDataType(db.CurrentConnectionConfig.DbType,c),
-                    PropertyName = CapitalizeFirstLetter(c.DbColumnName),
+                    PropertyName = CapitalizeFirstLetter(c.DbColumnName, setting.BoolValue),
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(GetType(c, dtc)),
                     IsNullable = c.IsNullable,
                     IsPrimarykey = c.IsPrimarykey,
@@ -81,15 +83,55 @@ namespace ReZero.SuperAPI
         {
             return "0=" + PubConst.Common_Random.Next(1, 9999999);
         }
-        public string CapitalizeFirstLetter(string input)
-        {
+        public string CapitalizeFirstLetter(string input, bool boolValue)
+        { 
             if (string.IsNullOrEmpty(input))
             {
                 return input;
             }
-            return char.ToUpper(input[0]) + input.Substring(1);
+            if (boolValue)
+            {
+                return GetCsharpName(input);
+            }
+            else
+            {
+                return char.ToUpper(input[0]) + input.Substring(1);
+            }
         }
-
+        public static string GetCsharpName(string dbColumnName)
+        {
+            if (dbColumnName.Contains("_"))
+            {
+                dbColumnName = dbColumnName.TrimEnd('_');
+                dbColumnName = dbColumnName.TrimStart('_');
+                var array = dbColumnName.Split('_').Select(it => GetFirstUpper(it, true)).ToArray();
+                return string.Join("", array);
+            }
+            else
+            {
+                return GetFirstUpper(dbColumnName);
+            }
+        }
+        private static string GetFirstUpper(string dbColumnName, bool islower = false)
+        {
+            if (dbColumnName == null)
+                return null;
+            if (islower)
+            {
+                return dbColumnName.Substring(0, 1).ToUpper() + dbColumnName.Substring(1).ToLower();
+            }
+            else
+            {
+                if (dbColumnName.ToUpper() == dbColumnName)
+                {
+                    return dbColumnName.Substring(0, 1).ToUpper() + dbColumnName.Substring(1).ToLower();
+                }
+                else
+                {
+                    return dbColumnName.Substring(0, 1).ToUpper() + dbColumnName.Substring(1);
+                }
+            }
+        }
         #endregion
     }
 }
