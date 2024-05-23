@@ -21,7 +21,7 @@
         <div class="card-header"><h4>保存登录</h4><code>【支持所有JWT】</code></div>
         <div class="card-body">
             <div class="form-group">
-                <label for="example-text-input">ToKen</label>
+                <label>ToKen</label>
                 <input v-model="txtToken" class="form-control" type="text" name="role-input" placeholder="保存后请求都会加上Token">
             </div>
 
@@ -35,16 +35,16 @@
         <div class="card-body">
 
             <div class="form-group">
-                <label for="example-text-input">用户名</label>
+                <label>用户名</label>
                 <input v-model="userName" class="form-control" type="text" name="role-input" placeholder="用户名">
             </div>
             <div class="form-group">
-                <label for="example-text-input">密码</label>
+                <label>密码</label>
                 <input id="txtpassword" v-model="password" class="form-control" type="text" name="role-input" placeholder="前端加密好的密码">
                 <button class="btn btn-xs btn-primary m-t-10" @click="MD5">MD5</button>
             </div>
             <div class="form-group">
-                <label for="example-text-input">结果:</label>
+                <label>结果:</label>
                 <textarea class="form-control">{{result}}</textarea>
             </div>
             <div class="form-group">
@@ -61,7 +61,7 @@
                 <button class="btn btn-primary m-t-10" @click="getUserInfo">确定</button>
             </div>
             <div class="form-group">
-                <label for="example-text-input">结果:</label>
+                <label>结果:</label>
                 <textarea rows="5" class="form-control">{{jwtInfo}}</textarea>
                 <code>注意：如果成功，内置接口访问不了可能是 DisableSystemInterface 禁用了 </code>
             </div>
