@@ -14,13 +14,13 @@
                     <label class="control-label" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">{{param.Description}} [ {{ param.Name }} {{param.FieldOperatorString}}]:</label>
 
                     <div v-if="param.ValueType=='Byte[]'">
-                        <input @change="handleFileChange($event, param)" class="form-control" type="file" id="param1" :placeholder="param.ValueType">
+                        <input @change="handleFileChange($event, param)" class="form-control" type="file"   :placeholder="param.ValueType">
                     </div>
                     <div v-else-if="param.ValueIsReadOnly==false">
-                        <input v-model="param.Value" type="text" id="param1" class="form-control" :placeholder="param.ValueType">
+                        <input v-model="param.Value" type="text"   class="form-control" :placeholder="param.ValueType">
                     </div>
                     <div v-else-if="param.ValueIsReadOnly==true" :style="{ display: param.ValueIsReadOnly ? 'none' : 'block' }">
-                        <input v-model="param.Value" type="text" class="readonly form-control" readonly="readonly" id="param1" placeholder="">
+                        <input v-model="param.Value" type="text" class="readonly form-control" readonly="readonly"   placeholder="">
                     </div>
                 </div>
             </div>
@@ -238,11 +238,13 @@
             },
             transformJsonArrayToObject: function (jsonArray) {
                 let result = {};
-                jsonArray.forEach(item => {
-                    if ('Name' in item) {
-                        result[item.Name] = null;
-                    }
-                });
+                if (jsonArray) {
+                    jsonArray.forEach(item => {
+                        if ('Name' in item) {
+                            result[item.Name] = null;
+                        }
+                    });
+                }
                 return result;   
             }  
         }
