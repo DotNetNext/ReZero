@@ -774,9 +774,10 @@
             getSettingItem: function (typeId, childTypeId)
             {
                 var url = "/PrivateReZeroRoute/100003/GetSetting";
+                var th = this;
                 axios.post(url, { typeId: typeId, childTypeId: childTypeId }, jwHeader)
                     .then(response => {
-                        this.setting.importUnunderline = response.data.BoolValue;
+                        th.setting.importUnunderline = response.data.BoolValue;
                         this.error = null;
                     })
                     .catch(error => {
