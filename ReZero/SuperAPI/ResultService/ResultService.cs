@@ -14,9 +14,13 @@ namespace ReZero.SuperAPI
             {
                 return data;
             }
+            else if (result?.ResultType == ResultType.File) 
+            {
+                return data;
+            }
             else
             {
-                return GetResultProvider(data, result);
+                return GetResultProvider(data, result!);
             }
         }
          

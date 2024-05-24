@@ -9,7 +9,7 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {  
-        public DataTable[] ExportEntities(long [] tableIds)
+        public byte[] ExportEntities(long [] tableIds)
         { 
             List<DataTable> datatables = new List<DataTable>();
             var db = App.Db;
@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
                 dt.TableName = item.DbTableName;
                 datatables.Add(dt);
             }
-            return datatables.ToArray();
+            return ReZero.Excel.DataTableToExcel.ExportExcel(datatables.ToArray(),$"{DateTime.Now.ToString("实体文档.xlsx")}");
         }
     }
 }

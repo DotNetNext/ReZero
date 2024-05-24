@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Linq; 
+using System.Threading.Tasks; 
 
 namespace ReZero.SuperAPI
 {
@@ -57,8 +57,15 @@ namespace ReZero.SuperAPI
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel);
-                    context.Response.ContentType = PubConst.DataSource_ApplicationJson;
-                    await context.Response.WriteAsync(JsonHelper.SerializeObject(data));
+                    if (interInfo.CustomResultModel?.ResultType == ResultType.File)
+                    {
+                        await InstanceManager.WriteFileAsync(context, interInfo, data);
+                    }
+                    else
+                    {
+                        context.Response.ContentType = PubConst.DataSource_ApplicationJson;
+                        await context.Response.WriteAsync(JsonHelper.SerializeObject(data));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -68,6 +75,6 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(systemInterfaceContext); ;
                 }
             } 
-        }
+        } 
     }
 }

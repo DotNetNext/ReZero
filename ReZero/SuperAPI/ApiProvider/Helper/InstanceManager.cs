@@ -5,6 +5,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,19 @@ namespace ReZero.SuperAPI
 {
     internal class InstanceManager
     {
+
+        public static async Task WriteFileAsync(HttpContext context, ZeroInterfaceList interInfo, object data)
+        {
+            var fileBytes = (byte[])data;
+            context.Response.ContentType = "application/octet-stream"; // Or the appropriate MIME type for your file
+            context.Response.ContentLength = fileBytes.Length;
+            var fileName = string.Format(interInfo!.CustomResultModel!.GroupName, DateTime.Now.ToString("yyyyMMddHHmmss"));
+            var contentDisposition = new ContentDispositionHeaderValue("attachment");
+            contentDisposition.FileName = fileName;
+            context.Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+            // Write the file bytes to the response body
+            await context.Response.Body.WriteAsync(fileBytes, 0, fileBytes.Length);
+        }
         public static async Task<bool> AuthorizationAsync(HttpContext context, InterfaceContext dynamicInterfaceContext)
         {
             if (SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true)

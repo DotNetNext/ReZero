@@ -335,13 +335,20 @@ namespace ReZero.SuperAPI
                 it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
                 it.Name = TextHandler.GetInterfaceListText(ExportEntitiesId);
                 it.Url = GetUrl(it, "ExportEntities");
+                it.CustomResultModel = new ResultModel()
+                {
+                     ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                     GroupName=TextHandler.GetCommonText( "数据库文档{0}.xlsx", "Tables{0}.xlsx"),
+                     ResultType=ResultType.File
+                };
                 it.DataModel = new DataModel()
                 {
                     TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
                     ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodArgsCount = 2,
+                        MethodArgsCount = 1,
+                        ArgsTypes=new Type[] { typeof(long[]) },
                         MethodClassFullName = typeof(MethodApi).FullName,
                         MethodName = nameof(MethodApi.ExportEntities)
                     },

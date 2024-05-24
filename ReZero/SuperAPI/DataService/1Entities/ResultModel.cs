@@ -9,6 +9,7 @@ namespace ReZero.SuperAPI
         public ResultType? ResultType { get; set; }
         public string? GroupName { get; set; }
         public object? OutPutData { get;  set; }
+        public string? ContentType { get; set; }
         public List<ResultColumnModel>? ResultColumnModels { get; set; }
     }
 }
