@@ -249,6 +249,11 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("更新配置")]
         [EnglishTextAttribute("Update setting")]
         public const long UpdateSettingId = 44;
+
+        [ChineseTextAttribute("导出实体")]
+        [EnglishTextAttribute("Export entities")]
+        public const long ExportEntitiesId = 45;
+        
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

@@ -20,6 +20,7 @@ namespace ReZero.SuperAPI
             ExecuetSql();
             GetSetting();
             UpdateSetting();
+            ExportEntities();
         }
 
         private void SaveInterfaceList()
@@ -319,6 +320,34 @@ namespace ReZero.SuperAPI
                         new DataModelDefaultParameter() { Name ="typeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("分类ID", "Type id") },
                         new DataModelDefaultParameter() { Name ="childTypeId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("子分类Id", "Child type id") },
                         new DataModelDefaultParameter() { Name ="value",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("值", "Value") }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void ExportEntities()
+        { 
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = ExportEntitiesId;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(ExportEntitiesId);
+                it.Url = GetUrl(it, "ExportEntities");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 2,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.ExportEntities)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="tableIds",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JsonArray).Name,  Description = TextHandler.GetCommonText("表Id集合", "Table id array") }  
                     }
                 };
             });
