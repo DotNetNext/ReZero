@@ -768,9 +768,35 @@
 
                 this.saveSettingItem(1, 1, this.setting.importUnunderline);
             },
-            exportExcel: function ()
-            {
-                window.location.href = "/PrivateReZeroRoute/100003/ExportEntities?tableIds=" + JSON.stringify(this.selectedItems);
+            exportExcel: function () {
+                var th = this;
+                axios.get("/PrivateReZeroRoute/100003/ExportEntities", {
+                    params: {
+                        tableIds: JSON.stringify(this.selectedItems)
+                    },
+                    responseType: 'blob',
+                    headers: jwHeader.headers
+                })
+                    .then(function (response) {
+                        // 创建一个 Blob 对象，指向数据的 URL  
+                        var url = window.URL.createObjectURL(new Blob([response.data]));
+                        var link = document.createElement('a');
+                        link.href = url;
+
+                        // 设置下载文件的名称，可以根据实际情况调整  
+                        link.setAttribute('download', 'exported_data.xlsx');
+
+                        // 触发下载  
+                        document.body.appendChild(link);
+                        link.click();
+
+                        // 清理资源  
+                        window.URL.revokeObjectURL(link.href);
+                        document.body.removeChild(link); 
+                    })
+                    .catch(function (error) {
+                        console.error("Error downloading the Excel file:", error);
+                    });
             },
             getSettingItem: function (typeId, childTypeId)
             {
