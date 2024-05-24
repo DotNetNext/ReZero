@@ -770,7 +770,7 @@
             },
             exportExcel: function ()
             {
-                tools.alert("开发中..");
+                window.location.href = "/PrivateReZeroRoute/100003/ExportEntities?tableIds=" + JSON.stringify(this.selectedItems);
             },
             getSettingItem: function (typeId, childTypeId)
             {
