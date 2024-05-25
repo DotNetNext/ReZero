@@ -58,25 +58,28 @@ namespace ReZero.TextTemplate
             return output.ToString();
         }
         private static ScriptOptions? scriptOptions;
+        private static object objLock = new object();
         private static ScriptOptions GetOptions()
         {
             if (scriptOptions != null)
                 return scriptOptions;
-
-            var namespaces = new[]
-               {
+            lock (objLock)
+            {
+                var namespaces = new[]
+                   {
                     // System命名空间
                     "System",
                     "System.Collections",
-                    "System.Collections.Generic", 
+                    "System.Collections.Generic",
                     "System.IO",
                     "System.Linq",
                     "System.Text",
                     "System.Text.RegularExpressions"
                 };
-            var result= ScriptOptions.Default.AddReferences(AppDomain.CurrentDomain.GetAssemblies())
-                                                      .WithImports(namespaces);
-            scriptOptions = result;
+                var result = ScriptOptions.Default.AddReferences(AppDomain.CurrentDomain.GetAssemblies())
+                                                          .WithImports(namespaces);
+                scriptOptions = result;
+            }
             return result;
         }
     }
