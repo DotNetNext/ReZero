@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ReZero.SuperAPI 
 {
@@ -116,6 +117,10 @@ namespace ReZero.SuperAPI
                 if (data != null)
                 {
                     saveInterfaceListModel!.Url = data.Url;
+                }
+                else if (Regex.IsMatch(saveInterfaceListModel?.TableId?.ToLower()+"", @"[\u4e00-\u9fa5]")) 
+                {
+                    saveInterfaceListModel!.Url = $"/{saveInterfaceListModel.InterfaceCategoryId}/{saveInterfaceListModel.ActionType.ToString().ToLower()}/{SqlSugar.SnowFlakeSingle.Instance.NextId()}";
                 }
                 else
                 {
