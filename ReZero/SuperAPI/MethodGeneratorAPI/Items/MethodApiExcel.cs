@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using ReZero.Excel;
 
 namespace ReZero.SuperAPI 
 {
@@ -11,9 +12,12 @@ namespace ReZero.SuperAPI
     {
         public byte[] ExportEntities(long[] tableIds)
         {
-            List<DataTable> datatables = new List<DataTable>();
+            List<EecelData> datatables = new List<EecelData>();
             var db = App.Db;
-            var datas = db.Queryable<ZeroEntityInfo>().WhereIF(tableIds.Any(), it => tableIds.Contains(it.Id)).Includes(it => it.ZeroEntityColumnInfos).ToList();
+            var datas = db.Queryable<ZeroEntityInfo>()
+                .OrderBy(it=>it.DbTableName)
+                .WhereIF(tableIds.Any(), it => tableIds.Contains(it.Id))
+                .Includes(it => it.ZeroEntityColumnInfos).ToList();
             foreach (var item in datas)
             {
                 var columnInfos = db.DbMaintenance.GetColumnInfosByTableName(item.DbTableName, false);
@@ -53,7 +57,7 @@ namespace ReZero.SuperAPI
                     dt.Rows.Add(dr);
                 }
                 dt.TableName = item.DbTableName;
-                datatables.Add(dt);
+                datatables.Add(new EecelData() { DataTable=dt, TableDescrpition=item.Description??"-" });
             }
             return ReZero.Excel.DataTableToExcel.ExportExcel(datatables.ToArray(), $"{DateTime.Now.ToString("实体文档.xlsx")}");
         }
