@@ -49,7 +49,7 @@ namespace ReZero.TextTemplate
                 output.AppendLine("result");
                 var result = CSharpScript.EvaluateAsync<string>(output.ToString(), options, data).GetAwaiter().GetResult();
                 output.Clear();
-                output.AppendLine(result);
+                output.Append(result);
             }
             catch (CompilationErrorException e)
             {
