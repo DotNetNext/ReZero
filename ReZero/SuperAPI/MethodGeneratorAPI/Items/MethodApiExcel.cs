@@ -36,6 +36,10 @@ namespace ReZero.SuperAPI
                     dr[TextHandler.GetCommonText("列名", "Field name")] = it.DbColumnName;
                     dr[TextHandler.GetCommonText("列描述", "Column description")] = it.ColumnDescription;
                     dr[TextHandler.GetCommonText("列类型", "Column type")] = it.DataType;
+                    if (db.CurrentConnectionConfig.DbType == SqlSugar.DbType.Oracle) 
+                    {
+                        dr[TextHandler.GetCommonText("列类型", "Column type")] = it.OracleDataType;
+                    }
                     dr[TextHandler.GetCommonText("实体类型", "Entity type")] = it.PropertyType;
                     dr[TextHandler.GetCommonText("表名", "Table name")] = item.DbTableName;
                     dr[TextHandler.GetCommonText("表描述", "Table description")] = item.Description;
