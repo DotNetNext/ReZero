@@ -105,8 +105,15 @@ namespace ReZero.Excel
                 navRowIndex++;
             }
 
-            // 设置导航工作表的列宽
-            navigationSheet.Columns(1, 2).AdjustToContents();
+            var minWidth = 50;
+            if (navigationSheet.Column(1).Width < minWidth)
+            {
+                navigationSheet.Column(1).Width = minWidth;
+            }
+            if (navigationSheet.Column(2).Width < minWidth)
+            {
+                navigationSheet.Column(2).Width = minWidth;
+            }  
 
             // 缓存到内存流，然后返回
             byte[] bytes = null!;
