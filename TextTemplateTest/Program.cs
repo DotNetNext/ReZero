@@ -10,6 +10,5 @@ var template = @"<div>{{condition}}</div>
 ";
 var data = new Model{ condition = true, collection = new[] { "Item 1", "Item 2", "Item 3" } };
 var str=x.RenderTemplate(template,data);
-Console.WriteLine(str);
-Console.WriteLine("该功能还在开发中!!");
+Console.WriteLine(str); 
 Console.ReadLine();
