@@ -79,8 +79,9 @@ namespace ReZero.TextTemplate
                 var result = ScriptOptions.Default.AddReferences(AppDomain.CurrentDomain.GetAssemblies())
                                                           .WithImports(namespaces);
                 scriptOptions = result;
+
+                return result;
             }
-            return result;
         }
     }
 }
