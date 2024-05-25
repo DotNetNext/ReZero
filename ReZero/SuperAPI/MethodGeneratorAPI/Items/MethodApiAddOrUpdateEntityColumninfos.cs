@@ -82,9 +82,14 @@ namespace ReZero.SuperAPI
 
         private void CheckTableInfo(ZeroEntityInfo tableInfo)
         {
+            
             if (tableInfo == null)
             {
                 throw new Exception(DefaultResult());
+            }
+            else if (!PubMethod.CheckIsPropertyName(tableInfo.ClassName!))
+            {
+                throw new Exception(TextHandler.GetCommonText("【" + tableInfo.ClassName! + "】开头必须是字母并且不能有特殊字符", "[" + tableInfo.ClassName! + "]  must start with a letter and cannot have special characters"));
             }
             else if (tableInfo.IsInitialized)
             {
