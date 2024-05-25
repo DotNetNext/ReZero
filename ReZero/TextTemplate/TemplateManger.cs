@@ -35,8 +35,9 @@ namespace ReZero.TextTemplate
         private  string DefaultRender(string template, object data)
         {
             var engine = new TemplateEngine();
-            engine.AddDirective("v-if", new IfDirective());
-            engine.AddDirective("v-for", new ForDirective());
+            engine.AddDirective("root", new RootDirective());
+            engine.AddDirective("default", new DefaultDirective());
+            engine.AddDirective("member", new MemberDirective());
             var output = new StringBuilder();
             engine.Render(template, data, output);
             return output.ToString();
