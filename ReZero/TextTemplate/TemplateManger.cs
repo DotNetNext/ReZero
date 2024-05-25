@@ -53,7 +53,7 @@ namespace ReZero.TextTemplate
             }
             catch (CompilationErrorException e)
             {
-                Console.WriteLine(string.Join(Environment.NewLine, e.Diagnostics));
+                throw new Exception(string.Join(Environment.NewLine, e.Diagnostics));
             }
             return output.ToString();
         }
