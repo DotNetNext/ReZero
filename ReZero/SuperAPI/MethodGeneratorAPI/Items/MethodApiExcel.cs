@@ -59,7 +59,7 @@ namespace ReZero.SuperAPI
                 dt.TableName = item.DbTableName;
                 datatables.Add(new EecelData() { DataTable=dt, TableDescrpition=item.Description??"-" });
             }
-            return ReZero.Excel.DataTableToExcel.ExportExcel(datatables.ToArray(), $"{DateTime.Now.ToString("实体文档.xlsx")}",sheetName:TextHandler.GetCommonText("表名","Table name"));
+            return ReZero.Excel.DataTableToExcel.ExportExcel(datatables.ToArray(), $"{DateTime.Now.ToString("实体文档.xlsx")}",navName:TextHandler.GetCommonText("表名","Table name"));
         }
     }
 }
