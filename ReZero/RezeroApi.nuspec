@@ -17,6 +17,7 @@
 			<dependency id="SqlSugarCore" version="5.1.4.154" />
 			<dependency id="Microsoft.AspNetCore.Authentication.JwtBearer" version="2.1.30" />
 			<dependency id="Microsoft.AspNetCore.Cors" version="2.1.1" />
+			<dependency id="ClosedXML" version="0.102.2" />
 		</dependencies>
 		<contentFiles>
 			<files include="any/any/wwwroot/rezero/**" buildAction="None" copyToOutput="true" flatten="false" />
