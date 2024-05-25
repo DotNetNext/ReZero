@@ -21,8 +21,8 @@ namespace ReZero.Excel
             XLWorkbook wb = new XLWorkbook();
 
             // 添加导航工作表
-            var navigationSheet = wb.Worksheets.Add(navName ?? TextHandler.GetCommonText("导航","Navigation"));
-            navigationSheet.Cell(1, 1).Value = TextHandler.GetCommonText("Sheet名称","Sheet Name");
+            var navigationSheet = wb.Worksheets.Add(TextHandler.GetCommonText("导航","Navigation"));
+            navigationSheet.Cell(1, 1).Value = TextHandler.GetCommonText(navName ?? "Sheet名称","Sheet Name");
             navigationSheet.Cell(1, 2).Value = TextHandler.GetCommonText("备注","Description"); // 可以添加其他信息，例如描述
 
             int index = 0;

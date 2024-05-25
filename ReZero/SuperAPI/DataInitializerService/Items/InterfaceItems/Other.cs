@@ -347,13 +347,14 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodArgsCount = 1,
-                        ArgsTypes=new Type[] { typeof(long[]) },
+                        MethodArgsCount = 2,
+                        ArgsTypes=new Type[] {typeof(long), typeof(long[]) },
                         MethodClassFullName = typeof(MethodApi).FullName,
                         MethodName = nameof(MethodApi.ExportEntities)
                     },
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
+                        new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("数据库Id", "Database id") },
                         new DataModelDefaultParameter() { Name ="tableIds",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JsonArray).Name,  Description = TextHandler.GetCommonText("表Id集合", "Table id array") }  
                     }
                 };

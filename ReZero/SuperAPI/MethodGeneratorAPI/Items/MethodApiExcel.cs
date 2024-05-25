@@ -10,17 +10,18 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
-        public byte[] ExportEntities(long[] tableIds)
+        public byte[] ExportEntities(long databaseId,long[] tableIds)
         {
             List<EecelData> datatables = new List<EecelData>();
             var db = App.Db;
             var datas = db.Queryable<ZeroEntityInfo>()
                 .OrderBy(it=>it.DbTableName)
+                .Where(it=>it.DataBaseId==databaseId)
                 .WhereIF(tableIds.Any(), it => tableIds.Contains(it.Id))
                 .Includes(it => it.ZeroEntityColumnInfos).ToList();
             foreach (var item in datas)
             {
-                var columnInfos = db.DbMaintenance.GetColumnInfosByTableName(item.DbTableName, false);
+                var columnInfos = App.GetDbById(databaseId)!.DbMaintenance.GetColumnInfosByTableName(item.DbTableName, false);
                 DataTable dt = new DataTable();
                 dt.Columns.Add(TextHandler.GetCommonText("列名", "Field name"));
                 dt.Columns.Add(TextHandler.GetCommonText("列描述", "Column description"));
@@ -57,6 +58,12 @@ namespace ReZero.SuperAPI
                     dt.Rows.Add(dr);
                 }
                 dt.TableName = item.DbTableName;
+                if (dt.Rows.Count == 0) 
+                {
+                    var dr = dt.NewRow();
+                    dr[TextHandler.GetCommonText("列名", "Field name")]= TextHandler.GetCommonText("表还没有创建需要到实体管理点同步", "The table has not yet been created and needs to be synchronized to the entity management point");
+                    dt.Rows.Add(dr);
+                }
                 datatables.Add(new EecelData() { DataTable=dt, TableDescrpition=item.Description??"-" });
             }
             return ReZero.Excel.DataTableToExcel.ExportExcel(datatables.ToArray(), $"{DateTime.Now.ToString("实体文档.xlsx")}",navName:TextHandler.GetCommonText("表名","Table name"));

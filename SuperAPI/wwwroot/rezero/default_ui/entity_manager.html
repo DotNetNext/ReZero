@@ -772,7 +772,8 @@
                 var th = this;
                 axios.get("/PrivateReZeroRoute/100003/ExportEntities", {
                     params: {
-                        tableIds: JSON.stringify(this.selectedItems)
+                        tableIds: JSON.stringify(this.selectedItems),
+                        DataBaseId: this.databaseId
                     },
                     responseType: 'blob',
                     headers: jwHeader.headers
