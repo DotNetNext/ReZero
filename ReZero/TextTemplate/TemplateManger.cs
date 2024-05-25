@@ -1,4 +1,7 @@
-﻿using ReZero.TextTemplate;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using ReZero.TextTemplate;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -20,7 +23,7 @@ namespace ReZero.TextTemplate
                 return CustomRender(template, data, this.customRenderer);
             }
             else
-            {
+            { 
                 return DefaultRender(template, data);
             }
         }
@@ -40,7 +43,29 @@ namespace ReZero.TextTemplate
             engine.AddDirective("member", new MemberDirective());
             var output = new StringBuilder();
             engine.Render(template, data, output);
+            var options = GetOptions();
+            try
+            {
+                output.AppendLine("result");
+                var result = CSharpScript.EvaluateAsync<string>(output.ToString(), options, data).GetAwaiter().GetResult();
+                output.Clear();
+                output.AppendLine(result);
+            }
+            catch (CompilationErrorException e)
+            {
+                Console.WriteLine(string.Join(Environment.NewLine, e.Diagnostics));
+            }
             return output.ToString();
+        }
+        private static ScriptOptions? scriptOptions;
+        private static ScriptOptions GetOptions()
+        {
+            if (scriptOptions != null)
+                return scriptOptions;
+            var result= ScriptOptions.Default.AddReferences(AppDomain.CurrentDomain.GetAssemblies())
+                                                      .WithImports("System", "System.Collections.Generic", "System.Linq");
+            scriptOptions = result;
+            return result;
         }
     }
 }
