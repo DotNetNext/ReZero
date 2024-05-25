@@ -53,7 +53,7 @@ namespace ReZero.SuperAPI
         /// <returns>True if the string is a valid property name, otherwise false</returns>
         public static bool CheckIsPropertyName(string str)
         {
-            return Regex.IsMatch(str, @"^[a-z,A-Z,_]\w*$");
+            return Regex.IsMatch(str, @"^[\u4e00-\u9fa5a-zA-Z_]\w*$");
         }
 
         public static byte[] ConvertFromBase64(string base64String)
