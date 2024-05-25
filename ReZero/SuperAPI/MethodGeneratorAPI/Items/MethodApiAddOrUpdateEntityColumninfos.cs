@@ -89,7 +89,7 @@ namespace ReZero.SuperAPI
             }
             else if (!PubMethod.CheckIsPropertyName(tableInfo.ClassName!))
             {
-                throw new Exception(TextHandler.GetCommonText("【" + tableInfo.ClassName! + "】开头必须是字母并且不能有特殊字符", "[" + tableInfo.ClassName! + "]  must start with a letter and cannot have special characters"));
+                throw new Exception(TextHandler.GetCommonText("【 实体名错误 " + tableInfo.ClassName! + "】开头必须是字母并且不能有特殊字符", "[ Class name" + tableInfo.ClassName! + "]  must start with a letter and cannot have special characters"));
             }
             else if (tableInfo.IsInitialized)
             {
