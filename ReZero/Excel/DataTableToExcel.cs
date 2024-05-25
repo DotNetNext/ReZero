@@ -16,12 +16,12 @@ namespace ReZero.Excel
         /// <param name="name"></param>
         /// <param name="widths"></param>
         /// <returns></returns>
-        public static byte[] ExportExcel(EecelData[] dts, string name, int[]? widths = null)
+        public static byte[] ExportExcel(EecelData[] dts, string name, int[]? widths = null,string? navName=null)
         {
             XLWorkbook wb = new XLWorkbook();
 
             // 添加导航工作表
-            var navigationSheet = wb.Worksheets.Add(TextHandler.GetCommonText("导航","Navigation"));
+            var navigationSheet = wb.Worksheets.Add(navName ?? TextHandler.GetCommonText("导航","Navigation"));
             navigationSheet.Cell(1, 1).Value = TextHandler.GetCommonText("Sheet名称","Sheet Name");
             navigationSheet.Cell(1, 2).Value = TextHandler.GetCommonText("备注","Description"); // 可以添加其他信息，例如描述
 
