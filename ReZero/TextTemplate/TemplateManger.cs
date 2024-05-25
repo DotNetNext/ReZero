@@ -62,8 +62,20 @@ namespace ReZero.TextTemplate
         {
             if (scriptOptions != null)
                 return scriptOptions;
+
+            var namespaces = new[]
+               {
+                    // System命名空间
+                    "System",
+                    "System.Collections",
+                    "System.Collections.Generic", 
+                    "System.IO",
+                    "System.Linq",
+                    "System.Text",
+                    "System.Text.RegularExpressions"
+                };
             var result= ScriptOptions.Default.AddReferences(AppDomain.CurrentDomain.GetAssemblies())
-                                                      .WithImports("System", "System.Collections.Generic", "System.Linq");
+                                                      .WithImports(namespaces);
             scriptOptions = result;
             return result;
         }
