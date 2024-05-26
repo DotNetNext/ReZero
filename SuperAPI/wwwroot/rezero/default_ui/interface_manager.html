@@ -763,6 +763,7 @@
                     axios.get(urlById, jwHeader)
                         .then(response => {
                             var oldData = JSON.parse(JSON.stringify(th.$data));
+                            var oldDatabase = th.database;
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
                             tools.assignValuesToObject(data, th); 
                             th.title = title;  
@@ -770,6 +771,7 @@
                             th.data = oldData.data;
                             th.interfaceCategroyList = oldData.interfaceCategroyList;
                             th.actionList = oldData.actionList;
+                            th.database = oldDatabase;
                             if (th.currentActionTypeContext) {
                                 if (th.currentActionTypeContext.FormElements)
                                 {
