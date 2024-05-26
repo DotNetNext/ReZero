@@ -537,6 +537,7 @@
                         this.error = null;
                         if (response.data == true) {
                             tools.alert("保存成功");
+                            th.onSearch(1);
                         }
                         else {
                             tools.alert(response.data);
@@ -585,12 +586,14 @@
             },
             importEntitySubmit: function () {
                 var url = " /PrivateReZeroRoute/100003/ImportEntities";
+                var th = this;
                 axios.post(url, { databasdeId: this.databaseId, tableNames: this.selectedTables }, jwHeader)
                     .then(response => {
                         this.error = null;
                         if (response.data == true) {
                             btnImportEntityClose.click();
-                            this.onSearch(1);
+                            th.onSearch(1);
+                            th.selectedTables = [];
                             tools.alert("导入成功，删除实体可以重新导入。");
                         }
                         else {
