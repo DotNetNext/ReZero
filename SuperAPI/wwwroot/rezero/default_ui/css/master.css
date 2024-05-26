@@ -158,7 +158,7 @@
 }
 
 .master-table-container {
-    height: calc(100vh - 350px);
+    height: calc(100vh - 380px);
     max-height: 70vh; /* 设置表格容器的最大高度，防止内容过多时出现滚动条 */
     overflow-y: auto; /* 启用垂直滚动条 */
 }
