@@ -43,7 +43,7 @@ namespace ReZero.SuperAPI
             {
                 var systemInterfaceContext = new InterfaceContext() { InterfaceType = InterfaceType.SystemApi, HttpContext = context, InterfaceInfo = interInfo };
                 try
-                { 
+                {
                     DataService dataService = new DataService();
                     interInfo!.DataModel!.ApiId = interInfo.Id;
                     dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
@@ -57,15 +57,7 @@ namespace ReZero.SuperAPI
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data, resultModel);
-                    if (interInfo.CustomResultModel?.ResultType == ResultType.File)
-                    {
-                        await InstanceManager.WriteFileAsync(context, interInfo, data);
-                    }
-                    else
-                    {
-                        context.Response.ContentType = PubConst.DataSource_ApplicationJson;
-                        await context.Response.WriteAsync(JsonHelper.SerializeObject(data));
-                    }
+                    await Write(context, interInfo, data);
                 }
                 catch (Exception ex)
                 {
@@ -75,6 +67,19 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(systemInterfaceContext); ;
                 }
             } 
-        } 
+        }
+
+        private static async Task Write(HttpContext context, ZeroInterfaceList interInfo, object data)
+        {
+            if (interInfo.CustomResultModel?.ResultType == ResultType.File)
+            {
+                await InstanceManager.WriteFileAsync(context, interInfo, data);
+            }
+            else
+            {
+                context.Response.ContentType = PubConst.DataSource_ApplicationJson;
+                await context.Response.WriteAsync(JsonHelper.SerializeObject(data));
+            }
+        }
     }
 }
