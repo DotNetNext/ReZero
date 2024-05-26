@@ -212,7 +212,8 @@
 
                 var urlParameters = "&" + tools.objectToQueryString({
                     Name: txtSearch.value,
-                    PageNumber: page
+                    PageNumber: page,
+                    PageSize: selPageSize.value,
                 });
 
                 this.fetchData(urlParameters);
