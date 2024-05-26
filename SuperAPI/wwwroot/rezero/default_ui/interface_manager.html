@@ -704,7 +704,7 @@
 
                 var urlParameters = "?" + tools.objectToQueryString({
                     PageNumber: page,
-                    PageSize: selPageSize.value,
+                    PageSize: tools.getValue("selPageSize"),
                     Name: txtName.value,
                     GroupName: selGroupName.value,
                     DataBaseId: selDatabase.value,

@@ -99,6 +99,14 @@
     closeLoading: function () {
         var loadingOverlay = document.getElementById('loadingOverlay');
         loadingOverlay.style.display = 'none';
+    },
+    getValue: function (id) {
+        var element = document.getElementById(id);
+        if (element) {
+            return element.value;
+        } else {
+            return null;
+        }
     }
 }
 Array.prototype.removeArrayItem = function (item) {
