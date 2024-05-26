@@ -15,8 +15,8 @@
                     <div class="col-md-2"><select id="selGroupName" class="form-control"><option value=""> ==分组==</option> <option v-for="item in groupList">{{item.GroupName}}</option></select></div>
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option value="">==分类==</option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-3">
-                        <button @click="onSearch()" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
-                        <button onclick="frmSearach.reset()" id="btnSearch" class="btn btn-close m-l-15" type="submit">清空</button>
+                        <button @click="onSearch()" id="btnSearch" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button onclick="frmSearach.reset()"  class="btn btn-close m-l-15" type="submit">清空</button>
                     </div>
                 </div>
             </div>
@@ -704,6 +704,7 @@
 
                 var urlParameters = "?" + tools.objectToQueryString({
                     PageNumber: page,
+                    PageSize: selPageSize.value,
                     Name: txtName.value,
                     GroupName: selGroupName.value,
                     DataBaseId: selDatabase.value,
@@ -1398,5 +1399,5 @@
 
 
         }
-    });
+    }); 
 </script>
