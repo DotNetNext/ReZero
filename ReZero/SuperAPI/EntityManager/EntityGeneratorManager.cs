@@ -43,7 +43,8 @@ namespace ReZero.SuperAPI
             CheckTableInfo(tableInfo);
             var builder = db.DynamicBuilder().CreateClass(tableInfo.ClassName, new SqlSugar.SugarTable()
             {
-                TableName = tableInfo.DbTableName
+                TableName = tableInfo.DbTableName,
+                TableDescription=tableInfo.Description
             });
             foreach (var item in tableInfo.ZeroEntityColumnInfos ?? new List<ZeroEntityColumnInfo>())
             {
