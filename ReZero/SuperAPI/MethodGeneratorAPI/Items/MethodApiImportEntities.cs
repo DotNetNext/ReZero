@@ -66,6 +66,9 @@ namespace ReZero.SuperAPI
                     IsPrimarykey = c.IsPrimarykey,
                     IsIdentity = c.IsIdentity,
                     Description = c.ColumnDescription,
+                    Length=c.Length,
+                    Scale=c.Scale,
+                    DecimalDigits=c.DecimalDigits,
                     CreateTime = DateTime.Now
                 }).ToList();
             entityInfo.ZeroEntityColumnInfos = joinedColumns;
