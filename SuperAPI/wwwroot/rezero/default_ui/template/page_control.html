@@ -4,5 +4,14 @@
             <a href="#" @click="onSearch(page)">{{ page }}</a>
         </li>
         <li><a>当前：{{data.Page.PageNumber}}/{{data.Page.TotalPage}}&nbsp;&nbsp; 总共：{{data.Page.TotalCount}}</a> </li>
+        <li>
+            <a>页码:</a>
+            <select>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+            </select>
+        </li>
     </ul>
 </nav>

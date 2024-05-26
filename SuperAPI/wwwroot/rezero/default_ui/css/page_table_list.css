@@ -45,6 +45,13 @@
     margin-left:20px;
     margin-top:-20px;
 }
+    .pagination select {
+         border:1px solid #ccc;
+         width:40px;
+         text-align:center;
+         position:relative;
+         top:2px
+    }
 
 .lyear-checkbox {
     padding-left: 10px;
