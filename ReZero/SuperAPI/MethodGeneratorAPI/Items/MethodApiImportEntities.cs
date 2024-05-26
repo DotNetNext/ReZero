@@ -22,7 +22,22 @@ namespace ReZero.SuperAPI
                 entityInfo.ColumnCount = entityInfo.ZeroEntityColumnInfos?.Count??0;
                 entityInfos.Add(entityInfo);
             }
-            App.Db.InsertNav(entityInfos).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
+            var dbTableNames = entityInfos.Select(it => it.DbTableName).ToList();
+            var deleteTables=App.Db.Queryable<ZeroEntityInfo>()
+                .ClearFilter()
+                .Where(it => it.DataBaseId == databasdeId)
+                .Where(it=>it.IsDeleted==true)
+                .Where(it => dbTableNames.Contains(it.DbTableName))
+                .ToList();
+            var deleteTableNames = deleteTables.Select(it => it.DbTableName).ToList();
+            var inserObj = entityInfos.Where(it => !deleteTableNames.Contains(it.DbTableName)).ToList();
+            var updateObj = entityInfos.Where(it => deleteTableNames.Contains(it.DbTableName)).ToList();
+            App.Db.InsertNav(inserObj).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
+            foreach (var item in updateObj)
+            {
+                item.Id = deleteTables.OrderByDescending(it => it.Id).FirstOrDefault(it => it.DbTableName == item.DbTableName)?.Id??0;
+            }
+            App.Db.UpdateNav(updateObj).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
             return true;
         }
 
