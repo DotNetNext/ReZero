@@ -83,13 +83,52 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">数据库类型：</label>
-                            <select class="form-control" v-model="formData.DbType" name="DbType">
+                            <select @change="showMessage" class="form-control" v-model="formData.DbType" name="DbType">
                                 <option v-for="item in dbTypeList" v-bind:value="item.Value"> {{item.Name}} </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">字符串：</label>
                             <textarea class="form-control" v-model="formData.Connection" name="Connection" id="message-text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <code class="db0 hidden dbmessage">
+                                MySql示例:<br />
+                                server=localhost;Database=SqlSugar4xTest;Uid=root;Pwd=haosql;
+                                非默认端口要用port=3306
+                            </code>
+                            <code class="db1 hidden dbmessage">
+                                SqlServer示例:<br />
+                                server=localhost;Database=SqlSugar4xTest;Uid=root;Pwd=haosql;<br />
+                                .net8需要注意 启动文件csproj文件 ，InvariantGlobalization设置为false<br />
+                                有端口localhost:1433;
+                            </code>
+                            <code class="db2 hidden dbmessage">
+                                Sqlite示例:<br />
+                                DataSource=xxx.sqlite
+                            </code>
+                            <code class="db3 hidden dbmessage">
+                                Oracle示例:<br />
+                                //写法1<br />
+                                Data Source=localhost/orcl;User ID=system;Password=haha<br />
+                                //字法2 上面连不上可以试用下面写法<br />
+                                Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=150.158.57.125)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=ORCL)));User Id=xx;Password=xx;Pooling='true';Max Pool Size=150
+                            </code>
+                            <code class="db4 hidden dbmessage">
+                                Postgresql 示例:<br />
+                                PORT=5432;DATABASE=SqlSugar4xTest;HOST=localhost;PASSWORD=haosql;USER ID=postgres<br />
+                                不是public需要设置架构名searchpath=架构名
+                            </code>
+                            <code class="db5 hidden dbmessage">
+                                达梦 示例:<br />
+                                Server=153.101.101:5236;User Id=SYSDBA;PWD=123456;SCHEMA=架构;DATABASE=DAMENG
+                            </code>
+                            <code class="db6 hidden dbmessage">
+                                人大金仓 示例:<br />
+                                Server=127.0.0.1;Port=54321;UID=SYSTEM;PWD=system;database=SQLSUGAR4XTEST1<br>
+                                默认是Oracle模式，如果不是Oracle模式需要看SqlSugar文档改ReZero源码<br>
+                                通过SQL可以查看安装模式 show database_mode;
+                            </code>
                         </div>
                     </form>
                 </div>
@@ -343,6 +382,12 @@
                     .catch(error => {
                         this.error = error.message;
                     });
+            },
+            showMessage: function ()
+            {
+                var id = this.formData.DbType;
+                $(".dbmessage").addClass("hidden");
+                $(".db" + id).removeClass("hidden");
             }
         }
     });</script>
