@@ -83,17 +83,19 @@ http://localhost:5267/rezero
 如果不喜欢默认返回格式我们可以自定义返回格式
 
 ```cs
+//注册ReZero.Api
 builder.Services.AddReZeroServices(api =>
 {
-   
-    api.EnableSuperApi(new SuperAPIOptions()
+  
+    //有重载可换json文件 (断点看一下apiObj.DatabaseOptions.ConnectionConfig有没有字符串进来)
+    var apiObj = SuperAPIOptions.GetOptions("rezero.json"); 
+      
+    .....省略........
+     
+    //只看这一行 （不要new InterfaceOptions会把上面配置清空,尽量用apiObj.InterfaceOptions.xxx）
+    apiObj.InterfaceOptions.MergeDataToStandardDtoFunc=dto =>
     {
-        InterfaceOptions = new InterfaceOptions()
-        {
-            //MergeDataToStandardDtoFunc 设置统一返回格式
-            MergeDataToStandardDtoFunc = dto =>
-            {
-
+ 
                 if (dto is ErrorResponse error)
                 {
                     return new { isSuccess = false, data = error.message };
@@ -104,10 +106,12 @@ builder.Services.AddReZeroServices(api =>
                 }
                 //更多逻辑自已处理这儿只是一个示例
                 return new { isSuccess = true, data = dto };
-            }
-        }
-    });
-
+      };
+      
+  
+    //启用超级API
+    api.EnableSuperApi(apiObj);
+  
 });
 
 ``` 
