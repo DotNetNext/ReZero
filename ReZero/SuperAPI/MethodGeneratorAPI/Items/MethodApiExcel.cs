@@ -12,7 +12,7 @@ namespace ReZero.SuperAPI
     {
         public byte[] ExportEntities(long databaseId,long[] tableIds)
         {
-            List<EecelData> datatables = new List<EecelData>();
+            List<ExcelData> datatables = new List<ExcelData>();
             var db = App.Db;
             var datas = db.Queryable<ZeroEntityInfo>()
                 .OrderBy(it=>it.DbTableName)
@@ -64,7 +64,7 @@ namespace ReZero.SuperAPI
                     dr[TextHandler.GetCommonText("列名", "Field name")]= TextHandler.GetCommonText("表还没有创建需要到实体管理点同步", "The table has not yet been created and needs to be synchronized to the entity management point");
                     dt.Rows.Add(dr);
                 }
-                datatables.Add(new EecelData() { DataTable=dt, TableDescrpition=item.Description??"-" });
+                datatables.Add(new ExcelData() { DataTable=dt, TableDescrpition=item.Description??"-" });
             }
             return ReZero.Excel.DataTableToExcel.ExportExcel(datatables.ToArray(), $"{DateTime.Now.ToString("实体文档.xlsx")}",navName:TextHandler.GetCommonText("表名","Table name"));
         }

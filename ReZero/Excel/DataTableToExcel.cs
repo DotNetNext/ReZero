@@ -16,7 +16,7 @@ namespace ReZero.Excel
         /// <param name="name"></param>
         /// <param name="widths"></param>
         /// <returns></returns>
-        public static byte[] ExportExcel(EecelData[] dts, string name, int[]? widths = null,string? navName=null)
+        public static byte[] ExportExcel(ExcelData[] dts, string name, int[]? widths = null,string? navName=null)
         {
             XLWorkbook wb = new XLWorkbook();
 
@@ -126,10 +126,5 @@ namespace ReZero.Excel
         }
 
      
-    }
-    public class EecelData
-    {
-        public string? TableDescrpition { get; set; }
-        public DataTable? DataTable { get; set; }
     }
 }
