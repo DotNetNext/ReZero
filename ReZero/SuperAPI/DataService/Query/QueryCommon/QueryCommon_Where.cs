@@ -199,6 +199,7 @@ namespace ReZero.SuperAPI
 
         private  void ConvetConditional(DataModel dataModel, QueryMethodInfo queryObject, List<IConditionalModel> conditionalModels, DataModelDefaultParameter? item)
         {
+            var preoperyName = item?.Name;
             item!.Name =_sqlSugarClient!.EntityMaintenance.GetDbColumnName(item.PropertyName??item.Name, queryObject.EntityType);
             if (item.Value != null)
             {
@@ -224,9 +225,13 @@ namespace ReZero.SuperAPI
                 item.Value = value;
                 item.ValueType = value?.GetType()?.Name;
             }
-            var forNames = dataModel.DefaultParameters.Where(it => it.MergeForName?.ToLower() == item.Name.ToLower()).ToList();
+            var forNames = dataModel.DefaultParameters.Where(it => it.MergeForName?.ToLower() == (preoperyName)?.ToLower()).ToList();
             if (forNames.Any())
             {
+                foreach (var forItem in forNames)
+                {
+                    forItem.Name = _sqlSugarClient!.EntityMaintenance.GetDbColumnName(forItem.Name, queryObject.EntityType);
+                }
                 ConvetConditionalModelForNames(conditionalModels, item, forNames);
             }
             else
