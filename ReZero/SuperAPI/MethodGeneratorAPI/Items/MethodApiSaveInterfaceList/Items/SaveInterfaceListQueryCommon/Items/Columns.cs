@@ -83,8 +83,18 @@ namespace ReZero.SuperAPI
                 {
                     Description = saveInterfaceListModel!.Json!.Columns.FirstOrDefault(z => z.PropertyName == it.PropertyName).DbColumnName,
                     PropertyName = it.PropertyName
-                }).ToList();
+                }).ToList(); 
                 var isPage = saveInterfaceListModel.PageSize;
+                if (isPage) 
+                {
+                    foreach (var item in zeroInterfaceList.DataModel!.Columns)
+                    {
+                        if (item.PropertyName == item.Description || string.IsNullOrEmpty(item.Description))
+                        {
+                            item.Description = columns.FirstOrDefault(it => it.PropertyName == item.PropertyName).Description;
+                        }
+                    }
+                }
                 zeroInterfaceList.DataModel!.SelectParameters = saveInterfaceListModel!.Json!.Columns
                   .Select(it => new DataModelSelectParameters()
                   {
