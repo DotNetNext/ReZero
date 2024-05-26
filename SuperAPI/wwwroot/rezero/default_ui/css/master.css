@@ -156,3 +156,22 @@
     word-wrap: break-word;
     word-break: break-all;
 }
+
+.master-table-container {
+    height: calc(100vh - 350px);
+    max-height: 70vh; /* 设置表格容器的最大高度，防止内容过多时出现滚动条 */
+    overflow-y: auto; /* 启用垂直滚动条 */
+}
+
+    .master-table-container thead th {
+        position: -webkit-sticky; /* 兼容性写法 */
+        position: sticky;
+        top: 0;
+        background-color: #fff; /* 可以根据需要设置表头的背景色 */
+        z-index: 2; /* 确保表头在上方 */
+    }
+.mypage .pagination {
+    position:relative;
+    top:10px;
+    margin:0 !important;
+}     

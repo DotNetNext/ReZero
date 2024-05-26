@@ -31,45 +31,45 @@
         </div>
     </div>
     <!--主列表-->
-    <div class="card-body">
-
-        <h5> </h5>
+    <div class="card-body"> 
         <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr v-if="data && data.Columns && data.Columns.length > 0">
-                        <th class="width30">
-                            <label class="lyear-checkbox checkbox-primary">
-                                <input type="checkbox" @change="selectAll" id="check-all"><span></span>
-                            </label>
-                        </th>
-                        <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody v-if="data &&data.Data">
-                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
-                        <td>
-                            <label class="lyear-checkbox checkbox-primary">
-                                <input type="checkbox" name="ids[]" v-model="selectedItems" :alt="item.Id" :value="item.Id"><span></span>
-                            </label>
-                        </td>
-                        <td v-for="column in data.Columns">
-                            {{ item[column.PropertyName] }}
-                        </td>
+            <div class="master-table-container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr v-if="data && data.Columns && data.Columns.length > 0">
+                            <th class="width30">
+                                <label class="lyear-checkbox checkbox-primary">
+                                    <input type="checkbox" @change="selectAll" id="check-all"><span></span>
+                                </label>
+                            </th>
+                            <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="data &&data.Data">
+                        <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
+                            <td>
+                                <label class="lyear-checkbox checkbox-primary">
+                                    <input type="checkbox" name="ids[]" v-model="selectedItems" :alt="item.Id" :value="item.Id"><span></span>
+                                </label>
+                            </td>
+                            <td v-for="column in data.Columns">
+                                {{ item[column.PropertyName] }}
+                            </td>
 
-                        <td class="table_opt">
-                            <button data-toggle="modal" @click="openEdit(item)" class="btn btn-link" type="button">
-                                <i class="mdi mdi-lead-pencil"></i> 修改
-                            </button>
-                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
-                                <i class="mdi mdi-do-not-disturb"></i> 删除
-                            </button>
-                        </td>
-                    </tr>
+                            <td class="table_opt">
+                                <button data-toggle="modal" @click="openEdit(item)" class="btn btn-link" type="button">
+                                    <i class="mdi mdi-lead-pencil"></i> 修改
+                                </button>
+                                <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
+                                    <i class="mdi mdi-do-not-disturb"></i> 删除
+                                </button>
+                            </td>
+                        </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
