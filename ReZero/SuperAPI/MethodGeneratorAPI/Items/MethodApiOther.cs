@@ -41,10 +41,11 @@ namespace ReZero.SuperAPI
         {
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
-                .Where(it => it.IsDeleted == false)
+                .Where(it => it.IsDeleted == false) 
                 .Where(it => it.DataBaseId == databaseId).ToList();
             var tables = db!.DbMaintenance.GetTableInfoList(false).Where(it => !it.Name.ToLower().StartsWith("zero_")).ToList();
             var result = tables
+                            .OrderBy(it=>it.Name)
                             .Where(it => !entitys.Any(s => s.DbTableName!.EqualsCase(it.Name))).ToList();
             if (!string.IsNullOrEmpty(tableName))
             {
