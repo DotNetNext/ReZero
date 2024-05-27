@@ -1,0 +1,197 @@
+﻿@@master_page.html
+<link href="css/page_table_list.css" rel="stylesheet" />
+<div id="apibox" class="card">
+    <div class="search-bar">
+
+        <form id="frmSearach" action="lyear_forms_elements.html" method="post" onsubmit="return false;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-1"><label class="form-control" t>名称:</label></div>
+                    <div class="col-md-3"><input class="form-control" type="text" id="txtSearch" name="example-text-input" placeholder="分类名称"></div>
+                    <div class="col-md-3">
+                        <button @click="onSearch()" id="btnSearch" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button onclick="frmSearach.reset()" class="btn btn-close m-l-15" type="submit">清空</button>
+
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </form>
+        <div class="toolbar-btn-action">
+            <button @click="openAddDiv()" class="btn btn-primary m-l-15 " data-toggle="modal" data-target="#gridSystemModal"><i class="mdi mdi-plus"></i> 新增</button>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <h5> </h5>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr v-if="data && data.Columns && data.Columns.length > 0">
+                        <th class="mi-w-100" v-for="column in data.Columns">{{column.ColumnDescription}}</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody v-if="data &&data.Data">
+                    <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
+
+                        <td v-for="column in data.Columns">
+                            {{ item[column.PropertyName] }}
+                        </td>
+
+                        <td class="table_opt">
+                            <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-link" type="button">
+                                <i class="mdi mdi-lead-pencil"></i> 修改
+                            </button>
+                            <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
+                                <i class="mdi mdi-do-not-disturb"></i> 删除
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    @@page_control.html
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmEdit">
+                        <input type="hidden" v-model="formData.Id" name="Id" />
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">名称：</label>
+                            <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">内容：</label>
+                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseEdit" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="addOrUpdate()" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null,
+            addTitle: "添加动态接口分类",
+            editTitle: "修改态接口分类",
+            title: "",
+            formData: {
+
+            }
+        },
+        mounted() {
+            this.fetchData("");
+        },
+        methods: {
+            fetchData(append) {
+                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryPageList?ParentId=200" + append;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            onSearch: function (page) {
+
+                var urlParameters="&"+tools.objectToQueryString({
+                    Name: txtSearch.value,
+                    PageNumber: page,
+                    PageSize: tools.getValue("selPageSize"),
+                });
+                this.fetchData(urlParameters);
+            },
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    if (localStorage.delId == 200100) {
+                        tools.alert("初始化分类不能删除");
+                        btnDelClose.click();
+                        return;
+                    }
+                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategory?IsDeleted=true&Id=" + localStorage.delId;
+                    axios.get(url, jwHeader)
+                        .then(response => {
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },
+            openEditDiv: function (item)
+            {
+                var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById?id="+item.Id;
+                if (item.Id) {
+                    this.title = this.editTitle;
+                    axios.get(urlById, jwHeader)
+                        .then(response => {
+                            this.formData= response.data;
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                }
+            },
+            openAddDiv: function (item)
+            {
+                this.title= this.addTitle;
+                this.formData = {};
+            },
+            addOrUpdate: function () {
+                var th = this;
+                var frmId = "frmEdit";
+                var json = this.formData;
+                var url = json.Id ?
+                    "/PrivateReZeroRoute/100003/UpdateDynamicInterfaceCategory" :
+                    "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
+                this.addOrUpdateSubmit(url, json);
+            },
+            addOrUpdateSubmit: function (url, json) {
+                var th = this;
+                axios.post(url, json, jwHeader)
+                    .then(response => {
+                        this.error = null;
+                        this.onSearch();
+                        if (response.data == true) {
+                            frmEdit.reset();
+                            btnCloseEdit.click();
+                        }
+                        else
+                        {
+                            tools.highlightErrorFields(response.data)
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            }
+        }
+    });</script>

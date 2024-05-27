@@ -130,8 +130,16 @@ namespace ReZero.SuperAPI
                 it.Id = Id300007;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300007);
                 it.ParentId = Id300;
-                it.Url = "/rezero/Authorization.html";
+                it.Url = "/rezero/authorization.html";
                 it.SortId = 4;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = 300008;
+                it.Name = TextHandler.GetInterfaceCategoryText(300008);
+                it.ParentId = Id300;
+                it.Url = "/rezero/template.html";
+                it.SortId = 5;
             }));
         }
 
