@@ -100,11 +100,7 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.InsertObject,
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
-                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Id) ,ParameterValidate=
-                        new ParameterValidate()
-                        {
-                            IsRequired=true
-                        } ,ValueType = typeof(long).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Id) },
                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Title) ,ParameterValidate=
                         new ParameterValidate()
                         {
@@ -120,6 +116,22 @@ namespace ReZero.SuperAPI
                         {
                             IsRequired=true
                         } ,ValueType = typeof(long).Name },
+
+                       DataInitHelper.GetIsDynamicParameter(),
+                       new DataModelDefaultParameter() {
+                                                Name=nameof(ZeroEntityInfo.Creator),
+                                                InsertParameter=new InsertParameter(){
+                                                     IsUserName=true
+                                                },
+                                                 Value="" ,
+                                                 ValueType = typeof(string).Name },
+                       new DataModelDefaultParameter() {
+                                                Name=nameof(ZeroEntityInfo.CreateTime),
+                                                InsertParameter=new InsertParameter(){
+                                                     IsDateTimeNow=true
+                                                },
+                                                 Value="" ,
+                                                 ValueType = typeof(string).Name },
 
                     }
                 };
@@ -187,7 +199,7 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroTemplate,
                     ActionType = ActionType.QueryCommon,
                     DefaultParameters = new List<DataModelDefaultParameter>() {
-                             new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.Title),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,Value=200,ValueIsReadOnly=true, Description = TextHandler.GetCommonText("标题", "Title") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.Title),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name ,ValueIsReadOnly=true, Description = TextHandler.GetCommonText("标题", "Title") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
                              new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
                              new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
