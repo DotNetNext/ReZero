@@ -253,7 +253,34 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("导出实体")]
         [EnglishTextAttribute("Export entities")]
         public const long ExportEntitiesId = 45;
-        
+
+
+        [ChineseTextAttribute("文件模版分页")]
+        [EnglishTextAttribute("File template page")]
+        public const long GetTemplatePageId = 46;
+
+        [ChineseTextAttribute("文件模版根据id")]
+        [EnglishTextAttribute("File template by id")]
+        public const long GetTemplateById_Id = 47;
+
+        [ChineseTextAttribute("添加文件模版")]
+        [EnglishTextAttribute("Add template")]
+        public const long GetAddTemplateId = 48;
+
+        [ChineseTextAttribute("修改文件模版")]
+        [EnglishTextAttribute("Update template")]
+        public const long GetUpdateTemplateId = 49;
+
+        [ChineseTextAttribute("删除文件模版")]
+        [EnglishTextAttribute("Delete template")]
+        public const long DeleteTemplateId = 50;
+
+        [ChineseTextAttribute("获取模版分类")]
+        [EnglishTextAttribute("Get template type")]
+        public const long GetTemplateTypeId = 51;
+
+
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

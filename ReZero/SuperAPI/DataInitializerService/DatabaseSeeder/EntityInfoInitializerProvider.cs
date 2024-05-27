@@ -12,5 +12,7 @@ namespace ReZero.SuperAPI
         public const long Id_ZeroDatabaseInfo = 3;
         public const long Id_ZeroEntityInfo = 4;
         public const long Id_ZeroColumnInfo = 5;
+        public const long Id_ZeroTemplate = 6;
+        public const long Id_ZeroTemplateType = 7;
     }
 }
