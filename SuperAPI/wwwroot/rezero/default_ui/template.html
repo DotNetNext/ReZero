@@ -67,11 +67,17 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">名称：</label>
-                            <input type="text" v-model="formData.Name" name="Name" class="form-control" id="recipient-name">
+                            <input type="text" v-model="formData.Title" name="Title" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">内容：</label>
-                            <textarea class="form-control" v-model="formData.Description" name="Description" id="message-text"></textarea>
+                            <textarea class="form-control" v-model="formData.TemplateContent" name="TemplateContent" id="message-text"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">模版分类：</label>
+                            <select>
+                                <option></option>
+                            </select>
                         </div>
                     </form>
                 </div>
@@ -89,8 +95,8 @@
         data: {
             data: null,
             error: null,
-            addTitle: "添加动态接口分类",
-            editTitle: "修改态接口分类",
+            addTitle: "添加模版",
+            editTitle: "修改模版",
             title: "",
             formData: {
 
@@ -101,7 +107,7 @@
         },
         methods: {
             fetchData(append) {
-                var url = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryPageList?ParentId=200" + append;
+                var url = "/PrivateReZeroRoute/100003/GetTemplatePageList?ParentId=200" + append;
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
@@ -128,7 +134,7 @@
                         btnDelClose.click();
                         return;
                     }
-                    var url = "/PrivateReZeroRoute/100003/DeleteDynamicInterfaceCategory?IsDeleted=true&Id=" + localStorage.delId;
+                    var url = "/PrivateReZeroRoute/100003/DeleteTemplate?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url, jwHeader)
                         .then(response => {
                             this.data = response.data;
@@ -146,7 +152,7 @@
             },
             openEditDiv: function (item)
             {
-                var urlById = "/PrivateReZeroRoute/100003/GetDynamicInterfaceCategoryById?id="+item.Id;
+                var urlById = "/PrivateReZeroRoute/100003/GetTemplateById?id="+item.Id;
                 if (item.Id) {
                     this.title = this.editTitle;
                     axios.get(urlById, jwHeader)
@@ -169,8 +175,8 @@
                 var frmId = "frmEdit";
                 var json = this.formData;
                 var url = json.Id ?
-                    "/PrivateReZeroRoute/100003/UpdateDynamicInterfaceCategory" :
-                    "/PrivateReZeroRoute/100003/AddDynamicInterfaceCategory";
+                    "/PrivateReZeroRoute/100003/UpdateTemplate" :
+                    "/PrivateReZeroRoute/100003/AddTemplate";
                 this.addOrUpdateSubmit(url, json);
             },
             addOrUpdateSubmit: function (url, json) {
