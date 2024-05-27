@@ -15,6 +15,8 @@ namespace ReZero.SuperAPI
             AddZeroDataBaseInfo(datas);
             AddZeroEntityInfo(datas);
             AddZeroColumn(datas);
+            AddZeroTemplate(datas);
+            AddZeroTemplateType(datas);
             return datas;
         }
         private void AddZeroColumn(List<ZeroEntityInfo> datas)
@@ -67,6 +69,24 @@ namespace ReZero.SuperAPI
             datas.Add(data);
         }
 
+        private void AddZeroTemplate(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroTemplate));
+            data.Id = Id_ZeroTemplate;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
+            datas.Add(data);
+        }
+        private void AddZeroTemplateType(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroTemplateType));
+            data.Id = Id_ZeroTemplateType;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
+            datas.Add(data);
+        }
 
         private void CommonSetting(ZeroEntityInfo data)
         {
