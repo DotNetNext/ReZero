@@ -50,7 +50,14 @@ namespace ReZero.SuperAPI
             var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Url!.ToLower() == url).FirstAsync();
             if (currentMenu == null)
             {
-                currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().FirstAsync();
+                if (url.Contains("utorials.html"))
+                {
+                    currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().FirstAsync(it=>it.Id== InterfaceCategoryInitializerProvider.Id300008);
+                }
+                else
+                {
+                    currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().FirstAsync();
+                }
             }
             var parentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Id == currentMenu.ParentId).FirstAsync();
             var menuHtml = await GetMenuHtml(menuList, filePath, currentMenu);

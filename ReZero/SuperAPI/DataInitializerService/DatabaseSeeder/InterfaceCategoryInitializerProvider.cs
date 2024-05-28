@@ -121,7 +121,7 @@ namespace ReZero.SuperAPI
         public const long Id300007 = 300007;
 
         /// <summary>
-        /// 接口授权
+        /// 文件模版
         /// </summary>
         [ChineseTextAttribute("文件模版")]
         [EnglishTextAttribute("File template")]
