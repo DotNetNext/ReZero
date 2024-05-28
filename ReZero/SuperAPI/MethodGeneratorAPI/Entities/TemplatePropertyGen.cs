@@ -56,7 +56,7 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 特殊类型
         /// </summary>
-        public bool IsSpecialType { get; set; } 
+        public int SpecialType { get; set; } 
         /// <summary>
         /// 默认值
         /// </summary>
