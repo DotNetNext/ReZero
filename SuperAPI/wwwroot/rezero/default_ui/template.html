@@ -194,6 +194,8 @@
             },
             addOrUpdateSubmit: function (url, json) {
                 var th = this;
+                var editor = ace.edit("editor");
+                this.formData.TemplateContent = editor.getValue();
                 axios.post(url, json, jwHeader)
                     .then(response => {
                         this.error = null;
