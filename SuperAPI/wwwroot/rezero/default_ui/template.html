@@ -79,15 +79,16 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">编辑框样式：</label>
-                            <select class="form-control" v-model="formData.TemplateContentStyle">
+                            <select @change="setEditorValue" class="form-control" v-model="formData.TemplateContentStyle">
                                 <option>csharp</option>
                                 <option>javascript</option>
                                 <option>typescript</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="message-text" class="control-label">内容：</label>
-                            <textarea class="form-control" v-model="formData.TemplateContent" name="TemplateContent" id="message-text"></textarea>
+                            <label for="message-text" class="control-label">内容：</label> 
+                            <div id="editor"  style="width: 100%; height: 300px;"></div>
+                            <textarea class="form-control hidden" v-model="formData.TemplateContent" name="TemplateContent" id="message-text"></textarea>
                         </div>
                     </form>
                 </div>
@@ -99,6 +100,8 @@
         </div>
     </div>
 </div>
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script>
 <script>
     var vueObj = new Vue({
         el: '#apibox',
@@ -130,7 +133,7 @@
             },
             onSearch: function (page) {
 
-                var urlParameters="&"+tools.objectToQueryString({
+                var urlParameters = "&" + tools.objectToQueryString({
                     Name: txtSearch.value,
                     PageNumber: page,
                     PageSize: tools.getValue("selPageSize"),
@@ -160,14 +163,14 @@
                     localStorage.delId = item.Id;
                 }
             },
-            openEditDiv: function (item)
-            {
-                var urlById = "/PrivateReZeroRoute/100003/GetTemplateById?id="+item.Id;
+            openEditDiv: function (item) {
+                var urlById = "/PrivateReZeroRoute/100003/GetTemplateById?id=" + item.Id;
                 if (item.Id) {
                     this.title = this.editTitle;
                     axios.get(urlById, jwHeader)
                         .then(response => {
-                            this.formData= response.data;
+                            this.formData = response.data;
+                            this.setEditorValue();
                         })
                         .catch(error => {
                             this.error = error.message;
@@ -175,10 +178,10 @@
                         });
                 }
             },
-            openAddDiv: function (item)
-            {
-                this.title= this.addTitle;
+            openAddDiv: function (item) {
+                this.title = this.addTitle;
                 this.formData = {};
+                this.setEditorValue();
             },
             addOrUpdate: function () {
                 var th = this;
@@ -199,8 +202,7 @@
                             frmEdit.reset();
                             btnCloseEdit.click();
                         }
-                        else
-                        {
+                        else {
                             tools.highlightErrorFields(response.data)
                         }
                     })
@@ -208,6 +210,23 @@
                         this.error = error.message;
                         this.data = null;
                     });
-            }
+            },
+            setEditorValue: function () {
+                if (this.formData.TemplateContentStyle == null) {
+                    this.formData.TemplateContentStyle = "csharp";
+                }
+                var editor = ace.edit("editor");  
+                editor.setTheme("ace/theme/twilight");
+                editor.setOption("showPrintMargin", false);
+                editor.setOption("enableBasicAutocompletion", true);
+                editor.setOption("enableSnippets", true);
+                editor.setOption("useWorker", false);
+                editor.setOption("enableLiveAutocompletion", true)
+                editor.session.setMode("ace/mode/" + this.formData.TemplateContentStyle);
+                editor.setValue(this.formData.TemplateContent);
+                editor.selection.clearSelection();
+                editor.resize();
+
+            },
         }
     });</script>
