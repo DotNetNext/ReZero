@@ -9,5 +9,7 @@ namespace ReZero.SuperAPI
         public int TypeId { get; set; }
         public string? Title { get; set; } 
         public string ? TemplateContent { get; set; }
+        [SqlSugar.SugarColumn(IsNullable =true)]
+        public string? TemplateContentStyle { get; set; }
     }
 }

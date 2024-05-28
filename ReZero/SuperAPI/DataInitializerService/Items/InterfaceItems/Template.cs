@@ -67,12 +67,17 @@ namespace ReZero.SuperAPI
                         {
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TemplateContentStyle) ,ParameterValidate=
+                        new ParameterValidate()
+                        {
+                            IsRequired=true
+                        } ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TemplateContent) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
-                          new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TypeId) ,ParameterValidate=
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TypeId) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
@@ -101,7 +106,7 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>()
                     {
                         new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Id) },
-                       new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Title) ,ParameterValidate=
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Title) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
@@ -111,21 +116,25 @@ namespace ReZero.SuperAPI
                         {
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
-                          new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TypeId) ,ParameterValidate=
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TypeId) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
                         } ,ValueType = typeof(long).Name },
-
-                       DataInitHelper.GetIsDynamicParameter(),
-                       new DataModelDefaultParameter() {
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TemplateContentStyle) ,ParameterValidate=
+                        new ParameterValidate()
+                        {
+                            IsRequired=true
+                        } ,ValueType = typeof(string).Name },
+                        DataInitHelper.GetIsDynamicParameter(),
+                        new DataModelDefaultParameter() {
                                                 Name=nameof(ZeroEntityInfo.Creator),
                                                 InsertParameter=new InsertParameter(){
                                                      IsUserName=true
                                                 },
                                                  Value="" ,
                                                  ValueType = typeof(string).Name },
-                       new DataModelDefaultParameter() {
+                        new DataModelDefaultParameter() {
                                                 Name=nameof(ZeroEntityInfo.CreateTime),
                                                 InsertParameter=new InsertParameter(){
                                                      IsDateTimeNow=true
