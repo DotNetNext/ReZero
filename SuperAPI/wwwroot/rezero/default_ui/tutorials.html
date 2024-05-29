@@ -1,5 +1,71 @@
 ﻿@@master_page.html
 <link href="css/page_table_list.css" rel="stylesheet" />
+<style>
+    #editorResult .ace_cursor {
+        display: none !important; /* 或者使用 caret-color: transparent; */
+    }
+</style>
 <div id="apibox" class="card">
-    aa
+    <div class="card-header"><h4>基本样式</h4></div>
+    <div class="card-body">
+
+        <div class="form-group">
+            <label for="example-text-input">模版结构</label>
+            <div id="editorJson" style="height: calc(30vh - 100px);"></div>
+            <input class="form-control hidden" type="text" name="role-input">
+        </div>
+        <div class="form-group">
+            <label for="example-text-input">测试模版</label>
+            <div id="editorTemplate" style="height: calc(30vh - 100px);"></div>
+            <input class="form-control hidden" type="text" name="role-input">
+        </div>
+        <div class="form-group">
+            <label for="example-text-input">测试结果</label>
+            <div id="editorResult" style="height: calc(30vh - 100px);"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-r-5">测试</button>
+            <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </div>
 </div>
+
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script>
+<script>
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: { 
+        },
+        mounted() {
+            this.fetchData();
+        },
+        methods: {
+            fetchData() {
+                this.initEditor("editorJson", "json5");
+                this.initEditor("editorTemplate", "csharp"); 
+                this.initEditor("editorResult", "csharp", true);
+            },
+            onSearch: function (page) {
+ 
+            }, 
+            initEditor: function (id, style,isReadOnly) { 
+                var editor = ace.edit(id);
+                if (isReadOnly) { 
+                    editor.setTheme("ace/theme/monokai");
+                } else {
+                    editor.setTheme("ace/theme/twilight");
+                }
+                editor.setOption("showPrintMargin", false);
+                editor.setOption("enableBasicAutocompletion", true);
+                editor.setOption("enableSnippets", true);
+                editor.setOption("useWorker", false);
+                editor.setOption("enableLiveAutocompletion", true)
+                editor.session.setMode("ace/mode/" + style);
+                editor.setReadOnly(isReadOnly); 
+                editor.setValue(null);
+                editor.selection.clearSelection();
+                editor.resize(); 
+            } 
+        }
+    });</script>
