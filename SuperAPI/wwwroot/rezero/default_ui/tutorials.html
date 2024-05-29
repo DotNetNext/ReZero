@@ -24,8 +24,8 @@
             <div id="editorResult" style="height: calc(30vh - 100px);"></div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary m-r-5">测试</button>
-            <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
+            <button type="submit" class="btn btn-primary m-r-5">测 试</button>
+            <button type="button" class="btn btn-default" onclick="javascript: window.close(); return false;">关 闭</button>
         </div>
     </div>
 </div>
@@ -35,23 +35,24 @@
 <script>
     var vueObj = new Vue({
         el: '#apibox',
-        data: { 
+        data: {
         },
         mounted() {
             this.fetchData();
         },
         methods: {
             fetchData() {
+                var page = this.getPageInfo();
                 this.initEditor("editorJson", "json5");
-                this.initEditor("editorTemplate", "csharp"); 
-                this.initEditor("editorResult", "csharp", true);
+                this.initEditor("editorTemplate", page.style);
+                this.initEditor("editorResult", page.style, true);
             },
             onSearch: function (page) {
- 
-            }, 
-            initEditor: function (id, style,isReadOnly) { 
+
+            },
+            initEditor: function (id, style, isReadOnly) {
                 var editor = ace.edit(id);
-                if (isReadOnly) { 
+                if (isReadOnly) {
                     editor.setTheme("ace/theme/monokai");
                 } else {
                     editor.setTheme("ace/theme/twilight");
@@ -62,10 +63,24 @@
                 editor.setOption("useWorker", false);
                 editor.setOption("enableLiveAutocompletion", true)
                 editor.session.setMode("ace/mode/" + style);
-                editor.setReadOnly(isReadOnly); 
+                editor.setReadOnly(isReadOnly);
                 editor.setValue(null);
                 editor.selection.clearSelection();
-                editor.resize(); 
-            } 
+                editor.resize();
+            },
+            getPageInfo: function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var type = urlParams.get('type');
+                var style = urlParams.get('style');
+                var result = { style: style };
+                if (type == 1) {
+
+                    return result;
+
+                } else if (type == 2) {
+
+                    return result;
+                }  
+            }
         }
     });</script>

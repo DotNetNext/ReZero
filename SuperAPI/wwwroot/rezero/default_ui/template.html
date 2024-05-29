@@ -234,7 +234,12 @@
             },
             openTutorials: function (item)
             {
-                window.open("/rezero/tutorials.html?type=" + item)
+                if (item == 1) {
+                    window.open("/rezero/tutorials.html?type=" + item +"&style=csharp")
+                } else
+                {
+                    tools.alert("根据接口生成还在开发中");
+                }
             }
         }
     });</script>
