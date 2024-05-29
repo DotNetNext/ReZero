@@ -6,7 +6,7 @@ namespace ReZero.SuperAPI
 {
     public class ZeroTemplate : DbBase
     {
-        public int TypeId { get; set; }
+        public TemplateType TypeId { get; set; }
         public string? Title { get; set; } 
         public string ? TemplateContent { get; set; }
         [SqlSugar.SugarColumn(IsNullable =true)]
