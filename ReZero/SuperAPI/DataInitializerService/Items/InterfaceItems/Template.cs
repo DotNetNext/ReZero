@@ -72,6 +72,11 @@ namespace ReZero.SuperAPI
                         {
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Url) ,ParameterValidate=
+                        new ParameterValidate()
+                        {
+                            IsRequired=true
+                        } ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TemplateContent) ,ParameterValidate=
                         new ParameterValidate()
                         {
@@ -112,6 +117,11 @@ namespace ReZero.SuperAPI
                             IsRequired=true
                         } ,ValueType = typeof(string).Name },
                         new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.TemplateContent) ,ParameterValidate=
+                        new ParameterValidate()
+                        {
+                            IsRequired=true
+                        } ,ValueType = typeof(string).Name },
+                        new DataModelDefaultParameter() { Name=nameof(ZeroTemplate.Url) ,ParameterValidate=
                         new ParameterValidate()
                         {
                             IsRequired=true
