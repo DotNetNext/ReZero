@@ -280,6 +280,20 @@ namespace ReZero.SuperAPI
         public const long GetTemplateTypeId = 51;
 
 
+        [ChineseTextAttribute("获取默认模版")]
+        [EnglishTextAttribute("Get default template")]
+        public const long GetDefalutTemplateId = 52;
+
+        [ChineseTextAttribute("执行模版生成")]
+        [EnglishTextAttribute("Execute template")]
+        public const long ExecTemplateId = 53;
+
+        [ChineseTextAttribute("获取默认模版json格式")]
+        [EnglishTextAttribute("Get template tormat json")]
+        public const long GetTemplateFormatJsonId = 54;
+
+
+
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

@@ -21,6 +21,9 @@ namespace ReZero.SuperAPI
             GetSetting();
             UpdateSetting();
             ExportEntities();
+            GetDefalutTemplate();
+            GetTemplateFormatJson();
+            ExecTemplate();
         }
 
         private void SaveInterfaceList()
@@ -356,6 +359,92 @@ namespace ReZero.SuperAPI
                     {
                         new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("数据库Id", "Database id") },
                         new DataModelDefaultParameter() { Name ="tableIds",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JsonArray).Name,  Description = TextHandler.GetCommonText("表Id集合", "Table id array") }  
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void GetDefalutTemplate()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetDefalutTemplateId;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetDefalutTemplateId);
+                it.Url = GetUrl(it, "GetDefalutTemplate"); 
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 1, 
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetDefalutTemplate)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="type",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("模版分类ID", "template type id") }, 
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void GetTemplateFormatJson()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetTemplateFormatJsonId;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetTemplateFormatJsonId);
+                it.Url = GetUrl(it, "GetTemplateFormatJson");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 1,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.GetTemplateFormatJson)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="type",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("模版分类ID", "template type id") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void ExecTemplate()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = ExecTemplateId;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(ExecTemplateId);
+                it.Url = GetUrl(it, "ExecTemplate");
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroEntityInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 3,
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.ExecTemplate)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="type",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("模版分类ID", "template type id") },
+                        new DataModelDefaultParameter() { Name ="data",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("数据", "data") },
+                        new DataModelDefaultParameter() { Name ="template",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("模版字符串", "template") }
                     }
                 };
             });
