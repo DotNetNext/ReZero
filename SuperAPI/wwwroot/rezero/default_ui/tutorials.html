@@ -4,23 +4,25 @@
     #editorResult .ace_cursor {
         display: none !important; /* 或者使用 caret-color: transparent; */
     }
+
+    .ace_editor {
+        z-index: 999
+    }
 </style>
 <div id="apibox" class="card">
     <div class="card-header"><h4>基本样式</h4></div>
     <div class="card-body">
 
         <div class="form-group">
-            <label for="example-text-input">模版结构</label>
-            <div id="editorJson" style="height: calc(30vh - 100px);"></div>
-            <input class="form-control hidden" type="text" name="role-input">
+            <label for="example-text-input">测试数据</label>
+            <div id="editorJson" style="height: calc(30vh - 100px); min-height: 300px"></div>
         </div>
         <div class="form-group">
             <label for="example-text-input">测试模版</label>
             <div id="editorTemplate" style="height: calc(30vh - 100px);min-height:500px"></div>
-            <input class="form-control hidden" type="text" name="role-input">
-        </div> 
+        </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary m-r-5">测 试</button>
+            <button type="submit" @click="submitTest" class="btn btn-primary m-r-5">测 试</button>
             <button type="button" class="btn btn-default" onclick="javascript: window.close(); return false;">关 闭</button>
         </div>
         <div class="form-group">
@@ -36,6 +38,7 @@
     var vueObj = new Vue({
         el: '#apibox',
         data: {
+
         },
         mounted() {
             this.fetchData();
@@ -46,6 +49,8 @@
                 this.initEditor("editorJson", "json5");
                 this.initEditor("editorTemplate", page.style);
                 this.initEditor("editorResult", page.style, true);
+                this.bindDefalutTemplate();
+                this.bindTemplateFormatJson();
             },
             onSearch: function (page) {
 
@@ -80,7 +85,62 @@
                 } else if (type == 2) {
 
                     return result;
-                }  
+                }
+            },
+            submitTest: function () {
+                var data = ace.edit("editorJson").getValue();
+                var template = ace.edit("editorTemplate").getValue();
+                var urlParams = new URLSearchParams(window.location.search);
+                var type = urlParams.get('type');
+                var url = "/PrivateReZeroRoute/100003/ExecTemplate";
+                axios.post(url, { type: type, data: data, template: template }, jwHeader)
+                    .then(response => {
+                        this.error = null;
+                        var editor = ace.edit("editorResult");
+                        if (response.data && response.data.message) {
+                            editor.setValue(response.data.message);
+                        } else { 
+                            editor.setValue(response.data);
+                        }
+                      
+
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            bindDefalutTemplate: function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var type = urlParams.get('type');
+                var url = "/PrivateReZeroRoute/100003/GetDefalutTemplate";
+                axios.post(url, { type: type }, jwHeader)
+                    .then(response => {
+                        this.error = null;
+                        var editor = ace.edit("editorTemplate");
+                        editor.setValue(response.data);
+
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            bindTemplateFormatJson: function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var type = urlParams.get('type');
+                var url = "/PrivateReZeroRoute/100003/GetTemplateFormatJson";
+                axios.post(url, { type: type }, jwHeader)
+                    .then(response => {
+                        this.error = null;
+                        var editor = ace.edit("editorJson");
+                        editor.setValue(JSON.stringify(response.data, null, 4));
+
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             }
         }
     });</script>

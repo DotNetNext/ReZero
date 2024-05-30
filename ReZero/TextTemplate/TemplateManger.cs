@@ -1,9 +1,11 @@
 ﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
 using ReZero.TextTemplate;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions; 
@@ -76,7 +78,9 @@ namespace ReZero.TextTemplate
                     "System.Text",
                     "System.Text.RegularExpressions"
                 };
-                var result = ScriptOptions.Default.AddReferences(AppDomain.CurrentDomain.GetAssemblies())
+                var ass = AppDomain.CurrentDomain.GetAssemblies().Where(it => it.FullName.StartsWith("System")).ToList() ;
+                ass.Add(Assembly.GetEntryAssembly());
+                var result = ScriptOptions.Default.AddReferences(ass)
                                                           .WithImports(namespaces);
                 scriptOptions = result;
 

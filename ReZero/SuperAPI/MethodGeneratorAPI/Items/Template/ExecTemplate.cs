@@ -25,8 +25,9 @@ namespace ReZero.SuperAPI
 
         private string ExecTemplateByEntity(string data, string template)
         {
-            TemplateModel<TemplateEntitiesGen> model = new SerializeService().DeserializeObject<TemplateModel<TemplateEntitiesGen>>(data);
-            var temp = new TextTemplateManager().RenderTemplate(template, model);
+            var model = new SerializeService().DeserializeObject<TemplateEntitiesGen>(data);
+            var templateModel=new  TemplateModel<TemplateEntitiesGen> { Model = model };
+            var temp = new TextTemplateManager().RenderTemplate(template, templateModel);
             return temp.ToString();
         }
     }
