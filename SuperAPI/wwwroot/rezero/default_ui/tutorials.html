@@ -10,7 +10,13 @@
     }
 </style>
 <div id="apibox" class="card">
-    <div class="card-header"><h4>基本样式</h4></div>
+    <div class="card-header"><h4>{{title}}</h4></div>
+    <div class="p-l-15">
+        <code>{{message1}}输出块,根目录以Model开头,非根目录以变量开头，支持C#自带函数</code>
+    </div>
+    <div class="p-l-15">
+        <code>{{message2}} 代码块，可以if foreach 逻辑计算等，支持C#自带语法</code>
+    </div>
     <div class="card-body">
 
         <div class="form-group">
@@ -38,7 +44,9 @@
     var vueObj = new Vue({
         el: '#apibox',
         data: {
-
+            title: null,
+            message1: "{{}}",
+            message2:"<%%>"
         },
         mounted() {
             this.fetchData();
@@ -51,6 +59,12 @@
                 this.initEditor("editorResult", page.style, true);
                 this.bindDefalutTemplate();
                 this.bindTemplateFormatJson();
+                var urlParams = new URLSearchParams(window.location.search);
+                var type = urlParams.get('type');
+                if (type == 1)
+                {
+                    this.title = "实体模版在线教程";
+                }
             },
             onSearch: function (page) {
 
