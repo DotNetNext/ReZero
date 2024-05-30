@@ -213,7 +213,11 @@ namespace ReZero.SuperAPI
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroTemplate.Title) ,
                             Description=TextHandler.GetCommonText("名称", "Name")
-                        } 
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroTemplate.Url) ,
+                            Description=TextHandler.GetCommonText("生成路径", "Path")
+                        }
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroTemplate,
                     ActionType = ActionType.QueryCommon,
