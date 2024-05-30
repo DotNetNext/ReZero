@@ -14,7 +14,8 @@ namespace ReZero.TextTemplate
             input = Regex.Replace(input, @"\} {1,5}\}", "}}");
             input = Regex.Replace(input, @"\<\ {1,5}\%", "<%");
             input = Regex.Replace(input, @"\% {1,5}\>", "%>");
-
+            input = Regex.Replace(input,  "\"{{", "\"\"{{");
+            input = Regex.Replace(input, "}}\"", "}}\"\"");
             StringBuilder sb = new StringBuilder();
             sb.Append("string result = ");
             sb.Append("@\"");
