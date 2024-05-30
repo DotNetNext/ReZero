@@ -116,7 +116,7 @@
                         } else { 
                             editor.setValue(response.data);
                         }
-                      
+                        editor.selection.clearSelection();
 
                     })
                     .catch(error => {
@@ -133,7 +133,7 @@
                         this.error = null;
                         var editor = ace.edit("editorTemplate");
                         editor.setValue(response.data);
-
+                        editor.selection.clearSelection();
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -149,7 +149,7 @@
                         this.error = null;
                         var editor = ace.edit("editorJson");
                         editor.setValue(JSON.stringify(response.data, null, 4));
-
+                        editor.selection.clearSelection();
                     })
                     .catch(error => {
                         this.error = error.message;
