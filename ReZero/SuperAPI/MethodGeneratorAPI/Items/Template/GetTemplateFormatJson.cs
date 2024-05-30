@@ -26,8 +26,8 @@ namespace ReZero.SuperAPI
         {
             TemplateEntitiesGen templateEntitiesGen = new TemplateEntitiesGen()
             {
-                ClassName = "ClassName",
-                TableName = "TableName",
+                ClassName = "ClassName01",
+                TableName = "TableName01",
                 Description = "表备注",
                 PropertyGens = new List<TemplatePropertyGen>()
                     {
@@ -35,6 +35,7 @@ namespace ReZero.SuperAPI
                         {
                             DbColumnName="Id",
                             PropertyName="PId",
+                            PropertyType="int",
                             IsIdentity=true,
                             IsPrimaryKey=true,
                             IsNullable=false,
@@ -44,8 +45,17 @@ namespace ReZero.SuperAPI
                         {
                             DbColumnName="Name",
                             PropertyName="PName",
+                            PropertyType="string",
                             IsNullable=false,
                             Description="名称"
+                        },
+                         new TemplatePropertyGen()
+                        {
+                            DbColumnName="Price",
+                            PropertyName="PPrice",
+                            PropertyType="decimal?",
+                            IsNullable=true,
+                            Description="价格"
                         }
                     }
             };
