@@ -21,6 +21,8 @@ namespace ReZero.SuperAPI
             GetTemplateById();
 
             GetTemplateTypeList();
+
+            GetTemplateListByTypeId();
         }
 
         private void GetTemplateById()
@@ -231,7 +233,46 @@ namespace ReZero.SuperAPI
             });
             zeroInterfaceList.Add(data2);
         }
-         
+
+        private void GetTemplateListByTypeId()
+        {
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetTemplateByTypeId_Id;
+                it.GroupName = nameof(ZeroTemplate);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetTemplateByTypeId_Id);
+                it.Url = GetUrl(it, "GetTemplateListByTypeId"); 
+                it.DataModel = new DataModel()
+                { 
+                    Columns = new List<DataColumnParameter>()
+                    {
+
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroTemplate.Id) ,
+                            Description=TextHandler.GetCommonText("ID", "Primary key")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroTemplate.Title) ,
+                            Description=TextHandler.GetCommonText("名称", "Name")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroTemplate.Url) ,
+                            Description=TextHandler.GetCommonText("生成路径", "Path")
+                        }
+                    },
+                    TableId = EntityInfoInitializerProvider.Id_ZeroTemplate,
+                    ActionType = ActionType.QueryCommon,
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                             new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.TypeId),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(int).Name , Description = TextHandler.GetCommonText("分类Id", "Type id") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data2);
+        }
+
         private void GetTemplateTypeList()
         {
           

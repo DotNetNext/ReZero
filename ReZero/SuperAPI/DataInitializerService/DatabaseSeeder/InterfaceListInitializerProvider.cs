@@ -292,6 +292,10 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Get template tormat json")]
         public const long GetTemplateFormatJsonId = 54;
 
+        [ChineseTextAttribute("获取模版根据分类")]
+        [EnglishTextAttribute("Get template by type")]
+        public const long GetTemplateByTypeId_Id = 55;
+
 
 
 

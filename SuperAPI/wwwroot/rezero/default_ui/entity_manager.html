@@ -350,12 +350,33 @@
                         <label class="lyear-checkbox">
                             <input type="checkbox" v-model="setting.importUnunderline" value="true">
                             <span class="p-l-15">导入实体去掉下划线</span>
-                        </label> 
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnSettingClose" class="btn btn-default" data-dismiss="modal">关闭</button> 
+                    <button type="button" id="btnSettingClose" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" @click="saveSetting()" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--代码生成-->
+    <div id="divGenerateFile" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnGenerateFile" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divGenerateFile"></button>
+        <div class="modal-dialog  width300 " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">代码生成</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="example-box">
+                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnGenerateFileClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="submitGenerateFile()" class="btn btn-primary">生成文件</button>
                 </div>
             </div>
         </div>
@@ -388,7 +409,8 @@
             editTableId: 0,
             setting: {
                 importUnunderline: false
-            }
+            },
+            templates:[]
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -832,7 +854,27 @@
                     });
             },
             openGenerateCode: function () {
-                tools.alert("开发中..");
+                btnGenerateFile.click();
+            },
+            submitGenerateFile: function ()
+            {
+
+            },
+            bindTemplates: function ()
+            {
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + tableId;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        response.data.forEach(item => {
+                            item.TableId = editId;
+                            item.Id = 0;
+                            this.columns.push(item);
+                            btnCloseCopy.click();
+                        });
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             }
         }
     });
