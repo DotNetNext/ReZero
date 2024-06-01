@@ -265,7 +265,7 @@ namespace ReZero.SuperAPI
                     TableId = EntityInfoInitializerProvider.Id_ZeroTemplate,
                     ActionType = ActionType.QueryCommon,
                     DefaultParameters = new List<DataModelDefaultParameter>() {
-                             new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.TypeId),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(int).Name , Description = TextHandler.GetCommonText("分类Id", "Type id") },
+                             new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.TypeId),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name , Description = TextHandler.GetCommonText("分类Id", "Type id") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
                     }
                 };
