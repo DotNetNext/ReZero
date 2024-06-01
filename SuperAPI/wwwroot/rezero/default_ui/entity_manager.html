@@ -885,7 +885,7 @@
                     TableIds: JSON.stringify(this.selectedItems),
                     DataBaseId: this.databaseId,
                     TemplateId: this.currentTemplate.Id,
-                    Url: currentTemplate.Url
+                    Url: this.currentTemplate.Url
                 }, jwHeader)
                     .then(response => {
                         tools.alert("生成成功");
