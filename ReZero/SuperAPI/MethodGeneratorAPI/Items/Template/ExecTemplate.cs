@@ -1,9 +1,11 @@
-﻿using ReZero.Excel;
+﻿using ReZero.Common;
+using ReZero.Excel;
 using ReZero.TextTemplate;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -26,14 +28,30 @@ namespace ReZero.SuperAPI
         }
         private void CreateFile(long databaseId, ZeroTemplate template, ZeroEntityInfo item,string url)
         {
-            TemplateEntitiesGen templateEntitiesGen = GetClassString(databaseId, template, item);
+            var oldUrl = url;
+            var  classString = GetClassString(databaseId, template, item,out TemplateEntitiesGen templateEntitiesGen);
             url = GetUrl(url, templateEntitiesGen);
+            if (!url.Contains(":")) 
+            { 
+                var baseDir = AppContext.BaseDirectory;
+                var findDir = DirectoryHelper.FindParentDirectoryWithSlnFile(baseDir);
+                if (!string.IsNullOrEmpty(findDir))
+                {
+                    url= url.TrimStart('\\').TrimStart('/');
+                    url = Path.Combine(findDir,url);
+                }
+                else 
+                {
+                    url = Path.Combine(baseDir, url);
+                }
+            }
+            FileSugar.CreateFileReplace(url, classString,Encoding.UTF8);
         }
 
-        private TemplateEntitiesGen GetClassString(long databaseId, ZeroTemplate template, ZeroEntityInfo item)
+        private string GetClassString(long databaseId, ZeroTemplate template, ZeroEntityInfo item,out TemplateEntitiesGen templateEntitiesGen)
         {
             var propertyGens = new List<TemplatePropertyGen>();
-            TemplateEntitiesGen templateEntitiesGen = new TemplateEntitiesGen()
+            templateEntitiesGen = new TemplateEntitiesGen()
             {
                 ClassName = item.ClassName,
                 Description = item.Description,
@@ -46,7 +64,7 @@ namespace ReZero.SuperAPI
                 AddProperty(propertyGens, columnInfos, zeroEntityColumn);
             }
             var classString = ExecTemplate(TemplateType.Entity, new SerializeService().SerializeObject(templateEntitiesGen), template.TemplateContent!);
-            return templateEntitiesGen;
+            return classString;
         }
         private static void AddProperty(List<TemplatePropertyGen> propertyGens, List<SqlSugar.DbColumnInfo> columnInfos, ZeroEntityColumnInfo zeroEntityColumn)
         {
