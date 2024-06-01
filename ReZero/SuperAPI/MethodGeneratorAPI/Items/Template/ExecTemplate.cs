@@ -87,7 +87,20 @@ namespace ReZero.SuperAPI
                 IsJson = zeroEntityColumn.IsJson,
                 IsIgnore = zeroEntityColumn.PropertyType == NativeType.IsIgnore
             };
-            if (templatePropertyGen.PropertyType == "Int32") 
+            ProcessingProperty(zeroEntityColumn, templatePropertyGen);
+            if (dbColumn != null)
+            {
+                templatePropertyGen.DbType = string.IsNullOrEmpty(dbColumn.OracleDataType) ? dbColumn.DataType : dbColumn.OracleDataType;
+                templatePropertyGen.DecimalDigits = dbColumn.DecimalDigits;
+                templatePropertyGen.Length = dbColumn.Length;
+                templatePropertyGen.IsNullable = dbColumn.IsNullable;
+            }
+            propertyGens.Add(templatePropertyGen);
+        }
+
+        private static void ProcessingProperty(ZeroEntityColumnInfo zeroEntityColumn, TemplatePropertyGen templatePropertyGen)
+        {
+            if (templatePropertyGen.PropertyType == "Int32")
             {
                 templatePropertyGen.PropertyType = "int";
             }
@@ -103,15 +116,19 @@ namespace ReZero.SuperAPI
             {
                 templatePropertyGen.PropertyType = "string";
             }
-            templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? "?" : string.Empty);
-            if (dbColumn != null)
+            else if (templatePropertyGen.PropertyType == "Decimal")
             {
-                templatePropertyGen.DbType = string.IsNullOrEmpty(dbColumn.OracleDataType) ? dbColumn.DataType : dbColumn.OracleDataType;
-                templatePropertyGen.DecimalDigits = dbColumn.DecimalDigits;
-                templatePropertyGen.Length = dbColumn.Length;
-                templatePropertyGen.IsNullable = dbColumn.IsNullable;
+                templatePropertyGen.PropertyType = "decimal";
             }
-            propertyGens.Add(templatePropertyGen);
+            else if (templatePropertyGen.PropertyType == "Byte")
+            {
+                templatePropertyGen.PropertyType = "byte";
+            }
+            else if (templatePropertyGen.PropertyType == "Double")
+            {
+                templatePropertyGen.PropertyType = "double";
+            }
+            templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? "?" : string.Empty);
         }
 
         private static string GetUrl(string url, TemplateEntitiesGen templateEntitiesGen)
