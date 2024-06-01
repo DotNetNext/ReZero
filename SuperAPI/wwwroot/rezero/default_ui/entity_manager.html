@@ -375,8 +375,8 @@
                             <label class="control-label">
                                 模版
                             </label>
-                            <select class="form-control">
-                                <option @change="changeTemplate(item)" v-for="item in templates">
+                            <select v-model="currentTemplateId"  @change="changeTemplate" class="form-control">
+                                <option v-for="item in templates" :value="item.Id">
                                     {{item.Title}}
                                 </option>
                             </select>
@@ -428,7 +428,8 @@
                 importUnunderline: false
             },
             templates: [],
-            currentTemplate: {}
+            currentTemplate: {},
+            currentTemplateId:0
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -901,7 +902,8 @@
                 axios.get(url, jwHeader)
                     .then(response => {
                         th.templates = response.data; 
-                        this.currentTemplate = th.templates[0];
+                        th.currentTemplate = th.templates[0];
+                        th.currentTemplateId = th.templates[0].Id;
                     })
                     .catch(error => {
                         th.error = error.message;
@@ -909,7 +911,7 @@
             },
             changeTemplate: function (template)
             {
-                this.currentTemplate = template;
+                this.currentTemplate = this.templates.find(item => item.Id === this.currentTemplateId); 
             }
         }
     });
