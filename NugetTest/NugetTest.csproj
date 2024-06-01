@@ -274,7 +274,7 @@
   
 
   <ItemGroup>
-    <PackageReference Include="Rezero.Api" Version="1.5.1" />
+    <PackageReference Include="Rezero.Api" Version="1.5.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
  
