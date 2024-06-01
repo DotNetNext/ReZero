@@ -83,22 +83,27 @@ namespace ReZero.SuperAPI
                 IsNullable = zeroEntityColumn.IsNullable,
                 IsPrimaryKey = zeroEntityColumn.IsPrimarykey,
                 PropertyName = zeroEntityColumn.PropertyName,
-                PropertyType = (EntityGeneratorManager.GetTypeByNativeTypes(zeroEntityColumn.PropertyType).Name + (zeroEntityColumn.IsNullable ? "?" : string.Empty))?.ToLower(),
+                PropertyType = EntityGeneratorManager.GetTypeByNativeTypes(zeroEntityColumn.PropertyType).Name,
                 IsJson = zeroEntityColumn.IsJson,
                 IsIgnore = zeroEntityColumn.PropertyType == NativeType.IsIgnore
             };
-            if (templatePropertyGen.PropertyType == "int32") 
+            if (templatePropertyGen.PropertyType == "Int32") 
             {
                 templatePropertyGen.PropertyType = "int";
             }
-            else if (templatePropertyGen.PropertyType == "int64")
+            else if (templatePropertyGen.PropertyType == "Int64")
             {
                 templatePropertyGen.PropertyType = "long";
             }
-            else if (templatePropertyGen.PropertyType == "int16")
+            else if (templatePropertyGen.PropertyType == "Int16")
             {
                 templatePropertyGen.PropertyType = "short";
             }
+            else if (templatePropertyGen.PropertyType == "String")
+            {
+                templatePropertyGen.PropertyType = "string";
+            }
+            templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? "?" : string.Empty);
             if (dbColumn != null)
             {
                 templatePropertyGen.DbType = string.IsNullOrEmpty(dbColumn.OracleDataType) ? dbColumn.DataType : dbColumn.OracleDataType;
