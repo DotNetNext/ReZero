@@ -3,6 +3,7 @@ using ReZero.TextTemplate;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 
@@ -11,24 +12,25 @@ namespace ReZero.SuperAPI
     public partial class MethodApi
     {
         #region ExecTemplateByTableIds
-        public bool ExecTemplateByTableIds(long databaseId, long[] tableIds, long templateId)
+        public bool ExecTemplateByTableIds(long databaseId, long[] tableIds, long templateId,string url)
         {
             List<ExcelData> datatables = new List<ExcelData>();
             var db = App.Db;
-            var datas = db.Queryable<ZeroEntityInfo>()
-                .OrderBy(it => it.DbTableName)
-                .Where(it => it.DataBaseId == databaseId)
-                .WhereIF(tableIds.Any(), it => tableIds.Contains(it.Id))
-                .Includes(it => it.ZeroEntityColumnInfos).ToList();
+            List<ZeroEntityInfo> datas = GetZeroEntities(databaseId, tableIds, db);
             var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
             foreach (var item in datas)
             {
-                CreateFile(databaseId, template, item);
+                CreateFile(databaseId, template, item, url);
             }
             return true;
         }
+        private void CreateFile(long databaseId, ZeroTemplate template, ZeroEntityInfo item,string url)
+        {
+            TemplateEntitiesGen templateEntitiesGen = GetClassString(databaseId, template, item);
+            url = GetUrl(url, templateEntitiesGen);
+        }
 
-        private void CreateFile(long databaseId, ZeroTemplate template, ZeroEntityInfo item)
+        private TemplateEntitiesGen GetClassString(long databaseId, ZeroTemplate template, ZeroEntityInfo item)
         {
             var propertyGens = new List<TemplatePropertyGen>();
             TemplateEntitiesGen templateEntitiesGen = new TemplateEntitiesGen()
@@ -44,8 +46,8 @@ namespace ReZero.SuperAPI
                 AddProperty(propertyGens, columnInfos, zeroEntityColumn);
             }
             var classString = ExecTemplate(TemplateType.Entity, new SerializeService().SerializeObject(templateEntitiesGen), template.TemplateContent!);
+            return templateEntitiesGen;
         }
-
         private static void AddProperty(List<TemplatePropertyGen> propertyGens, List<SqlSugar.DbColumnInfo> columnInfos, ZeroEntityColumnInfo zeroEntityColumn)
         {
             var dbColumn = columnInfos.FirstOrDefault(it => it.DbColumnName!.EqualsCase(zeroEntityColumn.DbColumnName!));
@@ -72,7 +74,21 @@ namespace ReZero.SuperAPI
                 templatePropertyGen.IsNullable = dbColumn.IsNullable;
             }
             propertyGens.Add(templatePropertyGen);
+        }
+
+        private static string GetUrl(string url, TemplateEntitiesGen templateEntitiesGen)
+        {
+            url = url.Replace("{0}", templateEntitiesGen.ClassName).Replace("{1}", templateEntitiesGen.TableName);
+            return url;
         } 
+        private static List<ZeroEntityInfo> GetZeroEntities(long databaseId, long[] tableIds, ISqlSugarClient db)
+        {
+            return db.Queryable<ZeroEntityInfo>()
+                .OrderBy(it => it.DbTableName)
+                .Where(it => it.DataBaseId == databaseId)
+                .WhereIF(tableIds.Any(), it => tableIds.Contains(it.Id))
+                .Includes(it => it.ZeroEntityColumnInfos).ToList();
+        }
         #endregion 
 
         #region ExecTemplate
