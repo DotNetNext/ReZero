@@ -62,6 +62,10 @@ namespace ReZero.SuperAPI
         /// </summary>
         public string? DefaultValue { get; set; }   
         /// <summary>
+        /// 长度
+        /// </summary>
+        public int Length { get; set; }
+        /// <summary>
         /// 是否是Json类型
         /// </summary>
         public bool IsJson { get; set; }
