@@ -78,7 +78,7 @@ namespace ReZero.SuperAPI
                 DbType = zeroEntityColumn.DataType,
                 DecimalDigits = zeroEntityColumn.DecimalDigits,
                 DefaultValue = "",
-                Description = zeroEntityColumn.Description,
+                Description = zeroEntityColumn.Description?.Replace("\r",string.Empty)?.Replace("\n", string.Empty),
                 IsIdentity = zeroEntityColumn.IsIdentity,
                 IsNullable = zeroEntityColumn.IsNullable,
                 IsPrimaryKey = zeroEntityColumn.IsPrimarykey,
