@@ -47,7 +47,8 @@ namespace ReZero.SuperAPI
                          IsPrimaryKey=columnInfo.IsPrimarykey, 
                          PropertyName= zeroEntityColumn.PropertyName,
                          PropertyType=EntityGeneratorManager.GetTypeByNativeTypes(zeroEntityColumn.PropertyType).Name+(zeroEntityColumn.IsNullable?"?":string.Empty),
-                         IsJson=zeroEntityColumn.IsJson 
+                         IsJson=zeroEntityColumn.IsJson,
+                         IsIgnore=zeroEntityColumn.PropertyType==NativeType.IsIgnore
                     }; 
                 }
             }
