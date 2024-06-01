@@ -216,6 +216,14 @@ namespace ReZero.SuperAPI
                             PropertyName= nameof(ZeroTemplate.Title) ,
                             Description=TextHandler.GetCommonText("名称", "Name")
                         },
+                       new DataColumnParameter(){
+                            PropertyName= nameof(ZeroTemplate.TypeId) ,
+                            Description=TextHandler.GetCommonText("类型", "TypeId")
+                        },
+                       new DataColumnParameter(){
+                            PropertyName= nameof(ZeroTemplate.TemplateContentStyle) ,
+                            Description=TextHandler.GetCommonText("样式", "Style")
+                        },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroTemplate.Url) ,
                             Description=TextHandler.GetCommonText("生成路径", "Path")
