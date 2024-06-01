@@ -104,36 +104,11 @@ namespace ReZero.SuperAPI
         } 
         private static void ProcessingPropertyDefault(ZeroEntityColumnInfo zeroEntityColumn, TemplatePropertyGen templatePropertyGen)
         {
-            if (templatePropertyGen.PropertyType == "Int32")
-            {
-                templatePropertyGen.PropertyType = "int";
-            }
-            else if (templatePropertyGen.PropertyType == "Int64")
-            {
-                templatePropertyGen.PropertyType = "long";
-            }
-            else if (templatePropertyGen.PropertyType == "Int16")
-            {
-                templatePropertyGen.PropertyType = "short";
-            }
-            else if (templatePropertyGen.PropertyType == "String")
-            {
-                templatePropertyGen.PropertyType = "string";
-            }
-            else if (templatePropertyGen.PropertyType == "Decimal")
-            {
-                templatePropertyGen.PropertyType = "decimal";
-            }
-            else if (templatePropertyGen.PropertyType == "Byte")
-            {
-                templatePropertyGen.PropertyType = "byte";
-            }
-            else if (templatePropertyGen.PropertyType == "Double")
-            {
-                templatePropertyGen.PropertyType = "double";
-            }
+            templatePropertyGen.PropertyType = EntityGeneratorManager.GetNativeTypeName(templatePropertyGen.PropertyType!);
             templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? PubConst.Common_Q : string.Empty);
-        } 
+        }
+
+
         private static string GetUrl(string url, TemplateEntitiesGen templateEntitiesGen)
         {
             url = url.Replace(PubConst.Common_Format0, templateEntitiesGen.ClassName).Replace(PubConst.Common_Format1, templateEntitiesGen.TableName);

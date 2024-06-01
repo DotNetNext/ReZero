@@ -261,6 +261,45 @@ namespace ReZero.SuperAPI
                 return GetNativeTypeByType(underlyingType);
             } 
             return NativeType.Json;
-        } 
+        }
+
+
+        public static string GetNativeTypeName(string  name)
+        {
+            string result= name??string.Empty; 
+            if (name == "Int32")
+            {
+                result = "int";
+            }
+            else if (name == "Int64")
+            {
+                result = "long";
+            }
+            else if (name == "Int16")
+            {
+                result = "short";
+            }
+            else if (name == "String")
+            {
+                result = "string";
+            }
+            else if (name == "Decimal")
+            {
+                result = "decimal";
+            }
+            else if (name == "Byte")
+            {
+                result = "byte";
+            }
+            else if (name == "Double")
+            {
+                result = "double";
+            }
+            else if (name == "Boolean")
+            {
+                result = "bool";
+            }
+            return result;
+        }
     }
 }
