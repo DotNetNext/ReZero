@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
+using ReZero.Common;
 using ReZero.TextTemplate;
 using System;
 using System.Collections.Generic;
@@ -88,7 +89,11 @@ namespace ReZero.TextTemplate
                     it.FullName.StartsWith("System.Collections")||
                     it.FullName.StartsWith("System.IO")).ToList();
 
-              
+                var isSingleFile =!FileSugar.IsExistFile("".GetType().Assembly.Location);
+                if (isSingleFile) 
+                {
+                    throw new Exception("该功能暂时还不支持单文件发布，发布时不能勾选文件合并，合并方案还在研究中");
+                }
                  
                 var result = ScriptOptions.Default.AddReferences(ass)
                                                   .WithImports(namespaces);
