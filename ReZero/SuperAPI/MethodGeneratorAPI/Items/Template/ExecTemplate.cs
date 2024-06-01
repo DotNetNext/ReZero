@@ -110,7 +110,7 @@ namespace ReZero.SuperAPI
                 DbType = zeroEntityColumn.DataType,
                 DecimalDigits = zeroEntityColumn.DecimalDigits,
                 DefaultValue = string.Empty,
-                Description = zeroEntityColumn.Description?.Replace(PubConst.Common_N, PubConst.Common_BlankSpace)?.Replace(PubConst.Common_R, PubConst.Common_BlankSpace),
+                Description = zeroEntityColumn.Description?.Replace(Environment.NewLine,PubConst.Common_BlankSpace)?.Replace(PubConst.Common_N, PubConst.Common_BlankSpace)?.Replace(PubConst.Common_R, PubConst.Common_BlankSpace),
                 IsIdentity = zeroEntityColumn.IsIdentity,
                 IsNullable = zeroEntityColumn.IsNullable,
                 IsPrimaryKey = zeroEntityColumn.IsPrimarykey,
