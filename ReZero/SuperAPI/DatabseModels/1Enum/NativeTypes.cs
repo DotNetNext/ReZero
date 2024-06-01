@@ -39,5 +39,6 @@ namespace ReZero.SuperAPI
         UInt, 
         UShort, 
         ULong,
+        IsIgnore
     }
 }

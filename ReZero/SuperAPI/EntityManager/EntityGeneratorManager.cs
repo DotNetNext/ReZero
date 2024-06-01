@@ -100,6 +100,10 @@ namespace ReZero.SuperAPI
                     propertyType = typeof(DynamicOneselfTypeList);
                     column.IsIgnore = true;
                 }
+                if (item.PropertyType == NativeType.IsIgnore) 
+                {
+                    column.IsIgnore = true;
+                }
                 builder.CreateProperty(item.PropertyName, propertyType, column);
             }
             var type = builder.BuilderType();
@@ -194,6 +198,7 @@ namespace ReZero.SuperAPI
                 case NativeType.ByteArray:
                     return typeof(byte[]);
                 case NativeType.Json:
+                case NativeType.IsIgnore:
                     return typeof(object); // Assuming Json is a placeholder for any JSON-related type
                 default:
                     if (nativeTypes.ToString().ToLower().StartsWith("string")) 
