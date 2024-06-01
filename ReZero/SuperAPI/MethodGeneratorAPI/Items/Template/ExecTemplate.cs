@@ -21,7 +21,7 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             List<ZeroEntityInfo> datas = GetZeroEntities(databaseId, tableIds, db);
             var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
-            var outUrl = "";
+            var outUrl = string.Empty;
             foreach (var item in datas)
             {
                 outUrl=CreateFile(databaseId, template, item, url);
@@ -33,13 +33,13 @@ namespace ReZero.SuperAPI
         { 
             var  classString = GetClassString(databaseId, template, item,out TemplateEntitiesGen templateEntitiesGen);
             url = GetUrl(url,templateEntitiesGen);
-            if (url.Contains("{project}")) 
+            if (url.Contains(PubConst.Common_Project)) 
             { 
                 var baseDir = AppContext.BaseDirectory;
                 var findDir = DirectoryHelper.FindParentDirectoryWithSlnFile(baseDir);
                 if (!string.IsNullOrEmpty(findDir))
                 {
-                    url= Regex.Replace(url,@"\{project\}","",RegexOptions.IgnoreCase).TrimStart('/').TrimStart('\\');
+                    url= Regex.Replace(url,PubConst.Common_ProjectRegex,string.Empty,RegexOptions.IgnoreCase).TrimStart('/').TrimStart('\\');
                     url = Path.Combine(findDir,url);
                 }
                 else 
@@ -78,7 +78,7 @@ namespace ReZero.SuperAPI
                 DbType = zeroEntityColumn.DataType,
                 DecimalDigits = zeroEntityColumn.DecimalDigits,
                 DefaultValue = "",
-                Description = zeroEntityColumn.Description?.Replace("\r",string.Empty)?.Replace("\n", string.Empty),
+                Description = zeroEntityColumn.Description?.Replace(PubConst.Common_N, PubConst.Common_BlankSpace)?.Replace(PubConst.Common_R, PubConst.Common_BlankSpace),
                 IsIdentity = zeroEntityColumn.IsIdentity,
                 IsNullable = zeroEntityColumn.IsNullable,
                 IsPrimaryKey = zeroEntityColumn.IsPrimarykey,
@@ -132,11 +132,11 @@ namespace ReZero.SuperAPI
             {
                 templatePropertyGen.PropertyType = "double";
             }
-            templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? "?" : string.Empty);
+            templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? PubConst.Common_Q : string.Empty);
         } 
         private static string GetUrl(string url, TemplateEntitiesGen templateEntitiesGen)
         {
-            url = url.Replace("{0}", templateEntitiesGen.ClassName).Replace("{1}", templateEntitiesGen.TableName);
+            url = url.Replace(PubConst.Common_Format0, templateEntitiesGen.ClassName).Replace(PubConst.Common_Format1, templateEntitiesGen.TableName);
             return url;
         } 
         private static List<ZeroEntityInfo> GetZeroEntities(long databaseId, long[] tableIds, ISqlSugarClient db)

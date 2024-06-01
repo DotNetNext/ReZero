@@ -22,6 +22,14 @@ namespace ReZero.SuperAPI
         public const string Namespace_ResultService = "ReZero.SuperAPI.Items.";
           
         public readonly static Random Common_Random = new Random();
+        public readonly static string Common_BlankSpace = " ";
+        public readonly static string Common_R = "\r";
+        public readonly static string Common_N = "\n";
+        public readonly static string Common_Project = "{project}";
+        public readonly static string Common_ProjectRegex= @"\{project\}";
+        public readonly static string Common_Format0 = "{0}";
+        public readonly static string Common_Format1 = "{1}";
+        public readonly static string Common_Q = "?";
 
         public const string CacheKey_Type = "ReZero_Type_{0}";
 
