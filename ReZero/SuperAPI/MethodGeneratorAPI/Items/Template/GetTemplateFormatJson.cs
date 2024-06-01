@@ -28,7 +28,7 @@ namespace ReZero.SuperAPI
             {
                 ClassName = "ClassName01",
                 TableName = "TableName01",
-                Description = "表备注",
+                Description =TextHandler.GetCommonText( "表备注", "Table description"),
                 PropertyGens = new List<TemplatePropertyGen>()
                     {
                         new TemplatePropertyGen()
@@ -39,7 +39,7 @@ namespace ReZero.SuperAPI
                             IsIdentity=true,
                             IsPrimaryKey=true,
                             IsNullable=false,
-                            Description="序号"
+                            Description=TextHandler.GetCommonText("序号","No")
                         },
                         new TemplatePropertyGen()
                         {
@@ -47,7 +47,7 @@ namespace ReZero.SuperAPI
                             PropertyName="PName",
                             PropertyType="string",
                             IsNullable=false,
-                            Description="名称"
+                            Description=TextHandler.GetCommonText( "名称","Name")
                         },
                          new TemplatePropertyGen()
                         {
@@ -55,7 +55,7 @@ namespace ReZero.SuperAPI
                             PropertyName="PPrice",
                             PropertyType="decimal?",
                             IsNullable=true,
-                            Description="价格"
+                            Description=TextHandler.GetCommonText( "价格","Price")
                         }
                     }
             };
