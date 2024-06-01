@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
@@ -68,20 +69,33 @@ namespace ReZero.TextTemplate
             lock (objLock)
             {
                 var namespaces = new[]
-                   {
-                    // System命名空间
-                    "System",
-                    "System.Collections",
-                    "System.Collections.Generic",
-                    "System.IO",
-                    "System.Linq",
-                    "System.Text",
-                    "System.Text.RegularExpressions"
-                };
-                var ass = AppDomain.CurrentDomain.GetAssemblies().Where(it => it.FullName.StartsWith("System.")).ToList() ;
-                ass.Add(Assembly.GetEntryAssembly());
-                var result = ScriptOptions.Default.AddReferences(ass)
-                                                          .WithImports(namespaces);
+                {
+            // System命名空间
+            "System",
+            "System.Collections",
+            "System.Collections.Generic",
+            "System.IO",
+            "System.Linq",
+            "System.Text",
+            "System.Text.RegularExpressions"
+        };
+
+                // 获取当前域内的程序集，并排除不含位置的程序集
+                var ass = AppDomain.CurrentDomain.GetAssemblies()
+                    .Where(it => !string.IsNullOrEmpty(it.Location) && it.FullName.StartsWith("System."))
+                    .ToList();
+
+                // 获取入口程序集的位置并加载
+                var entryAssembly = Assembly.GetEntryAssembly();
+                if (entryAssembly != null && !string.IsNullOrEmpty(entryAssembly.Location))
+                {
+                    ass.Add(entryAssembly);
+                }
+
+                // 使用程序集路径加载引用
+                var references = ass.Select(it => MetadataReference.CreateFromFile(it.Location)).ToList();
+                var result = ScriptOptions.Default.AddReferences(references)
+                                                  .WithImports(namespaces);
                 scriptOptions = result;
 
                 return result;
