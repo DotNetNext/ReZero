@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -196,8 +196,12 @@ namespace ReZero.SuperAPI
                 it.Url = GetUrl(it, "GetTemplatePageList");
                 it.CustomResultModel = new ResultModel()
                 {
-                    ResultType = ResultType.Grid
-                };
+                    ResultType = ResultType.Grid,
+                    ResultColumnModels = new List<ResultColumnModel>()
+                    {
+                        new ResultColumnModel(){  PropertyName= nameof(ZeroTemplate.TypeId) , ConvertType=typeof(TemplateType),ConvertType2=typeof(string), ResultColumnType= ResultColumnType.ConvertDefault }
+                    }
+                }; 
                 it.DataModel = new DataModel()
                 {
                     CommonPage = new DataModelPageParameter
@@ -218,7 +222,7 @@ namespace ReZero.SuperAPI
                         },
                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroTemplate.TypeId) ,
-                            Description=TextHandler.GetCommonText("类型", "TypeId")
+                            Description=TextHandler.GetCommonText("类型", "TypeId"), 
                         },
                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroTemplate.TemplateContentStyle) ,
