@@ -24,6 +24,7 @@ namespace ReZero.SuperAPI
             GetDefalutTemplate();
             GetTemplateFormatJson();
             ExecTemplate();
+            ExecTemplateByTableIds();
         }
 
         private void SaveInterfaceList()
@@ -445,6 +446,39 @@ namespace ReZero.SuperAPI
                         new DataModelDefaultParameter() { Name ="type",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(int).Name,  Description = TextHandler.GetCommonText("模版分类ID", "template type id") },
                         new DataModelDefaultParameter() { Name ="data",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("数据", "data") },
                         new DataModelDefaultParameter() { Name ="template",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("模版字符串", "template") }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+
+
+        private void ExecTemplateByTableIds()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = ExecTemplateByTableIdsId;
+                it.GroupName = nameof(ZeroEntityInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(ExecTemplateByTableIdsId);
+                it.Url = GetUrl(it, "ExecTemplateByTableIds"); 
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 3,
+                        ArgsTypes = new Type[] { typeof(long), typeof(long[]),typeof(long) },
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.ExecTemplateByTableIds)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("数据库Id", "Database id") },
+                        new DataModelDefaultParameter() { Name ="tableIds",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JsonArray).Name,  Description = TextHandler.GetCommonText("表Id集合", "Table id array") },
+                        new DataModelDefaultParameter() { Name ="templateId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("模版ID", "template id") },
                     }
                 };
             });

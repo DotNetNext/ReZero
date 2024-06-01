@@ -875,13 +875,23 @@
             openGenerateCode: function () {
                 btnGenerateFile.click();
             },
-            submitGenerateFile: function ()
-            {
+            submitGenerateFile: function () {
                 if (!this.selectedItems || this.selectedItems.length == 0) {
                     tools.alert("请选择实体");
                     return;
                 }
-                tools.alert("还没有开发完成");
+                var url = "/PrivateReZeroRoute/100003/ExecTemplateByTableIds";
+                axios.post(url, {
+                    TableIds: JSON.stringify(this.selectedItems),
+                    DataBaseId: this.databaseId,
+                    TemplateId: this.currentTemplate.Id
+                }, jwHeader)
+                    .then(response => {
+                        tools.alert("生成成功");
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
             bindTemplates: function ()
             {

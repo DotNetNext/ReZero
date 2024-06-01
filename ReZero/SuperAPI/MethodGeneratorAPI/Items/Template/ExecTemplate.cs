@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
-        public string ExecTemplateByTableIds(long databaseId, long[] tableIds,long tempId) 
+        public string ExecTemplateByTableIds(long databaseId, long[] tableIds,long templateId) 
         {
             List<ExcelData> datatables = new List<ExcelData>();
             var db = App.Db;
@@ -20,7 +20,7 @@ namespace ReZero.SuperAPI
                 .WhereIF(tableIds.Any(), it => tableIds.Contains(it.Id))
                 .Includes(it => it.ZeroEntityColumnInfos).ToList();
             List<TemplateEntitiesGen> gens = new List<TemplateEntitiesGen>();
-            var template= App.Db.Queryable<ZeroTemplate>().First(it => it.Id == tempId);
+            var template= App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
             foreach (var item in datas)
             {
                 var propertyGens = new List<TemplatePropertyGen>();

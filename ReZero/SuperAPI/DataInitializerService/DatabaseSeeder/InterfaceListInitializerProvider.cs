@@ -296,6 +296,10 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Get template by type")]
         public const long GetTemplateByTypeId_Id = 55;
 
+        [ChineseTextAttribute("生成实体")]
+        [EnglishTextAttribute("Generate entity file")]
+        public const long ExecTemplateByTableIdsId = 56;
+
 
 
 
