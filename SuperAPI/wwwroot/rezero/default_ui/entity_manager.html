@@ -889,7 +889,11 @@
                     Url: this.currentTemplate.Url
                 }, jwHeader)
                     .then(response => {
-                        tools.alert("已生成到目录" + response.data);
+                        if (response.data && response.data.message){
+                            tools.alert("已生出错:" + response.data.message);
+                        } else {
+                            tools.alert("已生成到目录" + response.data);
+                        }
                     })
                     .catch(error => {
                         this.error = error.message;
