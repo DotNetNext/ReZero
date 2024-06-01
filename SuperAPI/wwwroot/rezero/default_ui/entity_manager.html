@@ -386,8 +386,8 @@
                                 生成地址
                             </label>
                             <div><code>地址说明:修改模版可以修改这个地址</code></div>
-                            <div><code>符号说明:{0}是ClassName, {1}表示TableName</code></div>
-                            <input class="form-control" :value="currentTemplate.Url" />
+                            <div><code>符号说明:{0}是ClassName, {1}表示TableName,{project}表示项目的sln文件目录</code></div>
+                            <input class="form-control" v-model="currentTemplate.Url" />
                         </div>
                     </div>
                 </div>
@@ -888,7 +888,7 @@
                     Url: this.currentTemplate.Url
                 }, jwHeader)
                     .then(response => {
-                        tools.alert("生成成功");
+                        tools.alert("已生成到目录" + response.data);
                     })
                     .catch(error => {
                         this.error = error.message;

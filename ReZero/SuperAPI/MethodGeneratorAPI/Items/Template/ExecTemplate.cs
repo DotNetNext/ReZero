@@ -8,44 +8,47 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
         #region ExecTemplateByTableIds
-        public bool ExecTemplateByTableIds(long databaseId, long[] tableIds, long templateId,string url)
+        public string ExecTemplateByTableIds(long databaseId, long[] tableIds, long templateId,string url)
         {
             List<ExcelData> datatables = new List<ExcelData>();
             var db = App.Db;
             List<ZeroEntityInfo> datas = GetZeroEntities(databaseId, tableIds, db);
             var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
+            var outUrl = "";
             foreach (var item in datas)
             {
-                CreateFile(databaseId, template, item, url);
+                outUrl=CreateFile(databaseId, template, item, url);
             }
-            return true;
+            var result = Directory.GetParent(outUrl).FullName;
+            return result;
         }
-        private void CreateFile(long databaseId, ZeroTemplate template, ZeroEntityInfo item,string url)
-        {
-            var oldUrl = url;
+        private string CreateFile(long databaseId, ZeroTemplate template, ZeroEntityInfo item,string url)
+        { 
             var  classString = GetClassString(databaseId, template, item,out TemplateEntitiesGen templateEntitiesGen);
-            url = GetUrl(url, templateEntitiesGen);
-            if (!url.Contains(":")) 
+            url = GetUrl(url,templateEntitiesGen);
+            if (url.Contains("{project}")) 
             { 
                 var baseDir = AppContext.BaseDirectory;
                 var findDir = DirectoryHelper.FindParentDirectoryWithSlnFile(baseDir);
                 if (!string.IsNullOrEmpty(findDir))
                 {
-                    url= url.TrimStart('\\').TrimStart('/');
+                    url= Regex.Replace(url,@"\{project\}","",RegexOptions.IgnoreCase).TrimStart('/').TrimStart('\\');
                     url = Path.Combine(findDir,url);
                 }
                 else 
                 {
-                    url = Path.Combine(baseDir, url);
+                    throw new Exception(TextHandler.GetCommonText("没有找到 项目sln文件,可以使完整物理路径", "No project sln file found that can make the full physical path"));
                 }
             }
             FileSugar.CreateFileReplace(url, classString,Encoding.UTF8);
+            return url;
         }
 
         private string GetClassString(long databaseId, ZeroTemplate template, ZeroEntityInfo item,out TemplateEntitiesGen templateEntitiesGen)
