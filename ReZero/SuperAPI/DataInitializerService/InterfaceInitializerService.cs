@@ -24,7 +24,27 @@ namespace ReZero.SuperAPI
             InitDatabase(db);
             InitSetting(db);
             UpgradeCompatibility(db);
+            InitTempate(db);
             App.PreStartupDb!.QueryFilter.Restore();
+        }
+
+        private void InitTempate(ISqlSugarClient? db)
+        { 
+            var entityTemplate = db!.Queryable<ZeroTemplate>().Where(it=>it.IsDeleted==false).First(it => it.TypeId==TemplateType.Entity);
+            if (entityTemplate == null)
+            {
+                db!.Insertable(new ZeroTemplate()
+                {
+                    Title=TextHandler.GetCommonText("SqlSugar实体类默认模版", "SqlSugar template"),
+                    TemplateContent=new MethodApi().ClassNameDefalutTemplateTemplate(),
+                    TemplateContentStyle="csharp",
+                    Url="c:\\models\\{0}.cs",
+                    Creator = DataBaseInitializerProvider.UserName,
+                    Id =SqlSugar.SnowFlakeSingle.Instance.NextId(),
+                    TypeId=TemplateType.Entity,
+                    IsDeleted=false,
+                }).ExecuteCommand();
+            }
         }
 
         /// <summary>
