@@ -82,19 +82,15 @@ namespace ReZero.TextTemplate
 
                 // 获取当前域内的程序集，并排除不含位置的程序集
                 var ass = AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(it => !string.IsNullOrEmpty(it.Location) && it.FullName.StartsWith("System."))
-                    .ToList();
+                    .Where(it =>
+                    it.FullName.StartsWith("System.Linq")||
+                    it.FullName.StartsWith("System.text")||
+                    it.FullName.StartsWith("System.Collections")||
+                    it.FullName.StartsWith("System.IO")).ToList();
 
-                // 获取入口程序集的位置并加载
-                var entryAssembly = Assembly.GetEntryAssembly();
-                if (entryAssembly != null && !string.IsNullOrEmpty(entryAssembly.Location))
-                {
-                    ass.Add(entryAssembly);
-                }
-
-                // 使用程序集路径加载引用
-                var references = ass.Select(it => MetadataReference.CreateFromFile(it.Location)).ToList();
-                var result = ScriptOptions.Default.AddReferences(references)
+              
+                 
+                var result = ScriptOptions.Default.AddReferences(ass)
                                                   .WithImports(namespaces);
                 scriptOptions = result;
 
