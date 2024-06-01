@@ -78,7 +78,7 @@ namespace ReZero.TextTemplate
                     "System.Text",
                     "System.Text.RegularExpressions"
                 };
-                var ass = AppDomain.CurrentDomain.GetAssemblies().Where(it => it.FullName.StartsWith("System")).ToList() ;
+                var ass = AppDomain.CurrentDomain.GetAssemblies().Where(it => it.FullName.StartsWith("System.")).ToList() ;
                 ass.Add(Assembly.GetEntryAssembly());
                 var result = ScriptOptions.Default.AddReferences(ass)
                                                           .WithImports(namespaces);
