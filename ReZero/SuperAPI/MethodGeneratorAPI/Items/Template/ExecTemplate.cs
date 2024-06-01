@@ -87,7 +87,13 @@ namespace ReZero.SuperAPI
                 IsJson = zeroEntityColumn.IsJson,
                 IsIgnore = zeroEntityColumn.PropertyType == NativeType.IsIgnore
             };
-            ProcessingProperty(zeroEntityColumn, templatePropertyGen);
+            ProcessingPropertyDefault(zeroEntityColumn, templatePropertyGen);
+            ProcessingPropertyByDbColumn(dbColumn, templatePropertyGen);
+            propertyGens.Add(templatePropertyGen);
+        }
+
+        private static void ProcessingPropertyByDbColumn(SqlSugar.DbColumnInfo dbColumn, TemplatePropertyGen templatePropertyGen)
+        {
             if (dbColumn != null)
             {
                 templatePropertyGen.DbType = string.IsNullOrEmpty(dbColumn.OracleDataType) ? dbColumn.DataType : dbColumn.OracleDataType;
@@ -95,10 +101,8 @@ namespace ReZero.SuperAPI
                 templatePropertyGen.Length = dbColumn.Length;
                 templatePropertyGen.IsNullable = dbColumn.IsNullable;
             }
-            propertyGens.Add(templatePropertyGen);
-        }
-
-        private static void ProcessingProperty(ZeroEntityColumnInfo zeroEntityColumn, TemplatePropertyGen templatePropertyGen)
+        } 
+        private static void ProcessingPropertyDefault(ZeroEntityColumnInfo zeroEntityColumn, TemplatePropertyGen templatePropertyGen)
         {
             if (templatePropertyGen.PropertyType == "Int32")
             {
@@ -129,8 +133,7 @@ namespace ReZero.SuperAPI
                 templatePropertyGen.PropertyType = "double";
             }
             templatePropertyGen.PropertyType = templatePropertyGen.PropertyType + (zeroEntityColumn.IsNullable ? "?" : string.Empty);
-        }
-
+        } 
         private static string GetUrl(string url, TemplateEntitiesGen templateEntitiesGen)
         {
             url = url.Replace("{0}", templateEntitiesGen.ClassName).Replace("{1}", templateEntitiesGen.TableName);
