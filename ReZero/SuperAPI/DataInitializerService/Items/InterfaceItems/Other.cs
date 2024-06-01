@@ -469,8 +469,8 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodArgsCount = 3,
-                        ArgsTypes = new Type[] { typeof(long), typeof(long[]),typeof(long) },
+                        MethodArgsCount = 4,
+                        ArgsTypes = new Type[] { typeof(long), typeof(long[]),typeof(long),typeof(string) },
                         MethodClassFullName = typeof(MethodApi).FullName,
                         MethodName = nameof(MethodApi.ExecTemplateByTableIds)
                     },
