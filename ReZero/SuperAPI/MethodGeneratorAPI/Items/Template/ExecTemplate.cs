@@ -83,10 +83,22 @@ namespace ReZero.SuperAPI
                 IsNullable = zeroEntityColumn.IsNullable,
                 IsPrimaryKey = zeroEntityColumn.IsPrimarykey,
                 PropertyName = zeroEntityColumn.PropertyName,
-                PropertyType = EntityGeneratorManager.GetTypeByNativeTypes(zeroEntityColumn.PropertyType).Name + (zeroEntityColumn.IsNullable ? "?" : string.Empty),
+                PropertyType = (EntityGeneratorManager.GetTypeByNativeTypes(zeroEntityColumn.PropertyType).Name + (zeroEntityColumn.IsNullable ? "?" : string.Empty))?.ToLower(),
                 IsJson = zeroEntityColumn.IsJson,
                 IsIgnore = zeroEntityColumn.PropertyType == NativeType.IsIgnore
             };
+            if (templatePropertyGen.PropertyType == "int32") 
+            {
+                templatePropertyGen.PropertyType = "int";
+            }
+            else if (templatePropertyGen.PropertyType == "int64")
+            {
+                templatePropertyGen.PropertyType = "long";
+            }
+            else if (templatePropertyGen.PropertyType == "int16")
+            {
+                templatePropertyGen.PropertyType = "short";
+            }
             if (dbColumn != null)
             {
                 templatePropertyGen.DbType = string.IsNullOrEmpty(dbColumn.OracleDataType) ? dbColumn.DataType : dbColumn.OracleDataType;
