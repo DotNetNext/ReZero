@@ -27,7 +27,7 @@ namespace ReZero.SuperAPI
                 var codeFirstDb = App.GetDbTableId(entity.Id)!;
                 var type = EntityGeneratorManager.GetTypeAsync(entity.Id).GetAwaiter().GetResult();
                 var entityInfo = codeFirstDb.EntityMaintenance.GetEntityInfo(type);
-                if (entityInfo.Columns.Any(it => !string.IsNullOrEmpty(it.DataType))) 
+                if (entityInfo.Columns.Any(it => !string.IsNullOrEmpty(it.DataType)&&it.DataType!=StaticConfig.CodeFirst_BigString)) 
                 {
                     codeFirstDb.CurrentConnectionConfig.MoreSettings.SqlServerCodeFirstNvarchar = false;
                 }
