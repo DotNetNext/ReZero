@@ -22,13 +22,14 @@ namespace ReZero.SuperAPI
             result.Insert(6, new ActionTypeFormElementModel()
             {
                 ElementType = ElementType.UpdateColumns,
-                Name = "UpdateColumns",
+                Name = "TableColumns",
+                Value = "",
                 Text = TextHandler.GetCommonText("更新的列 ( 默认所有 )", "Updated columns")
             });
             result.Insert(7, new ActionTypeFormElementModel()
             {
                 ElementType = ElementType.UpdateResultType,
-                Name = "UpdateResultType",
+                Name = "ResultType",
                 Text = TextHandler.GetCommonText("返回类型", "return type")
             });
             return result;

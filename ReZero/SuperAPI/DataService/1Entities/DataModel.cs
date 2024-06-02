@@ -15,6 +15,7 @@ namespace ReZero.SuperAPI
         public MyMethodInfo? MyMethodInfo { get; set; }
         public string? Sql { get; set; }
         public SqlResultType? ResultType { get; set; }
+        public string? TableColumns { get; set; }
         #endregion
 
         #region Paremters
