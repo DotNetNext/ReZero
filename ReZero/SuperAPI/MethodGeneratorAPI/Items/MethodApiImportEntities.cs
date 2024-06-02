@@ -81,6 +81,10 @@ namespace ReZero.SuperAPI
             {
                 return c.OracleDataType;
             }
+            else if (dbType == SqlSugar.DbType.Dm && !string.IsNullOrEmpty(c.OracleDataType))
+            {
+                return c.OracleDataType;
+            }
             return c.DataType;
         }
 
