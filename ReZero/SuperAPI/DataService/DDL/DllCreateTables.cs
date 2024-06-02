@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,12 @@ namespace ReZero.SuperAPI
                 }
                 var codeFirstDb = App.GetDbTableId(entity.Id)!;
                 var type = EntityGeneratorManager.GetTypeAsync(entity.Id).GetAwaiter().GetResult();
-                 codeFirstDb.CodeFirst.InitTables(type);
+                var entityInfo = codeFirstDb.EntityMaintenance.GetEntityInfo(type);
+                if (entityInfo.Columns.Any(it => !string.IsNullOrEmpty(it.DataType))) 
+                {
+                    codeFirstDb.CurrentConnectionConfig.MoreSettings.SqlServerCodeFirstNvarchar = false;
+                }
+                codeFirstDb.CodeFirst.InitTables(type);
             }
             return true;
         }
