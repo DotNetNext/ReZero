@@ -17,8 +17,25 @@ namespace ReZero.SuperAPI
             base.InitData(type, db, dataModel);
             CheckSystemData(db, dataModel, type, db.EntityMaintenance.GetEntityInfo(type));
             this.SetDefaultValue(dataModel, db, type);
-            await db.UpdateableByObject(dataModel.Data).UpdateColumns(dataModel.DefaultParameters.Select(it => it.Name).ToArray()).ExecuteCommandAsync();
-            return true;
+            var updateable = db.UpdateableByObject(dataModel.Data);
+            UpdateCommonMethodInfo updateCommonMethodInfo = null!;
+            if (!string.IsNullOrEmpty(dataModel.TableColumns))
+            {
+                updateCommonMethodInfo = updateable.UpdateColumns(dataModel.TableColumns.Split(","));
+            }
+            else 
+            {
+                updateCommonMethodInfo= updateable.UpdateColumns(dataModel.DefaultParameters.Select(it => it.Name).ToArray());
+            }
+            var result=await updateCommonMethodInfo.ExecuteCommandAsync();
+            if (dataModel.ResultType == SqlResultType.AffectedRows)
+            {
+                return result;
+            }
+            else
+            {
+                return true;
+            }
         }
         private void SetDefaultValue(DataModel dataModel, ISqlSugarClient db, Type type)
         {

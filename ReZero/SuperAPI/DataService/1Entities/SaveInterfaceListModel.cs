@@ -27,6 +27,7 @@ namespace ReZero.SuperAPI
         public string? CurrentDataString { get; set; }
 
         public SqlResultType? ResultType { get; set; }
+        public string? TableColumns { get; set; }
     }
 
 
