@@ -123,7 +123,7 @@
                     this.error = error.message;
                     this.data = null;
                 });
-        }, 5000)
+        }, 3000)
     }
 }
 Array.prototype.removeArrayItem = function (item) {
