@@ -32,6 +32,7 @@ namespace ReZero.SuperAPI
                     codeFirstDb.CurrentConnectionConfig.MoreSettings.SqlServerCodeFirstNvarchar = false;
                 }
                 codeFirstDb.CodeFirst.InitTables(type);
+                codeFirstDb.CurrentConnectionConfig.MoreSettings.SqlServerCodeFirstNvarchar = true;
             }
             return true;
         }
