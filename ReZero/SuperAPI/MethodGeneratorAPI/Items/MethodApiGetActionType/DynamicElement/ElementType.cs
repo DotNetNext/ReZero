@@ -13,6 +13,8 @@ namespace ReZero.SuperAPI
         Hidden = 5,
         Page=6,
         SqlText=7,
-        DefaultValueColumn=8
+        DefaultValueColumn=8,
+        UpdateColumns = 9,
+        UpdateResultType=10
     }
 }

@@ -128,7 +128,7 @@
                                     <form id="frmSave" action="#!" method="post" name="edit-form" class="edit-form">
                                         <input v-model="editId" type="hidden" value="0" />
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
-                                            <label v-if="item.ElementType!=5" for="type">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
+                                            <label v-if="item.ElementType!=5" >{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
                                             <div class="form-controls">
                                                 <!--text-->
                                                 <template v-if="item.ElementType==0">
@@ -221,7 +221,21 @@
                                                 <!--DefaultValueColumns-->
                                                 <template v-if="item.ElementType==8">
                                                     <span class="btn btn-primary m-b-10" @click="openDefaultValue"><i class="mdi-account-settings-variant mdi"></i> 配置 </span>
-                                                    <textarea rows="5" class="form-control" readonly="readonly">{{saveDefaultValueColumns}}</textarea> 
+                                                    <textarea rows="5" class="form-control" readonly="readonly">{{saveDefaultValueColumns}}</textarea>
+                                                </template>
+                                                <!--UpdateColumns-->
+                                                <template v-if="item.ElementType==9">
+                                                    <input  v-model="item.Value"  type="hidden" :name="item.Name"  />
+                                                    <select id="selUpdateColumns" @change="setUpdateColums(item)" multiple class="form-control">
+                                                        <option v-for="childItem in updateColumns">{{childItem.PropertyName}}</option>
+                                                    </select>
+                                                </template>
+                                                <!--UpdateResultType-->
+                                                <template v-if="item.ElementType==10">
+                                                    <select v-model="item.Value" :name="item.Name" class="form-control">
+                                                        <option selected value="0">默认</option>
+                                                        <option value="1">受影响行数</option>
+                                                    </select>
                                                 </template>
                                             </div>
                                         </div>
@@ -673,7 +687,9 @@
             copcol_SortId: null,
             copcol_Name: null,
             copcol_ShowField: null,
-            copcol_ShowFields:[]
+            copcol_ShowFields: [],
+            //update
+            updateColumns:[]
         },
         mounted() {
             this.fetchData("");
@@ -887,6 +903,7 @@
                 });
                 this.columns = [];
                 btnImportEntityClose.click();
+                this.bindUpdates();
             },
             bindImportTables: function () {
                 var url = "/PrivateReZeroRoute/100004/GetAllTables?databaseId=" + this.databaseId + "&tableName=" + txtTableName.value;
@@ -1173,7 +1190,7 @@
                     .catch(error => {
                         this.error = error.message;
                     });
-            },
+            }, 
 
             /*
                   次要方法
@@ -1397,8 +1414,34 @@
 
                 var editor = ace.edit("divAceEditor");
                 editor.destroy();
+            }, 
+            bindUpdates: function () {
+                var th = this;
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        th.updateColumns = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
+            setUpdateColums: function (item) {
+                // 初始化一个空数组来存储选中的值  
+                var selectedValues = [];
 
+                // 遍历 <select> 元素的所有 <option> 子元素  
+                for (var i = 0; i < selUpdateColumns.options.length; i++) {
+                    // 检查 <option> 是否被选中  
+                    if (selUpdateColumns.options[i].selected) {
+                        // 如果被选中，则将其值添加到 selectedValues 数组中  
+                        selectedValues.push(selUpdateColumns.options[i].value);
+                    }
+                }
+                // 将选中的值转换为逗号分隔的字符串  
+                var valueStr = selectedValues.join(',');
+                item.Value = valueStr;
+            }
 
         }
     }); 
