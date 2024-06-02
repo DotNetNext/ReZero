@@ -199,6 +199,10 @@
                 this.addOrUpdateSubmit(url, json);
             },
             addOrUpdateSubmit: function (url, json) {
+                if (this.formData.TypeId == 2)
+                {
+                    return tools.alert("接口模版还在开发中，现在只支持实体");
+                }
                 var th = this;
                 var editor = ace.edit("editor");
                 this.formData.TemplateContent = editor.getValue();
