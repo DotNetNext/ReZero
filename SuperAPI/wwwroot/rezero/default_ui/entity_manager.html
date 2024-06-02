@@ -908,13 +908,13 @@
                     });
             },
             openGenerateCode: function () {
-                btnGenerateFile.click();
-            },
-            submitGenerateFile: function () {
                 if (!this.selectedItems || this.selectedItems.length == 0) {
                     tools.alert("请选择实体");
                     return;
                 }
+                btnGenerateFile.click();
+            },
+            submitGenerateFile: function () {
                 var url = "/PrivateReZeroRoute/100003/ExecTemplateByTableIds";
                 axios.post(url, {
                     TableIds: JSON.stringify(this.selectedItems),
@@ -924,7 +924,7 @@
                 }, jwHeader)
                     .then(response => {
                         if (response.data && response.data.message){
-                            tools.alert("已生出错:" + response.data.message);
+                            tools.alert("生成出错:" + response.data.message);
                         } else {
                             tools.alert("已生成到目录" + response.data);
                         }
