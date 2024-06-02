@@ -107,6 +107,23 @@
         } else {
             return null;
         }
+    },
+    checkAuthorization: function () { 
+        setTimeout(function () {
+
+            var tokeEle = document.getElementById("txtToken");
+            if (tokeEle) return;
+
+            axios.get("/PrivateReZeroRoute/100004/GetDbTypeList", jwHeader)
+                .then(response => {
+                    this.dbTypeList = response.data;
+                    this.error = null;
+                })
+                .catch(error => {
+                    this.error = error.message;
+                    this.data = null;
+                });
+        }, 5000)
     }
 }
 Array.prototype.removeArrayItem = function (item) {

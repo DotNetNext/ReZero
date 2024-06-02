@@ -21,7 +21,8 @@
             headers: {
                 "Authorization": 'Bearer ' + localStorage.getItem('@@authorizationLocalStorageName') 
             }
-        } 
+        }  
+        tools.checkAuthorization();
     </script>
 </head> 
 <body data-theme="default">
