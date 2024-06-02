@@ -801,6 +801,9 @@
                             }
                             btnSave.click();
                             this.showEditSql()
+                            setTimeout(function () {
+                                th.setSelectedOptions();
+                            }, 500);
                         })
                         .catch(error => {
                             this.error = error.message;
@@ -1421,7 +1424,7 @@
                 var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
                 axios.get(url, jwHeader)
                     .then(response => {
-                        th.updateColumns = response.data;
+                        th.updateColumns = response.data; 
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -1442,6 +1445,33 @@
                 // 将选中的值转换为逗号分隔的字符串  
                 var valueStr = selectedValues.join(',');
                 item.Value = valueStr;
+            }, 
+            setSelectedOptions: function () {
+                var id = "selUpdateColumns";
+                var selectElement = document.getElementById(id); 
+                if (selectElement == null) return; 
+                var valueStr = $(selectElement).prev().val();
+                // 清空当前select的所有选中项
+                for (var i = 0; i < selectElement.options.length; i++) {
+                    selectElement.options[i].selected = false;
+                }
+
+                // 将传入的逗号分隔字符串分割成数组
+                var values = valueStr.split(',');
+
+                // 遍历数组中的每一个值
+                for (var j = 0; j < values.length; j++) {
+                    // 去除值两边的空格
+                    var value = values[j].trim();
+
+                    // 遍历<select>的所有<option>，查找匹配的项并选中
+                    for (var k = 0; k < selectElement.options.length; k++) {
+                        if (selectElement.options[k].value === value) {
+                            selectElement.options[k].selected = true;
+                            break; // 找到匹配项后跳出内层循环
+                        }
+                    }
+                }
             }
 
         }
