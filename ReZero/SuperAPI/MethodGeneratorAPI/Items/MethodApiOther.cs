@@ -62,6 +62,7 @@ namespace ReZero.SuperAPI
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
                 .Where(it => it.IsDeleted == false)
+                .WhereIF(!string.IsNullOrEmpty(tableName),it=>it.DbTableName!.ToLower().Contains(tableName.ToLower()))
                 .Where(it => it.DataBaseId == databaseId).ToList()
                 .Where(it => !it.DbTableName!.ToLower().StartsWith("zero_"));
             var result = entitys.Select(it => new DbTableInfo()
