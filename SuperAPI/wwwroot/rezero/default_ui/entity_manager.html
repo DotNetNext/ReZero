@@ -866,7 +866,8 @@
                         link.href = url;
 
                         // 设置下载文件的名称，可以根据实际情况调整  
-                        link.setAttribute('download', 'exported_data.xlsx');
+                        var fileName = $("#selDataBaseId option:selected").text() + '.xlsx'; 
+                        link.setAttribute('download', fileName);
 
                         // 触发下载  
                         document.body.appendChild(link);
