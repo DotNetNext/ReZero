@@ -40,7 +40,7 @@ namespace ReZero.SuperAPI
                 {
                     var dr = dt.NewRow();
                     dr[TextHandler.GetCommonText("列名", "Field name")] = it.DbColumnName;
-                    dr[TextHandler.GetCommonText("列描述", "Column description")] = it.ColumnDescription??item.Description;
+                    dr[TextHandler.GetCommonText("列描述", "Column description")] = it.ColumnDescription?? item.ZeroEntityColumnInfos.FirstOrDefault(x => x.DbColumnName!.EqualsCase(it.DbColumnName!))?.Description; ;
                     dr[TextHandler.GetCommonText("列类型", "Column type")] = it.DataType;
                     if (db.CurrentConnectionConfig.DbType == SqlSugar.DbType.Oracle)
                     {
@@ -48,7 +48,7 @@ namespace ReZero.SuperAPI
                     }
                     dr[TextHandler.GetCommonText("实体类型", "Entity type")] = it.PropertyType;
                     dr[TextHandler.GetCommonText("表名", "Table name")] = item.DbTableName;
-                    dr[TextHandler.GetCommonText("表描述", "Table description")] = item.Description?? item.ZeroEntityColumnInfos.FirstOrDefault(x => x.DbColumnName!.EqualsCase(it.DbColumnName!))?.Description; 
+                    dr[TextHandler.GetCommonText("表描述", "Table description")] = item.Description ?? item.Description; 
                     dr[TextHandler.GetCommonText("主键", "Primary key")] = it.IsPrimarykey ? "yes" : "";
                     dr[TextHandler.GetCommonText("自增", "Auto increment")] = it.IsIdentity ? "yes" : "";
                     dr[TextHandler.GetCommonText("可空", "Nullable")] = it.IsNullable ? "yes" : "";
