@@ -260,18 +260,15 @@
                     <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="tablebox">
-                        <div>
-                            <label>名称:</label>
-                            <input id="txtTableName" class="form-control" type="text" />
-                            <button @click="bindImportTables()" data-toggle="modal" type="button" class="btn btn-red">
-                                搜索
-                            </button>
-                            <button onclick="txtTableName.value=''" data-toggle="modal" type="button" class="btn btn-red">
-                                清空
-                            </button>
-                        </div>
+                    
+                   <div class="input-group width250  m-b-10"> 
+                            <input id="txtTableName" type="text" class="form-control"> 
+                            <span class="input-group-btn">
+                                <button type="button" @click="bindImportTables()" class="btn btn-default"><i class="mdi mdi-magnify"></i>搜索</button>
+                                <button type="button" onclick="txtTableName.value=''" class="btn btn-default"><i class="mdi  mdi-refresh"></i>清空</button>
+                            </span>
                     </div>
+                    
                     <div class="table-container2">
                         <table class="table table-bordered">
                             <thead>
