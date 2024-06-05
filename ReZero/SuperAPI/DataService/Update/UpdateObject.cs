@@ -10,9 +10,7 @@ namespace ReZero.SuperAPI
     internal class UpdateObject : CommonDataService, IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
-        {
-            base.ClearZeroDatabaseInfoCache(dataModel);
-            base.ClearZeroEntityInfoInfoCache(dataModel);
+        { ;
             var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
@@ -30,6 +28,7 @@ namespace ReZero.SuperAPI
                 updateCommonMethodInfo= updateable.UpdateColumns(dataModel.DefaultParameters.Select(it => it.Name).ToArray());
             }
             var result=await updateCommonMethodInfo.ExecuteCommandAsync();
+            base.ClearAll(dataModel);
             if (dataModel.ResultType == SqlResultType.AffectedRows)
             {
                 return result;

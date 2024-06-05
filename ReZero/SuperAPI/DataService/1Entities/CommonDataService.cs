@@ -8,6 +8,12 @@ namespace ReZero.SuperAPI
 {
     public class CommonDataService
     {
+        internal void ClearAll(DataModel dataModel) 
+        { 
+            this.ClearZeroInterfaceListCache(dataModel);
+            this.ClearZeroEntityInfoInfoCache(dataModel);
+            this.ClearZeroDatabaseInfoCache(dataModel);
+        }
         internal void ClearZeroInterfaceListCache(DataModel dataModel)
         {
             if (dataModel.TableId == EntityInfoInitializerProvider.Id_ZeroInterfaceList)

@@ -10,15 +10,15 @@ namespace ReZero.SuperAPI
     internal class InsertObject: CommonDataService, IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
-        {
-            base.ClearZeroDatabaseInfoCache(dataModel);
-            base.ClearZeroEntityInfoInfoCache(dataModel);
+        { 
             var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
             base.InitData(type, db, dataModel);
             this.SetDefaultValue(dataModel, db, type);
             await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();
+
+            base.ClearAll(dataModel);
             return true;
         }
 

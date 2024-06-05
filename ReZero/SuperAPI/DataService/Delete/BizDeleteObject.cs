@@ -11,9 +11,6 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
-            base.ClearZeroInterfaceListCache(dataModel);
-            base.ClearZeroEntityInfoInfoCache(dataModel);
-            base.ClearZeroDatabaseInfoCache(dataModel);
             var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
@@ -29,6 +26,7 @@ namespace ReZero.SuperAPI
             await db.UpdateableByObject(dataModel.Data)
                     .UpdateColumns("isdeleted")
                     .ExecuteCommandAsync();
+            base.ClearAll(dataModel);
             return true;
         }
 
