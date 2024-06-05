@@ -37,7 +37,8 @@ namespace ReZero.SuperAPI
             {
                 item.Id = deleteTables.OrderByDescending(it => it.Id).FirstOrDefault(it => it.DbTableName == item.DbTableName)?.Id??0;
             }
-            App.Db.UpdateNav(updateObj).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand();
+            App.Db.UpdateNav(updateObj).Include(it => it.ZeroEntityColumnInfos).ExecuteCommand(); 
+            CacheManager<ZeroEntityInfo>.Instance.ClearCache();
             return true;
         }
 
