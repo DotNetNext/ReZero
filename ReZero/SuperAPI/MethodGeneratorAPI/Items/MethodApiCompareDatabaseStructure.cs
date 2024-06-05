@@ -45,9 +45,14 @@ namespace ReZero.SuperAPI
                 result = result.Replace("Delete column", $"<span class='diff_red'>{TextHandler.GetCommonText("删除列", "Delete column")}</span>");
                 return result;
             }
-            catch 
+            catch
             {
                 return "结构对比出现错误，请谨慎同步";
+            }
+            finally 
+            {
+
+                CacheManager<ZeroInterfaceList>.Instance.ClearCache();
             }
         }
     }
