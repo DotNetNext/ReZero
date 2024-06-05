@@ -13,6 +13,7 @@ namespace ReZero.SuperAPI
         public object SaveInterfaceList(SaveInterfaceListModel saveInterfaceListModel)
         {
             var db = App.Db;
+            ZeroInterfaceListCacheManager.Instance.ClearZeroInterfaceListCache();
             ISaveInterfaceList saveInterfaceList = GetSaveInterfaceList(saveInterfaceListModel);
             return saveInterfaceList.SaveInterfaceList(saveInterfaceListModel);
         }

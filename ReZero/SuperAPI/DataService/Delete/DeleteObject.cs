@@ -9,6 +9,7 @@ namespace ReZero.SuperAPI
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
         {
+            base.ClearZeroInterfaceListCache(dataModel);
             var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);

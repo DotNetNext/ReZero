@@ -8,6 +8,13 @@ namespace ReZero.SuperAPI
 {
     public class CommonDataService
     {
+        internal void ClearZeroInterfaceListCache(DataModel dataModel)
+        {
+            if (dataModel.TableId == EntityInfoInitializerProvider.Id_ZeroInterfaceList)
+            {
+                ZeroInterfaceListCacheManager.Instance.ClearZeroInterfaceListCache();
+            }
+        }
         internal void InitData(Type type, ISqlSugarClient db, DataModel dataModel)
         {
             var datas = dataModel.DefaultParameters.ToDictionary(it => it.Name, it => it.Value);
