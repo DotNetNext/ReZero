@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
                 return new ZeroInterfaceListCacheManager();
             }
         }
-        public List<ZeroInterfaceList> GetZeroInterfaceList()
+        public List<ZeroInterfaceList> GetList()
         {
             if (cacheZeroInterfaceList != null)
             {
@@ -35,7 +35,7 @@ namespace ReZero.SuperAPI
             return cacheZeroInterfaceList;
         }
 
-        public void ClearZeroInterfaceListCache()
+        public void ClearCache()
         {
             lock (cacheLock)
             {

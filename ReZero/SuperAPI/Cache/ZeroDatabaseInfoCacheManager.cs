@@ -16,7 +16,7 @@ namespace ReZero.SuperAPI
                 return new ZeroDatabaseInfoCacheManager();
             }
         }
-        public List<ZeroDatabaseInfo> GetZeroDatabaseInfo()
+        public List<ZeroDatabaseInfo> GetList()
         {
             if (cacheZeroDatabaseInfo != null)
             {
@@ -35,7 +35,7 @@ namespace ReZero.SuperAPI
             return cacheZeroDatabaseInfo;
         }
 
-        public void ClearZeroDatabaseInfoCache()
+        public void ClearCache()
         {
             lock (cacheLock)
             {

@@ -49,8 +49,8 @@ namespace ReZero.SuperAPI
         internal static SqlSugarClient? GetDbTableId(long tableId)
         {
             var rootDb = App.Db;
-            var dbId = ZeroEntityInfoCacheManager.Instance.GetZeroEntityInfo().Where(it => it.Id == tableId).First()?.DataBaseId;
-            var zeroDatabaseInfo = ZeroDatabaseInfoCacheManager.Instance.GetZeroDatabaseInfo().Where(it => it.Id == dbId).First();
+            var dbId = ZeroEntityInfoCacheManager.Instance.GetList().Where(it => it.Id == tableId).First()?.DataBaseId;
+            var zeroDatabaseInfo = ZeroDatabaseInfoCacheManager.Instance.GetList().Where(it => it.Id == dbId).First();
             SqlSugarClient? db = null;
             if (zeroDatabaseInfo != null) 
                 db = GetSqlSugarClientByDatabaseInfo(zeroDatabaseInfo); 
