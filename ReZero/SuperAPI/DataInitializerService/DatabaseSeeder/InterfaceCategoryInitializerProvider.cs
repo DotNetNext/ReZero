@@ -126,6 +126,13 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("文件模版")]
         [EnglishTextAttribute("File template")]
         public const long Id300008 = 300008;
+
+        /// <summary>
+        /// 系统缓存
+        /// </summary>
+        [ChineseTextAttribute("系统缓存")]
+        [EnglishTextAttribute("System cache")]
+        public const long Id300009 = 300009;
         #endregion
 
         #region Code builder

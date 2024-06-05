@@ -1,0 +1,41 @@
+﻿@@master_page.html
+<div id="apibox">
+    <div class="card">
+        <div class="card-header"><h4>内部缓存</h4></div>
+        <div class="card-body">
+            <div class="alert alert-success">
+                外部修改数据库需要清空 ，缓存内容主要包含：数据库信息、实体信息和接口信息。
+            </div>
+            <div class="form-group"> 
+                <button type="button" @click="clearIntervalCache" class="btn btn-primary ajax-post" target-form="add-form">清空</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            data: null, 
+        },
+        mounted() {
+            
+        },
+        methods: {
+
+            clearIntervalCache: function ()
+            {
+                //axios.get("/api/rezero/clear", jwHeader)
+                //           .then(response => {
+                //                        this.error = null;
+                //                        this.jwtInfo = response.data;
+                //                    })
+                //                    .catch(error => {
+                //               this.error = error.message;
+                //               this.data = null;
+                //    });
+            }
+        }
+    });
+</script>

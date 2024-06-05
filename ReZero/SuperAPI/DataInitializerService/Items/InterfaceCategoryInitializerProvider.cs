@@ -135,11 +135,19 @@ namespace ReZero.SuperAPI
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
-                it.Id = 300008;
-                it.Name = TextHandler.GetInterfaceCategoryText(300008);
+                it.Id = Id300008;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300008);
                 it.ParentId = Id300;
                 it.Url = "/rezero/template.html";
                 it.SortId = 5;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300009;
+                it.Name = TextHandler.GetInterfaceCategoryText(300009);
+                it.ParentId = Id300;
+                it.Url = "/rezero/cache.html";
+                it.SortId = 6;
             }));
         }
 
