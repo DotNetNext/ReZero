@@ -24,6 +24,7 @@ namespace ReZero.SuperAPI
                 App.Db.Insertable(newColumns).ExecuteReturnSnowflakeId();
                 tableInfo.ColumnCount = newColumns.Length;
                 App.Db.Updateable(tableInfo).UpdateColumns(it => new { it.ColumnCount }).ExecuteCommand();
+                CacheManager<ZeroEntityInfo>.Instance.ClearCache();
                 return true;
             }
             catch (Exception ex)
