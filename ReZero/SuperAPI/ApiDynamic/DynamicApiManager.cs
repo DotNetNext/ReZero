@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
         public bool IsApi(string url)
         {
             var db = App.Db;
-            var isAnyUrl = db.Queryable<ZeroInterfaceList>().Any(it => it!.Url!.ToLower() == url.ToLower());
+            var isAnyUrl = ZeroInterfaceListCacheManager.Instance.GetZeroInterfaceList().Any(it => it!.Url!.ToLower() == url.ToLower());
             return isAnyUrl;
         }
 
@@ -51,7 +51,7 @@ namespace ReZero.SuperAPI
             var handler = helper.GetHandler(requestMethod, context);
             var db = App.Db;
             var path = context.Request.Path.ToString()?.ToLower(); 
-            var interInfo = db.Queryable<ZeroInterfaceList>().Where(it => it.Url!.ToLower() == path).First();
+            var interInfo = ZeroInterfaceListCacheManager.Instance.GetZeroInterfaceList().Where(it => it.Url!.ToLower() == path).First();
             var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,HttpContext = context,InterfaceInfo=interInfo };
             if (interInfo == null)
             {
