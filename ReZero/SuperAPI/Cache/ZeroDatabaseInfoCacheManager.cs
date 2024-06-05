@@ -4,19 +4,19 @@ using System.Text;
 
 namespace ReZero.SuperAPI
 {
-    internal class ZeroDatabaseInfoCacheManager
+    public class  CacheManager<T>: ICacheManager<T> where T:class,new()
     {
-        private static List<ZeroDatabaseInfo> cacheZeroDatabaseInfo = null!;
+        private static List<T> cacheZeroDatabaseInfo = null!;
         private static readonly object cacheLock = new object();
 
-        public static ZeroDatabaseInfoCacheManager Instance
+        public static CacheManager<T> Instance
         {
             get
             {
-                return new ZeroDatabaseInfoCacheManager();
+                return new CacheManager<T>();
             }
         }
-        public List<ZeroDatabaseInfo> GetList()
+        public List<T> GetList()
         {
             if (cacheZeroDatabaseInfo != null)
             {
@@ -28,7 +28,7 @@ namespace ReZero.SuperAPI
                 if (cacheZeroDatabaseInfo == null)
                 {
                     var db = App.Db;
-                    cacheZeroDatabaseInfo = db.Queryable<ZeroDatabaseInfo>().ToList();
+                    cacheZeroDatabaseInfo = db.Queryable<T>().ToList();
                 }
             }
 

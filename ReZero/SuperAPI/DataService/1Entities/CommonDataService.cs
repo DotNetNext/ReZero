@@ -12,7 +12,7 @@ namespace ReZero.SuperAPI
         {
             if (dataModel.TableId == EntityInfoInitializerProvider.Id_ZeroInterfaceList)
             {
-                ZeroInterfaceListCacheManager.Instance.ClearCache();
+                CacheManager<ZeroInterfaceList>.Instance.ClearCache();
             }
         }
         internal void InitData(Type type, ISqlSugarClient db, DataModel dataModel)
