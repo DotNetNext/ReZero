@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SqlSugar;
 using System;
-
+using System.Linq;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -49,8 +49,8 @@ namespace ReZero.SuperAPI
         internal static SqlSugarClient? GetDbTableId(long tableId)
         {
             var rootDb = App.Db;
-            var dbId = rootDb.Queryable<ZeroEntityInfo>().Where(it => it.Id == tableId).First()?.DataBaseId;
-            var zeroDatabaseInfo = rootDb.Queryable<ZeroDatabaseInfo>().Where(it => it.Id == dbId).First();
+            var dbId = ZeroEntityInfoCacheManager.Instance.GetZeroEntityInfo().Where(it => it.Id == tableId).First()?.DataBaseId;
+            var zeroDatabaseInfo = ZeroDatabaseInfoCacheManager.Instance.GetZeroDatabaseInfo().Where(it => it.Id == dbId).First();
             SqlSugarClient? db = null;
             if (zeroDatabaseInfo != null) 
                 db = GetSqlSugarClientByDatabaseInfo(zeroDatabaseInfo); 
