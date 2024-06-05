@@ -1,4 +1,5 @@
-﻿var tools = {
+﻿var isLoading = false;
+var tools = {
     highlightErrorFields: function (data) {
         if (!data.ErrorParameters) {
             tools.alert(data.message);
@@ -117,13 +118,15 @@
             axios.get("/PrivateReZeroRoute/100004/GetDbTypeList", jwHeader)
                 .then(response => {
                     this.dbTypeList = response.data;
+                    isLoading = true;
                     this.error = null;
                 })
                 .catch(error => {
+                    isLoading = true;
                     this.error = error.message;
                     this.data = null;
                 });
-        }, 500)
+        }, 3000)
     }
 }
 Array.prototype.removeArrayItem = function (item) {
@@ -136,7 +139,9 @@ Array.prototype.removeArrayItem = function (item) {
 setTimeout(function () {
     // 设置请求拦截器  
     axios.interceptors.request.use(function (config) {
-        tools.openLoading();
+        if (isLoading) {
+            tools.openLoading();
+        }
         return config;
     }, function (error) {
         // 对请求错误做些什么  
@@ -145,13 +150,17 @@ setTimeout(function () {
 
     // 设置响应拦截器  
     axios.interceptors.response.use(function (response) {
-        tools.closeLoading();
+        if (isLoading) {
+            tools.closeLoading();
+        }
         return response;
     }, function (error) {
         if (error.response) {
             // 请求已发出，但服务器响应的状态码不在 2xx 范围内  
             if (error.response.status === 401) {
-                tools.closeLoading();
+                if (isLoading) {
+                    tools.closeLoading();
+                }
                 tools.alert("授权失败，自动跳到授权页面");
                 // 如果是401错误（未授权），则跳转到登录页面  
                 setTimeout(function () {
