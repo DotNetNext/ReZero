@@ -15,6 +15,21 @@ namespace ReZero.SuperAPI
                 CacheManager<ZeroInterfaceList>.Instance.ClearCache();
             }
         }
+        internal void ClearZeroDatabaseInfoCache(DataModel dataModel)
+        {
+            if (dataModel.TableId == EntityInfoInitializerProvider.Id_ZeroDatabaseInfo)
+            {
+                CacheManager<ZeroDatabaseInfo>.Instance.ClearCache();
+            }
+        }
+
+        internal void ClearZeroEntityInfoInfoCache(DataModel dataModel)
+        {
+            if (dataModel.TableId == EntityInfoInitializerProvider.Id_ZeroEntityInfo)
+            {
+                CacheManager<ZeroEntityInfo>.Instance.ClearCache();
+            }
+        }
         internal void InitData(Type type, ISqlSugarClient db, DataModel dataModel)
         {
             var datas = dataModel.DefaultParameters.ToDictionary(it => it.Name, it => it.Value);
