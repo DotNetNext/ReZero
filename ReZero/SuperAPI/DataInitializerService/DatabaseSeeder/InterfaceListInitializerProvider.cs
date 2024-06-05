@@ -301,7 +301,9 @@ namespace ReZero.SuperAPI
         public const long ExecTemplateByTableIdsId = 56;
 
 
-
+        [ChineseTextAttribute("清除系统缓存")]
+        [EnglishTextAttribute("Clear internal cache")]
+        public const long ClearAllInternalCacheId = 57;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

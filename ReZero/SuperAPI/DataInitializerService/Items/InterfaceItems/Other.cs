@@ -25,6 +25,7 @@ namespace ReZero.SuperAPI
             GetTemplateFormatJson();
             ExecTemplate();
             ExecTemplateByTableIds();
+            ClearAllInternalCache();
         }
 
         private void SaveInterfaceList()
@@ -450,9 +451,7 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data1);
-        }
-
-
+        } 
         private void ExecTemplateByTableIds()
         {
             ZeroInterfaceList data1 = GetNewItem(it =>
@@ -480,6 +479,30 @@ namespace ReZero.SuperAPI
                         new DataModelDefaultParameter() { Name ="tableIds",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JsonArray).Name,  Description = TextHandler.GetCommonText("表Id集合", "Table id array") },
                         new DataModelDefaultParameter() { Name ="templateId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("模版ID", "template id") },
                         new DataModelDefaultParameter() { Name ="url",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("Url", "Url") }
+                    } 
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
+        private void ClearAllInternalCache()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = ClearAllInternalCacheId;
+                it.GroupName = nameof(CacheCenter);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(ClearAllInternalCacheId);
+                it.Url = GetUrl(it, "ClearAllInternalCache");
+                it.DataModel = new DataModel()
+                {
+                    TableId =0,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 0, 
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.ClearAllInternalCache)
                     } 
                 };
             });

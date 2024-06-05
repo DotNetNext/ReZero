@@ -41,11 +41,11 @@ namespace ReZero.SuperAPI
         {
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
-                .Where(it => it.IsDeleted == false) 
+                .Where(it => it.IsDeleted == false)
                 .Where(it => it.DataBaseId == databaseId).ToList();
             var tables = db!.DbMaintenance.GetTableInfoList(false).Where(it => !it.Name.ToLower().StartsWith("zero_")).ToList();
             var result = tables
-                            .OrderBy(it=>it.Name)
+                            .OrderBy(it => it.Name)
                             .Where(it => !entitys.Any(s => s.DbTableName!.EqualsCase(it.Name))).ToList();
             if (!string.IsNullOrEmpty(tableName))
             {
@@ -53,7 +53,7 @@ namespace ReZero.SuperAPI
             }
             return result;
         }
-        public object GetUserInfo() 
+        public object GetUserInfo()
         {
             return null;
         }
@@ -62,7 +62,7 @@ namespace ReZero.SuperAPI
             var db = App.GetDbById(databaseId);
             var entitys = App.Db.Queryable<ZeroEntityInfo>()
                 .Where(it => it.IsDeleted == false)
-                .WhereIF(!string.IsNullOrEmpty(tableName),it=>it.DbTableName!.ToLower().Contains(tableName.ToLower()))
+                .WhereIF(!string.IsNullOrEmpty(tableName), it => it.DbTableName!.ToLower().Contains(tableName.ToLower()))
                 .Where(it => it.DataBaseId == databaseId).ToList()
                 .Where(it => !it.DbTableName!.ToLower().StartsWith("zero_"));
             var result = entitys.Select(it => new DbTableInfo()
@@ -74,17 +74,17 @@ namespace ReZero.SuperAPI
             return result;
         }
 
-        public object ExecuetSql(long databaseId,string sql)
+        public object ExecuetSql(long databaseId, string sql)
         {
             var db = App.GetDbById(databaseId);
             sql = sql + string.Empty;
-            if (db!.CurrentConnectionConfig.DbType == DbType.Oracle&& sql.Contains(";") && !sql.ToLower().Contains("begin"))
+            if (db!.CurrentConnectionConfig.DbType == DbType.Oracle && sql.Contains(";") && !sql.ToLower().Contains("begin"))
             {
-                var sqls=sql.Split(';');
+                var sqls = sql.Split(';');
                 List<object> result = new List<object>();
                 foreach (var item in sqls)
                 {
-                    if (!string.IsNullOrEmpty(item.Trim().Replace("\r","").Replace("\n", "")))
+                    if (!string.IsNullOrEmpty(item.Trim().Replace("\r", "").Replace("\n", "")))
                     {
                         result.Add(GetObject(item, db));
                     }
@@ -93,14 +93,14 @@ namespace ReZero.SuperAPI
                 {
                     return result.FirstOrDefault();
                 }
-                else 
+                else
                 {
                     return result;
                 }
             }
             else
             {
-                var result = GetObject(sql, db); 
+                var result = GetObject(sql, db);
                 return result;
             }
         }
@@ -127,6 +127,14 @@ namespace ReZero.SuperAPI
             {
                 return db!.Ado.ExecuteCommand(sql) + " affected rows";
             }
+        }
+
+
+        public static bool ClearAllInternalCache()
+        {
+            var cc = new CacheCenter();
+            cc.ClearAllInternalCache();
+            return true;
         }
     }
 }
