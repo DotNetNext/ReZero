@@ -12,9 +12,13 @@ namespace ReZero.SuperAPI
         {
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             base.SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
-            this.SetProperties(zeroInterfaceList,saveInterfaceListModel);
+            this.SetProperties(zeroInterfaceList, saveInterfaceListModel);
+            base.ApplyDefaultAndClearIfNotEmpty(zeroInterfaceList);
             return base.SaveData(zeroInterfaceList);
         }
+
+      
+
         private void SetProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
             var entityInfo = base.GetEntityInfo(zeroInterfaceList!.DataModel!.TableId!);

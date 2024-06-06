@@ -11,6 +11,20 @@ namespace ReZero.SuperAPI
     public class BaseSaveInterfaceList
     {
 
+        protected void ApplyDefaultAndClearIfNotEmpty(ZeroInterfaceList zeroInterfaceList)
+        {
+            foreach (var item in zeroInterfaceList.DataModel?.DefaultValueColumns ?? new List<DataModelDefaultValueColumnParameter>())
+            {
+                var paramter = zeroInterfaceList.DataModel?.DefaultParameters?.FirstOrDefault(it => it.Name == item.PropertyName);
+                if (paramter != null)
+                {
+                    if (paramter?.ParameterValidate?.IsRequired == true && item?.Type != DefaultValueType.None)
+                    {
+                        paramter.ParameterValidate = null;
+                    }
+                }
+            }
+        }
         protected void Check(EntityColumnInfo pk)
         {
             if (pk == null)
