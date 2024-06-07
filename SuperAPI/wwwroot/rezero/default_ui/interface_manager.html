@@ -854,6 +854,8 @@
                     this.setValueEditSql();
                     var formData = tools.formToJson("frmSave");
                     formData.DatabaseId = this.DatabaseId; 
+                    var vueData = this.$data;
+                    vueData.data = [];
                     formData.Json = {
                         Id: this.editId,
                         Columns:this.selectedColumns,
@@ -863,7 +865,7 @@
                         WhereRelationTemplate: this.selectedWhereRelationTemplate,
                         OrderBys: this.selectedOrderBys,
                         OrderBysEnableSort: this.selectedOrderBys_EnableSort,
-                        CurrentDataString: JSON.stringify(this.$data),
+                        CurrentDataString: JSON.stringify(vueData),
                         DataBaseId: this.databaseId,
                         DefaultValueColumns: this.saveDefaultValueColumns
                     };
