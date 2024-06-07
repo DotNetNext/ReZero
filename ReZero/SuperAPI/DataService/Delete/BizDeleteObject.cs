@@ -23,11 +23,18 @@ namespace ReZero.SuperAPI
             CheckSystemData(db,dataModel, type, entity); 
             var column = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted)));
             column.PropertyInfo.SetValue(dataModel.Data, true);
-            await db.UpdateableByObject(dataModel.Data)
+            var result= db.UpdateableByObject(dataModel.Data)
                     .UpdateColumns("isdeleted")
                     .ExecuteCommandAsync();
             base.ClearAll(dataModel);
-            return true;
+            if (dataModel.ResultType == SqlResultType.AffectedRows)
+            {
+                return result;
+            }
+            else
+            {
+                return true;
+            }
         }
 
     }

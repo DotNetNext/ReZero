@@ -14,10 +14,16 @@ namespace ReZero.SuperAPI
             base.InitDb(type, db);
             //CheckSystemData(db, dataModel, type, db.EntityMaintenance.GetEntityInfo(type));
             base.InitData(type,db, dataModel);
-            await db.DeleteableByObject(dataModel.Data).ExecuteCommandAsync();
-
+            var result=  await db.DeleteableByObject(dataModel.Data).ExecuteCommandAsync();
             base.ClearAll(dataModel);
-            return true;
+            if (dataModel.ResultType == SqlResultType.AffectedRows)
+            {
+                return result;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

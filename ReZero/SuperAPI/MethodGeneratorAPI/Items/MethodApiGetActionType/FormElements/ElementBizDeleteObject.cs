@@ -13,6 +13,12 @@ namespace ReZero.SuperAPI
             var result = new List<ActionTypeFormElementModel>();
             base.AddActionTypeFormElementModels(result);
             base.AddActionTypeElementModel(result,this);
+            result.Insert(4, new ActionTypeFormElementModel()
+            {
+                ElementType = ElementType.UpdateResultType,
+                Name = "ResultType",
+                Text = TextHandler.GetCommonText("返回类型", "return type")
+            });
             return result;
         }
 

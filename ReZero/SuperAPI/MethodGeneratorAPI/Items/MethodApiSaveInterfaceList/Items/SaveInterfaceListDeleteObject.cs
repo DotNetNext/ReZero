@@ -31,6 +31,7 @@ namespace ReZero.SuperAPI
                     ValueType=pk.UnderType.Name
                 }
             };
+            zeroInterfaceList.DataModel.ResultType = saveInterfaceListModel?.ResultType;
         }
 
     }
