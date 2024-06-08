@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SqlSugar;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ReZero.SuperAPI
             base.InitDb(type, db);
             this.InitData(type, db, dataModel);
             this.SetDefaultValue(dataModel, db, type);
-            await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync(); 
+            await db.InsertableByObject(dataModel.Data).PageSize(1000).ExecuteCommandAsync(); 
             base.ClearAll(dataModel);
             return true;
         }
@@ -29,7 +30,18 @@ namespace ReZero.SuperAPI
         }
         private void SetDefaultValue(DataModel dataModel, ISqlSugarClient db, Type type)
         {
-             
+            if (EntityMappingService.IsAnyDefaultValue(dataModel))
+            {
+                foreach (var item in (IList)dataModel.Data!)
+                {
+                    var para = new DataModel()
+                    {
+                        Data = item,
+                        DefaultValueColumns=dataModel.DefaultValueColumns
+                    };
+                    EntityMappingService.GetDataByDefaultValueParameters(type, db, para);
+                }
+            }
         }
     }
 }

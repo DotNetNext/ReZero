@@ -33,7 +33,8 @@ namespace ReZero.SuperAPI
                         ValueType=typeof(JArray).Name, 
                         Description=""
                    }
-                }; 
+                };
+            zeroInterfaceList.DataModel.DefaultValueColumns = saveInterfaceListModel.Json?.DefaultValueColumns;
         }
     }
 }
