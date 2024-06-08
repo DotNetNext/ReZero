@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.Collections;
+using SqlSugar;
 namespace ReZero.SuperAPI 
 {
     public class SaveInterfaceListInsertRange : BaseSaveInterfaceList, ISaveInterfaceList
@@ -17,19 +20,20 @@ namespace ReZero.SuperAPI
         private void SetProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)
         {
             var entityInfo = base.GetEntityInfo(zeroInterfaceList!.DataModel!.TableId!);
-            zeroInterfaceList.DataModel.DefaultParameters = new List<DataModelDefaultParameter>();
-            foreach (var item in entityInfo.Columns.Where(it => it.IsIdentity == false && it.IsOnlyIgnoreInsert == false && it.IsIgnore == false))
-            {
-                zeroInterfaceList.DataModel.DefaultParameters.Add(new DataModelDefaultParameter()
-                {
-                    FieldOperator = FieldOperatorType.Equal,
-                    Name = item.PropertyName,
-                    ParameterValidate = item.IsNullable ? null : new ParameterValidate() { IsRequired = true },
-                    Description = item.ColumnDescription,
-                    ValueType = item.UnderType.Name
-                });
-            }
-            zeroInterfaceList.DataModel.DefaultValueColumns = saveInterfaceListModel.Json?.DefaultValueColumns;
+            var listType= typeof(List<>).MakeGenericType(entityInfo.Type);
+            var listInstance = (IList)Activator.CreateInstance(listType) ;
+            listInstance.Add(Activator.CreateInstance(entityInfo.Type));
+            var json = new SerializeService().SerializeObject(listInstance);
+            zeroInterfaceList.DataModel.DefaultParameters = 
+                new List<DataModelDefaultParameter>() {
+                   new DataModelDefaultParameter() 
+                   {
+                        Value=json,
+                        Name="Data",
+                        ValueType=typeof(JArray).Name, 
+                        Description=""
+                   }
+                }; 
         }
     }
 }
