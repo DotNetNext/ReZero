@@ -10,7 +10,7 @@ namespace ReZero.SuperAPI
     internal class UpdateObject : CommonDataService, IDataService
     {
         public async Task<object> ExecuteAction(DataModel dataModel)
-        {  
+        {
             var db = App.GetDbTableId(dataModel.TableId) ?? App.Db;
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
@@ -23,12 +23,17 @@ namespace ReZero.SuperAPI
             {
                 updateCommonMethodInfo = updateable.UpdateColumns(dataModel.TableColumns.Split(","));
             }
-            else 
+            else
             {
-                updateCommonMethodInfo= updateable.UpdateColumns(dataModel.DefaultParameters.Select(it => it.Name).ToArray());
+                updateCommonMethodInfo = updateable.UpdateColumns(dataModel.DefaultParameters.Select(it => it.Name).ToArray());
             }
-            var result=await updateCommonMethodInfo.ExecuteCommandAsync();
+            var result = await updateCommonMethodInfo.ExecuteCommandAsync();
             base.ClearAll(dataModel);
+            return GetResult(dataModel, result);
+        }
+
+        private static object GetResult(DataModel dataModel, int result)
+        {
             if (dataModel.ResultType == SqlResultType.AffectedRows)
             {
                 return result;
@@ -38,6 +43,7 @@ namespace ReZero.SuperAPI
                 return true;
             }
         }
+
         private void SetDefaultValue(DataModel dataModel, ISqlSugarClient db, Type type)
         {
             if (EntityMappingService.IsAnyDefaultValue(dataModel))

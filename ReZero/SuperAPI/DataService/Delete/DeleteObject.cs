@@ -13,9 +13,14 @@ namespace ReZero.SuperAPI
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
             //CheckSystemData(db, dataModel, type, db.EntityMaintenance.GetEntityInfo(type));
-            base.InitData(type,db, dataModel);
-            var result=  await db.DeleteableByObject(dataModel.Data).ExecuteCommandAsync();
+            base.InitData(type, db, dataModel);
+            var result = await db.DeleteableByObject(dataModel.Data).ExecuteCommandAsync();
             base.ClearAll(dataModel);
+            return GetResult(dataModel, result);
+        }
+
+        private static object GetResult(DataModel dataModel, int result)
+        {
             if (dataModel.ResultType == SqlResultType.AffectedRows)
             {
                 return result;

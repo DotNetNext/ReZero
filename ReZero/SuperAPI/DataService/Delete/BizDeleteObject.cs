@@ -20,13 +20,18 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(TextHandler.GetCommonText(type.Name + "没有IsDeleted属性不能逻辑删除", type.Name + "Cannot be logically deleted without IsDeleted attribute"));
             }
-            CheckSystemData(db,dataModel, type, entity); 
+            CheckSystemData(db, dataModel, type, entity);
             var column = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(nameof(DbBase.IsDeleted)));
             column.PropertyInfo.SetValue(dataModel.Data, true);
-            var result= db.UpdateableByObject(dataModel.Data)
+            var result = db.UpdateableByObject(dataModel.Data)
                     .UpdateColumns("isdeleted")
                     .ExecuteCommandAsync();
             base.ClearAll(dataModel);
+            return GetResult(dataModel, result);
+        }
+
+        private static object GetResult(DataModel dataModel, Task<int> result)
+        {
             if (dataModel.ResultType == SqlResultType.AffectedRows)
             {
                 return result;
@@ -36,6 +41,5 @@ namespace ReZero.SuperAPI
                 return true;
             }
         }
-
     }
 }
