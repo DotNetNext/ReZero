@@ -35,6 +35,11 @@ namespace ReZero.SuperAPI
         [EnglishText("Insert by entity")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_InsertCN, PubConst.DataSource_ActionTypeGroupName_InsertEN)]
         InsertObject = 20000,
+
+        [ChineseText("批量插入")]
+        [EnglishText("Insert range")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_InsertCN, PubConst.DataSource_ActionTypeGroupName_InsertEN)]
+        InsertRange = 20001,
         #endregion
 
 
