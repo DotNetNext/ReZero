@@ -19,6 +19,15 @@ namespace ReZero.SuperAPI
             this.SetDefaultValue(dataModel, db, type);
             var updateable = db.UpdateableByObject(dataModel.Data);
             UpdateCommonMethodInfo updateCommonMethodInfo = null!;
+            updateCommonMethodInfo = GetUpdateable(dataModel, updateable);
+            var result = await updateCommonMethodInfo.ExecuteCommandAsync();
+            base.ClearAll(dataModel);
+            return GetResult(dataModel, result);
+        }
+
+        private static UpdateCommonMethodInfo GetUpdateable(DataModel dataModel, UpdateMethodInfo updateable)
+        {
+            UpdateCommonMethodInfo updateCommonMethodInfo;
             if (!string.IsNullOrEmpty(dataModel.TableColumns))
             {
                 updateCommonMethodInfo = updateable.UpdateColumns(dataModel.TableColumns.Split(","));
@@ -27,9 +36,8 @@ namespace ReZero.SuperAPI
             {
                 updateCommonMethodInfo = updateable.UpdateColumns(dataModel.DefaultParameters.Select(it => it.Name).ToArray());
             }
-            var result = await updateCommonMethodInfo.ExecuteCommandAsync();
-            base.ClearAll(dataModel);
-            return GetResult(dataModel, result);
+
+            return updateCommonMethodInfo;
         }
 
         private static object GetResult(DataModel dataModel, int result)
