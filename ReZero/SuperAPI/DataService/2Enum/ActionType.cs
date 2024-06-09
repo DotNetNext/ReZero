@@ -61,6 +61,11 @@ namespace ReZero.SuperAPI
         [EnglishText("Update by entity")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_UpdateCN, PubConst.DataSource_ActionTypeGroupName_UpdateEN)]
         UpdateObject = 40000,
+
+        [ChineseText("批量更新")]
+        [EnglishText("Update Range")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_UpdateCN, PubConst.DataSource_ActionTypeGroupName_UpdateEN)]
+        UpdateRange = 40001,
         #endregion
 
 
