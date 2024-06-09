@@ -44,15 +44,25 @@ namespace ReZero.SuperAPI
 
 
         #region Delete
-        [ChineseText("删除根据实体")]
-        [EnglishText("Delete by entity")]
+        [ChineseText("删除")]
+        [EnglishText("Delete")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_DeleteCN, PubConst.DataSource_ActionTypeGroupName_DeleteEN)]
-        DeleteObject = 30000,  
+        DeleteObject = 30000,
 
-        [ChineseText("逻辑删除根据实体")]
-        [EnglishText("logic delete by entity")]
+        [ChineseText("批量删除")]
+        [EnglishText("Delete range")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_DeleteCN, PubConst.DataSource_ActionTypeGroupName_DeleteEN)]
+        DeleteRange = 30002,
+
+        [ChineseText("逻辑删除")]
+        [EnglishText("logic delete")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_DeleteCN, PubConst.DataSource_ActionTypeGroupName_DeleteEN)]
         BizDeleteObject = 30001,
+
+        [ChineseText("批量逻辑删除")]
+        [EnglishText("logic delete range")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_DeleteCN, PubConst.DataSource_ActionTypeGroupName_DeleteEN)]
+        BizDeleteRange = 30003,
         #endregion
 
 
