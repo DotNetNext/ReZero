@@ -14,7 +14,7 @@ namespace ReZero.SuperAPI
             var classAttribute = type.GetCustomAttribute<ApiAttribute>();
             var methodAttribute = method.GetCustomAttribute<ApiMethodAttribute>();
             var groupName = methodAttribute.GroupName ?? classAttribute.GroupName ?? type.Name;
-            var url = methodAttribute.Url ?? $"/api/{classAttribute.InterfaceCategoryId}/{type.Name?.ToLower()}/{method.Name?.ToLower()}";
+            string url = GetUrl(type, method, classAttribute, methodAttribute);
             var methodDesc = methodAttribute.Description ?? string.Empty;
             ZeroInterfaceList it = new ZeroInterfaceList();
             it.HttpMethod = methodAttribute.HttpMethod.ToString();
@@ -53,14 +53,14 @@ namespace ReZero.SuperAPI
                 else if (IsObject(item.ParameterType))
                 {
                     dataModelDefaultParameter.ValueType = "Json";
-                    object obj = Activator.CreateInstance(item.ParameterType); 
+                    object obj = Activator.CreateInstance(item.ParameterType);
                     dataModelDefaultParameter.Value = new SerializeService().SerializeObject(obj);
                 }
                 else if (method.GetParameters().Count() == 1)
                 {
                     isAdd = false;
-                    it.DataModel.MyMethodInfo.ArgsTypes = new Type[] {typeof(SingleModel) };
-                    var paramters = item.ParameterType.GetProperties();  
+                    it.DataModel.MyMethodInfo.ArgsTypes = new Type[] { typeof(SingleModel) };
+                    var paramters = item.ParameterType.GetProperties();
                     AddSingleClassParameters(it, paramters);
                 }
                 else
@@ -73,6 +73,15 @@ namespace ReZero.SuperAPI
                     it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
             }
             return it;
+        }
+
+        private static string GetUrl(Type type, MethodInfo method, ApiAttribute classAttribute, ApiMethodAttribute methodAttribute)
+        {
+            if (string.IsNullOrEmpty(methodAttribute.Url)&& !string.IsNullOrEmpty(classAttribute.Url)) 
+            {
+                return methodAttribute.Url ?? $"/{classAttribute.Url.TrimStart('/')}/{method.Name?.ToLower()}";
+            }
+            return methodAttribute.Url ?? $"/api/{classAttribute.InterfaceCategoryId}/{type.Name?.ToLower()}/{method.Name?.ToLower()}";
         }
 
         private static void AddSingleClassParameters(ZeroInterfaceList it, PropertyInfo[] paramters)

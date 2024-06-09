@@ -8,7 +8,8 @@ namespace ReZero.SuperAPI
     public class ApiAttribute : Attribute
     {
         internal long InterfaceCategoryId { get; set; }
-        public string? GroupName { get; set; } 
+        public string? GroupName { get; set; }
+        public string? Url { get; set; }
         public ApiAttribute(long interfaceCategoryId)
         {
             InterfaceCategoryId = interfaceCategoryId; 
