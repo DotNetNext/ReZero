@@ -20,6 +20,7 @@ namespace ReZero.SuperAPI
         public string? TreeCode { get; set; }
         public string? TreeParentCode { get; set; }
         public string? TreeRootParentValue { get; set; }
+        public string? HttpMethod { get; set; }
         public bool PageSize { get; set; }
         /// <summary>
         /// Used for binding interface controls during interface editing. It can be left unassigned if interface editing is not used.

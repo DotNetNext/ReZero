@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -32,11 +33,48 @@ namespace ReZero.SuperAPI
             var items = new List<ActionTypeItemModel>();
             foreach (var item in it.ToList())
             {
+                var eles = GetFormElements(item);
+                eles.Add(new  ActionTypeFormElementModel()
+                {
+                    
+                    ElementType= ElementType.Select,
+                    Name=nameof(HttpMethod), 
+                    Text= nameof(HttpMethod),
+                    SelectDataSource=new List<ActionTypeFormElementSelectDataSourceModel>() 
+                    {
+                        new ActionTypeFormElementSelectDataSourceModel()
+                        {
+                            Key=HttpRequestMethod.All.ToString().FirstCharToUpper(),
+                            Value=HttpRequestMethod.All.ToString().FirstCharToUpper(),
+                        },
+                        new ActionTypeFormElementSelectDataSourceModel()
+                        {
+                            Key=HttpRequestMethod.GET.ToString().FirstCharToUpper(),
+                            Value=HttpRequestMethod.GET.ToString().FirstCharToUpper(),
+                        },
+                        new ActionTypeFormElementSelectDataSourceModel()
+                        {
+                            Key=HttpRequestMethod.POST.ToString().FirstCharToUpper(),
+                            Value=HttpRequestMethod.POST.ToString().FirstCharToUpper(),
+                        },
+                        new ActionTypeFormElementSelectDataSourceModel()
+                        {
+                           Key=HttpRequestMethod.PUT.ToString().FirstCharToUpper(),
+                           Value=HttpRequestMethod.PUT.ToString().FirstCharToUpper(),
+                        },
+                        new ActionTypeFormElementSelectDataSourceModel()
+                        {
+                            Key=HttpRequestMethod.DELETE.ToString().FirstCharToUpper(),
+                            Value=HttpRequestMethod.DELETE.ToString().FirstCharToUpper(),
+                        },
+                    }
+                    
+                });
                 items.Add(new ActionTypeItemModel()
                 {
                      Text=item.Text,
                      TextGroup=item.TextGroup, 
-                     FormElements= GetFormElements(item),
+                     FormElements= eles,
                 });
             }
             return items;

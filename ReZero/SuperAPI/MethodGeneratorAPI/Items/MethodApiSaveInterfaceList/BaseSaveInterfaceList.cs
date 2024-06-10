@@ -52,9 +52,13 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.CreateTime = DateTime.Now;
 
             // Set default HttpMethod if not specified
-            if (zeroInterfaceList.HttpMethod == null)
+            if (string.IsNullOrEmpty(zeroInterfaceList.HttpMethod))
             {
                 zeroInterfaceList.HttpMethod = HttpRequestMethod.All.ToString();
+            }
+            if (!string.IsNullOrEmpty(saveInterfaceListModel?.HttpMethod)) 
+            {
+                zeroInterfaceList.HttpMethod = saveInterfaceListModel.HttpMethod;
             }
 
             // Set DataModel for ZeroInterfaceList
