@@ -136,8 +136,7 @@
                 }
                 if (txtOrderDynamicParemters.value) {
                     postData["OrderDynamicParemters"] = txtOrderDynamicParemters.value;
-                }
-                this.message = "结果:"
+                } 
                 // 发送 POST 请求
                 axios.post(fullUrl, postData, jwHeader)
                     .then(function (response) {
