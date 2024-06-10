@@ -52,6 +52,7 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             var path = context.Request.Path.ToString()?.ToLower(); 
             var interInfo = CacheManager<ZeroInterfaceList>.Instance.GetList().Where(it => it.Url!.ToLower() == path).First();
+            interInfo=db.Utilities.TranslateCopy(interInfo);
             var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,HttpContext = context,InterfaceInfo=interInfo };
             if (interInfo == null)
             {
