@@ -51,6 +51,7 @@ namespace ReZero.SuperAPI
             var rootDb = App.Db;
             var dbId = CacheManager<ZeroEntityInfo>.Instance.GetList().Where(it => it.Id == tableId).First()?.DataBaseId;
             var zeroDatabaseInfo =CacheManager<ZeroDatabaseInfo>.Instance.GetList().Where(it => it.Id == dbId).First();
+            zeroDatabaseInfo = rootDb.Utilities.TranslateCopy(zeroDatabaseInfo);
             SqlSugarClient? db = null;
             if (zeroDatabaseInfo != null) 
                 db = GetSqlSugarClientByDatabaseInfo(zeroDatabaseInfo); 
