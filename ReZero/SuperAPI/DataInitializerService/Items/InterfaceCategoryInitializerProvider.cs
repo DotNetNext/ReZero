@@ -109,6 +109,7 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300);
                 it.ParentId = Id;
                 it.SortId = 3;
+                it.Icon = "mdi mdi-database-plus";
                 //it.Url= "/rezero/interface_manager.html";
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
