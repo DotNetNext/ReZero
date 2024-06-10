@@ -135,13 +135,10 @@ namespace ReZero.SuperAPI
         public const long Id300009 = 300009;
         #endregion
 
-        #region Code builder
-        [ChineseTextAttribute("代码生成")]
-        [EnglishTextAttribute("Code builder")]
-        public const long CodeBuilderRootId = 400;
-        [ChineseTextAttribute("代码生成")]
-        [EnglishTextAttribute("Code builder")]
-        public const long CodeBuilderManagerId = 400001;
+        #region System setting
+        [ChineseTextAttribute("系统&配置")]
+        [EnglishTextAttribute("System setting")]
+        public const long SystemSettingId = 400; 
         #endregion
 
         #region Data document
