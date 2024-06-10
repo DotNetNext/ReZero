@@ -47,7 +47,7 @@ namespace ReZero.SuperAPI
                 it.Id = SystemSettingId;
                 it.Name = TextHandler.GetInterfaceCategoryText(SystemSettingId);
                 it.ParentId = Id; 
-                it.Icon = "mdi mdi-codepen";
+                it.Icon = "mdi mdi-settings";
                 it.SortId = 499;
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
