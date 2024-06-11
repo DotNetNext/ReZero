@@ -23,21 +23,26 @@ namespace ReZero.SuperAPI
             if (dataModel.Data == null)
                 return dataModel.Data;
             var entityInfo=db.EntityMaintenance.GetEntityInfo(type);
+            var now = DateTime.Now;
+            if (dataModel.DefaultValueColumns.Any(it => it.Type == DefaultValueType.CurrentTime)) 
+            {
+                now = db.GetDate();
+            }
             if (dataModel.Data is IList list)
             {
                 foreach (var item in list)
                 {
-                    SetDatefaultValue(item, entityInfo, db, dataModel);
+                    SetDatefaultValue(item, entityInfo, db, dataModel, now.AddMilliseconds(1));
                 }
             }
             else 
             {
-                SetDatefaultValue(dataModel.Data, entityInfo, db, dataModel);
+                SetDatefaultValue(dataModel.Data, entityInfo, db, dataModel, now);
             } 
             return dataModel.Data;
         }
 
-        private static void SetDatefaultValue(object item, EntityInfo entityInfo, ISqlSugarClient db, DataModel dataModel)
+        private static void SetDatefaultValue(object item, EntityInfo entityInfo, ISqlSugarClient db, DataModel dataModel, DateTime now)
         {
             foreach (var DefaultValue in dataModel.DefaultValueColumns??new List<DataModelDefaultValueColumnParameter>())
             {
@@ -61,7 +66,7 @@ namespace ReZero.SuperAPI
                             case DefaultValueType.CurrentTime:
                                 if (columnInfo.UnderType == typeof(DateTime))
                                 {
-                                    columnInfo.PropertyInfo.SetValue(item, DateTime.Now);
+                                    columnInfo.PropertyInfo.SetValue(item, now);
                                 }
                                 else
                                 {
