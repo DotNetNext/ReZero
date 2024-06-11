@@ -15,17 +15,20 @@ namespace ReZero.SuperAPI
         public void Initialize(SuperAPIOptions options)
         {
             var db = App.PreStartupDb;
-            App.PreStartupDb!.QueryFilter.ClearAndBackup();
-            InitUser(options);
-            InitInterfaceCategory(db);
-            InitEntityInfo(db);
-            InitInterfaceList(db);
-            InitIcon();
-            InitDatabase(db);
-            InitSetting(db);
-            UpgradeCompatibility(db);
-            InitTempate(db);
-            App.PreStartupDb!.QueryFilter.Restore();
+            if (db != null)
+            {
+                App.PreStartupDb!.QueryFilter.ClearAndBackup();
+                InitUser(options);
+                InitInterfaceCategory(db);
+                InitEntityInfo(db);
+                InitInterfaceList(db);
+                InitIcon();
+                InitDatabase(db);
+                InitSetting(db);
+                UpgradeCompatibility(db);
+                InitTempate(db);
+                App.PreStartupDb!.QueryFilter.Restore();
+            }
         }
 
         private void InitTempate(ISqlSugarClient? db)

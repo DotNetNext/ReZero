@@ -130,10 +130,13 @@ namespace ReZero.SuperAPI
                 }
             }
             var db = App.PreStartupDb;
-            db!.QueryFilter.ClearAndBackup();
-            db.Deleteable<ZeroInterfaceList>().Where(it => it.IsAttributeMethod == true).ExecuteCommand();
-            db.Insertable(zeroInterfaceLists).ExecuteCommand();
-            db!.QueryFilter.Restore();
+            if (db != null)
+            {
+                db!.QueryFilter.ClearAndBackup();
+                db.Deleteable<ZeroInterfaceList>().Where(it => it.IsAttributeMethod == true).ExecuteCommand();
+                db.Insertable(zeroInterfaceLists).ExecuteCommand();
+                db!.QueryFilter.Restore();
+            }
         }
 
         /// <summary>
