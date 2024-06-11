@@ -25,8 +25,9 @@ namespace ReZero.SuperAPI
             zeroInterfaceList!.DataModel!.DefaultParameters = new List<DataModelDefaultParameter>();
             // 定义正则表达式
             Regex regex = new Regex(@"{(?<type>\w+):(?<name>\w+)}");
-
-            var sqlQuery = zeroInterfaceList!.DataModel.Sql+string.Empty;
+            var replaceKey =PubConst.Common_RegexWKey;
+            var keyword = PubConst.Common_ArrayKey;
+            var sqlQuery = zeroInterfaceList!.DataModel.Sql!.Replace(keyword, replaceKey) +string.Empty;
             // 匹配所有的 {type:name} 格式
             MatchCollection matches = regex.Matches(sqlQuery);
              
@@ -35,7 +36,11 @@ namespace ReZero.SuperAPI
             {
                 string type = match.Groups["type"].Value;
                 string name = match.Groups["name"].Value; 
-                string replacement = "@" + name;   
+                string replacement = "@" + name;
+                if (type?.Contains(replaceKey) == true) 
+                {
+                    type = type?.Replace(replaceKey, string.Empty) + keyword;
+                }
                 sqlQuery = sqlQuery.Replace(match.Value, replacement);
                 zeroInterfaceList!.DataModel!.DefaultParameters.Add(new DataModelDefaultParameter() {
                     ValueIsReadOnly=false,
@@ -50,7 +55,7 @@ namespace ReZero.SuperAPI
                     currentParameter.ValueIsReadOnly = true;
                 }
             }
-            zeroInterfaceList!.DataModel.Sql = sqlQuery;
+            zeroInterfaceList!.DataModel.Sql = sqlQuery.Replace(replaceKey, keyword);
         }
         
         private  void SetDataModel(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)

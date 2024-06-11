@@ -17,7 +17,7 @@ namespace ReZero.SuperAPI
         public const string Orm_ApiParameterJsonArray = "json array";
         public const string Orm_SubqueryKey = "`SqlFunc`.`Key`.['010203']";
         public const string Orm_WhereValueTypeClaimKey = "Orm_WhereValueTypeClaimKey['16125']";
-        public const string Orm_ClaimkeyName = "claimkey";
+        public const string Orm_ClaimkeyName = "claimkey"; 
 
         public const string Namespace_ResultService = "ReZero.SuperAPI.Items.";
           
@@ -30,6 +30,8 @@ namespace ReZero.SuperAPI
         public readonly static string Common_Format0 = "{0}";
         public readonly static string Common_Format1 = "{1}";
         public readonly static string Common_Q = "?";
+        public readonly static string Common_ArrayKey = "[]";
+        public readonly static string Common_RegexWKey = "_____asfalflsgayfaggugglgfgyydfyiypqombbgjoosbds____";
 
         public const string CacheKey_Type = "ReZero_Type_{0}";
 

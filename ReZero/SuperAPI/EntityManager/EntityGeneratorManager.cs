@@ -263,6 +263,54 @@ namespace ReZero.SuperAPI
             return NativeType.Json;
         }
 
+        public static Type GetTypeByString(string typeName)
+        {
+            if (typeName == null)
+                return typeof(object); // Default to object type if no match is found
+
+            typeName = typeName.Trim().ToLower();
+
+            if (typeName == "int")
+                return typeof(int);
+            else if (typeName == "uint")
+                return typeof(uint);
+            else if (typeName == "short")
+                return typeof(short);
+            else if (typeName == "ushort")
+                return typeof(ushort);
+            else if (typeName == "long")
+                return typeof(long);
+            else if (typeName == "ulong")
+                return typeof(ulong);
+            else if (typeName == "byte")
+                return typeof(byte);
+            else if (typeName == "sbyte")
+                return typeof(sbyte);
+            else if (typeName == "float")
+                return typeof(float);
+            else if (typeName == "double")
+                return typeof(double);
+            else if (typeName == "decimal")
+                return typeof(decimal);
+            else if (typeName == "char")
+                return typeof(char);
+            else if (typeName == "bool")
+                return typeof(bool);
+            else if (typeName == "string")
+                return typeof(string);
+            else if (typeName == "datetime")
+                return typeof(DateTime);
+            else if (typeName == "timespan")
+                return typeof(TimeSpan);
+            else if (typeName == "guid")
+                return typeof(Guid);
+            else if (typeName == "byte[]")
+                return typeof(byte[]);
+            else if (typeName == "jtoken")
+                return typeof(Newtonsoft.Json.Linq.JToken); // Assuming JToken is from Newtonsoft.Json.Linq
+            else
+                return typeof(object); // Default to object type if no match is found
+        }
 
         public static string GetNativeTypeName(string  name)
         {

@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using Newtonsoft.Json;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -22,6 +23,13 @@ namespace ReZero.SuperAPI
                 {
                    var claimItem=dataModel.ClaimList.FirstOrDefault(it => it.Key?.ToLower() == item.Name?.ToLower());
                     p = new SugarParameter("@" + item.Name, claimItem.Value);
+                }
+                if (item.ValueType?.Contains(PubConst.Common_ArrayKey) == true) 
+                {
+                    var type = item.ValueType.Replace(PubConst.Common_ArrayKey, string.Empty);
+                    var arrayType= typeof(List<>).MakeGenericType( EntityGeneratorManager.GetTypeByString(type));
+                    var value=JsonConvert.DeserializeObject(item.Value?.ToString()?? PubConst.Common_ArrayKey, arrayType);
+                    p = new SugarParameter("@" + item.Name, value);
                 }
                 pars.Add(p);
             }
