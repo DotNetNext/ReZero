@@ -23,7 +23,7 @@ namespace ReZero.SuperAPI
             var data = await db.QueryableByObject(type)
                 .InSingleAsync(pkValue);
             var typeBuilder = GetTypeBuilder(db, parameter, type, entity);
-            var parentCodeName = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(parameter?.ParentCodePropertyName ?? ""));
+            var parentCodeName = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(parameter?.ParentCodePropertyName?.Trim() ?? ""));
             var codeName = entity.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(parameter?.CodePropertyName ?? ""));
             CheckPars(parentCodeName, codeName);
             object? parentId = new object();
