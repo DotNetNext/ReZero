@@ -45,18 +45,18 @@ namespace ReZero.DependencyInjection
             {
                 if (@interface == typeof(ITransientContract))
                 {
-                    services.AddTransient(type, type);
+                    services.AddTransient(type!, type!);
                     foreach (var item in interfacesNoRezero)
                     {
-                        services.AddTransient(item, type);
+                        services.AddTransient(item, type!);
                     }
                 }
                 else if (@interface == typeof(IScopeContract))
                 {
-                    services.AddScoped(type, type);
+                    services.AddScoped(type!, type!);
                     foreach (var item in interfacesNoRezero)
                     {
-                        services.AddScoped(item, type);
+                        services.AddScoped(item, type!);
                     }
                 }
                 else if (@interface == typeof(ISingletonContract))
