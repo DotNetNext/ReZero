@@ -127,6 +127,11 @@ var tools = {
                     this.data = null;
                 });
         }, 3000)
+    },
+    jsonToUrl: function (json) {
+        return Object.keys(json).map(function (key) {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(json[key]);
+        }).join('&');
     }
 }
 Array.prototype.removeArrayItem = function (item) {

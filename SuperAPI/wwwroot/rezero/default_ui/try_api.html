@@ -66,6 +66,12 @@
         <p>Loading...</p>
     </div> 
     <div id="editor" class="m-t-10" style="padding:10px;width: 100%; height: 300px;"></div>
+
+    <div v-if="responseUrl" class="alert alert-success m-t-10 m-b-10">
+        <div class="m-b-10" v-if="data.HttpMethod=='Post'">Post同时支持Raw、表单和url参数</div>
+        {{responseUrl}}
+    </div>
+
 </div> 
 <script src="js/ace/src-min/ace.js"></script>
 <script>
@@ -75,6 +81,7 @@
             data: null,
             error: null,
             response: "",
+            responseUrl: null,
             toggle:true,
             message: "注意：如果找不到表需要到【菜单：实体表维护】点按钮【同步】建表"
         },
@@ -116,6 +123,16 @@
                         // 更新响应
                         vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditorValue(vm.response);
+                        // 定义HTTP方法和原始URL  
+                        var httpMethod = this.data.HttpMethod;
+                        var baseUrl = window.location.origin + fullUrl;
+
+                        // 将postData转换为URL参数  
+                        var queryParams = tools.jsonToUrl(json);
+                        if (queryParams)
+                            queryParams = "?" + queryParams;
+                        // 使用模板字符串构建完整的响应URL  
+                        this.responseUrl = `${httpMethod} : ${baseUrl}${queryParams}`;
                     }.bind(vm))
                     .catch(function (error) {
                         // 处理错误
@@ -143,6 +160,18 @@
                         // 更新响应
                         vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditorValue(vm.response);
+
+                        // 定义HTTP方法和原始URL  
+                        var httpMethod = this.data.HttpMethod;
+                        var baseUrl = window.location.origin + fullUrl;
+
+                        // 将postData转换为URL参数  
+                        var queryParams = tools.jsonToUrl(postData);
+                        if (queryParams)
+                            queryParams = "?" + queryParams;
+                        // 使用模板字符串构建完整的响应URL  
+                        this.responseUrl = `${httpMethod} : ${baseUrl}${queryParams}`;
+
                     }.bind(vm))
                     .catch(function (error) {
                         // 处理错误
