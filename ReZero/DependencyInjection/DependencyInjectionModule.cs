@@ -33,6 +33,10 @@ namespace ReZero.DependencyInjection
 
         private static void InitDefaultType(IServiceCollection services, Type  type, Type[] interfaces, IEnumerable<Type> interfacesNoRezero)
         {
+            if (type == null) 
+            {
+                return; 
+            }
             if (type?.GetGenericArguments()?.Length > 0) 
             {
                 return;
