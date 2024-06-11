@@ -99,6 +99,19 @@ namespace ReZero.SuperAPI
         #endregion
 
 
+        #region  Inset Or Update
+        [ChineseText("插入或者更新")]
+        [EnglishText("Insert or update")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_InsertOrUpdateCN, PubConst.DataSource_ActionTypeGroupName_InsertOrUpdateEN)]
+        InsertOUpdateObject = 60000,
+
+        [ChineseText("批量插入或者更新")]
+        [EnglishText("Insert or update range")]
+        [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_InsertOrUpdateCN, PubConst.DataSource_ActionTypeGroupName_InsertOrUpdateEN)]
+        InsertOrUpdateRange = 60001,
+        #endregion
+
+
         #region 自定义方法
         [ChineseText("SQL脚本")]
         [EnglishText("SQL Script")]

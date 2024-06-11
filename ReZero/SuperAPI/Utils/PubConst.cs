@@ -46,6 +46,8 @@ namespace ReZero.SuperAPI
         public const string DataSource_ActionTypeGroupName_MyMethodCN = "自定义方法";
         public const string DataSource_ActionTypeGroupName_MyMethodEN = "My method";
         public const string DataSource_ApplicationJson = "application/json; charset=utf-8";
+        public const string DataSource_ActionTypeGroupName_InsertOrUpdateCN = "插入或更新";
+        public const string DataSource_ActionTypeGroupName_InsertOrUpdateEN = "Insert or update";
 
         public const string Jwt_TokenUrl = "/api/rezero/token";
         public const string Jwt_GetJwtInfo = "/api/rezero/getuserinfo";
