@@ -858,6 +858,8 @@
                     vueData.data = [];
                     var oldActionList = vueData.actionList;
                     vueData.actionList = null;
+                    var currentString = JSON.stringify(vueData); 
+                    vueData.actionList = oldActionList;
                     formData.Json = {
                         Id: this.editId,
                         Columns:this.selectedColumns,
@@ -867,7 +869,7 @@
                         WhereRelationTemplate: this.selectedWhereRelationTemplate,
                         OrderBys: this.selectedOrderBys,
                         OrderBysEnableSort: this.selectedOrderBys_EnableSort,
-                        CurrentDataString: JSON.stringify(vueData),
+                        CurrentDataString: currentString,
                         DataBaseId: this.databaseId,
                         DefaultValueColumns: this.saveDefaultValueColumns
                     };
@@ -879,7 +881,6 @@
                                 btnAddOrUpdateColse.click();
                                 this.error = null;
                                 th.onSearch();
-                                vueData.actionList = oldActionList;
                             }
                             else {
                                 tools.alert(response.data.message);
