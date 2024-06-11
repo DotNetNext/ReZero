@@ -856,6 +856,8 @@
                     formData.DatabaseId = this.DatabaseId; 
                     var vueData = this.$data;
                     vueData.data = [];
+                    var oldActionList = vueData.actionList;
+                    vueData.actionList = null;
                     formData.Json = {
                         Id: this.editId,
                         Columns:this.selectedColumns,
@@ -877,6 +879,7 @@
                                 btnAddOrUpdateColse.click();
                                 this.error = null;
                                 th.onSearch();
+                                vueData.actionList = oldActionList;
                             }
                             else {
                                 tools.alert(response.data.message);
