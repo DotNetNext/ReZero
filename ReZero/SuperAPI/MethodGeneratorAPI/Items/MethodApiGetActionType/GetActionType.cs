@@ -34,13 +34,15 @@ namespace ReZero.SuperAPI
             foreach (var item in it.ToList())
             {
                 var eles = GetFormElements(item);
-                eles.Add(new  ActionTypeFormElementModel()
+                if (eles.Any())
                 {
-                    
-                    ElementType= ElementType.Select,
-                    Name=nameof(HttpMethod), 
-                    Text= nameof(HttpMethod),
-                    SelectDataSource=new List<ActionTypeFormElementSelectDataSourceModel>() 
+                    eles.Add(new ActionTypeFormElementModel()
+                    {
+
+                        ElementType = ElementType.Select,
+                        Name = nameof(HttpMethod),
+                        Text = nameof(HttpMethod),
+                        SelectDataSource = new List<ActionTypeFormElementSelectDataSourceModel>()
                     {
                         new ActionTypeFormElementSelectDataSourceModel()
                         {
@@ -68,8 +70,9 @@ namespace ReZero.SuperAPI
                             Value=HttpRequestMethod.DELETE.ToString().FirstCharToUpper(),
                         },
                     }
-                    
-                });
+
+                    });
+                }
                 items.Add(new ActionTypeItemModel()
                 {
                      Text=item.Text,
