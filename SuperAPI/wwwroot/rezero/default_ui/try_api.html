@@ -123,16 +123,8 @@
                         // 更新响应
                         vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditorValue(vm.response);
-                        // 定义HTTP方法和原始URL  
-                        var httpMethod = this.data.HttpMethod;
-                        var baseUrl = window.location.origin + fullUrl;
-
-                        // 将postData转换为URL参数  
-                        var queryParams = tools.jsonToUrl(json);
-                        if (queryParams)
-                            queryParams = "?" + queryParams;
-                        // 使用模板字符串构建完整的响应URL  
-                        this.responseUrl = `${httpMethod} : ${baseUrl}${queryParams}`;
+                        this.setResponseUrl(fullUrl, json);
+                     
                     }.bind(vm))
                     .catch(function (error) {
                         // 处理错误
@@ -160,17 +152,7 @@
                         // 更新响应
                         vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditorValue(vm.response);
-
-                        // 定义HTTP方法和原始URL  
-                        var httpMethod = this.data.HttpMethod;
-                        var baseUrl = window.location.origin + fullUrl;
-
-                        // 将postData转换为URL参数  
-                        var queryParams = tools.jsonToUrl(postData);
-                        if (queryParams)
-                            queryParams = "?" + queryParams;
-                        // 使用模板字符串构建完整的响应URL  
-                        this.responseUrl = `${httpMethod} : ${baseUrl}${queryParams}`;
+                        this.setResponseUrl(fullUrl, postData);
 
                     }.bind(vm))
                     .catch(function (error) {
@@ -274,7 +256,20 @@
                     });
                 }
                 return result;   
-            }  
+            },
+            setResponseUrl: function (fullUrl,json)
+            {
+                // 定义HTTP方法和原始URL  
+                var httpMethod = this.data.HttpMethod;
+                var baseUrl = window.location.origin + fullUrl;
+
+                // 将postData转换为URL参数  
+                var queryParams = tools.jsonToUrl(json);
+                if (queryParams)
+                    queryParams = "?" + queryParams;
+                // 使用模板字符串构建完整的响应URL  
+                this.responseUrl = `${httpMethod} : ${baseUrl}${queryParams}`;
+            }
         }
     });
 </script>

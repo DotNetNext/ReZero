@@ -24,7 +24,14 @@ namespace SuperAPITest.Controllers
         public Object C(ClassA classA)
         {
             return classA;
-        }  
+        }
+
+        [ApiMethod("我是D方法")]
+        [UrlParameters]
+        public int D(int num, int num2)
+        {
+            return num + num2;
+        }
     }
 
     public class ClassA 

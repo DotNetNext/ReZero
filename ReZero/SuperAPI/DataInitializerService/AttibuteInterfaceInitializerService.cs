@@ -13,6 +13,8 @@ namespace ReZero.SuperAPI
         {
             var classAttribute = type.GetCustomAttribute<ApiAttribute>();
             var methodAttribute = method.GetCustomAttribute<ApiMethodAttribute>();
+            var urlParametersAttribute = method.GetCustomAttribute<UrlParametersAttribute>();
+            var isUrlParameters = urlParametersAttribute != null;
             var groupName = methodAttribute.GroupName ?? classAttribute.GroupName ?? type.Name;
             string url = GetUrl(type, method, classAttribute, methodAttribute);
             var methodDesc = methodAttribute.Description ?? string.Empty;
@@ -40,6 +42,8 @@ namespace ReZero.SuperAPI
             var isAdd = true;
             foreach (var item in method.GetParameters())
             {
+                var nonNullableType = item.ParameterType.GetNonNullableType();
+                it.Url = GetUrl(type, isUrlParameters, it.Url, item, nonNullableType);
                 DataModelDefaultParameter dataModelDefaultParameter = new DataModelDefaultParameter();
                 dataModelDefaultParameter.Name = item.Name;
                 if (IsDefaultType(item.ParameterType))
@@ -73,6 +77,19 @@ namespace ReZero.SuperAPI
                     it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
             }
             return it;
+        }
+
+        private static string GetUrl(Type type, bool isUrlParameters, string url, ParameterInfo item, Type nonNullableType)
+        {
+            if (isUrlParameters && !(nonNullableType.IsValueType || nonNullableType == typeof(string)))
+            {
+                throw new Exception(TextHandler.GetCommonText($"{type.FullName}中的{item.Name}方法使用[UrlParameters] 只能是基础类型参数。{nonNullableType.Name}类型不支持", $"The {item.Name} method in {type.FullName} uses [UrlParameters] as a base type parameter only. The {nonNullableType.Name} type is not supported"));
+            }
+            else if (isUrlParameters)
+            {
+                url += "/{" + item.Name + "}";
+            } 
+            return url;
         }
 
         private static string GetUrl(Type type, MethodInfo method, ApiAttribute classAttribute, ApiMethodAttribute methodAttribute)

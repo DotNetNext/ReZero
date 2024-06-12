@@ -17,6 +17,12 @@ namespace ReZero.SuperAPI
             this.Description = description;
         }
     }
+    [AttributeUsage(AttributeTargets.Method)]
+    public class UrlParametersAttribute : Attribute
+    {
+     
+    }
+
     public enum HttpType
     { 
         Post=0,
