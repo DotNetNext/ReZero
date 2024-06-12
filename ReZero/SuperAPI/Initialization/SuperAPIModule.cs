@@ -38,8 +38,15 @@ namespace ReZero.SuperAPI
                 var corsOptions = apiOptions.InterfaceOptions.CorsOptions;
                 services.AddCors(option =>
                 option.AddPolicy(corsOptions.PolicyName,
-                policy => policy.WithHeaders(corsOptions.Headers).WithMethods(corsOptions.Methods).WithOrigins(corsOptions.Origins))
-                );
+                policy =>
+                {
+                    policy.WithHeaders(corsOptions.Headers).WithMethods(corsOptions.Methods).WithOrigins(corsOptions.Origins);
+                    if (corsOptions.AllowCredentials)
+                    {
+                        policy.AllowCredentials();
+                    }
+                })
+                ); 
                 services.AddSingleton(provider=>corsOptions);
                 services.AddTransient<IStartupFilter,SuperAPICorsFilter>();
             }
