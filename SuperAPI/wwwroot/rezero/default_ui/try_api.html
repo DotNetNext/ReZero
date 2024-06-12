@@ -277,7 +277,8 @@
 
                 if (isUrlParameters)
                 {
-                    return `${httpMethod} : ${baseUrl}`;
+                    this.responseUrl = `${httpMethod} : ${baseUrl}`;
+                    return;
                 }
 
                 // 将postData转换为URL参数  

@@ -10,13 +10,29 @@ namespace ReZero.SuperAPI
 {
     public partial class BindHttpParameters
     {
-        internal void Bind(DataModel? dataModel, HttpContext context)
+        internal void Bind(DataModel? dataModel, HttpContext context, string? path, bool isUrlParameters, ZeroInterfaceList interInfo)
         {
             var formDatas = GetFormDatas(context);
             BindPageParameters(dataModel, context, formDatas);
             BindDefaultParameters(dataModel, context, formDatas);
             BindOrderByParameters(dataModel, context, formDatas);
             BindGroupByParameters(dataModel, context, formDatas);
+            BindUrlParameters(isUrlParameters,path, dataModel!, interInfo);
+        }
+
+        private void BindUrlParameters(bool isUrlParameters, string? path, DataModel dataModel, ZeroInterfaceList interInfo)
+        {
+            if (isUrlParameters) 
+            {
+                var parameterString = path!.Replace(interInfo.OriginalUrl!.ToLower(), string.Empty);
+                var parameters= parameterString.Split('/').Where(it=>!string.IsNullOrWhiteSpace(it)).ToArray();
+                var index = 0;
+                foreach (var item in dataModel.DefaultParameters??new List<DataModelDefaultParameter>())
+                {
+                    item.Value= parameters[index];
+                    index++;
+                }
+            }
         }
 
         private void BindGroupByParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)

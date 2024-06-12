@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,11 @@ namespace ReZero.SuperAPI
         public bool IsApi(string url)
         {
             var db = App.Db;
-            var isAnyUrl = CacheManager<ZeroInterfaceList>.Instance.GetList().Any(it => it!.Url!.ToLower() == url.ToLower());
+            var isAnyUrl = CacheManager<ZeroInterfaceList>.Instance.GetList()
+                .Any(it =>
+                it!.Url!.ToLower() == url.ToLower()||
+                (it.OriginalUrl!=null&&url.ToLower().StartsWith(it.OriginalUrl.ToLower()))
+                );
             return isAnyUrl;
         }
 
@@ -51,7 +56,13 @@ namespace ReZero.SuperAPI
             var handler = helper.GetHandler(requestMethod, context);
             var db = App.Db;
             var path = context.Request.Path.ToString()?.ToLower(); 
-            var interInfo = CacheManager<ZeroInterfaceList>.Instance.GetList().Where(it => it.Url!.ToLower() == path).First();
+            var interInfo = CacheManager<ZeroInterfaceList>
+                                             .Instance.GetList()
+                                             .Where(it =>
+                                                     it.Url!.ToLower() == path
+                                                     ||
+                                                     (it.OriginalUrl != null && path!.ToLower().StartsWith(it.OriginalUrl.ToLower()))
+                                                    )?.First();
             interInfo=db.Utilities.TranslateCopy(interInfo);
             var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,HttpContext = context,InterfaceInfo=interInfo };
             if (interInfo == null)
@@ -69,7 +80,7 @@ namespace ReZero.SuperAPI
                     interInfo!.DataModel!.ResultType = interInfo.DataModel?.ResultType;
                     interInfo!.DataModel!.Sql = interInfo.DataModel?.Sql;
                     interInfo!.DataModel!.DataBaseId = interInfo.DataModel?.DataBaseId ?? 0;
-                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context);
+                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context,path,!string.IsNullOrEmpty(interInfo.OriginalUrl),interInfo);
                     dynamicInterfaceContext.DataModel = interInfo.DataModel;
                     var service = DependencyInjection.DependencyResolver.Provider;
                     dynamicInterfaceContext.ServiceProvider = service;

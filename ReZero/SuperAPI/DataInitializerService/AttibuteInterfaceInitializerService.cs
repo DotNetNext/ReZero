@@ -16,8 +16,8 @@ namespace ReZero.SuperAPI
             var urlParametersAttribute = method.GetCustomAttribute<UrlParametersAttribute>();
             var isUrlParameters = urlParametersAttribute != null;
             var groupName = methodAttribute.GroupName ?? classAttribute.GroupName ?? type.Name;
-            var oldUrl= isUrlParameters? classAttribute.Url:null;
             string url = GetUrl(type, method, classAttribute, methodAttribute);
+            var oldUrl = isUrlParameters ? url : null;
             var methodDesc = methodAttribute.Description ?? string.Empty;
             ZeroInterfaceList it = new ZeroInterfaceList();
             it.HttpMethod = methodAttribute.HttpMethod.ToString();
