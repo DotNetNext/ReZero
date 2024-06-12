@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
 {
     public partial class QueryCommon :CommonDataService, IDataService
     {
-        private ISqlSugarClient? _sqlSugarClient;
+        public ISqlSugarClient? _sqlSugarClient;
         private ISqlBuilder? _sqlBuilder;
         public async Task<object> ExecuteAction(DataModel dataModel)
         {

@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
 {
     public partial class SaveInterfaceListQueryCommon : BaseSaveInterfaceList, ISaveInterfaceList
     {
-        private void SetWhere(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
+        public void SetWhere(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
             var json = saveInterfaceListModel.Json!;
             if (IsWhere(json))

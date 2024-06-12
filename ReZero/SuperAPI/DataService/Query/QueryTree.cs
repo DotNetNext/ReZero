@@ -30,9 +30,22 @@ namespace ReZero.SuperAPI
             var treeType = typeBuilder.WithCache().BuilderType();
             if (data != null)
                 parentId = data.GetType()?.GetProperty(parentCodeName.PropertyName)?.GetValue(data) ?? 1;
-            var result = await db.QueryableByObject(treeType)
-                          .ToTreeAsync(parameter?.ChildPropertyName, parentCodeName.PropertyName, parentId, codeName.PropertyName);
-            return result;
+
+            if (dataModel.DefaultParameters.Count() > 1)
+            {
+                var queryable = db.QueryableByObject(treeType, PubConst.Orm_TableDefaultMasterTableShortName);
+                var queryCommon = new QueryCommon();
+                queryCommon._sqlSugarClient = db;
+                dataModel.DefaultParameters=dataModel.DefaultParameters.Skip(1).ToList();
+                queryable = queryCommon.Where(treeType, dataModel, queryable);
+                return await queryable.ToTreeAsync(parameter?.ChildPropertyName, parentCodeName.PropertyName, parentId, codeName.PropertyName);
+            }
+            else
+            {
+                var result = await db.QueryableByObject(treeType)
+                              .ToTreeAsync(parameter?.ChildPropertyName, parentCodeName.PropertyName, parentId, codeName.PropertyName);
+                return result;
+            }
         }
 
         private static void CheckEntityInfo(EntityColumnInfo pkColumnInfo)

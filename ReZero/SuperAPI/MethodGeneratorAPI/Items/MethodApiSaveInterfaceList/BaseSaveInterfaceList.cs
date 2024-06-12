@@ -103,7 +103,7 @@ namespace ReZero.SuperAPI
             App.Db.Storageable(zeroInterfaceList).ExecuteCommand();
             return true;
         }
-        private long GetTableId(string? tableId)
+        public long GetTableId(string? tableId)
         {
             var db = App.Db;
             var entityInfo= db.Queryable<ZeroEntityInfo>()

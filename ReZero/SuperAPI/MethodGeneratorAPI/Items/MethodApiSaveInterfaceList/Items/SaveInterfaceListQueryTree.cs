@@ -13,6 +13,9 @@ namespace ReZero.SuperAPI
             ZeroInterfaceList zeroInterfaceList = new ZeroInterfaceList();
             base.SetCommonProperties(zeroInterfaceList, saveInterfaceListModel);
             this.SetProperties(zeroInterfaceList, saveInterfaceListModel);
+            var commonQuery = new SaveInterfaceListQueryCommon();
+            commonQuery.zeroEntityInfo =App.Db.Queryable<ZeroEntityInfo>().Includes(it=>it.ZeroEntityColumnInfos).InSingle(zeroInterfaceList.DataModel!.TableId) ;
+            commonQuery.SetWhere(saveInterfaceListModel, zeroInterfaceList);
             return base.SaveData(zeroInterfaceList);
         }
         private void SetProperties(ZeroInterfaceList zeroInterfaceList, SaveInterfaceListModel saveInterfaceListModel)

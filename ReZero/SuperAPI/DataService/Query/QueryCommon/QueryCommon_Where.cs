@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public partial class QueryCommon : IDataService
     {
-        private   QueryMethodInfo Where(Type type, DataModel dataModel, QueryMethodInfo queryObject)
+        public   QueryMethodInfo Where(Type type, DataModel dataModel, QueryMethodInfo queryObject)
         {
             List<IConditionalModel> conditionalModels = new List<IConditionalModel>();
             List<IFuncModel> funcModels = new List<IFuncModel>();
@@ -134,7 +134,7 @@ namespace ReZero.SuperAPI
                 conditionalModels.Clear();
                 conditionalModels.Add(new ConditionalModel()
                 {
-                    FieldName = UtilMethods.FiledNameSql(),
+                    FieldName = UtilMethods.FieldNameSql(),
                     ConditionalType = ConditionalType.Equal,
                     FieldValue = PubConst.Orm_SqlFalseString
                 });
