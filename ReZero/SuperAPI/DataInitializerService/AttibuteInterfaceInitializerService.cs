@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
             var urlParametersAttribute = method.GetCustomAttribute<UrlParametersAttribute>();
             var isUrlParameters = urlParametersAttribute != null;
             var groupName = methodAttribute.GroupName ?? classAttribute.GroupName ?? type.Name;
+            var oldUrl= isUrlParameters? classAttribute.Url:null;
             string url = GetUrl(type, method, classAttribute, methodAttribute);
             var methodDesc = methodAttribute.Description ?? string.Empty;
             ZeroInterfaceList it = new ZeroInterfaceList();
@@ -25,6 +26,7 @@ namespace ReZero.SuperAPI
             it.InterfaceCategoryId = classAttribute.InterfaceCategoryId;
             it.Name = methodDesc;
             it.Url = url;
+            it.OriginalUrl = oldUrl;
             it.IsInitialized = false;
             it.IsAttributeMethod = true;
             it.DataModel = new DataModel()

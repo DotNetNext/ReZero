@@ -8,6 +8,8 @@ namespace ReZero.SuperAPI
     public class ZeroInterfaceList : DbBase
     {
         public string? Url { get; set; }
+        [SugarColumn(IsNullable =true)]
+        public string? OriginalUrl { get; set; }
         public string? Name { get; set; } 
         public long InterfaceCategoryId { get; set; }
         [SugarColumn(IsJson =true,IsNullable =true, ColumnDataType = StaticConfig.CodeFirst_BigString)]

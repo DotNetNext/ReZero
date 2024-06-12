@@ -117,13 +117,18 @@
                     editor.setValue(JSON.stringify({ message: "json格式不标准" },null,4));
                     return;
                 }
+                var isUrlParameters = this.isUrlParameters(fullUrl);
+                if (isUrlParameters)
+                {
+                    fullUrl = this.getUrlByUrlParameters(fullUrl);
+                }
                 // 发送 POST 请求
                 axios.post(fullUrl, json , jwHeader)
                     .then(function (response) {
                         // 更新响应
                         vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditorValue(vm.response);
-                        this.setResponseUrl(fullUrl, json);
+                        this.setResponseUrl(fullUrl, json, isUrlParameters);
                      
                     }.bind(vm))
                     .catch(function (error) {
@@ -145,14 +150,18 @@
                 }
                 if (txtOrderDynamicParemters.value) {
                     postData["OrderDynamicParemters"] = txtOrderDynamicParemters.value;
-                } 
+                }
+                var isUrlParameters = this.isUrlParameters(fullUrl);
+                if (isUrlParameters) {
+                    fullUrl = this.getUrlByUrlParameters(fullUrl);
+                }
                 // 发送 POST 请求
                 axios.post(fullUrl, postData, jwHeader)
                     .then(function (response) {
                         // 更新响应
                         vm.response = JSON.stringify(response.data, null, 4);
                         this.setEditorValue(vm.response);
-                        this.setResponseUrl(fullUrl, postData);
+                        this.setResponseUrl(fullUrl, postData, isUrlParameters);
 
                     }.bind(vm))
                     .catch(function (error) {
@@ -257,11 +266,19 @@
                 }
                 return result;   
             },
-            setResponseUrl: function (fullUrl,json)
+            setResponseUrl: function (fullUrl,json,isUrlParameters)
             {
+
+
                 // 定义HTTP方法和原始URL  
                 var httpMethod = this.data.HttpMethod;
                 var baseUrl = window.location.origin + fullUrl;
+
+
+                if (isUrlParameters)
+                {
+                    return `${httpMethod} : ${baseUrl}`;
+                }
 
                 // 将postData转换为URL参数  
                 var queryParams = tools.jsonToUrl(json);
@@ -269,6 +286,21 @@
                     queryParams = "?" + queryParams;
                 // 使用模板字符串构建完整的响应URL  
                 this.responseUrl = `${httpMethod} : ${baseUrl}${queryParams}`;
+            },
+            isUrlParameters: function (fullUrl)
+            {
+                var isUrlParameters = (fullUrl + "").indexOf("/{") > 0 && (fullUrl + "").indexOf("}") > 0;
+                return isUrlParameters;
+            },
+            getUrlByUrlParameters: function (fullUrl) {
+                var url = fullUrl;
+                if (this.data.DataModel.DefaultParameters) {
+                    this.data.DataModel.DefaultParameters.forEach(function (param) {
+                        var regex = new RegExp("{" + param.Name + "}", "g");
+                        url = url.replace(regex, param.Value);
+                    });
+                }
+                return url;
             }
         }
     });
