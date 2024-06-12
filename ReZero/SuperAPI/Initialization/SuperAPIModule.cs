@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 using ReZero.Configuration;
+using System.Data;
 namespace ReZero.SuperAPI
 {
     public static partial class SuperAPIModule
@@ -79,7 +80,7 @@ namespace ReZero.SuperAPI
         /// <param name="options">ReZero options.</param>
         private static void InitializeDataBase(SuperAPIOptions options)
         {
-            if (options.DatabaseOptions == null) 
+            if (options.DatabaseOptions == null)
             {
                 options.DatabaseOptions = new DatabaseOptions();
             }
@@ -87,15 +88,24 @@ namespace ReZero.SuperAPI
             {
                 return;
             }
-            if (options.DatabaseOptions?.ConnectionConfig?.DbType==SqlSugar.DbType.Sqlite&& options.DatabaseOptions?.ConnectionConfig?.ConnectionString == null) 
+            if (options.DatabaseOptions?.ConnectionConfig?.DbType == SqlSugar.DbType.Sqlite && options.DatabaseOptions?.ConnectionConfig?.ConnectionString == null)
             {
                 options.DatabaseOptions!.ConnectionConfig.ConnectionString = "datasource=rezero.db";
             }
             var types = PubMethod.GetTypesDerivedFromDbBase(typeof(DbBase));
             var db = new DatabaseContext(options.DatabaseOptions!.ConnectionConfig).SugarClient;
             App.PreStartupDb = db;
-            db.DbMaintenance.CreateDatabase();
+            if (IsSupportCreateDatabase(db))
+            {
+                db.DbMaintenance.CreateDatabase();
+            }
             db.CodeFirst.InitTables(types?.ToArray());
+        }
+
+        private static bool IsSupportCreateDatabase(SqlSugar.ISqlSugarClient db)
+        {
+            return db.CurrentConnectionConfig.DbType != SqlSugar.DbType.Oracle &&
+                            db.CurrentConnectionConfig.DbType != SqlSugar.DbType.Dm;
         }
 
 
