@@ -238,6 +238,9 @@
                                                 </template>
                                                 <!--Where-->
                                                 <template v-if="item.ElementType==11">
+                                                    <div v-if="item.Placeholder" class="alert-success p-10">
+                                                        {{item.Placeholder}}
+                                                    </div>
                                                     <span @click="openMiniWhere(item)" class="btn   btn-primary m-tb-10">
                                                         <i class="mdi mdi-settings"></i> 配置条件
                                                     </span>
@@ -838,6 +841,7 @@
                 this.currentActionTypeContext = [];
                 this.selectDefaultValueColumns = [];
                 this.saveDefaultValueColumns = [];
+                this.selectdWherePreviewString = null;
                 this.editId = 0;
             },
             openAdd: function (item) {

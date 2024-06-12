@@ -31,9 +31,9 @@ namespace ReZero.SuperAPI
             {
                 ElementType = ElementType.Where,
                 Name = "Where",
-                Text = TextHandler.GetCommonText("条件", "Where"),
-                Placeholder="",
-                IsRequired = true,
+                Text = TextHandler.GetCommonText("可选条件", "Where"),
+                Placeholder="注意:不能添加影响树型构造的条件，也就是加了条件这个结果还能构造树",
+                IsRequired = false,
             });
             return result;
         } 
