@@ -26,7 +26,15 @@ namespace ReZero.SuperAPI
                 Name = "TreeParentCode",
                 Text = TextHandler.GetCommonText("父级编号字段名", "Parent number Field name"),
                 IsRequired = true,
-            }); 
+            });
+            result.Insert(5, new ActionTypeFormElementModel()
+            {
+                ElementType = ElementType.Where,
+                Name = "Where",
+                Text = TextHandler.GetCommonText("条件", "Where"),
+                Placeholder="",
+                IsRequired = true,
+            });
             return result;
         } 
     }

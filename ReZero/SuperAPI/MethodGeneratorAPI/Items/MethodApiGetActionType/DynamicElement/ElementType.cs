@@ -15,6 +15,7 @@ namespace ReZero.SuperAPI
         SqlText=7,
         DefaultValueColumn=8,
         UpdateColumns = 9,
-        UpdateResultType=10
+        UpdateResultType=10,
+        Where = 11
     }
 }

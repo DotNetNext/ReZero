@@ -236,6 +236,21 @@
                                                         <option value="2">受影响行数</option>
                                                     </select>
                                                 </template>
+                                                <!--Where-->
+                                                <template v-if="item.ElementType==11">
+                                                    <span @click="openMiniWhere(item)" class="btn   btn-primary m-tb-10">
+                                                        <i class="mdi mdi-settings"></i> 配置条件
+                                                    </span>
+                                                    <span @click="showWherePreview" class="btn btn-info">
+                                                        <i class="mdi mdi-refresh"></i> 刷新预览
+                                                    </span>
+                                                    <span @click="clearMiniWhere(item)" class="btn btn-danger m-r-10">
+                                                        <i class="mdi mdi-do-not-disturb"></i> 清空条件
+                                                    </span> 
+                                                    <div>
+                                                        {{selectdWherePreviewString}}
+                                                    </div>
+                                                </template>
                                             </div>
                                         </div>
                                     </form>
@@ -1112,6 +1127,32 @@
                     this.selectedWheres.push(this.getWhereModel());
                 }
                 btnAddWhere.click();
+            },
+            openMiniWhere: function () {
+                var tableValue = document.querySelectorAll('[name=TableId]')[0].value;
+                if (!tableValue) {
+                    tools.alert("请先选择主表");
+                    return;
+                }
+                if (this.selectedWheres.length == 0) {
+                    this.selectedWheres.push(this.getWhereModel());
+                }
+                var th = this;
+                var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        th.columns = response.data;
+                        th.selectedColumns = th.columns;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    }); 
+                btnAddWhere.click();
+            },
+            clearMiniWhere: function () {
+                this.selectedColumns = [];
+                this.selectedWheres = [];
+                this.selectdWherePreviewString = null;
             },
             saveBtnWhere: function () {
                 btnCloseAddWhere.click();
