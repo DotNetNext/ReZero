@@ -305,6 +305,12 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Clear internal cache")]
         public const long ClearAllInternalCacheId = 57;
 
+
+        [ChineseTextAttribute("根据SQL返回Excel")]
+        [EnglishTextAttribute("Sql to excel")]
+        public const long ExecuetSqlReturnExcelId = 58;
+        
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

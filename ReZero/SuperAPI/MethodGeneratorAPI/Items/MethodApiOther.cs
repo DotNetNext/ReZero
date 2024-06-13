@@ -1,6 +1,8 @@
-﻿using SqlSugar;
+﻿using ReZero.Excel;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Text;
@@ -78,7 +80,7 @@ namespace ReZero.SuperAPI
         {
             var db = App.GetDbById(databaseId);
             sql = sql + string.Empty;
-            if (db!.CurrentConnectionConfig.DbType == DbType.Oracle && sql.Contains(";") && !sql.ToLower().Contains("begin"))
+            if (db!.CurrentConnectionConfig.DbType == SqlSugar.DbType.Oracle && sql.Contains(";") && !sql.ToLower().Contains("begin"))
             {
                 var sqls = sql.Split(';');
                 List<object> result = new List<object>();
@@ -104,6 +106,30 @@ namespace ReZero.SuperAPI
                 return result;
             }
         }
+         
+        public object ExecuetSqlReturnExcel(long databaseId, string sql)
+        {
+            var db = App.GetDbById(databaseId);
+            sql = sql + string.Empty; 
+            DataSet result = new DataSet();
+            if (db!.CurrentConnectionConfig.DbType == SqlSugar.DbType.Oracle && sql.Contains(";") && !sql.ToLower().Contains("begin"))
+            {
+                var sqls = sql.Split(';');
+                foreach (var item in sqls)
+                {
+                    if (!string.IsNullOrEmpty(item.Trim().Replace("\r", "").Replace("\n", "")))
+                    {
+                        result.Tables.Add(db.Ado.GetDataTable(sql));
+                    }
+                } 
+            }
+            else
+            {
+               result = db!.Ado.GetDataSetAll(sql);  
+            }
+            DataTableToExcel.ExportExcel(result, nameof(ExecuetSqlReturnExcel));
+            return result;
+        }
 
         private static object GetObject(string sql, SqlSugarClient? db)
         {
@@ -119,7 +145,7 @@ namespace ReZero.SuperAPI
                     return ds;
                 }
             }
-            else if (db!.CurrentConnectionConfig.DbType == DbType.SqlServer && sql.ToLower().Contains("go"))
+            else if (db!.CurrentConnectionConfig.DbType == SqlSugar.DbType.SqlServer && sql.ToLower().Contains("go"))
             {
                 return db!.Ado.ExecuteCommandWithGo(sql);
             }

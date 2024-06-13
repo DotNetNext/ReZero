@@ -125,6 +125,96 @@ namespace ReZero.Excel
             return bytes;
         }
 
-     
+
+        /// <summary>
+        /// 导出Excel
+        /// </summary>
+        /// <param name="dts"></param>
+        /// <param name="name"></param>
+        /// <param name="widths"></param>
+        /// <returns></returns>
+        public static byte[] ExportExcel(DataSet dts, string name, int[]? widths = null, string? navName = null)
+        {
+            XLWorkbook wb = new XLWorkbook();
+             
+            int index = 0; 
+            foreach (DataTable data in dts.Tables)
+            {
+                var dt = data!;
+                index++;
+                for (int i = 1; i < 15; i++)
+                {
+                    // 删除Ignore列
+                    if (dt.Columns.Contains("Column" + i))
+                    {
+                        dt.Columns.Remove("Column" + i);
+                    }
+                }
+                var newdt = new DataTable();
+                foreach (DataColumn item in dt.Columns)
+                {
+                    newdt.Columns.Add(item.ColumnName);
+                }
+                foreach (DataRow item in dt.Rows)
+                {
+                    DataRow dr = newdt.NewRow();
+                    foreach (DataColumn c in dt.Columns)
+                    {
+                        var value = item[c.ColumnName] + "";
+                        dr[c.ColumnName] = value;
+                    }
+                    newdt.Rows.Add(dr);
+                }
+                string sheetName;
+                try
+                {
+                    sheetName = dt.TableName;
+                    wb.Worksheets.Add(newdt, sheetName);
+                }
+                catch
+                {
+                    if (dt.TableName.Length < 28)
+                    {
+                        sheetName = "_" + dt.TableName;
+                        wb.Worksheets.Add(newdt, sheetName);
+                    }
+                    else
+                    {
+                        sheetName = dt.TableName.Substring(0, 25) + DateTime.Now.ToString("...") + index;
+                        wb.Worksheets.Add(newdt, sheetName);
+                    }
+                }
+
+                var worksheet = wb.Worksheets.Last();
+                foreach (var item in worksheet.Tables)
+                {
+                    item.Theme = XLTableTheme.None;
+                }
+                // 处理列
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    worksheet.Cell(1, i + 1).Value = dt.Columns[i].ColumnName;
+                }
+                // 处理列宽
+                var colsWidth = dt.Columns.Cast<DataColumn>().Select(it => 20).ToArray();
+                if (widths != null)
+                {
+                    colsWidth = widths;
+                }
+                for (int j = 1; j <= colsWidth.Length; j++)
+                {
+                    worksheet.Columns(j, j).Width = colsWidth[j - 1];
+                }
+ 
+            } 
+            // 缓存到内存流，然后返回
+            byte[] bytes = null!;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                wb.SaveAs(stream);
+                bytes = stream.ToArray();
+            }
+            return bytes;
+        } 
     }
 }

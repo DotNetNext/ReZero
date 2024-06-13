@@ -508,5 +508,42 @@ namespace ReZero.SuperAPI
             });
             zeroInterfaceList.Add(data1);
         }
+
+        private void ExecuetSqlReturnExcel()
+        {
+            ZeroInterfaceList data1 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = ExecuetSqlReturnExcelId;
+                it.GroupName = nameof(DbTableInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(ExecuetSqlReturnExcelId);
+                it.Url = GetUrl(it, "ExecuetSqlReturnExcel");
+                it.CustomResultModel = new ResultModel()
+                {
+                    ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    GroupName = TextHandler.GetCommonText("数据库文档{0}.xlsx", "Tables{0}.xlsx"),
+                    ResultType = ResultType.File
+                };
+                it.DataModel = new DataModel()
+                {
+                    TableId = EntityInfoInitializerProvider.Id_ZeroDatabaseInfo,
+                    ActionType = ActionType.MethodGeneratorAPI,
+                    MyMethodInfo = new MyMethodInfo()
+                    {
+                        MethodArgsCount = 2,
+                        ArgsTypes = new Type[] { typeof(long), typeof(string) },
+                        MethodClassFullName = typeof(MethodApi).FullName,
+                        MethodName = nameof(MethodApi.ExecuetSqlReturnExcel)
+                    },
+                    DefaultParameters = new List<DataModelDefaultParameter>()
+                    {
+                        new DataModelDefaultParameter() { Name ="DatabaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("库ID", "DatabaseId") },
+                        new DataModelDefaultParameter() { Name ="Sql",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("Sql", "Sql") }
+                    }
+                };
+            });
+            zeroInterfaceList.Add(data1);
+        }
     }
 }
