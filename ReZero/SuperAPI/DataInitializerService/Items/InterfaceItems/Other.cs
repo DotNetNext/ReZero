@@ -26,6 +26,7 @@ namespace ReZero.SuperAPI
             ExecTemplate();
             ExecTemplateByTableIds();
             ClearAllInternalCache();
+            ExecuetSqlReturnExcel();
         }
 
         private void SaveInterfaceList()

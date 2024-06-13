@@ -107,7 +107,7 @@ namespace ReZero.SuperAPI
             }
         }
          
-        public object ExecuetSqlReturnExcel(long databaseId, string sql)
+        public byte[] ExecuetSqlReturnExcel(long databaseId, string sql)
         {
             var db = App.GetDbById(databaseId);
             sql = sql + string.Empty; 
@@ -127,8 +127,8 @@ namespace ReZero.SuperAPI
             {
                result = db!.Ado.GetDataSetAll(sql);  
             }
-            DataTableToExcel.ExportExcel(result, nameof(ExecuetSqlReturnExcel));
-            return result;
+            var bytes=  DataTableToExcel.ExportExcel(result, nameof(ExecuetSqlReturnExcel));
+            return bytes;
         }
 
         private static object GetObject(string sql, SqlSugarClient? db)

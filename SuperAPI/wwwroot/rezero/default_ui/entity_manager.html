@@ -324,6 +324,7 @@
                 <div class="modal-body">
                     <div id="divAceEditor" style="width:100%; height:200px"> </div>
                     <button @click="executeSql" class="btn btn-danger m-10 m-b-0"><i class="mdi mdi-play-circle-outline"></i>运行</button>
+                    <button @click="executeSqlRegurnExcel" class="btn btn-danger m-10 m-b-0"><i class="mdi mdi-file-excel"></i>下载</button>
                     <button @click="clearSql" class="btn btn-cyan m-10 m-b-0"><i class="mdi-restart mdi"></i>清空</button>
                     <div id="divAceEditorResult" style="width:100%; height:200px"> </div>
                 </div>
@@ -800,6 +801,39 @@
                     })
                     .catch(error => {
                         this.error = error.message;
+                    });
+            },
+            executeSqlRegurnExcel: function () {
+                var editor = ace.edit("divAceEditor");
+                var sql = editor.getValue("\r\n");
+                var th = this;
+                axios.get("/PrivateReZeroRoute/100003/ExecuetSqlReturnExcel", {
+                    params: { 
+                        databaseId: this.databaseId, sql: sql
+                    },
+                    responseType: 'blob',
+                    headers: jwHeader.headers
+                })
+                    .then(function (response) {
+                        // 创建一个 Blob 对象，指向数据的 URL  
+                        var url = window.URL.createObjectURL(new Blob([response.data]));
+                        var link = document.createElement('a');
+                        link.href = url;
+
+                        // 设置下载文件的名称，可以根据实际情况调整  
+                        var fileName = 'sql.xlsx';
+                        link.setAttribute('download', fileName);
+
+                        // 触发下载  
+                        document.body.appendChild(link);
+                        link.click();
+
+                        // 清理资源  
+                        window.URL.revokeObjectURL(link.href);
+                        document.body.removeChild(link);
+                    })
+                    .catch(function (error) {
+                        console.error("Error downloading the Excel file:", error);
                     });
             },
             openSqlTool: function () {
