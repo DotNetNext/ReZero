@@ -13,7 +13,7 @@
 		<copyright>Copyright 2016</copyright>
 		<tags>低代码 Zero 超级API  API 导出文档</tags>
 		<dependencies>
-			<dependency id="Rezero" version="1.6.17" />
+			<dependency id="Rezero" version="1.6.18" />
 			<dependency id="Microsoft.AspNetCore.Authentication.JwtBearer" version="2.1.30" />
 			<dependency id="Microsoft.AspNetCore.Cors" version="2.1.1" />
 		</dependencies>
