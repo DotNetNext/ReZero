@@ -1,6 +1,8 @@
 ﻿using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace ReZero.SuperAPI
@@ -17,17 +19,22 @@ namespace ReZero.SuperAPI
             var db = App.PreStartupDb;
             if (db != null)
             {
-                App.PreStartupDb!.QueryFilter.ClearAndBackup();
-                InitUser(options);
-                InitInterfaceCategory(db);
-                InitEntityInfo(db);
-                InitInterfaceList(db);
-                InitIcon();
-                InitDatabase(db);
-                InitSetting(db);
-                UpgradeCompatibility(db);
-                InitTempate(db);
-                App.PreStartupDb!.QueryFilter.Restore();
+                var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                if (!db.Queryable<ZeroSysSetting>().Any(it => it.StringValue == version))
+                {
+                    App.PreStartupDb!.QueryFilter.ClearAndBackup();
+                    InitUser(options);
+                    InitInterfaceCategory(db);
+                    InitEntityInfo(db);
+                    InitInterfaceList(db);
+                    InitIcon();
+                    InitDatabase(db);
+                    InitSetting(db);
+                    UpgradeCompatibility(db);
+                    InitTempate(db);
+                    App.PreStartupDb!.QueryFilter.Restore();
+                    db.Insertable(new ZeroSysSetting() { StringValue = version }).ExecuteCommand();
+                }
             }
         }
 

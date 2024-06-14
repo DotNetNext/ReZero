@@ -11,5 +11,7 @@ namespace ReZero.SuperAPI
         public int ChildTypeId { get; set; }
         
         public bool BoolValue { get; set; }
+        [SqlSugar.SugarColumn(IsNullable =true)]
+        public string? StringValue { get; set; }
     }
 }
