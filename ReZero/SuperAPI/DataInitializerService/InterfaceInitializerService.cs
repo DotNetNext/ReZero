@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
             var db = App.PreStartupDb;
             if (db != null)
             {
-                var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                var version = GetVersion();
                 if (IsChangeVersion(db, version))
                 {
                     App.PreStartupDb!.QueryFilter.ClearAndBackup();
@@ -31,11 +31,16 @@ namespace ReZero.SuperAPI
                     InitDatabase(db);
                     InitSetting(db);
                     UpgradeCompatibility(db);
-                    InitTempate(db); 
+                    InitTempate(db);
                     UpdateVersion(db, version);
                     App.PreStartupDb!.QueryFilter.Restore();
                 }
             }
+        }
+
+        private static string GetVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private static void UpdateVersion(ISqlSugarClient db, string version)
