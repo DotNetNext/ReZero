@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http; 
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +101,7 @@ namespace ReZero.SuperAPI
                 }
                 catch (Exception ex)
                 {
+                    ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>().LogInformation(ex.Message);
                     object data =new ErrorResponse { message = ex.Message } ;
                     data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
