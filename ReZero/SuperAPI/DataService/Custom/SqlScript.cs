@@ -37,8 +37,7 @@ namespace ReZero.SuperAPI
                 }
                 sql = GetSqlByIsWhereIF(sql, left, right, isWhereIf, p);
                 pars.Add(p);
-            }
-            sql = GetSqlByIsWhereIf(sql, isWhereIf);
+            } 
             switch (dataModel.ResultType)
             {
                 case SqlResultType.DataSet:
@@ -73,15 +72,6 @@ namespace ReZero.SuperAPI
 
             return sql;
         }
-
-        private static string GetSqlByIsWhereIf(string sql, bool isWhereIf)
-        {
-            if (isWhereIf && Regex.IsMatch(sql.Trim(), "where$", RegexOptions.IgnoreCase))
-            {
-                sql = Regex.Replace(sql.Trim(), "where$", "", RegexOptions.IgnoreCase);
-            }
-
-            return sql;
-        }
+         
     }
 }
