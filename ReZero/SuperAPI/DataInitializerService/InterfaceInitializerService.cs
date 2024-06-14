@@ -33,7 +33,7 @@ namespace ReZero.SuperAPI
                     UpgradeCompatibility(db);
                     InitTempate(db);
                     App.PreStartupDb!.QueryFilter.Restore();
-                    db.Insertable(new ZeroSysSetting() { StringValue = version }).ExecuteCommand();
+                    db.Insertable(new ZeroSysSetting() {  StringValue = version }).ExecuteReturnSnowflakeId();
                 }
             }
         }
