@@ -20,7 +20,7 @@ namespace ReZero.SuperAPI
             if (db != null)
             {
                 var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                if (!db.Queryable<ZeroSysSetting>().Any(it => it.StringValue == version))
+                if (IsChangeVersion(db, version))
                 {
                     App.PreStartupDb!.QueryFilter.ClearAndBackup();
                     InitUser(options);
@@ -31,11 +31,21 @@ namespace ReZero.SuperAPI
                     InitDatabase(db);
                     InitSetting(db);
                     UpgradeCompatibility(db);
-                    InitTempate(db);
+                    InitTempate(db); 
+                    UpdateVersion(db, version);
                     App.PreStartupDb!.QueryFilter.Restore();
-                    db.Insertable(new ZeroSysSetting() {  StringValue = version }).ExecuteReturnSnowflakeId();
                 }
             }
+        }
+
+        private static void UpdateVersion(ISqlSugarClient db, string version)
+        {
+            db.Insertable(new ZeroSysSetting() { StringValue = version }).ExecuteReturnSnowflakeId();
+        }
+
+        private static bool IsChangeVersion(ISqlSugarClient db, string version)
+        {
+            return !db.Queryable<ZeroSysSetting>().Any(it => it.StringValue == version);
         }
 
         private void InitTempate(ISqlSugarClient? db)
