@@ -12,7 +12,7 @@ namespace ReZero.DependencyInjection
 {
     public class DependencyResolver
     {
-        public static ServiceProvider? Provider { get => ServiceLocator.Services!.BuildServiceProvider(); }
+        public static ServiceProvider Provider { get => ServiceLocator.Services!.BuildServiceProvider(); }
         public static IHttpContextAccessor? httpContextAccessor = null;
         public static T GetService<T>() where T : class
         {
