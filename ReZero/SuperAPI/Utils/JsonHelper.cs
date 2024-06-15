@@ -50,9 +50,9 @@ namespace ReZero.SuperAPI
         /// <param name="writer">The JSON writer.</param>
         /// <param name="value">The value to write.</param>
         /// <param name="serializer">The JSON serializer.</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            writer.WriteValue(value.ToString());
+            writer.WriteValue(value?.ToString());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace ReZero.SuperAPI
         /// <param name="existingValue">The existing value of the object being read.</param>
         /// <param name="serializer">The JSON serializer.</param>
         /// <returns>The deserialized object.</returns>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.String)
             {
