@@ -110,7 +110,7 @@ namespace ReZero.SuperAPI
                 conditionalModels.Clear();
                 conditionalModels.Add(new ConditionalModel()
                 {
-                    FieldName = UtilMethods.FiledNameSql(), 
+                    FieldName = UtilMethods.FieldNameSql(), 
                     ConditionalType = ConditionalType.Equal,
                     FieldValue = PubConst.Orm_SqlFalseString
                 });

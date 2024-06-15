@@ -61,10 +61,10 @@ namespace ReZero.DependencyInjection
                 }
                 else if (@interface == typeof(ISingletonContract))
                 {
-                    services.AddSingleton(type, type);
+                    services.AddSingleton(type!, type!);
                     foreach (var item in interfacesNoRezero)
                     {
-                        services.AddSingleton(item, type);
+                        services.AddSingleton(item, type!);
                     }
                 }
             }

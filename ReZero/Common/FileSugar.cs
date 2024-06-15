@@ -909,7 +909,7 @@ namespace ReZero.Common
         /// <param name="strValue"></param>
         public static byte[] GetFileSream(string Path)
         {
-            byte[] buffer = null;
+            byte[] buffer = null!;
             using (FileStream stream = new System.IO.FileInfo(Path).OpenRead())
             {
                 buffer = new byte[stream.Length];
@@ -961,7 +961,7 @@ namespace ReZero.Common
                 }
                 ++i;
                 reval.Append(itUrl);
-                itUrl = null;
+                itUrl = null!;
             }
             return GetRuntimeDirectory(reval.ToString());
         }
