@@ -69,6 +69,7 @@
 
     <div v-if="responseUrl" class="alert alert-success m-t-10 m-b-10">
         <div class="m-b-10" v-if="data.HttpMethod=='Post'">Post同时支持Raw、表单和url参数</div>
+        <div class="m-b-10" v-if="data.HttpMethod=='All'">Get Post 都支持,可以是Url参数、表单参数或者Raw</div>
         {{responseUrl}}
     </div>
 
