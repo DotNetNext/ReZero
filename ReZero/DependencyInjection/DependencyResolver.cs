@@ -43,7 +43,7 @@ namespace ReZero.DependencyInjection
                     var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(jwtToken.Claims));
                     return claimsPrincipal;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Handle token parsing error
                     return null;
