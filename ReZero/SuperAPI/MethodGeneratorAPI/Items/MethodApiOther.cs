@@ -72,7 +72,8 @@ namespace ReZero.SuperAPI
                 Id = it.Id,
                 Name = it.ClassName,
                 Description = it.Description
-            }).ToList();
+            })
+            .OrderBy(it=>it.Name).ToList();
             return result;
         }
 
