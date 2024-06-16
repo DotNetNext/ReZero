@@ -31,7 +31,7 @@ namespace ReZero.SuperAPI
             try
             {
                 db.Ado.BeginTran();
-                await db.Utilities.PageEachAsync(list, 1, async item =>
+                await db.Utilities.PageEachAsync(list,100, async item =>
                 {
                     var updateable = db.UpdateableByObject(item);
                     UpdateCommonMethodInfo updateCommonMethodInfo = null!;
