@@ -103,7 +103,7 @@ namespace ReZero.SuperAPI
         [ChineseText("插入或者更新")]
         [EnglishText("Insert or update")]
         [TextGroupAttribute(PubConst.DataSource_ActionTypeGroupName_InsertOrUpdateCN, PubConst.DataSource_ActionTypeGroupName_InsertOrUpdateEN)]
-        InsertOUpdateObject = 60000,
+        InsertOrUpdateObject = 60000,
 
         [ChineseText("批量插入或者更新")]
         [EnglishText("Insert or update range")]
