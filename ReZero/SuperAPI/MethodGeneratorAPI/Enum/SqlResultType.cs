@@ -8,6 +8,7 @@ namespace ReZero.SuperAPI
     {
         Query=1,
         AffectedRows=2,
-        DataSet=3
+        DataSet=3,
+        IdNumber=4
     }
 }

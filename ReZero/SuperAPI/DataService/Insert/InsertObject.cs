@@ -15,11 +15,19 @@ namespace ReZero.SuperAPI
             var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
             base.InitDb(type, db);
             base.InitData(type, db, dataModel);
-            this.SetDefaultValue(dataModel, db, type);
-            await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync();
-
-            base.ClearAll(dataModel);
-            return true;
+            this.SetDefaultValue(dataModel, db, type); 
+            if (dataModel.ResultType == SqlResultType.IdNumber)
+            {
+                var  idNumber = await db.InsertableByObject(dataModel.Data).ExecuteReturnIdentityAsync();
+                base.ClearAll(dataModel);
+                return idNumber;
+            }
+            else
+            {
+                await db.InsertableByObject(dataModel.Data).ExecuteCommandAsync(); 
+                base.ClearAll(dataModel);
+                return true;
+            }
         }
 
         private  void SetDefaultValue(DataModel dataModel, ISqlSugarClient db, Type type)

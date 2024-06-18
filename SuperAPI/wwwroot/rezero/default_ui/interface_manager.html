@@ -224,7 +224,7 @@
                                                 </template>
                                                 <!--UpdateColumns-->
                                                 <template v-if="item.ElementType==9">
-                                                    <input  v-model="item.Value"  type="hidden" :name="item.Name"  />
+                                                    <input v-model="item.Value" type="hidden" :name="item.Name" />
                                                     <select id="selUpdateColumns" @change="setUpdateColums(item)" multiple class="form-control">
                                                         <option v-for="childItem in updateColumns">{{childItem.PropertyName}}</option>
                                                     </select>
@@ -234,6 +234,13 @@
                                                     <select v-model="item.Value" :name="item.Name" class="form-control">
                                                         <option selected value="1">默认</option>
                                                         <option value="2">受影响行数</option>
+                                                    </select>
+                                                </template>
+                                                <!--InsertResultType-->
+                                                <template v-if="item.ElementType==12">
+                                                    <select v-model="item.Value" :name="item.Name" class="form-control">
+                                                        <option selected value="1">默认</option>
+                                                        <option value="4">自增列(只支持int)</option>
                                                     </select>
                                                 </template>
                                                 <!--Where-->
@@ -249,7 +256,7 @@
                                                     </span>
                                                     <span @click="clearMiniWhere(item)" class="btn btn-danger m-r-10">
                                                         <i class="mdi mdi-do-not-disturb"></i> 清空条件
-                                                    </span> 
+                                                    </span>
                                                     <div>
                                                         {{selectdWherePreviewString}}
                                                     </div>

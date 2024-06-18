@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
         DefaultValueColumn=8,
         UpdateColumns = 9,
         UpdateResultType=10,
-        Where = 11
+        Where = 11,
+        InsertResultType = 12,
     }
 }

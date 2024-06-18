@@ -19,6 +19,12 @@ namespace ReZero.SuperAPI
                  Name= "DefaultValueColumns", 
                  Text=TextHandler.GetCommonText("默认值","Dafault value")
             });
+            result.Insert(4, new ActionTypeFormElementModel()
+            {
+                ElementType = ElementType.InsertResultType,
+                Name = "ResultType",
+                Text = TextHandler.GetCommonText("返回类型", "return type")
+            });
             return result;
         } 
     }
