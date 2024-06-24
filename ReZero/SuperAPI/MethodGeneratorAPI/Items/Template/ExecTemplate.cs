@@ -50,7 +50,7 @@ namespace ReZero.SuperAPI
             var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
             var item = new ZeroEntityInfo();
             var viewDb = App.GetDbById(databaseId);
-            var dt=viewDb!.Queryable<object>().AS(viewName).Select("*").ToDataTable();
+            var dt=viewDb!.Queryable<object>().AS(viewName).Take(1).Select("*").ToDataTable();
             item.ClassName = viewName;
             item.DbTableName = viewName;
             item.Description = string.Empty;
