@@ -469,8 +469,8 @@ namespace ReZero.SuperAPI
                     ActionType = ActionType.MethodGeneratorAPI,
                     MyMethodInfo = new MyMethodInfo()
                     {
-                        MethodArgsCount = 4,
-                        ArgsTypes = new Type[] { typeof(long), typeof(long[]),typeof(long),typeof(string) },
+                        MethodArgsCount = 5,
+                        ArgsTypes = new Type[] { typeof(long), typeof(long[]),typeof(long),typeof(string),typeof(string) },
                         MethodClassFullName = typeof(MethodApi).FullName,
                         MethodName = nameof(MethodApi.ExecTemplateByTableIds)
                     },
@@ -479,7 +479,8 @@ namespace ReZero.SuperAPI
                         new DataModelDefaultParameter() { Name ="databaseId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("数据库Id", "Database id") },
                         new DataModelDefaultParameter() { Name ="tableIds",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(JsonArray).Name,  Description = TextHandler.GetCommonText("表Id集合", "Table id array") },
                         new DataModelDefaultParameter() { Name ="templateId",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name,  Description = TextHandler.GetCommonText("模版ID", "template id") },
-                        new DataModelDefaultParameter() { Name ="url",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("Url", "Url") }
+                        new DataModelDefaultParameter() { Name ="url",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("Url", "Url") },
+                        new DataModelDefaultParameter() { Name ="viewName",   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name,  Description = TextHandler.GetCommonText("View", "View") }
                     } 
                 };
             });

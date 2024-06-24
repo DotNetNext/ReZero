@@ -1,9 +1,11 @@
-﻿using ReZero.Common;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using ReZero.Common;
 using ReZero.Excel;
 using ReZero.TextTemplate;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
@@ -23,8 +25,12 @@ namespace ReZero.SuperAPI
         /// <param name="templateId">The ID of the template.</param>
         /// <param name="url">The URL of the output file.</param>
         /// <returns>The directory path of the generated files.</returns>
-        public string ExecTemplateByTableIds(long databaseId, long[] tableIds, long templateId, string url)
+        public string ExecTemplateByTableIds(long databaseId, long[] tableIds, long templateId, string url,string viewName)
         {
+            if (IsView(viewName))
+            {
+                return ExecTemplateByView(databaseId, viewName, templateId, url);
+            }
             List<ExcelData> datatables = new List<ExcelData>();
             var db = App.Db;
             List<ZeroEntityInfo> datas = GetZeroEntities(databaseId, tableIds, db);
@@ -36,6 +42,37 @@ namespace ReZero.SuperAPI
             }
             var result = Directory.GetParent(outUrl).FullName;
             return result;
+        }
+
+        private string ExecTemplateByView(long databaseId, string viewName, long templateId, string url)
+        {
+            var db = App.Db;
+            var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
+            var item = new ZeroEntityInfo();
+            var viewDb = App.GetDbById(databaseId);
+            var dt=viewDb!.Queryable<object>().AS(viewName).Select("*").ToDataTable();
+            item.ClassName = viewName;
+            item.DbTableName = viewName;
+            item.Description = string.Empty;
+            item.ZeroEntityColumnInfos = new List<ZeroEntityColumnInfo>();
+            foreach (DataColumn dataColumn in dt.Columns)
+            {
+                item.ZeroEntityColumnInfos.Add(new ZeroEntityColumnInfo()
+                {
+                     PropertyName=dataColumn.ColumnName,
+                     DbColumnName=dataColumn.ColumnName,
+                     DataType=dataColumn.DataType.Name,
+                     PropertyType=EntityGeneratorManager.GetNativeTypeByType(dataColumn.DataType)
+                });
+            }
+            var outUrl = CreateFile(databaseId, template, item, url);
+            var result = Directory.GetParent(outUrl).FullName;
+            return result;
+        }
+
+        private static bool IsView(string viewName)
+        {
+            return !string.IsNullOrEmpty(viewName);
         }
 
         /// <summary>

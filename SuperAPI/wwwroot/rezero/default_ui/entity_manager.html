@@ -33,7 +33,8 @@
                     <a class="btn btn-warning m-r-10" @click="openCompareDatabaseStructure()" data-toggle="tooltip" data-original-title="根据实体修改表结构" href="#!"><i class="mdi mdi-redo-variant"></i>同步</a>
                     <a class="btn btn-pink m-r-10" @click="openSqlTool()" data-toggle="tooltip" data-original-title="可以方便执行SQL，让你不需要打开数据库" href="#!"><i class="mdi mdi-database"></i>SQL</a>
                     <a class="btn btn-danger m-r-10" @click="exportExcel()" data-toggle="tooltip" data-original-title="导出表文档" href="#!"><i class="mdi mdi-file-export"></i> 导出文档</a>
-                    <a class="btn btn-purple m-r-10" @click="openGenerateCode()" data-toggle="tooltip" data-original-title="根据实体生成文件" href="#!"><i class="mdi mdi-language-csharp"></i> 生成代码</a>
+                    <a class="btn btn-purple m-r-10" @click="openGenerateCode()" data-toggle="tooltip" data-original-title="根据实体生成文件" href="#!"><i class="mdi mdi-language-csharp"></i>实体生成器</a>
+                    <a class="btn btn-primary m-r-10" @click="openGenerateCodeByView()" data-toggle="tooltip" data-original-title="根据视图生成文件" href="#!"><i class="mdi mdi-language-csharp"></i>视图生成器</a>
                     <a class="btn btn-cyan m-r-10" @click="openSetting()" data-toggle="tooltip" data-original-title="实体管理个性化配置" href="#!"><i class="mdi mdi-account-settings-variant"></i> 配置</a>
                 </div>
             </div>
@@ -379,6 +380,12 @@
                                 </option>
                             </select>
                         </div>
+                        <div class=" form-group" v-if="isView">
+                            <label class="control-label">
+                                视图名 <span class="red">*</span>
+                            </label>
+                            <input v-model="viewName" class="form-control" placeholder="视图名字" value="" />
+                        </div>
                         <div class=" form-group">
                             <label class="control-label">
                                 生成地址
@@ -457,7 +464,9 @@
             },
             templates: [],
             currentTemplate: {},
-            currentTemplateId:0
+            currentTemplateId: 0,
+            isView: false,
+            viewName:null
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -944,15 +953,28 @@
                     tools.alert("请选择实体");
                     return;
                 }
+                this.isView = false;
+                this.viewName = null;
+                btnGenerateFile.click();
+            },
+            openGenerateCodeByView: function () {
+            
+                this.isView = true;
                 btnGenerateFile.click();
             },
             submitGenerateFile: function () {
+                if (this.isView && !this.viewName)
+                {
+                    tools.alert("视图名不能为空");
+                    return;
+                }
                 var url = "/PrivateReZeroRoute/100003/ExecTemplateByTableIds";
                 axios.post(url, {
                     TableIds: JSON.stringify(this.selectedItems),
                     DataBaseId: this.databaseId,
                     TemplateId: this.currentTemplate.Id,
-                    Url: this.currentTemplate.Url
+                    Url: this.currentTemplate.Url,
+                    ViewName: this.viewName
                 }, jwHeader)
                     .then(response => {
                         if (response.data && response.data.message){
