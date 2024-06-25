@@ -95,7 +95,7 @@ namespace ReZero.SuperAPI
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data!, resultModel);
                     data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
-                    var json = JsonHelper.SerializeObject(data);
+                    var json = JsonHelper.SerializeObject(data, SuperAPIModule._apiOptions!.InterfaceOptions?.JsonSerializerSettings);
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
                     await context.Response.WriteAsync(json);
                 }
