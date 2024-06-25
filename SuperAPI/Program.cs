@@ -11,6 +11,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.AspNetCore.Cors;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -46,7 +48,11 @@ builder.Services.AddReZeroServices(api =>
 
     apiObj!.DependencyInjectionOptions = new DependencyInjectionOptions(assemblyList);
 
-  
+    apiObj.InterfaceOptions.JsonSerializerSettings = new JsonSerializerSettings
+    {
+        ContractResolver = new CamelCasePropertyNamesContractResolver()
+    };
+
    //∆Ù”√≥¨º∂API
    api.EnableSuperApi(apiObj); 
 

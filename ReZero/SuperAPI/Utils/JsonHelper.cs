@@ -12,7 +12,7 @@ namespace ReZero.SuperAPI
     /// </summary>
     public static class JsonHelper
     {
-        private static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings
+        public static readonly JsonSerializerSettings DefaultJsonSerializerSettings = new JsonSerializerSettings
         {
             Converters = new List<JsonConverter> { new StringLongConverter() },
             // Other settings...
@@ -22,10 +22,11 @@ namespace ReZero.SuperAPI
         /// Serializes an object to a JSON string.
         /// </summary>
         /// <param name="obj">The object to serialize.</param>
+        /// <param name="settings"></param>
         /// <returns>The JSON string representation of the object.</returns>
-        public static string SerializeObject(object obj)
+        public static string SerializeObject(object obj, JsonSerializerSettings? settings = null)
         {
-            return JsonConvert.SerializeObject(obj, DefaultJsonSerializerSettings);
+            return JsonConvert.SerializeObject(obj, settings ?? DefaultJsonSerializerSettings);
         }
     }
 

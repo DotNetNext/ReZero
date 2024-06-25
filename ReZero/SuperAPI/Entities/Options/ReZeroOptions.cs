@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq;
+using Newtonsoft.Json;
 using ReZero.Configuration;
 namespace ReZero.SuperAPI
 {
@@ -107,6 +108,8 @@ namespace ReZero.SuperAPI
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
         public  ReZeroJwt?  Jwt { get; set; }
         public ReZeroCors CorsOptions { get; set; } = new ReZeroCors();
+
+        public JsonSerializerSettings? JsonSerializerSettings { get; set; }
     }
 
     /// <summary>
