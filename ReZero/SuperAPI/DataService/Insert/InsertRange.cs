@@ -25,9 +25,27 @@ namespace ReZero.SuperAPI
         internal new void InitData(Type type, ISqlSugarClient db, DataModel dataModel)
         {
             var json = dataModel?.DefaultParameters?.FirstOrDefault().Value + "";
-            object obj = JsonConvert.DeserializeObject(json,typeof(List<>).MakeGenericType(type))!;
+            object obj = JsonConvert.DeserializeObject(json, typeof(List<>).MakeGenericType(type))!;
+            SetDefaultPkValue(type, db, obj);
             dataModel!.Data = obj;
         }
+
+        private void SetDefaultPkValue(Type type, ISqlSugarClient db, object obj)
+        {
+            var entityInfo = db.EntityMaintenance.GetEntityInfo(type);
+            var columnInfo = entityInfo.Columns.Where(it => it.IsPrimarykey).FirstOrDefault();
+            if (columnInfo != null && IsSnowFlakeSingle(columnInfo))
+            {
+                foreach (var item in (IList)obj)
+                {
+                    if (Convert.ToInt64(columnInfo.PropertyInfo.GetValue(item)) == 0)
+                    {
+                        columnInfo.PropertyInfo.SetValue(item, SqlSugar.SnowFlakeSingle.Instance.NextId());
+                    }
+                }
+            }
+        }
+
         private void SetDefaultValue(DataModel dataModel, ISqlSugarClient db, Type type)
         {
             if (EntityMappingService.IsAnyDefaultValue(dataModel))

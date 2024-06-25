@@ -134,7 +134,7 @@ namespace ReZero.SuperAPI
                 EntityGeneratorManager.RemoveTypeCacheByTypeId(dataModel.TableId);
             }
         }
-        private static void SetIsSnowFlakeSingle(List<EntityColumnInfo> columnInfos, Type type, DataModel dataModel, EntityColumnInfo columnInfo)
+        protected  void SetIsSnowFlakeSingle(List<EntityColumnInfo> columnInfos, Type type, DataModel dataModel, EntityColumnInfo columnInfo)
         {
             var value = Convert.ToInt64(columnInfo.PropertyInfo.GetValue(dataModel.Data));
             if (value == 0)
@@ -150,7 +150,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static bool IsSnowFlakeSingle(EntityColumnInfo columnInfo)
+        protected  bool IsSnowFlakeSingle(EntityColumnInfo columnInfo)
         {
             return columnInfo.IsIdentity == false && columnInfo.UnderType == typeof(long);
         }
