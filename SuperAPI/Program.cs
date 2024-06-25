@@ -47,12 +47,7 @@ builder.Services.AddReZeroServices(api =>
                         .ToArray(); 
 
     apiObj!.DependencyInjectionOptions = new DependencyInjectionOptions(assemblyList);
-
-    apiObj.InterfaceOptions.JsonSerializerSettings = new JsonSerializerSettings
-    {
-        ContractResolver = new CamelCasePropertyNamesContractResolver()
-    };
-
+ 
    //∆Ù”√≥¨º∂API
    api.EnableSuperApi(apiObj); 
 
