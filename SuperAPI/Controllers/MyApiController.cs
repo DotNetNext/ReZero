@@ -1,4 +1,5 @@
-﻿using ReZero.SuperAPI;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using ReZero.SuperAPI;
 using System.Security.Policy;
 namespace SuperAPITest.Controllers
 { 
@@ -21,7 +22,7 @@ namespace SuperAPITest.Controllers
         } 
 
         [ApiMethod("我是C方法", HttpMethod = HttpType.Get)]
-        public Object C(ClassA classA)
+        public Object C(SqlSugar.PageModel classA)
         {
             return classA;
         }

@@ -14,7 +14,7 @@ namespace ReZero.SuperAPI
         {
             var formDatas = GetFormDatas(context);
             BindPageParameters(dataModel, context, formDatas);
-            BindDefaultParameters(dataModel, context, formDatas);
+            BindDefaultParameters(dataModel, context, formDatas, interInfo);
             BindOrderByParameters(dataModel, context, formDatas);
             BindGroupByParameters(dataModel, context, formDatas);
             BindUrlParameters(isUrlParameters,path, dataModel!, interInfo);
@@ -81,7 +81,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private void BindDefaultParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas)
+        private void BindDefaultParameters(DataModel? dataModel, HttpContext context, Dictionary<string, object> formDatas, ZeroInterfaceList interInfo)
         {
             if (IsJObjct(dataModel, formDatas))
             {
@@ -93,7 +93,14 @@ namespace ReZero.SuperAPI
             }
             else if (dataModel!.DefaultParameters != null)
             {
-                dataModel!.DefaultParameters = dataModel?.DefaultParameters?.Where(it => NoPageParameters(it)).ToList();
+                if (interInfo.IsAttributeMethod==true)
+                {
+                    //
+                }
+                else
+                {
+                    dataModel!.DefaultParameters = dataModel?.DefaultParameters?.Where(it => NoPageParameters(it)).ToList();
+                }
                 foreach (var item in dataModel?.DefaultParameters ?? new List<DataModelDefaultParameter>())
                 {
                     UpdateWhereItemValue(context, formDatas, item);
