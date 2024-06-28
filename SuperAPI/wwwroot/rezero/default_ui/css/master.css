@@ -43,6 +43,9 @@
 .width30 {
     width: 30px !important
 }
+.width_r_80 {
+   width:80% !important; 
+}
 .t_a_r {
     text-align: right !important
 }
