@@ -184,6 +184,8 @@ namespace ReZero.SuperAPI
                             new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceList.IsAttributeMethod),Value=false,ValueIsReadOnly=true,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name, Description = TextHandler.GetCommonText("是否是特性方法", "Is attribute method") },
                             new DataModelDefaultParameter(){ Name="Url",MergeForName="Name",ValueIsReadOnly=true, FieldOperator=FieldOperatorType.Like, ValueType=typeof(string).Name, Description=TextHandler.GetCommonText("Url","Url") },
                             new DataModelDefaultParameter(){ Name="DatabaseId", FieldOperator=FieldOperatorType.Equal, ValueType=typeof(long).Name, Description=TextHandler.GetCommonText("数据库Id","Database id") },
+                            new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
+                            new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
                     }
                 };
             });
