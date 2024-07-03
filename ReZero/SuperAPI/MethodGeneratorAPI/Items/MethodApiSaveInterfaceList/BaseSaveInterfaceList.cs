@@ -102,7 +102,8 @@ namespace ReZero.SuperAPI
             if (urlCount > 0) throw new Exception(TextHandler.GetCommonText("接口地址已存在", "The interface address already exists."));
             var x= App.Db.Storageable(zeroInterfaceList).ToStorage();
             x.AsInsertable.ExecuteCommand();
-            App.Db.Updateable(x.UpdateList.Select(it=>it.Item).First()).ExecuteCommand();
+            if(x.UpdateList.Any())
+                App.Db.Updateable(x.UpdateList.Select(it=>it.Item).First()).ExecuteCommand();
             return true;
         }
         public long GetTableId(string? tableId)
