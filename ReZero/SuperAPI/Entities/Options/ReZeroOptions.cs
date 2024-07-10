@@ -103,6 +103,8 @@ namespace ReZero.SuperAPI
     public class InterfaceOptions
     {
         public string? AuthorizationLocalStorageName { get; set; } = "RezeroLocalStorage";
+        public string PageNumberPropName { set; get; } = "PageNumber";
+        public string PageSizePropName { set; get; } = "PageSize";
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
 
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }

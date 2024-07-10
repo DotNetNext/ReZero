@@ -66,13 +66,13 @@ namespace ReZero.SuperAPI
         {
             if (dataModel?.CommonPage != null)
             {
-                var pageNumberPar = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageNumber)) == true);
+                var pageNumberPar = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(SuperAPIModule._apiOptions?.InterfaceOptions.PageNumberPropName) == true);
                 if (pageNumberPar != null)
                 {
                     pageNumberPar.Value = GetParameterValueFromRequest(pageNumberPar, context, formDatas);
                     dataModel!.CommonPage.PageNumber = Convert.ToInt32(pageNumberPar.Value ?? "1");
                 }
-                var pageSizePar = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(nameof(DataModelPageParameter.PageSize)) == true);
+                var pageSizePar = dataModel?.DefaultParameters?.FirstOrDefault(it => it?.Name?.EqualsCase(SuperAPIModule._apiOptions?.InterfaceOptions.PageSizePropName) == true);
                 if (pageSizePar != null)
                 {
                     pageSizePar.Value = GetParameterValueFromRequest(pageSizePar, context, formDatas);
@@ -145,8 +145,8 @@ namespace ReZero.SuperAPI
 
         private static bool NoPageParameters(DataModelDefaultParameter it)
         {
-            return it.Name != nameof(DataModelPageParameter.PageNumber) &&
-                        it.Name != nameof(DataModelPageParameter.PageSize);
+            return it.Name != SuperAPIModule._apiOptions?.InterfaceOptions.PageNumberPropName &&
+                        it.Name != SuperAPIModule._apiOptions?.InterfaceOptions.PageSizePropName;
         }
 
         private static bool IsUserName(DataModelDefaultParameter item)
