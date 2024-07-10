@@ -238,8 +238,8 @@ namespace ReZero.SuperAPI
                     DefaultParameters = new List<DataModelDefaultParameter>() {
                              new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.Title),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name ,ValueIsReadOnly=true, Description = TextHandler.GetCommonText("标题", "Title") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroTemplate.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
-                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
-                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
+                             new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageNumberPropName ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
+                             new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageSizePropName ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") }
                     }
                 };
             });

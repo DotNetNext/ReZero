@@ -283,8 +283,8 @@ namespace ReZero.SuperAPI
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.ClassName),   FieldOperator=FieldOperatorType.Like,  ValueType = typeof(string).Name,Value=null , Description = TextHandler.GetCommonText("名称", "class Name") },
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.DbTableName),MergeForName=nameof(ZeroEntityInfo.ClassName)  },
                              new DataModelDefaultParameter() { Name = nameof(ZeroEntityInfo.Description),MergeForName=nameof(ZeroEntityInfo.ClassName)  },
-                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageNumber) ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
-                             new DataModelDefaultParameter() { Name=nameof(DataModelPageParameter.PageSize) ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") },
+                             new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageNumberPropName ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
+                             new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageSizePropName ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") },
                              new DataModelDefaultParameter() { Name="OrderByType" ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name, Description = TextHandler.GetCommonText("排序类型", "SortType") },
                              new DataModelDefaultParameter() { Name="OrderByName" ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name, Description = TextHandler.GetCommonText("排序字段", "SortName") }
                     }
