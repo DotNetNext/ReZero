@@ -490,8 +490,8 @@
 
                 var urlParameters = "&" + tools.objectToQueryString({
                     ClassName: txtSearch.value,
-                    PageNumber: page, 
-                    PageSize: tools.getValue("selPageSize"),
+                    @@pageNumber: page, 
+                    @@pageSize: tools.getValue("selPageSize"),
                     DataBaseId: selDataBaseId.value,
                     OrderByType: this.sort,
                     OrderByName: this.sortName

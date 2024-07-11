@@ -743,8 +743,8 @@
             onSearch: function (page) {
 
                 var urlParameters = "?" + tools.objectToQueryString({
-                    PageNumber: page,
-                    PageSize: tools.getValue("selPageSize"),
+                    @@pageNumber: page,
+                    @@pageSize: tools.getValue("selPageSize"),
                     Name: txtName.value,
                     GroupName: selGroupName.value,
                     DataBaseId: selDatabase.value,
