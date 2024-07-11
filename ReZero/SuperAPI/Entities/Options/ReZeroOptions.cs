@@ -106,6 +106,7 @@ namespace ReZero.SuperAPI
         public string PageNumberPropName { set; get; } = "PageNumber";
         public string PageSizePropName { set; get; } = "PageSize";
         public DefaultSuperApiAop SuperApiAop { get; set; } = new DefaultSuperApiAop();
+        public Func<InterfaceContext, bool>? NoAuthorizationFunc { get; set; }
 
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
         public  ReZeroJwt?  Jwt { get; set; }

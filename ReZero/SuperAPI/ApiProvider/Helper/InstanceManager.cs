@@ -28,6 +28,13 @@ namespace ReZero.SuperAPI
         }
         public static async Task<bool> AuthorizationAsync(HttpContext context, InterfaceContext dynamicInterfaceContext)
         {
+            if (SuperAPIModule._apiOptions!.InterfaceOptions!.NoAuthorizationFunc != null)
+            {
+                if (SuperAPIModule._apiOptions!.InterfaceOptions!.NoAuthorizationFunc(dynamicInterfaceContext) == true) 
+                {
+                    return true;
+                } 
+            }
             if (SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable != true)
             {  
                 return true;
