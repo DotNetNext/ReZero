@@ -81,7 +81,7 @@ namespace ReZero.SuperAPI
                     interInfo!.DataModel!.ResultType = interInfo.DataModel?.ResultType;
                     interInfo!.DataModel!.Sql = interInfo.DataModel?.Sql;
                     interInfo!.DataModel!.DataBaseId = interInfo.DataModel?.DataBaseId ?? 0;
-                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context,path,!string.IsNullOrEmpty(interInfo.OriginalUrl),interInfo);
+                    dataService.BindHttpParameters.Bind(interInfo.DataModel, context, path, !string.IsNullOrEmpty(interInfo.OriginalUrl), interInfo);
                     dynamicInterfaceContext.DataModel = interInfo.DataModel;
                     var service = DependencyInjection.DependencyResolver.Provider;
                     dynamicInterfaceContext.ServiceProvider = service;
@@ -90,6 +90,7 @@ namespace ReZero.SuperAPI
                     await InstanceManager.AuthorizationAsync(context, dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
                     data = GetUserInfo(path, interInfo, data);
+                    SetDataToAop(dynamicInterfaceContext, data);
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(dynamicInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
@@ -110,6 +111,12 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }
             }
+        }
+
+        private static void SetDataToAop(InterfaceContext dynamicInterfaceContext, object? data)
+        {
+            if (dynamicInterfaceContext.DataModel != null)
+                dynamicInterfaceContext.DataModel.Data = data;
         }
 
         private static object? GetUserInfo(string? path, ZeroInterfaceList interInfo, object? data)

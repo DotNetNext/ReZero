@@ -55,6 +55,7 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(systemInterfaceContext);
                     await InstanceManager.AuthorizationAsync(context, systemInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel ?? new DataModel() { });
+                    SetDataToAop(systemInterfaceContext, data);
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutedAsync(systemInterfaceContext);
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
@@ -70,6 +71,12 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(systemInterfaceContext); ;
                 }
             } 
+        }
+
+        private static void SetDataToAop(InterfaceContext systemInterfaceContext, object data)
+        {
+            if (systemInterfaceContext.DataModel != null)
+                systemInterfaceContext.DataModel.Data = data;
         }
 
         private static async Task Write(HttpContext context, ZeroInterfaceList interInfo, object data)
