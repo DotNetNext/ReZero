@@ -27,6 +27,8 @@ namespace ReZero.SuperAPI
         private readonly string pageControlName = "page_control.html";
         private readonly string authorizationLocalStorageName = "@@authorizationLocalStorageName";
         private readonly string version = "@@version";
+        private readonly string pageNumber = "@@pageNumber";
+        private readonly string pageSize = "@@pageSize";
         public DefaultUiManager()
         {
         }
@@ -82,8 +84,12 @@ namespace ReZero.SuperAPI
             //token
             masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
 
+            masterPageHtml = masterPageHtml.Replace(pageNumber, SuperAPIModule._apiOptions?.InterfaceOptions?.PageNumberPropName);
+
+            masterPageHtml = masterPageHtml.Replace(pageSize, SuperAPIModule._apiOptions?.InterfaceOptions?.PageSizePropName);
+
             //version
-            masterPageHtml= masterPageHtml.Replace(version, $"{Assembly.GetExecutingAssembly().GetName().Version}");
+            masterPageHtml = masterPageHtml.Replace(version, $"{Assembly.GetExecutingAssembly().GetName().Version}");
             return masterPageHtml;
         }
 
