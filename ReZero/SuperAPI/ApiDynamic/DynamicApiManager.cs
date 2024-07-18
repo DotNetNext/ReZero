@@ -106,7 +106,7 @@ namespace ReZero.SuperAPI
                     object data =new ErrorResponse { message = ex.Message } ;
                     data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
-                    await context.Response.WriteAsync(db.Utilities.SerializeObject(data));
+                    await context.Response.WriteAsync(JsonHelper.SerializeObject(data, SuperAPIModule._apiOptions!.InterfaceOptions?.JsonSerializerSettings));
                     dynamicInterfaceContext.Exception = ex;
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }
