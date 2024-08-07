@@ -3,7 +3,7 @@
         <li v-for="page in Array.from({ length: data.Page.TotalPage }, (_, index) => index + 1)" :key="page">
             <a href="#" @click="onSearch(page)">{{ page }}</a>
         </li>
-        <li><a>当前：{{data.Page.@@pageNumber}}/{{data.Page.TotalPage}}&nbsp;&nbsp; 总共：{{data.Page.TotalCount}}</a> </li>
+        <li><a>当前：{{data.Page.___pageNumber}}/{{data.Page.TotalPage}}&nbsp;&nbsp; 总共：{{data.Page.TotalCount}}</a> </li>
         <li>
             <a>页码:</a>
             <select onchange="btnSearch.click()" id="selPageSize">

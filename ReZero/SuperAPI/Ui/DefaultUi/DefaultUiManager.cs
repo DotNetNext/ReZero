@@ -27,8 +27,8 @@ namespace ReZero.SuperAPI
         private readonly string pageControlName = "page_control.html";
         private readonly string authorizationLocalStorageName = "@@authorizationLocalStorageName";
         private readonly string version = "@@version";
-        private readonly string pageNumber = "@@pageNumber";
-        private readonly string pageSize = "@@pageSize";
+        private readonly string pageNumber = "__pageNumber";
+        private readonly string pageSize = "__pageSize";
         public DefaultUiManager()
         {
         }
