@@ -97,10 +97,27 @@ namespace ReZero.SuperAPI
             {
                 var p = dataModel.DefaultParameters.First(it => it.Name == item.Name);
                 p.Value = ConvetEmptyValue(item.PropertyType, p.Value);
-                item.SetValue(parameterOjb, UtilMethods.ChangeType2(p.Value, item.PropertyType));
+                if (IsJson(item, p))
+                {
+                    item.SetValue(parameterOjb,JsonConvert.DeserializeObject(p.Value + "",item.PropertyType));
+                }
+                else
+                {
+                    item.SetValue(parameterOjb, UtilMethods.ChangeType2(p.Value, item.PropertyType));
+                }
             }
             parameters = new object[] { parameterOjb };
             return parameters;
+        }
+
+        private static bool IsJson(PropertyInfo item, DataModelDefaultParameter p)
+        {
+            if (item.PropertyType?.FullName?.StartsWith("System.")==true) 
+            {
+                return false;
+            }
+            var value = p.Value?.ToString()?.Trim();
+            return value?.StartsWith("{") == true && value?.EndsWith("}") == true;
         }
 
         private static bool IsSingleModel(DataModel dataModel)
