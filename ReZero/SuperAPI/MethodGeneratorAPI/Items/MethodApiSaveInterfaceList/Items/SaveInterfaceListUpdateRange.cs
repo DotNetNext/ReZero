@@ -39,13 +39,13 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.DataModel.DefaultValueColumns = saveInterfaceListModel.Json?.DefaultValueColumns;
             zeroInterfaceList.DataModel.ResultType = saveInterfaceListModel?.ResultType;
             zeroInterfaceList.DataModel.TableColumns = saveInterfaceListModel?.TableColumns;
-            if (!string.IsNullOrEmpty(zeroInterfaceList?.DataModel?.TableColumns??null)) 
-            {
-                var cols = entityInfo.Columns.Where(it => it.IsPrimarykey || it.IsIdentity).Select(it=>it.PropertyName).ToList();
-                cols.AddRange(zeroInterfaceList?.DataModel?.TableColumns?.Split(','));
-                zeroInterfaceList!.DataModel.DefaultParameters =
-                    zeroInterfaceList.DataModel.DefaultParameters.Where(it => cols.Contains(it.Name!)|| cols.Contains(it.PropertyName!)).ToList();
-            }
+            //if (!string.IsNullOrEmpty(zeroInterfaceList?.DataModel?.TableColumns??null)) 
+            //{
+            //    var cols = entityInfo.Columns.Where(it => it.IsPrimarykey || it.IsIdentity).Select(it=>it.PropertyName).ToList();
+            //    cols.AddRange(zeroInterfaceList?.DataModel?.TableColumns?.Split(','));
+            //    zeroInterfaceList!.DataModel.DefaultParameters =
+            //        zeroInterfaceList.DataModel.DefaultParameters.Where(it => cols.Contains(it.Name!)|| cols.Contains(it.PropertyName!)).ToList();
+            //}
         }
     }
 }
