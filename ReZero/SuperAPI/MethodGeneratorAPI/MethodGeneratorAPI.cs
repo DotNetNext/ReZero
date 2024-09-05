@@ -112,6 +112,11 @@ namespace ReZero.SuperAPI
 
         private static bool IsJson(PropertyInfo item, DataModelDefaultParameter p)
         {
+            if (item.PropertyType?.FullName?.StartsWith("System.Collections.Generic.List")==true) 
+            {
+                var value2 = p.Value?.ToString()?.Trim();
+                return value2?.StartsWith("[") == true && value2?.EndsWith("]") == true;
+            }
             if (item.PropertyType?.FullName?.StartsWith("System.")==true) 
             {
                 return false;
