@@ -179,51 +179,39 @@
     margin:0 !important;
 }
 
-[data-theme="dark"] .btn-primary {
-    background-color: #006f72; /* 更深的蓝绿色 */
-    border-color: #006f72;
-    color: #fff !important;
-}
-[data-theme="dark"] .btn-warning {
-    background-color: #faa64b; /* 你选择的橙色 */
-    border-color: #faa64b;
-    color: #fff !important;
-}
-[data-theme="dark"] .btn-success {
-    background-color: #15c377; /* 绿色 */
-    border-color: #15c377;
-    color: #fff !important;
-}
-
-[data-theme="dark"] .btn-pink:hover {
-    background-color: #fa75a4; /* 粉色 */
-    border-color: #fa75a4;
-}
-
-[data-theme="dark"] .btn-danger {
-    background-color: #f96868; /* 红色 */
-    border-color: #f96868;
-    color: #fff !important;
-}
-
-[data-theme="dark"] .btn-cyan {
-    background-color: #57c7d4; /* 青色 */
-    border-color: #57c7d4;
-    color: #fff !important;
-}
-[data-theme="dark"] .btn-secondary {
-    color: #4d5259 !important;
-    background-color: #343a40; /* 暗色背景的灰色 */
-    border-color: #343a40;
-}
+ 
 
 [data-theme="dark"] .btn {
     color: #d1d8e1; /* 暗色模式下的浅灰色文本 */
     padding: 8px 12px;
     letter-spacing: 1px;
     border-radius: 2px;
-    background-color: #1e2125; /* 深色背景 */
+    background-color: #353537; /* 深色背景 */
     outline: none !important;
     -webkit-transition: 0.15s linear;
     transition: 0.15s linear;
+    border-color: #353537!important;
+}
+
+
+[data-theme="dark"] .btn:hover,
+[data-theme="dark"] .btn:focus,
+[data-theme="dark"] .btn:active {
+    color: #ffffff !important; /* 文本保持为白色 */
+}
+
+[data-theme="dark"] .btn:hover {
+    background-color: #4a4d50 !important; /* 稍微浅一点的深色背景 */
+    border-color: #4a4d50 !important; /* 稍微浅一点的边框颜色 */
+}
+
+[data-theme="dark"] .btn:active {
+    background-color: #2e2f30 !important; /* 点击时的深色背景 */
+    border-color: #2e2f30 !important; /* 点击时的边框颜色 */
+}
+
+[data-theme="dark"] .btn:focus {
+    background-color: #4a4d50 !important; /* 获取焦点时的背景色 */
+    border-color: #4a4d50 !important; /* 获取焦点时的边框颜色 */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* 聚焦时的蓝色阴影 */
 }
