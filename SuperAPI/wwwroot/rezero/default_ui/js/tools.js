@@ -132,6 +132,20 @@ var tools = {
         return Object.keys(json).map(function (key) {
             return encodeURIComponent(key) + '=' + encodeURIComponent(json[key]);
         }).join('&');
+    },
+    initColor: function () {
+        if (localStorage.BgColorType == 1) {
+            document.body.setAttribute('data-theme', 'dark');
+        } else {
+            document.body.setAttribute('data-theme', 'default');
+        }
+        var dropdown = document.querySelector('.dropdown-skin.open');
+
+        if (dropdown) {
+            // 移除 "open" 类，添加 "close" 类
+            dropdown.classList.remove('open');
+            dropdown.classList.add('close');
+        }
     }
 }
 Array.prototype.removeArrayItem = function (item) {

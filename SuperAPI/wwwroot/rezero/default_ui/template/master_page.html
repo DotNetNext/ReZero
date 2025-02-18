@@ -21,7 +21,7 @@
             headers: {
                 "Authorization": 'Bearer ' + localStorage.getItem('@@authorizationLocalStorageName') 
             }
-        }  
+        }
         tools.checkAuthorization();
     </script>
 </head> 
@@ -71,6 +71,26 @@
                                     <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
                                     <li class="divider"></li>
                                     <li> <a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown dropdown-skin open">
+                                <span data-toggle="dropdown" class="icon-palette" aria-expanded="true"><i class="mdi mdi-palette"></i></span>
+                                <ul class="dropdown-menu dropdown-menu-right" data-stoppropagation="true">
+                                    <li class="drop-title"><p>主题</p></li>
+                                    <li class="drop-skin-li clearfix">
+                                        <span class="inverse">
+                                            <input onclick="localStorage.BgColorType = 0;" type="radio" name="site_theme" value="default" id="site_theme_1" checked="">
+                                            <label onclick="localStorage.BgColorType = 0;" for="site_theme_1"></label>
+                                        </span>
+                                        <span>
+                                            <input onclick="localStorage.BgColorType = 1;" type="radio" name="site_theme" value="dark" id="site_theme_2">
+                                            <label onclick="localStorage.BgColorType = 1;" for="site_theme_2"></label>
+                                        </span>
+                                        <!--<span>
+                                            <input type="radio" name="site_theme" value="translucent" id="site_theme_3">
+                                            <label for="site_theme_3"></label>
+                                        </span>-->
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -142,5 +162,7 @@
             <span class="dot"></span>
         </div>
     </div>
+    <script src="js/init.js"></script>
 </body>
 </html>
+
