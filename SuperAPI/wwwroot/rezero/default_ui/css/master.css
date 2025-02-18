@@ -177,4 +177,53 @@
     position:relative;
     top:10px;
     margin:0 !important;
-}     
+}
+
+[data-theme="dark"] .btn-primary {
+    background-color: #006f72; /* 更深的蓝绿色 */
+    border-color: #006f72;
+    color: #fff !important;
+}
+[data-theme="dark"] .btn-warning {
+    background-color: #faa64b; /* 你选择的橙色 */
+    border-color: #faa64b;
+    color: #fff !important;
+}
+[data-theme="dark"] .btn-success {
+    background-color: #15c377; /* 绿色 */
+    border-color: #15c377;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .btn-pink:hover {
+    background-color: #fa75a4; /* 粉色 */
+    border-color: #fa75a4;
+}
+
+[data-theme="dark"] .btn-danger {
+    background-color: #f96868; /* 红色 */
+    border-color: #f96868;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .btn-cyan {
+    background-color: #57c7d4; /* 青色 */
+    border-color: #57c7d4;
+    color: #fff !important;
+}
+[data-theme="dark"] .btn-secondary {
+    color: #4d5259 !important;
+    background-color: #343a40; /* 暗色背景的灰色 */
+    border-color: #343a40;
+}
+
+[data-theme="dark"] .btn {
+    color: #d1d8e1; /* 暗色模式下的浅灰色文本 */
+    padding: 8px 12px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    background-color: #1e2125; /* 深色背景 */
+    outline: none !important;
+    -webkit-transition: 0.15s linear;
+    transition: 0.15s linear;
+}
