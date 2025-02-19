@@ -23,6 +23,11 @@ namespace ReZero.SuperAPI
             foreach (var item in dataModel.DefaultParameters ?? new List<DataModelDefaultParameter>())
             {
                 var p = new SugarParameter("@" + item.Name, UtilMethods.ConvertDataByTypeName(item.ValueType, item.Value?.ToString()));
+                if (IsDateOnly(item))
+                {
+                    p.DbType = System.Data.DbType.Date;
+                    p.Value = Convert.ToDateTime(p.Value);
+                }
                 if (item.ValueIsReadOnly)
                 {
                     var claimItem = dataModel.ClaimList.FirstOrDefault(it => it.Key?.ToLower() == item.Name?.ToLower());
@@ -37,7 +42,7 @@ namespace ReZero.SuperAPI
                 }
                 sql = GetSqlByIsWhereIF(sql, left, right, isWhereIf, p);
                 pars.Add(p);
-            } 
+            }
             switch (dataModel.ResultType)
             {
                 case SqlResultType.DataSet:
@@ -48,6 +53,11 @@ namespace ReZero.SuperAPI
                 default:
                     return await db.Ado.GetDataTableAsync(sql, pars);
             }
+        }
+
+        private static bool IsDateOnly(DataModelDefaultParameter item)
+        {
+            return item?.ValueType?.EqualsCase("DateOnly") == true;
         }
 
         private static string GetSqlByIsWhereIF(string sql, string left, string right, bool isWhereIf, SugarParameter p)
