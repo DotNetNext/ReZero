@@ -62,4 +62,8 @@
 [data-theme="dark"] .table-bordered th {
     color: #fff; /* 白色文字 */
     background-color: #27223b; /* 深色背景 */
-} 
+}
+[data-theme="dark"] .parameter-title {
+    background: #000 !important;
+    border-top: #000 !important;
+}
