@@ -136,7 +136,7 @@ var tools = {
     initColor: function () {
         if (localStorage.BgColorType == 1) {
             document.body.setAttribute('data-theme', 'dark');
-        } else {
+        } else if (localStorage.BgColorType !== 'default') {
             document.body.setAttribute('data-theme', 'default');
         }
         var dropdown = document.querySelector('.dropdown-skin.open');
