@@ -177,4 +177,7 @@
     position:relative;
     top:10px;
     margin:0 !important;
-} 
+}
+.topbar .close:focus, .topbar .close:hover {
+    opacity: 1 !important;
+}
