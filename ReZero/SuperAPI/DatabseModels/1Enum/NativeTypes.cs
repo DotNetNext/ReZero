@@ -32,6 +32,7 @@ namespace ReZero.SuperAPI
         String4000,
         StringMax,
         DateTime,
+        DateOnly,
         TimeSpan,
         Guid,
         ByteArray,
