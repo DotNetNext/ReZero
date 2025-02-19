@@ -10,12 +10,12 @@
     border-color: #0a3d2a; /* 较暗的绿色边框 */
     color: #e0f2e9; /* 较亮的文字颜色，确保可读性 */
 }
-[data-theme="dark"] #apibox {
+[data-theme="dark"] #apibox, [data-theme="dark"] #apibox .cad {
     background: #1c1e2f !important
 }
-[data-theme="dark"] .parameter-title {
-    background: #000
-}
+[data-theme='dark'] .sidebar-header, [data-theme='dark'] .lyear-layout-sidebar-scroll, [data-theme='dark'] .lyear-layout-header, [data-theme='dark'] .card, [data-theme='dark'] .jconfirm .jconfirm-box {
+    background: #1c1e2f !important
+}  
 [data-theme="dark"] #app {
     background: #1c1e2f !important;
     padding: 35px;
@@ -54,3 +54,8 @@
         border-color: #4a4d50 !important; /* 获取焦点时的边框颜色 */
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* 聚焦时的蓝色阴影 */
     }
+
+[data-theme="dark"] .table-bordered th {
+    color: #fff; /* 白色文字 */
+    background-color: #27223b; /* 深色背景 */
+} 
