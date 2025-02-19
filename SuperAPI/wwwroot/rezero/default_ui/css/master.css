@@ -177,41 +177,4 @@
     position:relative;
     top:10px;
     margin:0 !important;
-}
-
- 
-
-[data-theme="dark"] .btn {
-    color: #d1d8e1; /* 暗色模式下的浅灰色文本 */
-    padding: 8px 12px;
-    letter-spacing: 1px;
-    border-radius: 2px;
-    background-color: #353537; /* 深色背景 */
-    outline: none !important;
-    -webkit-transition: 0.15s linear;
-    transition: 0.15s linear;
-    border-color: #353537!important;
-}
-
-
-[data-theme="dark"] .btn:hover,
-[data-theme="dark"] .btn:focus,
-[data-theme="dark"] .btn:active {
-    color: #ffffff !important; /* 文本保持为白色 */
-}
-
-[data-theme="dark"] .btn:hover {
-    background-color: #4a4d50 !important; /* 稍微浅一点的深色背景 */
-    border-color: #4a4d50 !important; /* 稍微浅一点的边框颜色 */
-}
-
-[data-theme="dark"] .btn:active {
-    background-color: #2e2f30 !important; /* 点击时的深色背景 */
-    border-color: #2e2f30 !important; /* 点击时的边框颜色 */
-}
-
-[data-theme="dark"] .btn:focus {
-    background-color: #4a4d50 !important; /* 获取焦点时的背景色 */
-    border-color: #4a4d50 !important; /* 获取焦点时的边框颜色 */
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* 聚焦时的蓝色阴影 */
-}
+} 

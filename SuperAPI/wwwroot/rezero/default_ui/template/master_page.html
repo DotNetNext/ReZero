@@ -12,6 +12,7 @@
     <link href="css/materialdesignicons.min.css" rel="stylesheet">
     <link href="css/style.min.css" rel="stylesheet">
     <link href="css/master.css?v=@@version" rel="stylesheet" />
+    <link href="css/master-dark.css?v=@@version" rel="stylesheet" />
     <script src="js/vue.js"></script>
     <script src="js/axios.min.js"></script>
     <script src="js/tools.js?v=@@version"></script>
@@ -19,7 +20,7 @@
         var jwHeader =
         {
             headers: {
-                "Authorization": 'Bearer ' + localStorage.getItem('@@authorizationLocalStorageName') 
+                "Authorization": 'Bearer ' + localStorage.getItem('@@authorizationLocalStorageName')
             }
         }
         tools.checkAuthorization();
@@ -162,7 +163,7 @@
             <span class="dot"></span>
         </div>
     </div>
-    <script src="js/init.js"></script>
+    <script src="js/init.js?v=@@version"></script>
 </body>
 </html>
 
