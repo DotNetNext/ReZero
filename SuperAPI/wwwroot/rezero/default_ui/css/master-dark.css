@@ -1,5 +1,25 @@
-﻿
-
+﻿[data-theme="dark"] .mdi-palette {
+    color:#fff
+}
+[data-theme='dark'] .endpointPost .method {
+    background: #1a5336; /* 较暗的绿色背景 */
+    color: #e0f2e9; /* 较亮的文字颜色，确保可读性 */
+} 
+[data-theme='dark'] .alert-success {
+    background-color: #0a3d2a; /* 较暗的绿色背景 */
+    border-color: #0a3d2a; /* 较暗的绿色边框 */
+    color: #e0f2e9; /* 较亮的文字颜色，确保可读性 */
+}
+[data-theme="dark"] #apibox {
+    background: #1c1e2f !important
+}
+[data-theme="dark"] .parameter-title {
+    background: #000
+}
+[data-theme="dark"] #app {
+    background: #1c1e2f !important;
+    padding: 35px;
+}
 [data-theme="dark"] .btn {
     color: #d1d8e1; /* 暗色模式下的浅灰色文本 */
     padding: 8px 12px;
