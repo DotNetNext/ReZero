@@ -54,7 +54,11 @@
         border-color: #4a4d50 !important; /* 获取焦点时的边框颜色 */
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* 聚焦时的蓝色阴影 */
     }
-
+[data-theme='dark'] .alert-warning {
+    background-color: #ff7043; /* 暗色主题下使用的亮橙色背景 */
+    border-color: #ff7043; /* 同样的边框颜色 */
+    color: #ffffff; /* 白色文字 */
+}
 [data-theme="dark"] .table-bordered th {
     color: #fff; /* 白色文字 */
     background-color: #27223b; /* 深色背景 */
