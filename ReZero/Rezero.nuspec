@@ -15,7 +15,7 @@
 		<dependencies>
 			<dependency id="ClosedXML" version="0.102.2" />
 			<dependency id="SqlSugarCore" version="5.1.4.154" />
-			<dependency id="System.Linq.Dynamic.Core" version="1.3.13" />
+			<dependency id="System.Linq.Dynamic.Core" version="1.6.0.2" />
 			<dependency id="Microsoft.CodeAnalysis.CSharp.Scripting" version="4.10.0" />
 		</dependencies>
 	</metadata>
