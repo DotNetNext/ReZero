@@ -67,3 +67,6 @@
     background: #000 !important;
     border-top: #000 !important;
 }
+[data-theme="dark"] .table thead th {
+    background-color: #1c1e2f !important;
+}
