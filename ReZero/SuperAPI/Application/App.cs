@@ -87,7 +87,7 @@ namespace ReZero.SuperAPI
             {
                 db.Aop.OnLogExecuting = (s, p) =>
                 {
-                    ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>().LogInformation(UtilMethods.GetNativeSql(s, p));
+                    ReZero.DependencyInjection.DependencyResolver.GetLogger().LogInformation(UtilMethods.GetNativeSql(s, p));
                 };
             });
         }

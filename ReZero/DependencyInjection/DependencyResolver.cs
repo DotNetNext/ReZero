@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ReZero.SuperAPI;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,11 +16,20 @@ namespace ReZero.DependencyInjection
     {
         public static ServiceProvider Provider { get => ServiceLocator.Services!.BuildServiceProvider(); }
         public static IHttpContextAccessor? httpContextAccessor = null;
+        public static ILogger<SuperAPIMiddleware>? logger = null;
         public static T GetService<T>() where T : class
         {
             return Provider!.GetService<T>();
         }
 
+        public static ILogger<SuperAPIMiddleware> GetLogger() 
+        {
+            if (logger == null) 
+            {
+                logger = ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>();
+            }
+            return logger;
+        }
         public static ClaimsPrincipal GetClaims()
         {
             if (httpContextAccessor == null)

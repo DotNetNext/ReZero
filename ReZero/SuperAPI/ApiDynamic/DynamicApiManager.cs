@@ -102,7 +102,7 @@ namespace ReZero.SuperAPI
                 }
                 catch (Exception ex)
                 {
-                    ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>().LogInformation(ex.Message);
+                    ReZero.DependencyInjection.DependencyResolver.GetLogger().LogInformation(ex.Message);
                     object data =new ErrorResponse { message = ex.Message } ;
                     data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;

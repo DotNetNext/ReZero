@@ -40,7 +40,7 @@ namespace ReZero.SuperAPI
             {
                 db.QueryFilter.AddTableFilter<IDeleted>(it => it.IsDeleted == false);
                 db.Aop.OnLogExecuting = (s, p) =>
-                ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>().LogInformation(UtilMethods.GetNativeSql(s, p));
+                ReZero.DependencyInjection.DependencyResolver.GetLogger().LogInformation(UtilMethods.GetNativeSql(s, p));
             });
 
 

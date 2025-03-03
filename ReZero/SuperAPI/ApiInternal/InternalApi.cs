@@ -64,7 +64,7 @@ namespace ReZero.SuperAPI
                 }
                 catch (Exception ex)
                 {
-                    ReZero.DependencyInjection.DependencyResolver.GetService<ILogger<SuperAPIMiddleware>>().LogInformation(ex.Message);
+                    ReZero.DependencyInjection.DependencyResolver.GetLogger().LogInformation(ex.Message);
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
                     await context.Response.WriteAsync(db.Utilities.SerializeObject(new { message = ex.Message }));
                     systemInterfaceContext.Exception = ex;
