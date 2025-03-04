@@ -133,6 +133,13 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("系统缓存")]
         [EnglishTextAttribute("System cache")]
         public const long Id300009 = 300009;
+
+        /// <summary>
+        /// 系统配置
+        /// </summary>
+        [ChineseTextAttribute("系统配置")]
+        [EnglishTextAttribute("System config")]
+        public const long Id300010 = 300010;
         #endregion
 
         #region System setting

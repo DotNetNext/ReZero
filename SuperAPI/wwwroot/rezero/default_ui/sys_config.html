@@ -1,0 +1,178 @@
+﻿@@master_page.html
+<div id="apibox">
+    <div class="alert alert-success">修改配置后需要重新启用服务</div>
+
+    <!-- 数据库配置 -->
+    <div class="card">
+        <div class="card-header"><h4>数据库配置</h4></div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>数据库类型</label>
+                <select v-model="ReZero.BasicDatabase.DbType" class="form-control">
+                    <option value="MySql">MySql</option>
+                    <option value="SqlServer">SqlServer</option>
+                    <option value="Sqlite">Sqlite</option>
+                    <option value="Oracle">Oracle</option>
+                    <option value="PostgreSQL">PostgreSQL</option>
+                    <option value="Dm">达梦</option>
+                    <option value="Kdbndp">人大金仓默认模式</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>数据库连接字符串</label>
+                <input type="text" v-model="ReZero.BasicDatabase.ConnectionString" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <!-- UI 配置 -->
+    <div class="card">
+        <div class="card-header"><h4>UI 配置</h4></div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="lyear-checkbox">
+                    <input type="checkbox" v-model="ReZero.Ui.ShowNativeApiDocument"> <span class="p-l-5">显示原生 API 文档</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>原生的Swagger</label>
+                <input type="text" readonly="readonly" v-model="ReZero.Ui.DefaultIndexSource" class="form-control">
+            </div>
+            <div class="form-group">
+                <button @click="saveConfig" class="btn btn-primary">保存配置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JWT 配置 -->
+    <div class="card">
+        <div class="card-header"><h4>JWT 配置</h4></div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="lyear-checkbox">
+                    <input type="checkbox" v-model="ReZero.Jwt.Enable"> <span class="p-l-5">启用 JWT 授权</span>
+                </label>
+            </div>
+            <div v-if="ReZero.Jwt.Enable">
+                <div class="form-group">
+                    <label>JWT 密钥</label>
+                    <input type="text" v-model="ReZero.Jwt.Secret" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>用户表名称</label>
+                    <input type="text" v-model="ReZero.Jwt.UserTableName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>用户名字段名称</label>
+                    <input type="text" v-model="ReZero.Jwt.UserNameFieldName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>密码字段名称</label>
+                    <input type="text" v-model="ReZero.Jwt.PasswordFieldName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>过期时间（分钟）</label>
+                    <input type="number" v-model="ReZero.Jwt.Expires" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Claim 配置</label>
+                    <div v-for="(claim, index) in ReZero.Jwt.Claim" :key="index" class="claim-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <input type="text" v-model="claim.Key" placeholder="Claim Key" class="form-control" style="flex: 1; margin-right: 10px;">
+                        <input type="text" v-model="claim.FieldName" placeholder="字段名称" class="form-control" style="flex: 1; margin-right: 10px;">
+                        <input type="text" v-model="claim.Type" placeholder="C# 类型" class="form-control" style="flex: 1; margin-right: 10px;">
+                        <button @click="removeClaim(index)" class="btn btn-danger">删除</button>
+                    </div>
+                    <button @click="addClaim" class="btn  btn-default">添加 Claim</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <button @click="saveConfig" class="btn btn-primary">保存配置</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORS 配置 -->
+    <div class="card">
+        <div class="card-header"><h4>CORS 配置</h4></div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="lyear-checkbox">
+                    <input type="checkbox" v-model="ReZero.Cors.Enable"> <span class="p-l-5">启用跨域</span>
+                </label>
+            </div>
+            <div v-if="ReZero.Cors.Enable">
+                <div class="form-group">
+                    <label>策略名称</label>
+                    <input type="text" v-model="ReZero.Cors.PolicyName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>允许的 Headers</label>
+                    <input type="text" v-model="ReZero.Cors.Headers" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>允许的 Methods</label>
+                    <input type="text" v-model="ReZero.Cors.Methods" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>允许的 Origins</label>
+                    <input type="text" v-model="ReZero.Cors.Origins" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <button @click="saveConfig" class="btn btn-primary">保存配置</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            ReZero: {
+                BasicDatabase: {
+                    DbType: "SqlServer",
+                    ConnectionString: "server=.;uid=sa;pwd=sasa;database=SuperAPI"
+                },
+                Ui: {
+                    ShowNativeApiDocument: true,
+                    DefaultIndexSource: "/swagger"
+                },
+                Jwt: {
+                    Enable: false,
+                    Secret: "C0mPl3xS3cr3tK3yF0rJWT@DEVELOPMENT",
+                    UserTableName: "user",
+                    UserNameFieldName: "username",
+                    PasswordFieldName: "password",
+                    Expires: 1000,
+                    Claim: [
+                        { Key: "Id", FieldName: "Id", Type: "long" }
+                    ],
+                    DisableSystemInterface: false
+                },
+                Cors: {
+                    Enable: false,
+                    PolicyName: "cors",
+                    Headers: ["*"],
+                    Methods: ["*"],
+                    Origins: ["http://localhost:52798", "http://localhost:1803"]
+                }
+            }
+        },
+        methods: {
+            // 添加 Claim
+            addClaim() {
+                this.ReZero.Jwt.Claim.push({ Key: "", FieldName: "", Type: "" });
+            },
+            // 删除 Claim
+            removeClaim(index) {
+                this.ReZero.Jwt.Claim.splice(index, 1);
+            },
+            // 保存配置
+            saveConfig() {
+                console.log(JSON.stringify(this.ReZero, null, 2));
+                alert("配置已保存！");
+            }
+        }
+    });
+</script>

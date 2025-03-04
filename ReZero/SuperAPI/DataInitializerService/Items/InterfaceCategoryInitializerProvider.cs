@@ -74,7 +74,14 @@ namespace ReZero.SuperAPI
                 it.Url = "/rezero/cache.html";
                 it.SortId = 6;
             }));
-
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300010;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300010);
+                it.ParentId = SystemSettingId;
+                it.Url = "/rezero/sys_config.html";
+                it.SortId = 7;
+            }));
         }
 
         private void SetIndexAndRoot()
