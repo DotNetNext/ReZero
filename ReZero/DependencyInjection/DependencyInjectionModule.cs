@@ -28,7 +28,8 @@ namespace ReZero.DependencyInjection
                 {
                     InitDefaultType(services, type, interfaces, interfacesNoRezero);
                 }
-            } 
+            }
+            InitApiType(services, typeof(InternalInitApi));
         }
 
         private static void InitDefaultType(IServiceCollection services, Type  type, Type[] interfaces, IEnumerable<Type> interfacesNoRezero)

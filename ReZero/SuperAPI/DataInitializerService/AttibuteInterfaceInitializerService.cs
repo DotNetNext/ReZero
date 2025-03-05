@@ -144,6 +144,11 @@ namespace ReZero.SuperAPI
                     foreach (var method in methods)
                     {
                         var addItem = AttibuteInterfaceInitializerService.GetZeroInterfaceItem(type, method);
+                        if (addItem.Url == PubConst.InitApi_SystemSaveConfig)
+                        {
+                            addItem.IsInitialized = true; 
+                            addItem.Id = InterfaceListInitializerProvider.SaveConfigId;
+                        }
                         zeroInterfaceLists.Add(addItem);
                     }
                 }

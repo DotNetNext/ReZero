@@ -309,7 +309,11 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("根据SQL返回Excel")]
         [EnglishTextAttribute("Sql to excel")]
         public const long ExecuetSqlReturnExcelId = 58;
-        
+
+        [ChineseTextAttribute("保存接口配置")]
+        [EnglishTextAttribute("Save Config")]
+        public const long SaveConfigId = 59;
+
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

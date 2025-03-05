@@ -63,6 +63,7 @@ namespace ReZero.SuperAPI
                         .DependencyInjectionOptions
                         .Assemblies!
                         .SelectMany(it => it.GetTypes()).ToList();
+           types!.Add(typeof(InternalInitApi));
            AttibuteInterfaceInitializerService.InitDynamicAttributeApi(types);
         } 
         /// <summary>
