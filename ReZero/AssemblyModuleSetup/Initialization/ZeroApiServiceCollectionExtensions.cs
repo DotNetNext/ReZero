@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ReZero.DependencyInjection;
@@ -27,7 +28,8 @@ namespace ReZero
             SuperAPIModule.Init(services, options);
             AddDependencyInjection(options, options.SuperApiOptions);
             DependencyInjectionModule.Init(services, options); 
-            JwtInit(services, options); 
+            JwtInit(services, options);
+            App.InitReZeroOptions = options;
             return services;
         }
 
