@@ -32,7 +32,7 @@ namespace ReZero.SuperAPI
             MatchCollection matches = regex.Matches(sqlQuery);
              
             // 循环替换匹配的内容
-            foreach (Match match in matches)
+            foreach (Match match in matches.GroupBy(it => it.Groups["name"]+"").Select(it=>it.First()).ToList())
             {
                 string type = match.Groups["type"].Value;
                 string name = match.Groups["name"].Value; 
