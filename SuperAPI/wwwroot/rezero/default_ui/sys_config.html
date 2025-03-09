@@ -1,27 +1,29 @@
 ﻿@@master_page.html
 <div id="apibox">
     <div class="alert alert-success">修改配置后需要重新启用服务</div>
+
     <div class="card">
-        <div class="card-header">数据库配置</div>
+        <div class="card-header"><h4>登录配置</h4></div>
         <div class="card-body">
-            <div class="form-group">
+            <div v-if="ReZero.config.Enable" class="form-group" :class="{'has-error': !ReZero.config.Enable}">
                 <label class="lyear-checkbox">
-                    <input type="checkbox" v-model="ReZero.enableLogin">
-                    <span class="p-l-5">启用登录管理</span>
+                    <input type="checkbox" disabled="disabled" v-model="ReZero.config.Enable">
+                    <span class="p-l-5">启用授权</span>
                 </label>
             </div>
-            <div v-if="ReZero.enableLogin">
-                <div class="form-group">
-                    <label for="tableName">用户表的表名</label>
-                    <input type="text" class="form-control" id="tableName" v-model="ReZero.tableName" placeholder="表名例如 UserIno">
+            <span v-if="!ReZero.config.Enable" class="error-message">请在JSON文件或者程序初始化代码中配置JWT并启用</span>
+            <div v-if="ReZero.config.Enable">
+                <div class="form-group" :class="{'has-error': !ReZero.config.UserTableName}">
+                    <label for="userTableName">用户表的表名</label>
+                    <input type="text" class="form-control" id="userTableName" v-model="ReZero.config.UserTableName" readonly placeholder="请在json文件或者程序初使化代码中赋值">
                 </div>
-                <div class="form-group">
-                    <label for="usernameField">用户名字段名</label>
-                    <input type="text" class="form-control" id="usernameField" v-model="ReZero.usernameField" placeholder="字段名 例如 UserName">
+                <div class="form-group" :class="{'has-error': !ReZero.config.UserNameFieldName}">
+                    <label for="userNameFieldName">用户名字段名</label>
+                    <input type="text" class="form-control" id="userNameFieldName" v-model="ReZero.config.UserNameFieldName" readonly placeholder="请在json文件或者程序初使化代码中赋值">
                 </div>
-                <div class="form-group">
-                    <label for="passwordField">密码字段名</label>
-                    <input type="text" class="form-control" id="passwordField" v-model="ReZero.passwordField" placeholder="字段名 例如 password">
+                <div class="form-group" :class="{'has-error': !ReZero.config.PasswordFieldName}">
+                    <label for="passwordFieldName">密码字段名</label>
+                    <input type="text" class="form-control" id="passwordFieldName" v-model="ReZero.config.PasswordFieldName" readonly placeholder="请在json文件或者程序初使化代码中赋值">
                 </div>
                 <div class="form-group">
                     <label for="encryptionMethod">登录界面密码加密方式</label>
@@ -30,16 +32,16 @@
                         <option value="md5">MD5</option>
                     </select>
                 </div>
-                <div class="form-group" style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #ddd;">
+                <div class="form-group test-login-container">
                     <div class="form-group">
-                        <label for="testUsername">用户名</label>
+                        <label for="testUsername">测试用户名</label>
                         <input type="text" class="form-control" id="testUsername" v-model="ReZero.testUsername" placeholder="请输入测试用户名">
                     </div>
                     <div class="form-group">
-                        <label for="testPassword">密码</label>
+                        <label for="testPassword">测试密码</label>
                         <input type="password" class="form-control" id="testPassword" v-model="ReZero.testPassword" placeholder="请输入测试密码">
                     </div>
-                    <button class="btn btn-primary" @click="testLogin">测试登录</button>
+                    <button class="btn btn-primary" @click="testLogin">登录测试</button>
                 </div>
                 <div v-if="ReZero.testSuccess" class="form-group">
                     <button class="btn btn-success" @click="saveConfig">保存配置</button>
@@ -48,22 +50,59 @@
         </div>
     </div>
 </div>
+<style>
+.has-error input {
+    border-color: red;
+}
+
+.has-error input::placeholder {
+    color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 16px;
+    margin-top: 5px;
+    display: block;
+}
+
+.test-login-container {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+</style>
 <script>
     var vueObj = new Vue({
         el: '#apibox',
         data: {
             ReZero: {
-                enableLogin: false,
-                tableName: '',
-                usernameField: '',
-                passwordField: '',
+                config: {
+                    Enable: false,
+                    UserTableName: '',
+                    UserNameFieldName: '',
+                    PasswordFieldName: ''
+                },
                 encryptionMethod: '',
                 testUsername: '',
                 testPassword: '',
                 testSuccess: false
             }
         },
+        mounted() {
+            this.fetchConfig();
+        },
         methods: {
+            fetchConfig: function () {
+                axios.get('/PrivateReZeroRoute/100003/GetInitConfig')
+                    .then(response => {
+                        this.ReZero.config = response.data.Jwt;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
             testLogin: function () {
                 // 在这里添加登录测试的逻辑
                 // 假设测试成功
@@ -77,6 +116,5 @@
         }
     });
 </script>
-
 
 
