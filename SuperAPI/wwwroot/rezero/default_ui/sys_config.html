@@ -7,8 +7,20 @@
         <div class="card-body">
             <div class="form-group">
                 <label class="lyear-checkbox">
-                    <input type="checkbox" v-model="ReZero.config.Enable">
+                    <input type="checkbox" v-model="ReZero.config.Enable" @change="saveLoginConfig">
                     <span class="p-l-5">启用登录</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h4>实体管理配置</h4></div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="lyear-checkbox">
+                    <input type="checkbox" v-model="setting.importUnunderline" @change="saveSetting">
+                    <span class="p-l-5">导入实体去掉下划线</span>
                 </label>
             </div>
         </div>
@@ -22,10 +34,14 @@
                 config: {
                     Enable: false
                 }
+            },
+            setting: {
+                importUnunderline: false
             }
         },
         mounted() {
             this.fetchConfig();
+            this.getSettingItem(1, 1);
         },
         methods: {
             fetchConfig: function () {
@@ -36,10 +52,55 @@
                     .catch(error => {
                         console.error(error);
                     });
+            },
+            saveLoginConfig: function () {
+                var url = "/PrivateReZeroRoute/100003/UpdateLoginConfig";
+                axios.post(url, this.ReZero.config, jwHeader)
+                    .then(response => {
+                        tools.alert("登录配置保存成功");
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            saveSetting: function () {
+                this.saveSettingItem(1, 1, this.setting.importUnunderline);
+            },
+            getSettingItem: function (typeId, childTypeId) {
+                var url = "/PrivateReZeroRoute/100003/GetSetting";
+                axios.post(url, { typeId: typeId, childTypeId: childTypeId }, jwHeader)
+                    .then(response => {
+                        this.setting.importUnunderline = response.data.BoolValue;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            saveSettingItem: function (typeId, childTypeId, value) {
+                var url = "/PrivateReZeroRoute/100003/UpdateSetting";
+                axios.post(url, { typeId: typeId, childTypeId: childTypeId, value: value }, jwHeader)
+                    .then(response => {
+                        tools.alert("实体管理配置保存成功");
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             }
         }
     });
 </script>
+
+
+
+
+
+
 
 
 
