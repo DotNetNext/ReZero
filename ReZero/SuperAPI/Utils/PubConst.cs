@@ -64,5 +64,6 @@ namespace ReZero.SuperAPI
         public const string InitApi_SystemCommon = "SystemCommon";
         public const string InitApi_RootUrl = "/PrivateReZeroRoute/100003/";
         public const string InitApi_SystemSaveConfig = "/PrivateReZeroRoute/100003/SaveConfig";
+        public const string InitApi_SystemGetInitConfig = "/PrivateReZeroRoute/100003/GetInitConfig";
     }
 }

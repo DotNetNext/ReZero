@@ -13,5 +13,14 @@ namespace ReZero.SuperAPI
         {
             return true;
         }
+
+        [ApiMethod(nameof(InternalInitApi.GetInitConfig), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_SystemGetInitConfig)]
+        public object GetInitConfig()
+        {
+            return new 
+            { 
+                Jwt = App.InitReZeroOptions?.SuperApiOptions.InterfaceOptions.Jwt
+            };
+        }
     }
 }

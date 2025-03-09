@@ -311,8 +311,12 @@ namespace ReZero.SuperAPI
         public const long ExecuetSqlReturnExcelId = 58;
 
         [ChineseTextAttribute("保存接口配置")]
-        [EnglishTextAttribute("Save Config")]
+        [EnglishTextAttribute("Save config")]
         public const long SaveConfigId = 59;
+
+        [ChineseTextAttribute("获取初始化配置")]
+        [EnglishTextAttribute("Get init config")]
+        public const long GetInitConfigId= 60;
 
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
