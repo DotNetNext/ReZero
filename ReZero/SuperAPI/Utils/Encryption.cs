@@ -1,40 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Text;
 namespace ReZero.SuperAPI
 {
     public class Encryption
     {
         /// <summary>
-        /// Encrypt the input string by shifting each character by 3 positions in the Unicode table.
+        /// Encrypt the input string using MD5 hashing algorithm.
         /// </summary>
         /// <param name="input">The string to encrypt</param>
-        /// <returns>The encrypted string</returns>
+        /// <returns>The encrypted string in hexadecimal format</returns>
         public static string Encrypt(string input)
         {
-            char[] inputArray = input.ToCharArray();
-            for (int i = 0; i < inputArray.Length; i++)
+            using (MD5 md5 = MD5.Create())
             {
-                // Shift each character by 3 positions in the Unicode table
-                inputArray[i] = (char)(inputArray[i] + 3);
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString().ToLower();
             }
-            return new string(inputArray);
-        }
-        /// <summary>
-        /// Decrypt the input string by shifting each character back by 3 positions in the Unicode table.
-        /// </summary>
-        /// <param name="input">The string to decrypt</param>
-        /// <returns>The decrypted string</returns>
-        public static string Decrypt(string input)
-        {
-            char[] inputArray = input.ToCharArray();
-            for (int i = 0; i < inputArray.Length; i++)
-            {
-                // Shift each character back by 3 positions in the Unicode table
-                inputArray[i] = (char)(inputArray[i] - 3);
-            }
-            return new string(inputArray);
         }
     }
 }

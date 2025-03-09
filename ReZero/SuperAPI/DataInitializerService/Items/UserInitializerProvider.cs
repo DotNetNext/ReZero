@@ -16,6 +16,12 @@ namespace ReZero.SuperAPI
         private void InitUser()
         {
             var db = App.PreStartupDb;
+            var defaltUser=db!.Queryable<ZeroUserInfo>().ClearFilter().Where(it => !it.IsInitialized)
+                .Where(it => it.Id == 1).First();
+            if (defaltUser != null) 
+            {
+                db.Deleteable<ZeroUserInfo>().Where(it => it.Id == 1).ExecuteCommand();
+            }
             db!.Storageable(new ZeroUserInfo()
             {
                 Id = 1,
@@ -23,6 +29,7 @@ namespace ReZero.SuperAPI
                 Password = Encryption.Encrypt("123456"),
                 UserName = "admin",
                 SortId = -1,
+                IsInitialized=true,
                 CreatorId = 1,
                 Creator = "admin",
                 EasyDescription = "default password 123456"
