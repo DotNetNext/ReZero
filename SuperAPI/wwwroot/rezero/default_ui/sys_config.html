@@ -50,22 +50,22 @@
             }
         },
         mounted() {
-            this.fetchConfig();
+            this.getLoginConfig();
             this.getSettingItem(1, 1);
         },
         methods: {
-            fetchConfig: function () {
-                axios.get('/PrivateReZeroRoute/100003/GetInitConfig')
+            getLoginConfig: function () {
+                axios.get('/PrivateReZeroRoute/100003/getLoginConfig')
                     .then(response => {
-                        this.ReZero.config = response.data.Jwt;
+                        this.ReZero.config.Enable = response.data;
                     })
                     .catch(error => {
                         console.error(error);
                     });
             },
             saveLoginConfig: function () {
-                var url = "/PrivateReZeroRoute/100003/UpdateLoginConfig";
-                axios.post(url, this.ReZero.config, jwHeader)
+                var url = "/PrivateReZeroRoute/100003/saveLoginConfig";
+                axios.post(url, { enable: this.ReZero.config.Enable }, jwHeader)
                     .then(response => {
                         tools.alert("登录配置保存成功");
                         this.error = null;

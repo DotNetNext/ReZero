@@ -8,19 +8,25 @@ namespace ReZero.SuperAPI
     [Api(InterfaceCategoryInitializerProvider.Id100003)]
     internal class InternalInitApi
     {
-        [ApiMethod(nameof(InternalInitApi.SaveConfig), GroupName = PubConst.InitApi_SystemCommon, Url =PubConst.InitApi_SystemSaveConfig)]
-        public bool SaveConfig(string id) 
+        [ApiMethod(nameof(InternalInitApi.SaveLoginConfig), GroupName = PubConst.InitApi_SystemCommon, Url =PubConst.InitApi_SystemSaveConfig)]
+        public bool SaveLoginConfig(bool enable) 
         {
+            var db = App.Db;
+            var sysSetting = db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLoginType).First();
+            if (sysSetting == null)
+                sysSetting = new ZeroSysSetting() { Id=SqlSugar.SnowFlakeSingle.Instance.NextId(),TypeId = PubConst.Setting_EnableLoginType };
+            sysSetting.BoolValue = enable;
+            db.Storageable(sysSetting).ExecuteCommand();
             return true;
         }
 
-        [ApiMethod(nameof(InternalInitApi.GetInitConfig), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_SystemGetInitConfig)]
-        public object GetInitConfig()
+        [ApiMethod(nameof(InternalInitApi.GetLoginConfig), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_SystemGetInitConfig)]
+        public object GetLoginConfig()
         {
-            return new 
-            { 
-                Jwt = App.InitReZeroOptions?.SuperApiOptions.InterfaceOptions.Jwt
-            };
+            var db = App.Db;
+            var sysSetting=db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLoginType).First();
+            if (sysSetting == null) return false;
+            return sysSetting.BoolValue;
         }
     }
 }
