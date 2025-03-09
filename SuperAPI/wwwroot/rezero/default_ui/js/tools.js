@@ -183,7 +183,11 @@ setTimeout(function () {
                 tools.alert("授权失败，自动跳到授权页面");
                 // 如果是401错误（未授权），则跳转到登录页面  
                 setTimeout(function () {
-                    window.location.href = '/rezero/authorization.html'; // 替换为你想要跳转的地址
+                    if (isloginPage) {
+                        window.location.href = '/rezero/login.html';  
+                    } else {
+                        window.location.href = '/rezero/authorization.html';  
+                    }
                 }, 2000);
 
             } else {

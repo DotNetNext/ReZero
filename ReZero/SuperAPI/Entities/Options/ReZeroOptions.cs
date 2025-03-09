@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Linq;
 using Newtonsoft.Json;
-using ReZero.Configuration;
+using ReZero.Configuration; 
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -172,6 +172,10 @@ namespace ReZero.SuperAPI
         /// Show native api document
         /// </summary>
         public bool ShowNativeApiDocument { get; set; } = true;
+        /// <summary>
+        /// Enable Login page Configuration on the UI
+        /// </summary>
+        internal bool EnableLoginPage { get; set; }
     }
 
 
