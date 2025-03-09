@@ -28,8 +28,7 @@ namespace ReZero
             SuperAPIModule.Init(services, options);
             AddDependencyInjection(options, options.SuperApiOptions);
             DependencyInjectionModule.Init(services, options); 
-            JwtInit(services, options);
-            App.InitReZeroOptions = options;
+            JwtInit(services, options); 
             return services;
         }
 

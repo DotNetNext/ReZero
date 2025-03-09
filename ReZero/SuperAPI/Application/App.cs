@@ -17,12 +17,6 @@ namespace ReZero.SuperAPI
         /// Represents a database connection object used before service startup.
         /// </summary>
         internal static ISqlSugarClient? PreStartupDb { get; set; }
-
-        /// <summary>
-        /// Gets or sets the initial options for the ReZero application.
-        /// </summary>
-        internal static ReZeroOptions? InitReZeroOptions { get; set; }
-
         /// <summary>
         /// Gets the instance of the SqlSugar client for database operations.
         /// </summary>
