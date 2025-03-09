@@ -318,6 +318,10 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Get init config")]
         public const long GetInitConfigId= 60;
 
+        [ChineseTextAttribute("获取用户列表")]
+        [EnglishTextAttribute("Get user list")]
+        public const long GetUserInfoListId = 61;
+
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

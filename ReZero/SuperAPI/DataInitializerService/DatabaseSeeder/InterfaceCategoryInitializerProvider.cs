@@ -140,6 +140,13 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("系统配置")]
         [EnglishTextAttribute("System config")]
         public const long Id300010 = 300010;
+
+        /// <summary>
+        /// 系统用户
+        /// </summary>
+        [ChineseTextAttribute("系统用户")]
+        [EnglishTextAttribute("System user")]
+        public const long Id300011 = 300011;
         #endregion
 
         #region System setting

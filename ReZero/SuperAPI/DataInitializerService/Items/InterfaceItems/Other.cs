@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Text.Json.Nodes;
 
@@ -27,6 +28,7 @@ namespace ReZero.SuperAPI
             ExecTemplateByTableIds();
             ClearAllInternalCache();
             ExecuetSqlReturnExcel();
+            GetUserInfoPageList();
         }
 
         private void SaveInterfaceList()
@@ -58,6 +60,7 @@ namespace ReZero.SuperAPI
             });
             zeroInterfaceList.Add(data1);
         } 
+
         private void GetImportTables()
         {
             //获取导入的表
@@ -546,6 +549,76 @@ namespace ReZero.SuperAPI
                 };
             });
             zeroInterfaceList.Add(data1);
+        }
+
+        private void GetUserInfoPageList()
+        {
+            ZeroInterfaceList data2 = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetUserInfoListId;
+                it.GroupName = nameof(ZeroUserInfo);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetUserInfoListId);
+                it.Url = GetUrl(it, "GetUserInfoPageList");
+                it.CustomResultModel = new ResultModel()
+                {
+                    ResultType = ResultType.Grid,
+                    ResultColumnModels = new List<ResultColumnModel>()
+                    {
+                        new ResultColumnModel(){  PropertyName= nameof(ZeroDatabaseInfo.DbType) , ConvertType=typeof(DbType),ConvertType2=typeof(string), ResultColumnType= ResultColumnType.ConvertDefault }
+                    }
+                };
+                it.DataModel = new DataModel()
+                {
+                    Columns = new List<DataColumnParameter>()
+                    {
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.Id) ,
+                            Description=TextHandler.GetCommonText("ID", "Primary key")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.UserName) ,
+                            Description=TextHandler.GetCommonText("用户名", "User name")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.Password) ,
+                            Description=TextHandler.GetCommonText("密码", "Password")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.IsMasterAdmin) ,
+                            Description=TextHandler.GetCommonText("是否管理员", "Is master admin")
+                        },
+                       new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.EasyDescription) ,
+                            Description=TextHandler.GetCommonText("备注", "Description")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.Creator) ,
+                            Description=TextHandler.GetCommonText("创建人", "Creator")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.CreateTime) ,
+                            Description=TextHandler.GetCommonText("创建时间", "Create time")
+                        }
+                    },
+                    TableId = EntityInfoInitializerProvider.Id_ZeroUserInfo,
+                    ActionType = ActionType.QueryCommon,
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                        new DataModelDefaultParameter() { Name = nameof(ZeroUserInfo.UserName),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name, Description = TextHandler.GetCommonText("用户名", "User name") },
+                        new DataModelDefaultParameter() { Name = nameof(ZeroUserInfo.IsMasterAdmin),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,  Description = TextHandler.GetCommonText("是否是管理员", "Is master admin") },
+                        new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageNumberPropName ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
+                        new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageSizePropName ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Pageize") },
+                        new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
+                    },
+                    CommonPage = new DataModelPageParameter()
+                    {
+                        PageNumber = 1,
+                        PageSize = 20
+                    },
+                };
+            });
+            zeroInterfaceList.Add(data2);
         }
     }
 }

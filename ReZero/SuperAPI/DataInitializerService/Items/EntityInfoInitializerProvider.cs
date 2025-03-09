@@ -17,7 +17,17 @@ namespace ReZero.SuperAPI
             AddZeroColumn(datas);
             AddZeroTemplate(datas);
             AddZeroTemplateType(datas);
+            AddZeroUserInfo(datas);
             return datas;
+        }
+        private void AddZeroUserInfo(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroUserInfo));
+            data.Id = Id_ZeroUserInfo;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
+            datas.Add(data);
         }
         private void AddZeroColumn(List<ZeroEntityInfo> datas)
         {

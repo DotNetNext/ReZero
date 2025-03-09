@@ -1,0 +1,231 @@
+﻿@@master_page.html
+<link href="css/page_table_list.css" rel="stylesheet" />
+<link href="css/page_interface_manager.css" rel="stylesheet" />
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script>
+<div id="apibox" class="card">
+    <!--主列表搜索-->
+    <div class="search-bar">
+        <form id="frmSearach" action="lyear_forms_elements.html" method="post" onsubmit="return false;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><input class="form-control" type="text" id="txtUserName" name="example-text-input" placeholder="用户名"></div> 
+                    <div class="col-md-2">
+                        <select id="selIsMasterAdmin" class="form-control">
+                            <option value="">==是否管理员==</option>
+                            <option value="true">是</option>
+                            <option value="false">否</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button @click="onSearch()" id="btnSearch" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
+                        <button onclick="frmSearach.reset()" class="btn btn-close m-l-15" type="submit">清空</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--主表列表操作按钮-->
+    <div class="card-toolbar clearfix">
+        <div class="toolbar-btn-action">
+            <a class="btn btn-primary m-r-5" @click="openNext()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+        </div>
+    </div>
+    <!--主列表-->
+    <div class="card-body">
+        <div class="table-responsive">
+            <div class="master-table-container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr v-if="data && data.Columns && data.Columns.length > 0">
+                            <th class="width30">
+                                <label class="lyear-checkbox checkbox-primary">
+                                    <input type="checkbox" @change="selectAll" id="check-all"><span></span>
+                                </label>
+                            </th>
+                            <th v-for="column in data.Columns">{{column.ColumnDescription}}</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="data && data.Data">
+                        <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
+                            <td>
+                                <label class="lyear-checkbox checkbox-primary">
+                                    <input type="checkbox" name="ids[]" v-model="selectedItems" :alt="item.Id" :value="item.Id"><span></span>
+                                </label>
+                            </td>
+                            <td v-for="column in data.Columns">
+                                {{ item[column.PropertyName] }}
+                            </td>
+                            <td class="table_opt">
+                                <button data-toggle="modal" @click="openEdit(item)" class="btn btn-link" type="button">
+                                    <i class="mdi mdi-lead-pencil"></i> 修改
+                                </button>
+                                <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
+                                    <i class="mdi mdi-do-not-disturb"></i> 删除
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--分页局部视图-->
+    @@page_control.html
+    <!--创建用户信息窗体-->
+    <div id="divSave" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnSave" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divSave"></button>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">{{title}} </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmSave" action="#!" method="post" name="edit-form" class="edit-form">
+                        <input v-model="editId" type="hidden" value="0" />
+                        <div class="form-group col-md-12">
+                            <label>用户名</label>
+                            <input type="text" class="form-control" v-model="formData.UserName" placeholder="请输入用户名">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>密码</label>
+                            <input type="password" class="form-control" v-model="formData.Password" placeholder="请输入密码">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>是否管理员</label>
+                            <select class="form-control" v-model="formData.IsMasterAdmin">
+                                <option value="true">是</option>
+                                <option value="false">否</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnAddOrUpdateColse" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="addOrUpdateUserInfo()" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null,
+            title: "添加用户信息",
+            editId: 0,
+            formData: {
+                UserName: '',
+                Password: '',
+                IsMasterAdmin: false
+            },
+            selectedItems: []
+        },
+        mounted() {
+            this.fetchData("");
+        },
+        methods: {
+            fetchData: function (append) {
+                var url = "/PrivateReZeroRoute/100003/GetUserInfoPageList" + append;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            onSearch: function (page) {
+                var urlParameters = "?" + tools.objectToQueryString({
+                    __pageNumber: page,
+                    __pageSize: tools.getValue("selPageSize"),
+                    UserName: txtUserName.value,
+                    Password: txtPassword.value,
+                    IsMasterAdmin: selIsMasterAdmin.value
+                });
+                this.fetchData(urlParameters);
+            },
+            selectAll: function (event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedItems = this.data.Data.map(item => item.Id);
+                } else {
+                    // 全不选
+                    this.selectedItems = [];
+                }
+            },
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteUserInfo?IsDeleted=true&Id=" + localStorage.delId;
+                    axios.get(url, jwHeader)
+                        .then(response => {
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },
+            openEdit: function (item) {
+                var th = this;
+                var title = "修改用户信息";
+                var urlById = "/PrivateReZeroRoute/100003/GetUserInfoDetail?id=" + item.Id;
+                if (item.Id) {
+                    axios.get(urlById, jwHeader)
+                        .then(response => {
+                            th.formData = response.data;
+                            th.title = title;
+                            th.editId = response.data.Id;
+                            btnSave.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                }
+            },
+            openNext: function () {
+                this.title = "添加用户信息";
+                this.formData = {
+                    UserName: '',
+                    Password: '',
+                    IsMasterAdmin: false
+                };
+                btnSave.click();
+            },
+            addOrUpdateUserInfo: function () {
+                var formData = tools.formToJson("frmSave");
+                formData.Id = this.editId;
+                var url = "/PrivateReZeroRoute/100003/SaveUserInfo";
+                axios.post(url, formData, jwHeader)
+                    .then(response => {
+                        if (response.data == true) {
+                            tools.alert("保存成功");
+                            btnAddOrUpdateColse.click();
+                            this.error = null;
+                            this.onSearch();
+                        } else {
+                            tools.alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            }
+        }
+    });
+</script>
+
+

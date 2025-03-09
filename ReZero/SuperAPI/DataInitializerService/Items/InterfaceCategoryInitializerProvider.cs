@@ -80,6 +80,14 @@ namespace ReZero.SuperAPI
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300010);
                 it.ParentId = SystemSettingId;
                 it.Url = "/rezero/sys_config.html";
+                it.SortId = 8;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300011;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300011);
+                it.ParentId = SystemSettingId;
+                it.Url = "/rezero/sys_user.html";
                 it.SortId = 7;
             }));
         }
