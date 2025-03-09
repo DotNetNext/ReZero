@@ -25,6 +25,18 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-header"><h4>内部缓存</h4></div>
+        <div class="card-body">
+            <div class="alert alert-success">
+                外部修改数据库需要清空 ，缓存内容主要包含：数据库信息、实体信息和接口信息。
+            </div>
+            <div class="form-group">
+                <button type="button" @click="clearInternalCache" class="btn btn-primary">清空</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var vueObj = new Vue({
@@ -91,10 +103,22 @@
                         this.error = error.message;
                         this.data = null;
                     });
+            },
+            clearInternalCache: function () {
+                axios.get("/PrivateReZeroRoute/100003/ClearAllInternalCache", jwHeader)
+                    .then(response => {
+                        tools.alert("清除成功");
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             }
         }
     });
 </script>
+
 
 
 
