@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using ReZero.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Security.Policy;
 using System.Text;
@@ -8,6 +10,8 @@ namespace ReZero.SuperAPI
     [Api(InterfaceCategoryInitializerProvider.Id100003)]
     internal class InternalInitApi
     {
+        [DI]
+        public IHttpContextAccessor? contextAccessor { get; set; }
         [ApiMethod(nameof(InternalInitApi.SaveLoginConfig), GroupName = PubConst.InitApi_SystemCommon, Url =PubConst.InitApi_SystemSaveConfig)]
         public bool SaveLoginConfig(bool enable) 
         {
@@ -28,5 +32,13 @@ namespace ReZero.SuperAPI
             if (sysSetting == null) return false;
             return sysSetting.BoolValue;
         }
+        [ApiMethod(nameof(InternalInitApi.VerifyCode), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_VerifyCode)]
+        public string VerifyCode()
+        {
+            var bytes = VerifyCodeSugar.Create();
+            var base64String = Convert.ToBase64String(bytes);
+            return $"data:image/png;base64,{base64String}";
+        }
+         
     }
 }
