@@ -157,7 +157,17 @@ namespace ReZero.SuperAPI
                         if (addItem.Url == PubConst.InitApi_VerifyCode) 
                         {
                             addItem.IsInitialized = true;
-                            addItem.Id = InterfaceListInitializerProvider.GetVerifyCodeId;
+                            addItem.Id = InterfaceListInitializerProvider.VerifyCodeId;
+                        }
+                        if (addItem.Url == PubConst.InitApi_SaveUser) 
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.SaveUserId;
+                        }
+                        if (addItem.Url == PubConst.InitApi_GetUserById)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.GetUserById_Id;
                         }
                         zeroInterfaceLists.Add(addItem);
                     }

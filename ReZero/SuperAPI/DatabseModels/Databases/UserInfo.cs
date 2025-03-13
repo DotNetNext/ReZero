@@ -9,5 +9,7 @@ namespace ReZero.SuperAPI
         public string? UserName { get; set; }
         public string? Password { get; set; }
         public bool IsMasterAdmin { get; set; }
+        [SqlSugar.SugarColumn(IsNullable =true)]
+        public string? Avatar { get; set; }
     }
 }

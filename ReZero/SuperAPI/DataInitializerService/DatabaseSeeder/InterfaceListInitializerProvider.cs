@@ -324,7 +324,14 @@ namespace ReZero.SuperAPI
 
         [ChineseTextAttribute("获取验证码")]
         [EnglishTextAttribute("Get verify code")]
-        public const long GetVerifyCodeId = 62;
+        public const long VerifyCodeId = 62;
+
+        [ChineseTextAttribute("保存用户")]
+        [EnglishTextAttribute("Save User")]
+        public const long SaveUserId = 63;
+        [ChineseTextAttribute("根据主键获取用户")]
+        [EnglishTextAttribute("Get user by id")]
+        public const long GetUserById_Id = 64;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
