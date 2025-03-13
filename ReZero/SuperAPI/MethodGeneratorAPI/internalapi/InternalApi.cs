@@ -58,6 +58,10 @@ namespace ReZero.SuperAPI
                 {
                     throw new Exception("用户名已存在");
                 }
+                zeroUserInfo.CreateTime = DateTime.Now;
+                zeroUserInfo.Creator = "admin";
+                zeroUserInfo.CreatorId = 1;
+                zeroUserInfo.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
                 db.Insertable(zeroUserInfo).ExecuteCommand();
             }
             else
