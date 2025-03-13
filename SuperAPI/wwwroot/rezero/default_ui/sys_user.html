@@ -10,7 +10,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-2"><input class="form-control" type="text" id="txtUserName" name="example-text-input" placeholder="用户名"></div>
-                    <div class="col-md-2"><input class="form-control" type="text" id="txtPassword" name="example-text-input" placeholder="密码"></div>
+                    <div class="col-md-2 hide"><input class="form-control" type="text" id="txtPassword" name="example-text-input" placeholder="密码"></div>
                     <div class="col-md-2">
                         <select id="selIsMasterAdmin" class="form-control">
                             <option value="">==是否管理员==</option>
@@ -95,6 +95,10 @@
                             <input type="password" class="form-control" v-model="formData.Password" placeholder="请输入密码">
                         </div>
                         <div class="form-group col-md-12">
+                            <label>确认密码</label>
+                            <input type="password" class="form-control" v-model="formData.ConfirmPassword" placeholder="请再次输入密码">
+                        </div>
+                        <div class="form-group col-md-12">
                             <label>是否管理员</label>
                             <select class="form-control" v-model="formData.IsMasterAdmin">
                                 <option value="true">是</option>
@@ -122,6 +126,7 @@
             formData: {
                 UserName: '',
                 Password: '',
+                ConfirmPassword: '',
                 IsMasterAdmin: false
             },
             selectedItems: []
@@ -212,7 +217,7 @@
                     tools.alert("密码和确认密码不一致");
                     return;
                 }
-                var formData = tools.formToJson("frmSave");
+                var formData = this.formData;
                 formData.Id = this.editId;
                 var url = "/PrivateReZeroRoute/100003/SaveUser";
                 axios.post(url, formData, jwHeader)
@@ -229,9 +234,28 @@
                     .catch(error => {
                         this.error = error.message;
                     });
+            },
+            login: function () {
+                var formData = {
+                    UserName: this.formData.UserName,
+                    Password: this.formData.Password
+                };
+                var url = "/PrivateReZeroRoute/100003/Login";
+                axios.post(url, formData, jwHeader)
+                    .then(response => {
+                        if (response.data == true) {
+                            tools.alert("登录成功");
+                        } else {
+                            tools.alert("登录失败");
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             }
         }
     });
 </script>
+
 
 
