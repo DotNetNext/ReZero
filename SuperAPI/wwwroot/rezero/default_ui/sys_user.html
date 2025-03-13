@@ -94,13 +94,13 @@
                             <label>密码</label>
                             <input type="password" class="form-control" v-model="formData.Password" placeholder="请输入密码">
                         </div>
-                        <div class="form-group col-md-12">
+                        <div  class="form-group col-md-12">
                             <label>确认密码</label>
                             <input type="password" class="form-control" v-model="formData.ConfirmPassword" placeholder="请再次输入密码">
                         </div>
                         <div class="form-group col-md-12">
                             <label>是否管理员</label>
-                            <select class="form-control" v-model="formData.IsMasterAdmin">
+                            <select disabled class="form-control" v-model="formData.IsMasterAdmin">
                                 <option value="true">是</option>
                                 <option value="false">否</option>
                             </select>
@@ -168,9 +168,12 @@
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
-                    var url = "/PrivateReZeroRoute/100003/SaveUser?IsDeleted=true&Id=" + localStorage.delId;
+                    var url = "/PrivateReZeroRoute/100003/DeleteUserById?Id=" + localStorage.delId;
                     axios.get(url, jwHeader)
                         .then(response => {
+                            if (response.data.message) {
+                                tools.alert(response.data.message);
+                            }
                             this.data = response.data;
                             this.error = null;
                             this.onSearch();
@@ -217,8 +220,7 @@
                     tools.alert("密码和确认密码不一致");
                     return;
                 }
-                var formData = this.formData;
-                formData.Id = this.editId;
+                var formData = this.formData; 
                 var url = "/PrivateReZeroRoute/100003/SaveUser";
                 axios.post(url, formData, jwHeader)
                     .then(response => {

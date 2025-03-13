@@ -69,5 +69,6 @@ namespace ReZero.SuperAPI
         public const string InitApi_VerifyCode = "/Public/InitApi_VerifyCode";
         public const string InitApi_SaveUser = "/PrivateReZeroRoute/100003/SaveUser";
         public const string InitApi_GetUserById = "/PrivateReZeroRoute/100003/GetUserById";
+        public const string InitApi_DeleteUserById = "/PrivateReZeroRoute/100003/DeleteUserById";
     }
 }

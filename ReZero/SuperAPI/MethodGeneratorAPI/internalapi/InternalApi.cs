@@ -44,23 +44,7 @@ namespace ReZero.SuperAPI
         public bool SaveUser(ZeroUserInfo zeroUserInfo)
         {
             var db = App.Db;
-            if (zeroUserInfo.Id == -1)
-            {
-                if (string.IsNullOrEmpty(zeroUserInfo.UserName))
-                {
-                    throw new Exception(TextHandler.GetCommonText("用户名不能为空", "Username cannot be empty"));
-                }
-                if (string.IsNullOrEmpty(zeroUserInfo.Password))
-                {
-                    throw new Exception(TextHandler.GetCommonText("密码不能为空", "Password cannot be empty"));
-                }
-                if (zeroUserInfo.Id == 1)
-                {
-                    throw new Exception(TextHandler.GetCommonText("初始数据无法删除", "Initial data cannot be deleted"));
-                }
-                db.Deleteable<ZeroUserInfo>().Where(it => it.IsInitialized == false).In(zeroUserInfo.Id).ExecuteCommand();
-            }
-            else if (zeroUserInfo.Id == 0)
+            if (zeroUserInfo.Id == 0)
             {
                 if (string.IsNullOrEmpty(zeroUserInfo.UserName))
                 {
@@ -78,6 +62,8 @@ namespace ReZero.SuperAPI
             }
             else
             {
+                zeroUserInfo.Password=Encryption.Encrypt(zeroUserInfo.Password!);
+                zeroUserInfo.Modifier = "admin";
                 db.Updateable(zeroUserInfo).IgnoreColumns(true).ExecuteCommand();
             }
             return true;
@@ -87,6 +73,19 @@ namespace ReZero.SuperAPI
         {
             var db = App.Db;
             return db.Queryable<ZeroUserInfo>().InSingle(id);
+        }
+        [ApiMethod(nameof(InternalInitApi.DeleteUserInfo), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_DeleteUserById)]
+        public bool DeleteUserInfo(long id) 
+        {
+            var db = App.Db;
+            var zeroUser = db.Queryable<ZeroUserInfo>().InSingle(id);
+            if (zeroUser == null) return true;
+            if (zeroUser.IsInitialized||zeroUser.Id==1) 
+            {
+                throw new Exception("初始化数据无法删除");
+            }
+            db.Deleteable<ZeroUserInfo>().In(zeroUser.Id).ExecuteCommand();
+            return true;
         }
     }
 }
