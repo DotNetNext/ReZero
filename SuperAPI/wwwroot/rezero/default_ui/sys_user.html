@@ -163,7 +163,7 @@
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
-                    var url = "/PrivateReZeroRoute/100003/DeleteUserInfo?IsDeleted=true&Id=" + localStorage.delId;
+                    var url = "/PrivateReZeroRoute/100003/SaveUser?IsDeleted=true&Id=" + localStorage.delId;
                     axios.get(url, jwHeader)
                         .then(response => {
                             this.data = response.data;
@@ -182,7 +182,7 @@
             openEdit: function (item) {
                 var th = this;
                 var title = "修改用户信息";
-                var urlById = "/PrivateReZeroRoute/100003/GetUserInfoDetail?id=" + item.Id;
+                var urlById = "/PrivateReZeroRoute/100003/GetUserById?id=" + item.Id;
                 if (item.Id) {
                     axios.get(urlById, jwHeader)
                         .then(response => {
@@ -202,14 +202,19 @@
                 this.formData = {
                     UserName: '',
                     Password: '',
+                    ConfirmPassword: '',
                     IsMasterAdmin: false
                 };
                 btnSave.click();
             },
             addOrUpdateUserInfo: function () {
+                if (this.formData.Password !== this.formData.ConfirmPassword) {
+                    tools.alert("密码和确认密码不一致");
+                    return;
+                }
                 var formData = tools.formToJson("frmSave");
                 formData.Id = this.editId;
-                var url = "/PrivateReZeroRoute/100003/SaveUserInfo";
+                var url = "/PrivateReZeroRoute/100003/SaveUser";
                 axios.post(url, formData, jwHeader)
                     .then(response => {
                         if (response.data == true) {

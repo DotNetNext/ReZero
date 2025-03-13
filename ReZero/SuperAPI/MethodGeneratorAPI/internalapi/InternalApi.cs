@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
- using ReZero.DependencyInjection;
+using ReZero.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Security.Policy;
@@ -40,33 +40,53 @@ namespace ReZero.SuperAPI
             return $"data:image/png;base64,{base64String}";
         }
 
-        [ApiMethod(nameof(InternalInitApi.SaveUser), GroupName  = nameof(ZeroUserInfo), Url = PubConst.InitApi_SaveUser)]
+        [ApiMethod(nameof(InternalInitApi.SaveUser), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_SaveUser)]
         public bool SaveUser(ZeroUserInfo zeroUserInfo)
         {
             var db = App.Db;
             if (zeroUserInfo.Id == -1)
             {
+                if (string.IsNullOrEmpty(zeroUserInfo.UserName))
+                {
+                    throw new Exception(TextHandler.GetCommonText("用户名不能为空", "Username cannot be empty"));
+                }
+                if (string.IsNullOrEmpty(zeroUserInfo.Password))
+                {
+                    throw new Exception(TextHandler.GetCommonText("密码不能为空", "Password cannot be empty"));
+                }
                 if (zeroUserInfo.Id == 1)
                 {
-                    throw new Exception(TextHandler.GetCommonText("初始数据无非删除", ""));
+                    throw new Exception(TextHandler.GetCommonText("初始数据无法删除", "Initial data cannot be deleted"));
                 }
-                db.Deleteable<ZeroEntityInfo>().Where(it => it.IsInitialized == false).In(zeroUserInfo.Id).ExecuteCommand();
+                db.Deleteable<ZeroUserInfo>().Where(it => it.IsInitialized == false).In(zeroUserInfo.Id).ExecuteCommand();
             }
             else if (zeroUserInfo.Id == 0)
             {
+                if (string.IsNullOrEmpty(zeroUserInfo.UserName))
+                {
+                    throw new Exception(TextHandler.GetCommonText("用户名不能为空", "Username cannot be empty"));
+                }
+                if (string.IsNullOrEmpty(zeroUserInfo.Password))
+                {
+                    throw new Exception(TextHandler.GetCommonText("密码不能为空", "Password cannot be empty"));
+                }
+                if (db.Queryable<ZeroUserInfo>().Any(it => it.UserName == zeroUserInfo.UserName))
+                {
+                    throw new Exception("用户名已存在");
+                }
                 db.Insertable(zeroUserInfo).ExecuteCommand();
             }
             else
             {
-                db.Updateable(zeroUserInfo).ExecuteCommand();
+                db.Updateable(zeroUserInfo).IgnoreColumns(true).ExecuteCommand();
             }
             return true;
         }
         [ApiMethod(nameof(InternalInitApi.GetUserById), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_GetUserById)]
-        public ZeroEntityInfo GetUserById(long id) 
+        public ZeroUserInfo GetUserById(long id) 
         {
             var db = App.Db;
-            return db.Queryable<ZeroEntityInfo>().InSingle(id);
+            return db.Queryable<ZeroUserInfo>().InSingle(id);
         }
     }
 }
