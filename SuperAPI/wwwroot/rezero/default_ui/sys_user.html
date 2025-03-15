@@ -29,7 +29,8 @@
     <!--主表列表操作按钮-->
     <div class="card-toolbar clearfix">
         <div class="toolbar-btn-action">
-            <a class="btn btn-primary m-r-5" @click="openNext()" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+            <a class="btn btn-primary m-r-5" @click="openAddAdmin()" href="#!"><i class="mdi mdi-plus"></i> 新增管理账号</a>
+            <a class="btn btn-primary m-r-5" @click="openAddAdmin()" href="#!"><i class="mdi mdi-plus"></i> 业务账号</a>
         </div>
     </div>
     <!--主列表-->
@@ -100,10 +101,11 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label>是否管理员</label>
-                            <select :disabled="editId != 0" class="form-control" v-model="formData.IsMasterAdmin">
+                            <select  disabled  class="form-control" v-model="formData.IsMasterAdmin">
                                 <option value="true">是</option>
                                 <option value="false">否</option>
                             </select>
+                            <input  type="hidden" v-model="formData.IsMasterAdmin" />
                         </div>
                         <div class="form-group col-md-12"> 
                             <img :src="formData.Avatar"   onerror="this.src='images/users/avatar.jpg';" @click="selectImage" style="height: 50px; width: 50px; cursor: pointer;" />
@@ -208,13 +210,13 @@
                         });
                 }
             },
-            openNext: function () {
+            openAddAdmin: function () {
                 this.title = "添加用户信息";
                 this.formData = {
                     UserName: '',
                     Password: '',
                     ConfirmPassword: '',
-                    IsMasterAdmin: false,
+                    IsMasterAdmin: true,
                     Avatar: ''
                 };
                 this.editId = 0;
