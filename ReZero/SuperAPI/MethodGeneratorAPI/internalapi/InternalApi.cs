@@ -2,6 +2,7 @@
 using ReZero.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Policy;
 using System.Text;
 
@@ -44,7 +45,20 @@ namespace ReZero.SuperAPI
         public bool SaveUser(ZeroUserInfo zeroUserInfo)
         {
             var db = App.Db;
-            if (zeroUserInfo.Id == 0)
+            if (zeroUserInfo?.Avatar?.StartsWith("data:image/") == true)
+            {
+                var avatarBytes = PubMethod.ConvertBase64ToBytes(zeroUserInfo.Avatar);
+                var imgId = SqlSugar.SnowFlakeSingle.Instance.NextId();
+                var avatarDirectory = Path.Combine(AppContext.BaseDirectory, "wwwroot\\Rezero\\Avatar");
+                if (!Directory.Exists(avatarDirectory))
+                {
+                    Directory.CreateDirectory(avatarDirectory);
+                }
+                var avatarPath = Path.Combine(avatarDirectory, $"{imgId}.jpg");
+                File.WriteAllBytes(avatarPath, avatarBytes);
+                zeroUserInfo.Avatar = $"Avatar/{imgId}.jpg";
+            }
+            if (zeroUserInfo?.Id == 0)
             {
                 if (string.IsNullOrEmpty(zeroUserInfo.UserName))
                 {
@@ -66,7 +80,7 @@ namespace ReZero.SuperAPI
             }
             else
             {
-                zeroUserInfo.Password=Encryption.Encrypt(zeroUserInfo.Password!);
+                zeroUserInfo.Password = Encryption.Encrypt(zeroUserInfo.Password!);
                 zeroUserInfo.Modifier = "admin";
                 db.Updateable(zeroUserInfo).IgnoreColumns(true).ExecuteCommand();
             }

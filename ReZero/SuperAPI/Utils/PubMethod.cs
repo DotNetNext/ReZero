@@ -11,6 +11,17 @@ namespace ReZero.SuperAPI
     /// </summary>
     internal class PubMethod
     {
+        public static byte[] ConvertBase64ToBytes(string dataUri)
+        {
+            if (string.IsNullOrWhiteSpace(dataUri))
+                throw new ArgumentException("Data URI cannot be null or empty.", nameof(dataUri));
+
+            var match = Regex.Match(dataUri, @"^data:(image/\w+);base64,(.+)$", RegexOptions.IgnoreCase);
+            if (!match.Success)
+                throw new FormatException("Invalid data URI format.");
+
+            return Convert.FromBase64String(match.Groups[2].Value);
+        }
         /// <summary>
         /// Checks if the given URL has a valid format.
         /// </summary>
