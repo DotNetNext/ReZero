@@ -49,14 +49,14 @@ namespace ReZero.SuperAPI
             {
                 var avatarBytes = PubMethod.ConvertBase64ToBytes(zeroUserInfo.Avatar);
                 var imgId = SqlSugar.SnowFlakeSingle.Instance.NextId();
-                var avatarDirectory = Path.Combine(AppContext.BaseDirectory, "wwwroot\\Rezero\\Avatar");
+                var avatarDirectory = Path.Combine(AppContext.BaseDirectory, SuperAPIStaticFileMiddleware.GetFilePathByCurrentDirectory(Path.Combine("images", "users")));
                 if (!Directory.Exists(avatarDirectory))
                 {
                     Directory.CreateDirectory(avatarDirectory);
                 }
                 var avatarPath = Path.Combine(avatarDirectory, $"{imgId}.jpg");
                 File.WriteAllBytes(avatarPath, avatarBytes);
-                zeroUserInfo.Avatar = $"Avatar/{imgId}.jpg";
+                zeroUserInfo.Avatar = $"images/users/{imgId}.jpg";
             }
             if (zeroUserInfo?.Id == 0)
             {

@@ -19,7 +19,7 @@ namespace ReZero.SuperAPI
         internal static string DefaultIndexPath = "index.html";
         internal static string WwwRootPath = "wwwroot";
         internal static string DefaultUiFolderName = "default_ui";
-        private static string UiFolderPath { get; set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
+        internal static string UiFolderPath { get; set; } = $"{ReZeroDirName}/{DefaultUiFolderName}";
 
         public SuperAPIStaticFileMiddleware(RequestDelegate next)
         {
@@ -160,13 +160,13 @@ namespace ReZero.SuperAPI
         }
 
     
-        private static string GetFilePathByCurrentDirectory(string path)
+        internal static string GetFilePathByCurrentDirectory(string path)
         {
             var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
             var fullPath = Path.Combine(Directory.GetCurrentDirectory(), WwwRootPath, UiFolderPath, relativePath);
             return Path.GetFullPath(fullPath);
         }
-        private static string GetFilePathByBaseDirectory(string path)
+        internal static string GetFilePathByBaseDirectory(string path)
         {
             var relativePath = path.Replace(RezeroPathPrefix, string.Empty);
             var fullPath = Path.Combine(AppContext.BaseDirectory, WwwRootPath, UiFolderPath, relativePath);
