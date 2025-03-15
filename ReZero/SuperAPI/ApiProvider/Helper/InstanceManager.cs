@@ -52,6 +52,10 @@ namespace ReZero.SuperAPI
                 }
             } 
             var url = context.Request.Path.ToString().ToLower();
+            if (url.StartsWith("/public/")) 
+            {
+                return true;
+            }
             var jsonClaims = SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt.Claim ?? new List<Configuration.ClaimItem>(); ;
             var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
             if (authHeader != null && authHeader.StartsWith("Bearer "))
