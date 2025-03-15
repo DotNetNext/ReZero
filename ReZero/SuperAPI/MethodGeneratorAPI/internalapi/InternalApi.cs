@@ -70,7 +70,7 @@ namespace ReZero.SuperAPI
                 }
                 if (db.Queryable<ZeroUserInfo>().Any(it => it.UserName == zeroUserInfo.UserName))
                 {
-                    throw new Exception("用户名已存在");
+                    throw new Exception(TextHandler.GetCommonText("用户名已存在", "The user name already exists"));
                 }
                 zeroUserInfo.CreateTime = DateTime.Now;
                 zeroUserInfo.Creator = "admin";
@@ -80,7 +80,7 @@ namespace ReZero.SuperAPI
             }
             else
             {
-                zeroUserInfo.Password = Encryption.Encrypt(zeroUserInfo.Password!);
+                zeroUserInfo!.Password = Encryption.Encrypt(zeroUserInfo.Password!);
                 zeroUserInfo.Modifier = "admin";
                 db.Updateable(zeroUserInfo).IgnoreColumns(true).ExecuteCommand();
             }
