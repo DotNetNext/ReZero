@@ -1,6 +1,6 @@
 ﻿@@master_page.html
 <div id="apibox"> 
-    <div class="card">
+    <!--<div class="card">
         <div class="card-header"><h4>登录配置</h4></div>
         <div class="card-body">
             <div class="form-group">
@@ -13,7 +13,7 @@
                 </label>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="card">
         <div class="card-header"><h4>实体管理配置</h4></div>
@@ -53,31 +53,31 @@
             }
         },
         mounted() {
-            this.getLoginConfig();
+            //this.getLoginConfig();
             this.getSettingItem(1, 1);
         },
         methods: {
-            getLoginConfig: function () {
-                axios.get('/PrivateReZeroRoute/100003/getLoginConfig')
-                    .then(response => {
-                        this.ReZero.config.Enable = response.data;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
-            },
-            saveLoginConfig: function () {
-                var url = "/PrivateReZeroRoute/100003/saveLoginConfig";
-                axios.post(url, { enable: this.ReZero.config.Enable }, jwHeader)
-                    .then(response => {
-                        tools.alert("登录配置保存成功");
-                        this.error = null;
-                    })
-                    .catch(error => {
-                        this.error = error.message;
-                        this.data = null;
-                    });
-            },
+            //getLoginConfig: function () {
+            //    axios.get('/PrivateReZeroRoute/100003/getLoginConfig')
+            //        .then(response => {
+            //            this.ReZero.config.Enable = response.data;
+            //        })
+            //        .catch(error => {
+            //            console.error(error);
+            //        });
+            //},
+            //saveLoginConfig: function () {
+            //    var url = "/PrivateReZeroRoute/100003/saveLoginConfig";
+            //    axios.post(url, { enable: this.ReZero.config.Enable }, jwHeader)
+            //        .then(response => {
+            //            tools.alert("登录配置保存成功");
+            //            this.error = null;
+            //        })
+            //        .catch(error => {
+            //            this.error = error.message;
+            //            this.data = null;
+            //        });
+            //},
             saveSetting: function () {
                 this.saveSettingItem(1, 1, this.setting.importUnunderline);
             },

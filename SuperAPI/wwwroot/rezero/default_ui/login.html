@@ -125,11 +125,13 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/axios.min.js"></script>
     <script src="js/tools.js"></script>
+    <script src="js/crypto/core.js"></script>
+    <script src="js/crypto/md5.js"></script>
     <script>
         var vueObj = new Vue({
             el: '#loginbox',
@@ -157,16 +159,15 @@
                 login: function () {
                     var th = this;
                     if (!this.userName || !this.password) {
-                        this.message="用户名或者密码不能为空";
+                        this.message = "用户名或者密码不能为空";
                     } else {
-                        axios.post("/api/rezero/token", { userName: this.userName, password: this.password + "" })
+                        axios.post("/api/rezero/token", { userName: this.userName, password: CryptoJS.MD5(this.password + "").toString() })
                             .then(response => {
                                 this.error = null;
                                 this.result = response.data;
                                 if (response.data.message) {
                                     th.message = response.data.message;
-                                } else
-                                {
+                                } else {
                                     localStorage["@@authorizationLocalStorageName"] = response.data;
                                     setTimeout(function () {
                                         window.location.href = "/rezero";
