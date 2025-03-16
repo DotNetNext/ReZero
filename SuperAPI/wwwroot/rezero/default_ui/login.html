@@ -103,7 +103,7 @@
                 <form @submit.prevent="login">
                     <div class=" red">{{message}}</div>
                     <div class="form-group has-feedback feedback-left">
-                        <input type="text" placeholder="请输入您的用户名" class="form-control" v-model="username" required>
+                        <input type="text" placeholder="请输入您的用户名" class="form-control" v-model="userName" required>
                         <span class="mdi mdi-account form-control-feedback" aria-hidden="true"></span>
                     </div>
                     <div class="form-group has-feedback feedback-left">
@@ -134,7 +134,7 @@
         var vueObj = new Vue({
             el: '#loginbox',
             data: {
-                username: '',
+                userName: '',
                 password: '',
                 verifyCode: '',
                 verifyCodeSrc: '',
@@ -155,13 +155,17 @@
                         });
                 },
                 login: function () {
+                    var th = this;
                     if (!this.userName || !this.password) {
                         this.message="用户名或者密码不能为空";
                     } else {
-                        axios.post("/api/rezero/token", { userName: this.userName, password: this.password + "" }, jwHeader)
+                        axios.post("/api/rezero/token", { userName: this.userName, password: this.password + "" })
                             .then(response => {
                                 this.error = null;
                                 this.result = response.data;
+                                if (response.data.message) {
+                                    th.message = response.data.message;
+                                }
                             })
                             .catch(error => {
                                 this.error = error.message;
