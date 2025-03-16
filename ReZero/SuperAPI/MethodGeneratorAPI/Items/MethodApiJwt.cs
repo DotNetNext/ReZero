@@ -75,7 +75,7 @@ namespace ReZero.SuperAPI
             // 先验证是不是系统管理员账号
             return db.Queryable<ZeroUserInfo>()
             .Where(it => it.UserName == userName)
-            .Where(it => it.Password == Encryption.Encrypt(password)).First();
+            .Where(it => it.Password == password).First();
         }
 
         /// <summary>
