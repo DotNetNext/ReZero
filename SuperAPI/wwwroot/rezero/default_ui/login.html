@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>登录页面 - 光年(Light Year Admin)后台管理系统模板</title>
+    <title>登录页面 -Zero后台管理系统模板</title>
     <link rel="icon" href="favicon.ico" type="image/ico">
     <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
     <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
@@ -165,6 +165,12 @@
                                 this.result = response.data;
                                 if (response.data.message) {
                                     th.message = response.data.message;
+                                } else
+                                {
+                                    localStorage["@@authorizationLocalStorageName"] = response.data;
+                                    setTimeout(function () {
+                                        window.location.href = "/rezero";
+                                    }, 50);
                                 }
                             })
                             .catch(error => {

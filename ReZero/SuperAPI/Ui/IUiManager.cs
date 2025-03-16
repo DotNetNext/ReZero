@@ -17,6 +17,9 @@ namespace ReZero.SuperAPI
         /// <returns>The HTML content as a string.</returns>
         Task<string> GetHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content);
 
+        Task<string> GetCustomPageHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content);
+
+
         /// <summary>
         /// Checks if the file content represents a master page.
         /// </summary>

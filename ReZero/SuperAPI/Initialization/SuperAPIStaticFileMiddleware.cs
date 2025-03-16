@@ -135,6 +135,10 @@ namespace ReZero.SuperAPI
                 // If the file is a master page, get the HTML and send it to the client
                 fileContent = await defaultUiManager.GetHtmlAsync(fileContent, filePath, context);
             }
+            else 
+            {
+                fileContent = await defaultUiManager.GetCustomPageHtmlAsync(fileContent, filePath, context);
+            }
             // Send the file content to the client
             await context.Response.WriteAsync(fileContent);
         }

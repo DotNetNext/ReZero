@@ -111,6 +111,13 @@ namespace ReZero.SuperAPI
             return masterPageHtml;
         }
 
+
+        public Task<string> GetCustomPageHtmlAsync(string fileContent, string filePath, Microsoft.AspNetCore.Http.HttpContext content) 
+        {
+            fileContent = fileContent.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
+            return Task.FromResult(fileContent);
+        }
+
         private static string GetSmallPageHtml(HttpContext content, string masterPageHtml)
         {
             if ((content.Request.Query["model"] + "").ToString().ToLower() == "small")
