@@ -102,12 +102,12 @@ namespace ReZero.SuperAPI
 
             }
             masterPageHtml = masterPageHtml.Replace(authorizationLocalStorageName, SuperAPIModule._apiOptions?.InterfaceOptions?.AuthorizationLocalStorageName);
-            var db = App.Db;
-            var loginSetting=db.Queryable<ZeroSysSetting>().First(it => it.TypeId == PubConst.Setting_EnableLoginType);
-            if (loginSetting?.BoolValue == true) 
-            {
+            //var db = App.Db;
+            //var loginSetting=db.Queryable<ZeroSysSetting>().First(it => it.TypeId == PubConst.Setting_EnableLoginType);
+            //if (loginSetting?.BoolValue == true) 
+            //{
                 masterPageHtml=masterPageHtml.Replace("tools.checkAuthorization();", "var isloginPage=true;\r\n        tools.checkAuthorization();");
-            }
+            //}
             return masterPageHtml;
         }
 
