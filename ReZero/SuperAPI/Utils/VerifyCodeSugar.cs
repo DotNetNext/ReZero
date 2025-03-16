@@ -20,17 +20,13 @@ namespace ReZero.SuperAPI
     /// </summary>
     public class VerifyCodeSugar
     {
-        public static readonly string SessionKey = "VerifyCodeImage";
         private static readonly char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
         private static readonly Random random = new Random();
-        private static readonly ConcurrentDictionary<string, byte[]> sessionStore = new ConcurrentDictionary<string, byte[]>();
-
-        internal static byte[] Create()
+        internal static (string,byte[]) Create()
         {
             string code = GenerateCode(4);
             byte[] imageBytes = GenerateImage(code);
-            sessionStore[SessionKey] = imageBytes;
-            return imageBytes;
+            return (code,imageBytes);
         }
 
         private static string GenerateCode(int length)

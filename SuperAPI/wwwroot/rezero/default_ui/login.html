@@ -116,7 +116,7 @@
                             <span class="mdi mdi-check-all form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <div class="col-xs-5">
-                            <img :src="verifyCodeSrc" @click="refreshVerifyCode" class="pull-right" style="cursor: pointer;" title="点击刷新" alt="captcha">
+                            <img :src="verifyCodeSrc.Src" @click="refreshVerifyCode" class="pull-right" style="cursor: pointer;" title="点击刷新" alt="captcha">
                         </div>
                     </div>
                     <div class="form-group">
@@ -139,7 +139,7 @@
                 userName: '',
                 password: '',
                 verifyCode: '',
-                verifyCodeSrc: '',
+                verifyCodeSrc: {}, 
                 rememberMe: false,
                 message: "初始账号admin密码为123456"
             },
@@ -160,7 +160,12 @@
                     var th = this;
                     if (!this.userName || !this.password) {
                         this.message = "用户名或者密码不能为空";
-                    } else {
+                    }
+                    else if (this.verifyCodeSrc.Code != CryptoJS.MD5(this.verifyCode.toLowerCase()).toString())
+                    {
+                        this.message = "验证码错误";
+                    }
+                    else {
                         axios.post("/api/rezero/token", { userName: this.userName, password: CryptoJS.MD5(this.password + "").toString() })
                             .then(response => {
                                 this.error = null;

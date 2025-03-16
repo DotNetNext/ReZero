@@ -3,6 +3,7 @@ using ReZero.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.Xml;
 using System.Security.Policy;
 using System.Text;
 
@@ -34,11 +35,11 @@ namespace ReZero.SuperAPI
             return sysSetting.BoolValue;
         }
         [ApiMethod(nameof(InternalInitApi.VerifyCode), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_VerifyCode)]
-        public string VerifyCode()
+        public object VerifyCode()
         {
             var bytes = VerifyCodeSugar.Create();
-            var base64String = Convert.ToBase64String(bytes);
-            return $"data:image/png;base64,{base64String}";
+            var base64String = Convert.ToBase64String(bytes.Item2);
+            return new  { Code= Encryption.Encrypt(bytes.Item1?.ToLower()??string.Empty), Src= $"data:image/png;base64,{base64String}" };
         }
 
         [ApiMethod(nameof(InternalInitApi.SaveUser), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_SaveUser)]
