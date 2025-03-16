@@ -86,6 +86,10 @@
         .login-center .lyear-checkbox span::before {
             border-color: rgba(255,255,255,.075)
         }
+        .red {
+            color: #fcc525;
+            padding:3px 0;
+        }
     </style>
 </head>
 
@@ -97,6 +101,7 @@
                     <a href="index.html"> <img alt="light year admin" src="images/logo-sidebar.png"> </a>
                 </div>
                 <form @submit.prevent="login">
+                    <div class=" red">{{message}}</div>
                     <div class="form-group has-feedback feedback-left">
                         <input type="text" placeholder="请输入您的用户名" class="form-control" v-model="username" required>
                         <span class="mdi mdi-account form-control-feedback" aria-hidden="true"></span>
@@ -115,22 +120,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="lyear-checkbox checkbox-primary m-t-10 text-white">
-                            <input type="checkbox" v-model="rememberMe"><span>5天内自动登录</span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-block btn-primary" type="submit">立即登录</button>
+                        <button @click="login" class="btn btn-block btn-primary" type="button">立即登录</button>
                     </div>
                 </form>
-                <footer class="col-sm-12 text-center text-white">
-                    <p class="m-b-0">Copyright © 2020 <a href="http://lyear.itshubao.com">IT书包</a>. All right reserved</p>
-                </footer>
             </div>
         </div>
-    </div>
+    </div> 
+    <script src="js/jquery.min.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/axios.min.js"></script>
+    <script src="js/tools.js"></script>
     <script>
         var vueObj = new Vue({
             el: '#loginbox',
@@ -139,15 +138,13 @@
                 password: '',
                 verifyCode: '',
                 verifyCodeSrc: '',
-                rememberMe: false
+                rememberMe: false,
+                message: "初始账号admin密码为123456"
             },
             mounted() {
                 this.refreshVerifyCode();
             },
             methods: {
-                login: function () {
-                    // 登录逻辑
-                },
                 refreshVerifyCode: function () {
                     axios.get('/Public/InitApi_VerifyCode')
                         .then(response => {
@@ -156,7 +153,22 @@
                         .catch(error => {
                             console.error(error);
                         });
-                }
+                },
+                login: function () {
+                    if (!this.userName || !this.password) {
+                        this.message="用户名或者密码不能为空";
+                    } else {
+                        axios.post("/api/rezero/token", { userName: this.userName, password: this.password + "" }, jwHeader)
+                            .then(response => {
+                                this.error = null;
+                                this.result = response.data;
+                            })
+                            .catch(error => {
+                                this.error = error.message;
+                                this.data = null;
+                            });
+                    }
+                },
             }
         });
     </script>

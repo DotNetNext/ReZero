@@ -23,7 +23,13 @@ namespace ReZero.SuperAPI
             if (string.IsNullOrEmpty(jwt.Secret)||string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.UserTableName))
             {
                 throw new Exception(TextHandler.GetCommonText("请到json文件配置jwt信息", "Go to the json file to configure the jwt information"));
-            } 
+            }
+            if (db.Queryable<ZeroUserInfo>()
+            .Where(it => it.UserName == userName)
+            .Where(it => it.Password == Encryption.Encrypt(password)).First() is { } data)
+            {
+                return GenerateJwtToken(data, jwt);
+            }
             var dt = db.Queryable<object>()
                 .AS(jwt.UserTableName)
                 .Where(jwt.PasswordFieldName, "=", password)
@@ -35,7 +41,27 @@ namespace ReZero.SuperAPI
                 throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
             }
            return GenerateJwtToken(dt.Rows[0],jwt);
-        } 
+        }
+        private string GenerateJwtToken(ZeroUserInfo user, ReZeroJwt jwt)
+        {
+            var options = SuperAPIModule._apiOptions;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(jwt.Secret);
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+            foreach (var claim in jwt.Claim ?? new List<Configuration.ClaimItem>())
+            {
+                claims.Add(new Claim(claim.Key, user.GetType().GetProperty(claim.FieldName)?.GetValue(user, null)?.ToString() ?? ""));
+            }
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims.ToArray()),
+                Expires = DateTime.UtcNow.AddMinutes(jwt?.Expires ?? 1000),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
         private string GenerateJwtToken(DataRow user,ReZeroJwt jwt)
         {
             var options= SuperAPIModule._apiOptions;
