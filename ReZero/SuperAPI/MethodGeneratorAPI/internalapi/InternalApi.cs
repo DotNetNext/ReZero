@@ -116,13 +116,22 @@ namespace ReZero.SuperAPI
         public object GetUserInfo()
         {
             var userName = DependencyResolver.GetLoggedInUser();
+            var defaultSrc = "images/users/avatar.jpg";
+            var defaultUserName = "ReZero";
             var userInfo = App.Db.Queryable<ZeroUserInfo>().Where(it => it.UserName == userName || it.BusinessAccount == userName)
                 .First();
             if (userInfo?.Avatar==string.Empty)
             {
-                userInfo.Avatar = "images/users/avatar.jpg";
+                userInfo.Avatar = defaultSrc;
             }
-            return new { UserName = userInfo?.UserName??"ReZero", Avatar = userInfo?.Avatar };
+            if (userInfo == null) 
+            {
+                userInfo = new ZeroUserInfo()
+                {
+                     Avatar= defaultSrc
+                }; 
+            }
+            return new { UserName = userInfo?.UserName?? defaultUserName, Avatar = userInfo?.Avatar };
         } 
         #endregion
     }
