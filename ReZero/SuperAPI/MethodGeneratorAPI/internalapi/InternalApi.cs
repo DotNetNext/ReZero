@@ -1,9 +1,11 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using ReZero.DependencyInjection;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Sockets;
 using System.Security.Cryptography.Xml;
 using System.Security.Policy;
 using System.Text;
@@ -132,7 +134,31 @@ namespace ReZero.SuperAPI
                 }; 
             }
             return new { UserName = userInfo?.UserName?? defaultUserName, Avatar = userInfo?.Avatar };
-        } 
+        }
+        [ApiMethod(nameof(InternalInitApi.GetBizUsers), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_GetBizUsers)]
+        public object GetBizUsers()
+        {
+            var db = App.Db;
+            var options = SuperAPIModule._apiOptions;
+            var jwt = options?.InterfaceOptions?.Jwt ?? new Configuration.ReZeroJwt();
+            var isEnable=options?.InterfaceOptions?.Jwt?.Enable==true;
+            if (string.IsNullOrEmpty(jwt?.UserTableName)|| string.IsNullOrEmpty(jwt?.PasswordFieldName)|| string.IsNullOrEmpty(jwt?.UserNameFieldName)) 
+            {
+                throw new Exception(TextHandler.GetCommonText("JWT用户表或者字段未设置", "The JWT user table or field is not set"));
+            }
+            try
+            {
+                var result = db.Queryable<object>().AS(jwt.UserTableName)
+                        .Select<string>(SelectModel.Create(
+                            new SelectModel() { FieldName = jwt.UserNameFieldName, AsName = "username" }
+                            )).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(TextHandler.GetCommonText(ex.Message, ex.Message));
+            }
+        }
         #endregion
     }
 }

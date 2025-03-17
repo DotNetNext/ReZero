@@ -102,9 +102,12 @@
                         <div class="form-group col-md-12">
                             <label>绑定业务账号</label>
                             <code>初始化配置中的JWT用户表</code>
-                            <select  class="form-control" v-model="formData.BusinessAccount" placeholder="业务账号">
-
+                            <select v-if="bizUsers.length > 0&& bizUsers[0]" class="form-control" v-model="formData.BusinessAccount" placeholder="业务账号">
+                                <option v-for="user in bizUsers" :value="user">{{user}}</option>
                             </select>
+                            <div v-else class="alert alert-warning">
+                            JWT的信息没有配置完整，不能加载下拉列表
+                            详细：{{bizUserErrorMessage}}</div>
                         </div>
                         <div class="form-group col-md-12">
                             <label>是否管理员</label>
@@ -137,7 +140,9 @@
             error: null,
             title: "添加用户信息",
             editId: 0,
-            isReadOnly: false,
+            isReadOnly: false, 
+            bizUsers: null,
+            bizUserErrorMessage:"",
             formData: {
                 UserName: '',
                 Password: '',
@@ -150,6 +155,7 @@
         },
         mounted() {
             this.fetchData("");
+            this.fetchBizUsers();
         },
         methods: {
             fetchData: function (append) {
@@ -289,6 +295,21 @@
             },
             selectImage: function () {
                 document.getElementById('fileInput').click();
+            },
+            fetchBizUsers: function () {
+                var url = "/PrivateReZeroRoute/100003/GetBizUsers";
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        if (Array.isArray(response.data)) {
+                            this.bizUsers = response.data;
+                        } else if (response.data.message) {
+                            this.bizUserErrorMessage = response.data.message;
+                            this.bizUsers = [""];
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
             },
             onFileChange: function (e) {
                 var files = e.target.files;

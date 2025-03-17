@@ -338,6 +338,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("获取当前用户")]
         [EnglishTextAttribute("Get current user")]
         public const long GetCurrentUserId = 66;
+        [ChineseTextAttribute("获取业务表用户名集合")]
+        [EnglishTextAttribute("Gets a collection of business table user names")]
+        public const long GetBizUsersId = 67;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
