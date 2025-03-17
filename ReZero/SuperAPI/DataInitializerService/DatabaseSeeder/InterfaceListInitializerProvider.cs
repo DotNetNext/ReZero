@@ -335,6 +335,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("删除用户")]
         [EnglishTextAttribute("Delete user by id")]
         public const long DeleteUserById_Id = 65;
+        [ChineseTextAttribute("获取当前用户")]
+        [EnglishTextAttribute("Get current user")]
+        public const long GetCurrentUserId = 66;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

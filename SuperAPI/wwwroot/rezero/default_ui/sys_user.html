@@ -89,7 +89,7 @@
                         <input v-model="editId" type="hidden" value="0" />
                         <div class="form-group col-md-12">
                             <label>用户名</label>
-                            <input type="text" class="form-control" v-model="formData.UserName" placeholder="请输入用户名">
+                            <input :readonly="isReadOnly" type="text" class="form-control" v-model="formData.UserName" placeholder="请输入用户名">
                         </div>
                         <div class="form-group col-md-12">
                             <label>密码</label>
@@ -137,6 +137,7 @@
             error: null,
             title: "添加用户信息",
             editId: 0,
+            isReadOnly: false,
             formData: {
                 UserName: '',
                 Password: '',
@@ -205,6 +206,7 @@
             },
             openEdit: function (item) {
                 var th = this;
+                this.isReadOnly = true;
                 this.title = "修改用户信息";
                 var urlById = "/PrivateReZeroRoute/100003/GetUserById?id=" + item.Id;
                 if (item.Id) {
@@ -220,6 +222,7 @@
                 }
             },
             openAddAdmin: function () {
+                this.isReadOnly = false;
                 this.title = "添加管理员用户信息";
                 this.formData = {
                     UserName: '',
@@ -232,6 +235,7 @@
                 btnSave.click();
             },
             openAddUser: function () {
+                this.isReadOnly = false;
                 this.title = "添加业务用户信息";
                 this.formData = {
                     UserName: '',

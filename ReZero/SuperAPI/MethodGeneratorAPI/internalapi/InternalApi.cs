@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Http;
 using ReZero.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace ReZero.SuperAPI
     {
         [DI]
         public IHttpContextAccessor? contextAccessor { get; set; }
+
+        #region Setting
         [ApiMethod(nameof(InternalInitApi.SaveLoginConfig), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_SystemSaveConfig)]
         public bool SaveLoginConfig(bool enable)
         {
@@ -35,13 +38,16 @@ namespace ReZero.SuperAPI
             return sysSetting.BoolValue;
         }
         [ApiMethod(nameof(InternalInitApi.VerifyCode), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_VerifyCode)]
+
+        #endregion
+
+        #region User
         public object VerifyCode()
         {
             var bytes = VerifyCodeSugar.Create();
             var base64String = Convert.ToBase64String(bytes.Item2);
-            return new  { Code= Encryption.Encrypt(bytes.Item1?.ToLower()??string.Empty), Src= $"data:image/png;base64,{base64String}" };
+            return new { Code = Encryption.Encrypt(bytes.Item1?.ToLower() ?? string.Empty), Src = $"data:image/png;base64,{base64String}" };
         }
-
         [ApiMethod(nameof(InternalInitApi.SaveUser), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_SaveUser)]
         public bool SaveUser(ZeroUserInfo zeroUserInfo)
         {
@@ -88,23 +94,36 @@ namespace ReZero.SuperAPI
             return true;
         }
         [ApiMethod(nameof(InternalInitApi.GetUserById), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_GetUserById)]
-        public ZeroUserInfo GetUserById(long id) 
+        public ZeroUserInfo GetUserById(long id)
         {
             var db = App.Db;
             return db.Queryable<ZeroUserInfo>().InSingle(id);
         }
         [ApiMethod(nameof(InternalInitApi.DeleteUserInfo), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_DeleteUserById)]
-        public bool DeleteUserInfo(long id) 
+        public bool DeleteUserInfo(long id)
         {
             var db = App.Db;
             var zeroUser = db.Queryable<ZeroUserInfo>().InSingle(id);
             if (zeroUser == null) return true;
-            if (zeroUser.IsInitialized||zeroUser.Id==1) 
+            if (zeroUser.IsInitialized || zeroUser.Id == 1)
             {
                 throw new Exception("初始化数据无法删除");
             }
             db.Deleteable<ZeroUserInfo>().In(zeroUser.Id).ExecuteCommand();
             return true;
         }
+        [ApiMethod(nameof(InternalInitApi.GetUserInfo), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_GetCurrentUser)]
+        public object GetUserInfo()
+        {
+            var userName = DependencyResolver.GetLoggedInUser();
+            var userInfo = App.Db.Queryable<ZeroUserInfo>().Where(it => it.UserName == userName || it.BusinessAccount == userName)
+                .First();
+            if (userInfo?.Avatar==string.Empty)
+            {
+                userInfo.Avatar = "images/users/avatar.jpg";
+            }
+            return new { UserName = userInfo?.UserName??"ReZero", Avatar = userInfo?.Avatar };
+        } 
+        #endregion
     }
 }

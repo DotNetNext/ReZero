@@ -174,6 +174,11 @@ namespace ReZero.SuperAPI
                             addItem.IsInitialized = true;
                             addItem.Id = InterfaceListInitializerProvider.DeleteUserById_Id;
                         }
+                        if (addItem.Url == PubConst.InitApi_GetCurrentUser) 
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.GetCurrentUserId;
+                        }
                         zeroInterfaceLists.Add(addItem);
                     }
                 }

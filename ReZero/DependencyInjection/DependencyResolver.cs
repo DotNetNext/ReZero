@@ -101,5 +101,21 @@ namespace ReZero.DependencyInjection
             using var scope = Provider?.CreateScope();
             return scope?.ServiceProvider?.GetRequiredService<T>();
         }
+        public static string GetLoggedInUser()
+        {
+            var claimsPrincipal = GetClaims();
+            if (claimsPrincipal == null)
+            {
+                return null;
+            }
+
+            var usernameClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "unique_name");
+            if (usernameClaim == null)
+            {
+                return  null;
+            }
+
+            return usernameClaim.Value; ;
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace ReZero.SuperAPI
         public bool IsMasterAdmin { get; set; }
         [SqlSugar.SugarColumn(IsNullable =true)]
         public string? Avatar { get; set; }
+        [SqlSugar.SugarColumn(IsNullable = true)]
+        public string? BusinessAccount { get; set; }
     }
 }
