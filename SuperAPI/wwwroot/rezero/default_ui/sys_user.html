@@ -258,6 +258,10 @@
                     tools.alert("密码和确认密码不一致");
                     return;
                 }
+                if (!this.formData.IsMasterAdmin && !this.formData.BusinessAccount) {
+                    tools.alert("非管理员【绑定业务账号】是必填项");
+                    return;
+                }
                 var formData = this.formData;
                 var url = "/PrivateReZeroRoute/100003/SaveUser";
                 axios.post(url, formData, jwHeader)

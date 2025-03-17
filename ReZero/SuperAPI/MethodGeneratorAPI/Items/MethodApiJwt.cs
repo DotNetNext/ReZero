@@ -26,40 +26,44 @@ namespace ReZero.SuperAPI
             var options = SuperAPIModule._apiOptions;
             var jwt = options?.InterfaceOptions?.Jwt ?? new Configuration.ReZeroJwt();
             ZeroUserInfo data = GetAdminUserInfo(userName, password, db);
-            if (data != null)
-            {
+            if (data != null && string.IsNullOrEmpty(data.BusinessAccount))
+            { 
                 return GenerateJwtToken(data, jwt);
             }
-            else
+            else if (data != null&& !string.IsNullOrEmpty(data.BusinessAccount)) 
+            {  
+                var dt = db.Queryable<object>()
+                    .AS(jwt.UserTableName)
+                    .Where(jwt.UserNameFieldName, "=", data.BusinessAccount)
+                    .ToDataTable();
+                if (dt.Rows.Count == 0)
+                {
+                    throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
+                }
+                return GenerateJwtToken(dt.Rows[0], jwt); 
+            }
+            else //业务表登录
             {
+                CheckJwt(jwt); 
+                DataTable dt = new DataTable();
                 try
                 {
-                    // 不是管理员账号需要验证JWT
-                    CheckJwt(jwt);
+                    dt = db.Queryable<object>()
+                       .AS(jwt.UserTableName)
+                       .Where(jwt.PasswordFieldName, "=", password)
+                       .Where(jwt.UserNameFieldName, "=", userName)
+                       .ToDataTable();
 
-                    var dt = db.Queryable<object>()
-                        .AS(jwt.UserTableName)
-                        .Where(jwt.PasswordFieldName, "=", password)
-                        .Where(jwt.UserNameFieldName, "=", userName)
-                        .ToDataTable();
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
-                    }
-                    return GenerateJwtToken(dt.Rows[0], jwt);
                 }
                 catch (Exception)
                 {
-                    if (!string.IsNullOrEmpty(jwt.UserTableName))
-                    {
-                        throw new Exception(TextHandler.GetCommonText($"配置JWT用户表{jwt.UserTableName}不存在", $"Configuration jwt user table {jwt.UserTableName} does not exist"));
-                    }
-                    else
-                    {
-                        throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
-                    }
+                    throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
                 }
+                if (dt.Rows.Count == 0)
+                {
+                    throw new Exception(TextHandler.GetCommonText("授权失败", "Authorization failure"));
+                }
+                return GenerateJwtToken(dt.Rows[0], jwt);
             }
         }
 
