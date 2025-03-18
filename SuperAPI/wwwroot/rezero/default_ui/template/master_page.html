@@ -63,7 +63,7 @@
                         <ul class="topbar-right">
                             <li id="liUser" class="dropdown dropdown-profile">
                                 <a href="javascript:void(0)" data-toggle="dropdown">
-                                    <img class="img-avatar img-avatar-48 m-r-10" :src="userInfo.Avatar" :alt="userInfo.UserName" />
+                                    <img class="img-avatar img-avatar-48 m-r-10" :src="userInfo.Avatar" onerror="this.src='images/users/avatar.jpg';" :alt="userInfo.UserName" />
                                     <span> {{userInfo.UserName}} </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right"> 
