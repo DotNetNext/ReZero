@@ -119,7 +119,7 @@ namespace ReZero.SuperAPI
         {
             var userName = DependencyResolver.GetLoggedInUser();
             var defaultSrc = "images/users/avatar.jpg";
-            var defaultUserName = "ReZero";
+            var defaultUserName = "ReZero"; 
             var userInfo = App.Db.Queryable<ZeroUserInfo>().Where(it => it.UserName == userName || it.BusinessAccount == userName)
                 .First();
             if (userInfo?.Avatar==string.Empty)
@@ -133,7 +133,7 @@ namespace ReZero.SuperAPI
                      Avatar= defaultSrc
                 }; 
             }
-            return new { UserName = userInfo?.UserName?? defaultUserName, Avatar = userInfo?.Avatar };
+            return new { IsAdmin= userInfo.IsMasterAdmin, UserName = userInfo?.UserName?? defaultUserName, Avatar = userInfo?.Avatar };
         }
         [ApiMethod(nameof(InternalInitApi.GetBizUsers), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_GetBizUsers)]
         public object GetBizUsers()

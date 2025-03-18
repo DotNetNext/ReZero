@@ -17,6 +17,10 @@ var masterVueObj=new Vue({
             axios.get('/Public/User', jwHeader)
                 .then(response => {
                     this.userInfo = response.data;
+                    if (this.userInfo.IsAdmin == true)
+                    {
+                        document.querySelectorAll('.manager').forEach(element => element.classList.remove('hide'));
+                    }
                 })
                 .catch(error => {
                     console.error('获取用户信息失败:', error);

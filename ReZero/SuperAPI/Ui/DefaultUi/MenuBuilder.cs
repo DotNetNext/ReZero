@@ -22,11 +22,14 @@ namespace ReZero.SuperAPI
             foreach (var tree in treeList.OrderBy(it=>it.SortId))
             {
                 var isOpen = IsOpen(current, tree);
-                var active = isOpen ? " active " : null;
+                var active = isOpen ? " active " : null; 
+                var isHidden = SuperAPIModule._apiOptions?.InterfaceOptions?.Jwt?.Enable==true&&tree.Id>200;
                 if (tree.SubInterfaceCategories != null && tree.SubInterfaceCategories.Count > 0)
                 {
                     if (active != null)
-                        active = $" {active} open ";
+                        active = $" {active} open "; 
+                    if (isHidden) 
+                        active = $"hide manager {active}"; 
                     htmlBuilder.AppendLine("<li class=\" " + active + " nav-item nav-item-has-subnav\">");
                     htmlBuilder.AppendLine($"  <a href=\"{tree.Url}\"><i class=\""+(!string.IsNullOrEmpty(tree.Icon) ?tree.Icon: "mdi mdi-menu" )+ $"\"></i> {tree.Name}</a>");
                     htmlBuilder.AppendLine("  <ul class=\"nav nav-subnav\">");
@@ -36,6 +39,8 @@ namespace ReZero.SuperAPI
                 }
                 else
                 {
+                    if (isHidden)
+                        active = $"hide manager {active}";
                     htmlBuilder.AppendLine("<li class=\"  " + active + " nav-item-no-subnav\">");
                     htmlBuilder.AppendLine($"  <a href=\"{tree.Url}\"><i class=\""+(!string.IsNullOrEmpty(tree.Icon) ? tree.Icon : "mdi mdi-menu")+$"\"></i> {tree.Name}</a>");
                     htmlBuilder.AppendLine("</li>");
