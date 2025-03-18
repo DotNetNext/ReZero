@@ -5,6 +5,13 @@ using System.Linq;
 namespace ReZero.SuperAPI
 {
     /// <summary>
+    /// Get rezero db
+    /// </summary>
+    public class ZeroDb 
+    {
+        public static ISqlSugarClient Db =>new SqlSugarClient(UtilMethods.CopyConfig( App.PreStartupDb!.CurrentConnectionConfig));
+    }
+    /// <summary>
     /// Represents the application's main entry point and provides access to essential services and resources.
     /// </summary>
     internal class App
