@@ -100,6 +100,13 @@ namespace ReZero.SuperAPI
         public ZeroUserInfo GetUserById(long id)
         {
             var db = App.Db;
+            if (id == -1) 
+            {
+                var userName = DependencyResolver.GetLoggedInUser(); 
+                var userInfo = App.Db.Queryable<ZeroUserInfo>().Where(it => it.UserName == userName || it.BusinessAccount == userName)
+                    .First();
+                return userInfo;
+            }
             return db.Queryable<ZeroUserInfo>().InSingle(id);
         }
         [ApiMethod(nameof(InternalInitApi.DeleteUserInfo), GroupName = nameof(ZeroUserInfo), Url = PubConst.InitApi_DeleteUserById)]
