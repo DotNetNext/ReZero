@@ -84,6 +84,7 @@ namespace ReZero.SuperAPI
                 zeroUserInfo.CreateTime = DateTime.Now;
                 zeroUserInfo.Creator = "admin";
                 zeroUserInfo.CreatorId = 1;
+                zeroUserInfo.Password = Encryption.Encrypt(zeroUserInfo.Password);
                 zeroUserInfo.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
                 db.Insertable(zeroUserInfo).ExecuteCommand();
             }
