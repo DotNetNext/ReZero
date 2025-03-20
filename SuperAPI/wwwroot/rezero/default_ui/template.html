@@ -243,7 +243,8 @@
             openTutorials: function (item)
             {
                 if (item == 1) {
-                    window.open("/rezero/tutorials.html?type=" + item +"&style=csharp")
+                    var url = "/rezero/tutorials.html?type=" + item + "&style=csharp";
+                    window.open(url);
                 } else
                 {
                     tools.alert("根据接口生成还在开发中");
