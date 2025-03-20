@@ -244,6 +244,7 @@
             {
                 if (item == 1) {
                     var url = "/rezero/tutorials.html?type=" + item + "&style=csharp";
+                    url = tools.appendQueryParams(url);
                     window.open(url);
                 } else
                 {

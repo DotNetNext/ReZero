@@ -146,6 +146,35 @@ var tools = {
             dropdown.classList.remove('open');
             dropdown.classList.add('close');
         }
+    },
+    appendQueryParams: function (url) {
+        // 从当前 URL 中提取查询参数
+        const searchParams = new URLSearchParams(window.location.search);
+        const params = {};
+
+        // 动态提取 token 和 model
+        if (searchParams.has('token')) {
+            params.token = searchParams.get('token');
+        }
+        if (searchParams.has('model')) {
+            params.model = searchParams.get('model');
+        }
+
+        // 如果没有参数，直接返回原始 URL
+        if (Object.keys(params).length === 0) {
+            return url;
+        }
+
+        // 检查 URL 是否已经包含查询参数
+        const separator = url.includes('?') ? '&' : '?';
+
+        // 将参数对象转换为查询字符串
+        const queryString = Object.keys(params)
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+            .join('&');
+
+        // 拼接 URL 和查询参数
+        return url + separator + queryString;
     }
 }
 Array.prototype.removeArrayItem = function (item) {
