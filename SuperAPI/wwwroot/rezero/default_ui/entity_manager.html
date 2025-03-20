@@ -390,7 +390,7 @@
                             <label class="control-label">
                                 生成地址
                             </label>
-                            <div><code>地址说明:修改模版可以修改这个地址</code> <a class="red" href="/rezero/template.html">[进入模版管理]</a></div>
+                            <div><code>地址说明:修改模版可以修改这个地址</code> <a class="red" :href="tempUrl">[进入模版管理]</a></div>
                             <div><code>符号说明:{0}是ClassName, {1}表示TableName,{project}表示项目的sln文件目录</code></div>
                             <input class="form-control" v-model="currentTemplate.Url" />
                         </div>
@@ -466,12 +466,14 @@
             currentTemplate: {},
             currentTemplateId: 0,
             isView: false,
-            viewName:null
+            viewName: null,
+            tempUrl:"/rezero/template.html",
         },
         mounted() {
             this.bindDatabaseSelect();
             this.bindNativeTypeSelect();
             this.bindTemplates();
+            this.bindTempUrl();
         },
         methods: {
             fetchData(append) {
@@ -485,6 +487,17 @@
                         this.error = error.message;
                         this.data = null;
                     });
+            },
+            bindTempUrl: function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                var model = urlParams.get('model');
+                var token = urlParams.get('token');
+                if (model) {
+                    this.tempUrl += `?model=${model}`;
+                }
+                if (token) {
+                    this.tempUrl += model ? `&token=${token}` : `?token=${token}`;
+                }
             },
             onSearch: function (page) {
 
