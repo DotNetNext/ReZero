@@ -116,7 +116,8 @@ namespace ReZero.SuperAPI
 
         private static bool IsSystemPublicApi(ZeroInterfaceList interInfo)
         {
-            return interInfo.Url?.ToLower()?.StartsWith("/public/") != true && interInfo.Id != InterfaceListInitializerProvider.GetTokenId;
+            return (interInfo.Url?.ToLower()?.StartsWith("/public/") != true
+                    && interInfo.Id<1000) && interInfo.Id != InterfaceListInitializerProvider.GetTokenId;
         }
 
         private static void SetDataToAop(InterfaceContext dynamicInterfaceContext, object? data)
