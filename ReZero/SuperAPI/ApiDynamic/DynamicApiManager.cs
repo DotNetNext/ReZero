@@ -95,7 +95,8 @@ namespace ReZero.SuperAPI
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data!, resultModel);
-                    data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
+                    if (IsSystemPublicApi(interInfo))
+                        data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
                     var json = JsonHelper.SerializeObject(data, SuperAPIModule._apiOptions!.InterfaceOptions?.JsonSerializerSettings);
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
                     await context.Response.WriteAsync(json);
@@ -111,6 +112,11 @@ namespace ReZero.SuperAPI
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnErrorAsync(dynamicInterfaceContext);
                 }
             }
+        }
+
+        private static bool IsSystemPublicApi(ZeroInterfaceList interInfo)
+        {
+            return interInfo.Url?.ToLower()?.StartsWith("/public/") != true && interInfo.Id != InterfaceListInitializerProvider.GetTokenId;
         }
 
         private static void SetDataToAop(InterfaceContext dynamicInterfaceContext, object? data)
