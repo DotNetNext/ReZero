@@ -341,6 +341,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("获取业务表用户名集合")]
         [EnglishTextAttribute("Gets a collection of business table user names")]
         public const long GetBizUsersId = 67;
+        [ChineseTextAttribute("预览实体")]
+        [EnglishTextAttribute("Review class")]
+        public const long ViewTemplateId = 68;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

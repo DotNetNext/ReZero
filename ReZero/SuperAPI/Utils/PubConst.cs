@@ -72,5 +72,6 @@ namespace ReZero.SuperAPI
         public const string InitApi_DeleteUserById = "/PrivateReZeroRoute/100003/DeleteUserById";
         public const string InitApi_GetCurrentUser = "/Public/User";
         public const string InitApi_GetBizUsers = "/PrivateReZeroRoute/100003/GetBizUsers";
+        public const string InitApi_ViewTemplate = "/PrivateReZeroRoute/100003/ViewTemplate";
     }
 }
