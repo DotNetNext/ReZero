@@ -398,6 +398,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnGenerateFileClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button  type="button" @click="previewEntity()" class="btn btn-primary" >  预览实体</button>
                     <button type="button" @click="submitGenerateFile()" class="btn btn-primary">生成文件</button>
                 </div>
             </div>
@@ -661,6 +662,22 @@
                     .catch(error => {
                         this.error = error.message;
                         this.data = null;
+                    });
+            },
+            // 其他方法...
+            previewEntity: function () {
+                if (!this.selectedItems || this.selectedItems.length == 0) {
+                    tools.alert("请选择实体");
+                    return;
+                }
+                var tableId = this.selectedItems[0];
+                var url = `/PrivateReZeroRoute/100003/ViewTemplate?databaseId=${this.databaseId}&viewName=${tableId}&templateId=${this.currentTemplateId}`;
+                axios.get(url, jwHeader)
+                    .then(response => { 
+                        alert(response.data); 
+                    })
+                    .catch(error => {
+                        this.error = error.message;
                     });
             },
             createTables: function () {
