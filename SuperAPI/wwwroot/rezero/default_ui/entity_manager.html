@@ -690,6 +690,11 @@
                     tools.alert("请选择实体");
                     return;
                 }
+                if (this.isView && !this.viewName)
+                {
+                    tools.alert("请填写视图名");
+                    return;
+                }
                 var tableId = this.selectedItems[0];
                 var url = `/PrivateReZeroRoute/100003/ViewTemplate?databaseId=${this.databaseId}&viewName=${this.isView ? this.viewName : tableId}&templateId=${this.currentTemplateId}&isView=${this.isView}`;
                 axios.get(url, jwHeader)
