@@ -17,6 +17,10 @@ var masterVueObj=new Vue({
             axios.get('/Public/User', jwHeader)
                 .then(response => {
                     this.userInfo = response.data;
+                    if (!this.userInfo.Avatar)
+                    {
+                        this.userInfo.Avatar = "images/users/avatar.jpg";
+                    }
                     if (this.userInfo.IsAdmin == true)
                     {
                         document.querySelectorAll('.manager').forEach(element => element.classList.remove('hide'));
