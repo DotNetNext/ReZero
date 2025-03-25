@@ -168,5 +168,12 @@ namespace ReZero.SuperAPI
             }
         }
         #endregion
+
+        #region Entity
+        public string ExecTemplateByViewWithoutCreatingFiles(long databaseId, string viewName, long templateId) 
+        {
+            return new MethodApi().ExecTemplateByViewWithoutCreatingFiles(databaseId, viewName, templateId);
+        }
+        #endregion
     }
 }

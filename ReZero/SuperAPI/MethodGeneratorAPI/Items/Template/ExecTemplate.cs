@@ -254,5 +254,34 @@ namespace ReZero.SuperAPI
             return temp.ToString();
         }
         #endregion
+
+        #region Helper
+
+        internal  string ExecTemplateByViewWithoutCreatingFiles(long databaseId, string viewName, long templateId)
+        {
+            var db = App.Db;
+            var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
+            var item = new ZeroEntityInfo();
+            var viewDb = App.GetDbById(databaseId);
+            var dt = viewDb!.Queryable<object>().AS(viewName).Take(1).Select("*").ToDataTable();
+            item.ClassName = viewName;
+            item.DbTableName = viewName;
+            item.Description = string.Empty;
+            item.ZeroEntityColumnInfos = new List<ZeroEntityColumnInfo>();
+            foreach (DataColumn dataColumn in dt.Columns)
+            {
+                item.ZeroEntityColumnInfos.Add(new ZeroEntityColumnInfo()
+                {
+                    PropertyName = dataColumn.ColumnName,
+                    DbColumnName = dataColumn.ColumnName,
+                    DataType = dataColumn.DataType.Name,
+                    PropertyType = EntityGeneratorManager.GetNativeTypeByType(dataColumn.DataType)
+                });
+            }
+            var classString = GetClassString(databaseId, template, item, out _);
+            return classString;
+        }
+
+        #endregion
     }
 }
