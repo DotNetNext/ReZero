@@ -257,13 +257,14 @@ namespace ReZero.SuperAPI
 
         #region Helper
 
-        internal  string ExecTemplateByViewWithoutCreatingFiles(long databaseId, string viewName, long templateId)
+        internal  string ExecTemplateByViewWithoutCreatingFiles(long databaseId, string viewName,bool isView, long templateId)
         {
             var db = App.Db;
             var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
             var item = new ZeroEntityInfo();
             var viewDb = App.GetDbById(databaseId);
-            viewName = db.Queryable<ZeroEntityInfo>()!.InSingle(viewName)!.DbTableName!;
+            if(isView==false)
+              viewName = db.Queryable<ZeroEntityInfo>()!.InSingle(viewName)!.DbTableName!;
             var dt = viewDb!.Queryable<object>().AS(viewName).Take(1).Select("*").ToDataTable();
             item.ClassName = viewName;
             item.DbTableName = viewName;

@@ -171,9 +171,9 @@ namespace ReZero.SuperAPI
 
         #region Entity
         [ApiMethod(nameof(InternalInitApi.ExecTemplateByViewWithoutCreatingFiles), GroupName = nameof(ZeroEntityInfo), Url = PubConst.InitApi_ViewTemplate)]
-        public string ExecTemplateByViewWithoutCreatingFiles(long databaseId, string viewName, long templateId) 
+        public string ExecTemplateByViewWithoutCreatingFiles(long databaseId,bool isView, string viewName, long templateId) 
         {
-            return new MethodApi().ExecTemplateByViewWithoutCreatingFiles(databaseId, viewName, templateId);
+            return new MethodApi().ExecTemplateByViewWithoutCreatingFiles(databaseId, viewName, isView, templateId);
         }
         #endregion
     }
