@@ -261,15 +261,15 @@
                     <h4 class="modal-title" id="myLargeModalLabel">导入实体</h4>
                 </div>
                 <div class="modal-body">
-                    
-                   <div class="input-group width250  m-b-10"> 
-                            <input id="txtTableName" type="text" class="form-control"> 
-                            <span class="input-group-btn">
-                                <button type="button" @click="bindImportTables()" class="btn btn-default"><i class="mdi mdi-magnify"></i>搜索</button>
-                                <button type="button" onclick="txtTableName.value=''" class="btn btn-default"><i class="mdi  mdi-refresh"></i>清空</button>
-                            </span>
+
+                    <div class="input-group width250  m-b-10">
+                        <input id="txtTableName" type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button type="button" @click="bindImportTables()" class="btn btn-default"><i class="mdi mdi-magnify"></i>搜索</button>
+                            <button type="button" onclick="txtTableName.value=''" class="btn btn-default"><i class="mdi  mdi-refresh"></i>清空</button>
+                        </span>
                     </div>
-                    
+
                     <div class="table-container2">
                         <table class="table table-bordered">
                             <thead>
@@ -374,7 +374,7 @@
                             <label class="control-label">
                                 模版
                             </label>
-                            <select v-model="currentTemplateId"  @change="changeTemplate" class="form-control">
+                            <select v-model="currentTemplateId" @change="changeTemplate" class="form-control">
                                 <option v-for="item in templates" :value="item.Id">
                                     {{item.Title}}
                                 </option>
@@ -398,7 +398,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnGenerateFileClose" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button  type="button" @click="previewEntity()" class="btn btn-primary" >  预览实体</button>
+                    <button type="button" @click="previewEntity()" class="btn btn-primary">  预览实体</button>
                     <button type="button" @click="submitGenerateFile()" class="btn btn-primary">生成文件</button>
                 </div>
             </div>
@@ -413,11 +413,11 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myLargeModalLabel">修改原生类型</h4>
                 </div>
-                <div class="modal-body"> 
-                    <div class="example-box"> 
+                <div class="modal-body">
+                    <div class="example-box">
                         <div class="form-group">
                             <label class="control-label">类型</label>
-                            <div><code>注意:这儿有配置不支持多库，一般用于单库或者导入</code></div> 
+                            <div><code>注意:这儿有配置不支持多库，一般用于单库或者导入</code></div>
                             <input v-model="currentColumn.DataType" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -429,7 +429,26 @@
                             <input v-model="currentColumn.DecimalDigits" class="form-control" />
                         </div>
                     </div>
-                </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--预览实体-->
+    <div id="divPreviewEntity" class="modal fade bs-example-modal-lg" tabindex="-11" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none;">
+        <button id="btnPreviewEntity" type="button" class="btn btn-primary hidden" data-toggle="modal" data-target="#divPreviewEntity"></button>
+        <div class="modal-dialog  width_r_80 " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myLargeModalLabel">预览实体</h4>
+                </div>
+                <div class="modal-body ">
+                    <code>预览只显示一个实体</code>
+                    <pre @dblclick="selectText" id="preReviewClass" style="height:380px !important" >{{reviewClass}}</pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnClosePreviewEntity" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
             </div>
         </div>
     </div>
@@ -468,7 +487,8 @@
             currentTemplateId: 0,
             isView: false,
             viewName: null,
-            tempUrl:"/rezero/template.html",
+            tempUrl: "/rezero/template.html",
+            reviewClass:null
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -673,12 +693,22 @@
                 var tableId = this.selectedItems[0];
                 var url = `/PrivateReZeroRoute/100003/ViewTemplate?databaseId=${this.databaseId}&viewName=${tableId}&templateId=${this.currentTemplateId}`;
                 axios.get(url, jwHeader)
-                    .then(response => { 
-                        alert(response.data); 
+                    .then(response => {
+                        btnGenerateFileClose.click();
+                        btnPreviewEntity.click();
+                        this.reviewClass=response.data; 
                     })
                     .catch(error => {
                         this.error = error.message;
                     });
+            },
+            selectText(event) {
+                // 方法1：使用现代浏览器的 Selection API
+                const range = document.createRange();
+                range.selectNodeContents(event.target);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
             },
             createTables: function () {
                 var url = "/PrivateReZeroRoute/100003/CreateTables";
