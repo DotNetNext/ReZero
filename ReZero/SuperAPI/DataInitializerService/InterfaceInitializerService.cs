@@ -174,9 +174,15 @@ namespace ReZero.SuperAPI
         /// <param name="db">The database client.</param>
         private void InitInterfaceCategory(ISqlSugarClient? db)
         {
+            var data = db!.Queryable<ZeroInterfaceCategory>().InSingle(InterfaceCategoryInitializerProvider.Id200100);
             db!.Deleteable<ZeroInterfaceCategory>().Where(it => it.IsInitialized).ExecuteCommand();
             var categoryProvider = new InterfaceCategoryInitializerProvider(zeroInterfaceCategory);
-            categoryProvider.Set();
+            categoryProvider.Set(); 
+            if (data != null)
+            {
+                zeroInterfaceCategory.RemoveAll(it => it.Id == InterfaceCategoryInitializerProvider.Id200100);
+                zeroInterfaceCategory.Add(data);
+            }
             db!.Storageable(zeroInterfaceCategory).ExecuteCommand();
         }
 
