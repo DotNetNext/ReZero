@@ -97,13 +97,7 @@ namespace ReZero.SuperAPI
             data.DataBaseId = DataBaseInitializerProvider.Id;
             CommonSetting(data);
             datas.Add(data);
-        }
-
-        private void CommonSetting(ZeroEntityInfo data)
-        {
-            data.IsInitialized = true;
-            data.IsDeleted = false;
-        }
+        } 
         private void AddZeroJwtTokenManagement(List<ZeroEntityInfo> datas)
         {
             var entityMappingService = new EntityMappingService();
@@ -112,6 +106,11 @@ namespace ReZero.SuperAPI
             data.DataBaseId = DataBaseInitializerProvider.Id;
             CommonSetting(data);
             datas.Add(data);
+        } 
+        private void CommonSetting(ZeroEntityInfo data)
+        {
+            data.IsInitialized = true;
+            data.IsDeleted = false;
         }
     }
 }
