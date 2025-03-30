@@ -344,6 +344,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("预览实体")]
         [EnglishTextAttribute("Review class")]
         public const long ViewTemplateId = 68;
+        [ChineseTextAttribute("获取JWT令牌管理")]
+        [EnglishTextAttribute("Get jwt token management")]
+        public const long GetZeroJwtTokenManagementPageId = 69;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

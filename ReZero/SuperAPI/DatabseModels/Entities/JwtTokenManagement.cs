@@ -11,7 +11,7 @@ namespace ReZero.SuperAPI
         /// 连接用户名称，标识使用 JWT 的用户
         /// </summary>
         [SugarColumn(Length = 200)]
-        public string? Username { get; set; }
+        public string? UserName { get; set; }
 
         /// <summary>
         /// 描述，用于说明该 JWT 授权的用途或其他相关信息

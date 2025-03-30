@@ -29,8 +29,80 @@ namespace ReZero.SuperAPI
             ClearAllInternalCache();
             ExecuetSqlReturnExcel();
             GetUserInfoPageList();
+            GetZeroJwtTokenManagementPage();
         }
-
+        private void GetZeroJwtTokenManagementPage()
+        {
+            ZeroInterfaceList data = GetNewItem(it =>
+            {
+                it.HttpMethod = HttpRequestMethod.GET.ToString();
+                it.Id = GetZeroJwtTokenManagementPageId;
+                it.GroupName = nameof(ZeroJwtTokenManagement);
+                it.InterfaceCategoryId = InterfaceCategoryInitializerProvider.Id100003;
+                it.Name = TextHandler.GetInterfaceListText(GetZeroJwtTokenManagementPageId);
+                it.Url = GetUrl(it, "GetZeroJwtTokenManagementPage");
+                it.CustomResultModel = new ResultModel()
+                {
+                    ResultType = ResultType.Grid,
+                    ResultColumnModels = new List<ResultColumnModel>()
+                    {
+                        new ResultColumnModel()
+                        {
+                            ResultColumnType = ResultColumnType.ConvertDefaultTimeString,
+                            PropertyName = nameof(ZeroJwtTokenManagement.CreateTime),
+                        }
+                    }
+                };
+                it.DataModel = new DataModel()
+                {
+                    Columns = new List<DataColumnParameter>()
+                    {
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.Id) ,
+                            Description=TextHandler.GetCommonText("ID", "Primary key")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.UserName) ,
+                            Description=TextHandler.GetCommonText("用户名", "User name")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.Description) ,
+                            Description=TextHandler.GetCommonText("描述", "Description")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.Expiration) ,
+                            Description=TextHandler.GetCommonText("使用期限", "Expiration")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.Token) ,
+                            Description=TextHandler.GetCommonText("JWT Token", "JWT Token")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.Creator) ,
+                            Description=TextHandler.GetCommonText("创建人", "Creator")
+                        },
+                        new DataColumnParameter(){
+                            PropertyName= nameof(ZeroJwtTokenManagement.CreateTime) ,
+                            Description=TextHandler.GetCommonText("创建时间", "Create time")
+                        }
+                    },
+                    TableId = EntityInfoInitializerProvider.Id_ZeroJwtTokenManagement,
+                    ActionType = ActionType.QueryCommon,
+                    DefaultParameters = new List<DataModelDefaultParameter>() {
+                        new DataModelDefaultParameter() { Name = nameof(ZeroJwtTokenManagement.UserName),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(string).Name, Description = TextHandler.GetCommonText("用户名", "User name") },
+                        new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageNumberPropName ,Value=1,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("第几页", "Page number") },
+                        new DataModelDefaultParameter() { Name=SuperAPIModule._apiOptions?.InterfaceOptions.PageSizePropName ,Value=20,FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(long).Name, Description = TextHandler.GetCommonText("每页几条", "Page size") },
+                        new DataModelDefaultParameter() { Name = nameof(ZeroInterfaceCategory.IsDeleted),   FieldOperator=FieldOperatorType.Equal,  ValueType = typeof(bool).Name,Value="false",ValueIsReadOnly=true, Description = TextHandler.GetCommonText("IsDeleted", "IsDeleted") },
+                    },
+                    CommonPage = new DataModelPageParameter()
+                    {
+                        PageNumber = 1,
+                        PageSize = 20
+                    },
+                };
+            });
+            zeroInterfaceList.Add(data);
+        }
         private void SaveInterfaceList()
         {
             //获取数据库所有

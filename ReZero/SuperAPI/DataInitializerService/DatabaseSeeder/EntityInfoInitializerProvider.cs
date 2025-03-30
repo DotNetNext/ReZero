@@ -15,5 +15,6 @@ namespace ReZero.SuperAPI
         public const long Id_ZeroTemplate = 6;
         public const long Id_ZeroTemplateType = 7;
         public const long Id_ZeroUserInfo = 8;
+        public const long Id_ZeroJwtTokenManagement = 9;
     }
 }
