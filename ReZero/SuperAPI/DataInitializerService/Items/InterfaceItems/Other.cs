@@ -565,10 +565,14 @@ namespace ReZero.SuperAPI
                 {
                     ResultType = ResultType.Grid,
                     ResultColumnModels = new List<ResultColumnModel>()
-                    {
-                        new ResultColumnModel(){  PropertyName= nameof(ZeroDatabaseInfo.DbType) , ConvertType=typeof(DbType),ConvertType2=typeof(string), ResultColumnType= ResultColumnType.ConvertDefault }
+                    { 
+                        new ResultColumnModel()
+                         {
+                               ResultColumnType=ResultColumnType.ConvertDefaultTimeString,
+                               PropertyName= nameof(ZeroEntityInfo.CreateTime),
+                         }
                     }
-                };
+                }; 
                 it.DataModel = new DataModel()
                 {
                     Columns = new List<DataColumnParameter>()
@@ -585,9 +589,13 @@ namespace ReZero.SuperAPI
                             PropertyName= nameof(ZeroUserInfo.Password) ,
                             Description=TextHandler.GetCommonText("密码", "Password")
                         },
+                       new DataColumnParameter(){
+                            PropertyName= nameof(ZeroUserInfo.BusinessAccount) ,
+                            Description=TextHandler.GetCommonText("业务账号", "Business account")
+                        },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroUserInfo.IsMasterAdmin) ,
-                            Description=TextHandler.GetCommonText("是否管理员", "Is master admin")
+                            Description=TextHandler.GetCommonText("管理员", "admin")
                         },
                        new DataColumnParameter(){
                             PropertyName= nameof(ZeroUserInfo.EasyDescription) ,
@@ -599,7 +607,7 @@ namespace ReZero.SuperAPI
                         },
                         new DataColumnParameter(){
                             PropertyName= nameof(ZeroUserInfo.CreateTime) ,
-                            Description=TextHandler.GetCommonText("创建时间", "Create time")
+                            Description=TextHandler.GetCommonText("创建时间", "Create time") 
                         }
                     },
                     TableId = EntityInfoInitializerProvider.Id_ZeroUserInfo,

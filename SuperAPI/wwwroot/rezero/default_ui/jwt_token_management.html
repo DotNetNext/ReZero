@@ -1,3 +1,244 @@
 ﻿@@master_page.html
-
-开发中
+<link href="css/page_table_list.css?v=1" rel="stylesheet" />
+<link href="css/page_jwt_token_management.css?v=1" rel="stylesheet" />
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script>
+<div id="apibox" class="card mypage">
+    <!--正文-->
+    <div class="card">
+        <div class="search-bar"> </div>
+        <div class="card">
+            <form id="frmSearach" onsubmit="return false;">
+                <div class="row ">
+                    <div class="form-group">
+                        <div class="col-md-1"><label class="form-control m-l-15">搜索:</label></div>
+                        <div class="col-md-11">
+                            <div class="input-group">
+                                <input id="txtSearch" type="text" style="width:150px;margin-left:20px; margin-right:10px" class="form-control" value="" name="keyword" placeholder="请输入用户名">
+                                <a class="btn btn-secondary m-r-5" id="btnSearch" data-toggle="tooltip" @click="onSearch()" href="#!"><i class="mdi mdi-magnify"></i> 搜索</a>
+                                <button onclick="frmSearach.reset()" type="submit" class="btn btn-close">清空</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="card-toolbar clearfix">
+                <div class="toolbar-btn-action">
+                    <a @click="openAddDiv()" data-toggle="modal" data-target="#gridSystemModal" class="btn btn-primary m-r-10" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="master-table-container">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr v-if="data && data.Columns && data.Columns.length > 0">
+                                    <th class="width30">
+                                        <label class="lyear-checkbox checkbox-primary">
+                                            <input type="checkbox" @change="selectAll" id="check-all"><span></span>
+                                        </label>
+                                    </th>
+                                    <th v-for="column in data.Columns">{{ column.ColumnDescription }}</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody v-if="data && data.Data">
+                                <tr v-if="data.Columns && data.Columns.length > 0" v-for="item in data.Data">
+                                    <td>
+                                        <label class="lyear-checkbox checkbox-primary">
+                                            <input type="checkbox" name="ids[]" v-model="selectedItems" :alt="item.Id" :value="item.Id"><span></span>
+                                        </label>
+                                    </td>
+                                    <td v-for="column in data.Columns">
+                                        {{ item[column.PropertyName] }}
+                                    </td>
+                                    <td class="table_opt2">
+                                        <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-link" type="button">
+                                            <i class="mdi mdi-lead-pencil"></i> 修改
+                                        </button>
+                                        <button data-toggle="modal" @click="deleteAndConfirm(item)" data-target="#divDelBox" class="btn btn-link" type="button">
+                                            <i class="mdi mdi-do-not-disturb"></i> 删除
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @@page_control.html
+            </div>
+        </div>
+    </div>
+    <!--插入或者新增-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="frmEdit">
+                        <input type="hidden" v-model="formData.Id" name="Id" />
+                        <div class="form-group">
+                            <label class="control-label">用户名：</label>
+                            <input type="text" placeholder="用户名" v-model="formData.UserName" name="UserName" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">描述：</label>
+                            <input type="text" placeholder="描述" v-model="formData.Description" name="Description" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">使用期限：</label>
+                            <input type="date" v-model="formData.Expiration" name="Expiration" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">JWT Token：</label>
+                            <textarea placeholder="JWT Token" class="form-control" v-model="formData.Token" name="Token"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseEdit" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="addOrUpdate()" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--删除确认-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="divDelBox" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel">确认删除</h4>
+                </div>
+                <div class="modal-body">
+                    是否删除该记录？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnDelClose" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" @click="deleteAndConfirm(null)" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            error: null,
+            title: "添加JWT Token",
+            formData: {
+                Id: 0,
+                UserName: '',
+                Description: '',
+                Expiration: '',
+                Token: ''
+            },
+            selectedItems: []
+        },
+        mounted() {
+            this.fetchData("");
+        },
+        methods: {
+            fetchData: function (append) {
+                var url = "/PrivateReZeroRoute/100003/GetJwtTokenList" + append;
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.data = response.data;
+                        this.error = null;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
+            },
+            onSearch: function (page) {
+                var urlParameters = "?" + tools.objectToQueryString({
+                    __pageNumber: page,
+                    __pageSize: tools.getValue("selPageSize"),
+                    UserName: txtSearch.value
+                });
+                this.fetchData(urlParameters);
+            },
+            selectAll: function (event) {
+                if (event.target.checked) {
+                    // 全选
+                    this.selectedItems = this.data.Data.map(item => item.Id);
+                } else {
+                    // 全不选
+                    this.selectedItems = [];
+                }
+            },
+            deleteAndConfirm: function (item) {
+                if (item == null) {
+                    var url = "/PrivateReZeroRoute/100003/DeleteJwtToken?Id=" + localStorage.delId;
+                    axios.get(url, jwHeader)
+                        .then(response => {
+                            if (response.data.message) {
+                                tools.alert(response.data.message);
+                            }
+                            this.data = response.data;
+                            this.error = null;
+                            this.onSearch();
+                            btnDelClose.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                } else {
+                    localStorage.delId = item.Id;
+                }
+            },
+            openEditDiv: function (item) {
+                var th = this;
+                this.title = "修改JWT Token";
+                var urlById = "/PrivateReZeroRoute/100003/GetJwtTokenById?id=" + item.Id;
+                if (item.Id) {
+                    axios.get(urlById, jwHeader)
+                        .then(response => {
+                            th.formData = response.data;
+                            btnSave.click();
+                        })
+                        .catch(error => {
+                            this.error = error.message;
+                            this.data = null;
+                        });
+                }
+            },
+            openAddDiv: function () {
+                this.title = "添加JWT Token";
+                this.formData = {
+                    Id: 0,
+                    UserName: '',
+                    Description: '',
+                    Expiration: '',
+                    Token: ''
+                };
+                btnSave.click();
+            },
+            addOrUpdate: function () {
+                var formData = this.formData;
+                var url = formData.Id ?
+                    "/PrivateReZeroRoute/100003/UpdateJwtToken" :
+                    "/PrivateReZeroRoute/100003/AddJwtToken";
+                axios.post(url, formData, jwHeader)
+                    .then(response => {
+                        if (response.data == true) {
+                            tools.alert("保存成功");
+                            btnCloseEdit.click();
+                            this.error = null;
+                            this.onSearch();
+                        } else {
+                            tools.alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                    });
+            }
+        }
+    });</script>
