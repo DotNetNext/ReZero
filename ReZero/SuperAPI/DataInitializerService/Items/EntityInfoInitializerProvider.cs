@@ -18,6 +18,7 @@ namespace ReZero.SuperAPI
             AddZeroTemplate(datas);
             AddZeroTemplateType(datas);
             AddZeroUserInfo(datas);
+            AddZeroJwtTokenManagement(datas);
             return datas;
         }
         private void AddZeroUserInfo(List<ZeroEntityInfo> datas)
@@ -102,6 +103,15 @@ namespace ReZero.SuperAPI
         {
             data.IsInitialized = true;
             data.IsDeleted = false;
+        }
+        private void AddZeroJwtTokenManagement(List<ZeroEntityInfo> datas)
+        {
+            var entityMappingService = new EntityMappingService();
+            var data = entityMappingService.ConvertDbToEntityInfo(typeof(ZeroJwtTokenManagement));
+            data.Id = Id_ZeroJwtTokenManagement;
+            data.DataBaseId = DataBaseInitializerProvider.Id;
+            CommonSetting(data);
+            datas.Add(data);
         }
     }
 }
