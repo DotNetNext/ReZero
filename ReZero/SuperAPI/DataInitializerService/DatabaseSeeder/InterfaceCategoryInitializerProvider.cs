@@ -116,8 +116,8 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 接口授权
         /// </summary>
-        [ChineseTextAttribute("接口授权")]
-        [EnglishTextAttribute("Api authorization")]
+        [ChineseTextAttribute("授权测试")]
+        [EnglishTextAttribute("Authorization test")]
         public const long Id300007 = 300007;
 
         /// <summary>
