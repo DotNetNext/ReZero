@@ -144,7 +144,7 @@
         },
         methods: {
             fetchData: function (append) {
-                var url = "/PrivateReZeroRoute/100003/GetJwtTokenList" + append;
+                var url = "/PrivateReZeroRoute/100003/GetZeroJwtTokenManagementPage" + append;
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
