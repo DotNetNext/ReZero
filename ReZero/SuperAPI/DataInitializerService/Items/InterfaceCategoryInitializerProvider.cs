@@ -60,6 +60,22 @@ namespace ReZero.SuperAPI
             }));
             zeroInterfaceCategory.Add(GetNewItem(it =>
             {
+                it.Id = Id300012;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300012);
+                it.ParentId = SystemSettingId;
+                it.Url = "/rezero/jwt_token_management.html";
+                it.SortId = 100000;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
+                it.Id = Id300013;
+                it.Name = TextHandler.GetInterfaceCategoryText(Id300013);
+                it.ParentId = SystemSettingId;
+                it.Url = "/rezero/interface_permission_management.html";
+                it.SortId = 100000;
+            }));
+            zeroInterfaceCategory.Add(GetNewItem(it =>
+            {
                 it.Id = Id300008;
                 it.Name = TextHandler.GetInterfaceCategoryText(Id300008);
                 it.ParentId = SystemSettingId;

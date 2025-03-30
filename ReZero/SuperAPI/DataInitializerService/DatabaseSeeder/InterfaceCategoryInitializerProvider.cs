@@ -116,8 +116,8 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 接口授权
         /// </summary>
-        [ChineseTextAttribute("授权测试")]
-        [EnglishTextAttribute("Authorization test")]
+        [ChineseTextAttribute("JWT 认证测试")]
+        [EnglishTextAttribute("JWT certification test")]
         public const long Id300007 = 300007;
 
         /// <summary>
@@ -147,6 +147,21 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("系统用户")]
         [EnglishTextAttribute("System user")]
         public const long Id300011 = 300011;
+
+
+        /// <summary>
+        /// JWT 令牌管理
+        /// </summary>
+        [ChineseTextAttribute("JWT 令牌管理")]
+        [EnglishTextAttribute("JWT token management")]
+        public const long Id300012 = 300012;
+
+        /// <summary>
+        /// 接口权限管理
+        /// </summary>
+        [ChineseTextAttribute("接口权限管理")]
+        [EnglishTextAttribute("Interface permission management")]
+        public const long Id300013 = 300013;
         #endregion
 
         #region System setting
