@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReZero.SuperAPI
 {
-    public class JwtTokenManagement : DbBase
+    public class ZeroJwtTokenManagement : DbBase
     {
         /// <summary>
         /// 连接用户名称，标识使用 JWT 的用户
