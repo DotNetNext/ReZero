@@ -175,6 +175,24 @@ var tools = {
 
         // 拼接 URL 和查询参数
         return url + separator + queryString;
+    },
+    validateDatalist: function (ele, datalistId) {
+        const input = ele;
+        const list = document.getElementById(datalistId);
+        const options = list && list.options;
+        const value = input.value;
+        let isValid = false;
+        if (options) {
+            for (let i = 0; i < options.length; i++) {
+                if (value === options[i].value) {
+                    isValid = true;
+                    break;
+                }
+            }
+        }
+        if (!isValid) {
+            input.value = '';
+        }
     }
 }
 Array.prototype.removeArrayItem = function (item) {

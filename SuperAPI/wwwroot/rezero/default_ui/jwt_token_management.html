@@ -82,7 +82,7 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label class="control-label">用户名：</label>
-                            <input list="userList" v-model="formData.UserName" class="form-control" placeholder="请选择用户名">
+                            <input oninput="tools.validateDatalist(this,'userList')" list="userList" v-model="formData.UserName" class="form-control" placeholder="请选择用户名">
                             <datalist id="userList">
                                 <option v-for="user in users" :value="user">{{ user }}</option>
                             </datalist>

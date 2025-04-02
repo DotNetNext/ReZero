@@ -102,8 +102,8 @@
                         <div class="form-group col-md-12">
                             <label>绑定业务账号</label>
                             <code>初始化配置中的JWT用户表</code>
-                            <input v-if="bizUsers.length > 0&& bizUsers[0]" list="bizUserList" v-model="formData.BusinessAccount" class="form-control" placeholder="业务账号">
-                            <datalist v-if="bizUsers.length > 0&& bizUsers[0]" id="bizUserList">
+                            <input oninput="tools.validateDatalist(this,'bizUserList')"  v-if="bizUsers.length > 0&& bizUsers[0]" list="bizUserList" v-model="formData.BusinessAccount" class="form-control" placeholder="业务账号">
+                            <datalist  v-if="bizUsers.length > 0&& bizUsers[0]" id="bizUserList">
                                 <option v-for="user in bizUsers" :value="user">{{ user }}</option>
                             </datalist>
                             <div v-else  class="alert alert-warning">
