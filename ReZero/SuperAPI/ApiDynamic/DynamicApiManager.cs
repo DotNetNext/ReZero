@@ -95,7 +95,7 @@ namespace ReZero.SuperAPI
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data!, resultModel);
-                    if (IsSystemPublicApi(interInfo))
+                    if (IsNoSystemPublicApi(interInfo))
                         data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
                     var json = JsonHelper.SerializeObject(data, SuperAPIModule._apiOptions!.InterfaceOptions?.JsonSerializerSettings);
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
@@ -114,7 +114,7 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static bool IsSystemPublicApi(ZeroInterfaceList interInfo)
+        private static bool IsNoSystemPublicApi(ZeroInterfaceList interInfo)
         {
             return (interInfo.Url?.ToLower()?.StartsWith("/public/") != true
                     && interInfo.Id<1000) && interInfo.Id != InterfaceListInitializerProvider.GetTokenId;
