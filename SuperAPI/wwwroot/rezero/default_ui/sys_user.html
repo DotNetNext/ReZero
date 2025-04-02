@@ -102,11 +102,11 @@
                         <div class="form-group col-md-12">
                             <label>绑定业务账号</label>
                             <code>初始化配置中的JWT用户表</code>
-                            <input list="bizUserList" v-model="formData.BusinessAccount" class="form-control" placeholder="业务账号">
-                            <datalist id="bizUserList">
+                            <input v-if="bizUsers.length > 0&& bizUsers[0]" list="bizUserList" v-model="formData.BusinessAccount" class="form-control" placeholder="业务账号">
+                            <datalist v-if="bizUsers.length > 0&& bizUsers[0]" id="bizUserList">
                                 <option v-for="user in bizUsers" :value="user">{{ user }}</option>
                             </datalist>
-                            <div v-if="bizUsers.length === 0" class="alert alert-warning">
+                            <div v-else  class="alert alert-warning">
                                 JWT的信息没有配置完整，不能加载下拉列表
                                 详细：{{bizUserErrorMessage}}
                             </div>
