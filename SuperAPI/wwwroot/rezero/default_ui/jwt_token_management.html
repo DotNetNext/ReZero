@@ -82,7 +82,9 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label class="control-label">用户名：</label>
-                            <input type="text" placeholder="用户名" v-model="formData.UserName" name="UserName" class="form-control">
+                            <select v-model="formData.UserName" class="form-control">
+                                <option v-for="user in users" :value="user">{{ user }}</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">描述：</label>
@@ -137,10 +139,12 @@
                 Expiration: '',
                 Token: ''
             },
-            selectedItems: []
+            selectedItems: [],
+            users: [] // 添加用户列表
         },
         mounted() {
             this.fetchData("");
+            this.fetchUsers();
         },
         methods: {
             fetchData: function (append) {
@@ -153,6 +157,16 @@
                     .catch(error => {
                         this.error = error.message;
                         this.data = null;
+                    });
+            },
+            fetchUsers: function () {
+                var url = "/PrivateReZeroRoute/100003/GetBizUsers"; // 获取用户列表的API
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.users = response.data;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
                     });
             },
             onSearch: function (page) {
