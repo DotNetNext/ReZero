@@ -201,7 +201,15 @@ var tools = {
         }).catch(err => {
             tools.alert("复制失败");
         });
-    }
+    }, 
+    formatDate: function (date) {
+        if (!date) return '';
+                const d = new Date(date);
+                const month = '' + (d.getMonth() + 1);
+                const day = '' + d.getDate();
+                const year = d.getFullYear();
+                return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
+            }
 }
 Array.prototype.removeArrayItem = function (item) {
     const index = this.indexOf(item);

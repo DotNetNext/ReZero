@@ -208,6 +208,7 @@
                     axios.get(urlById, jwHeader)
                         .then(response => {
                             th.formData = response.data; 
+                            th.formData.Expiration =tools.formatDate(th.formData.Expiration);
                         })
                         .catch(error => {
                             this.error = error.message;
