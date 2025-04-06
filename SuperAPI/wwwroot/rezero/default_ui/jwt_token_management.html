@@ -164,7 +164,8 @@
                 var urlParameters = "?" + tools.objectToQueryString({
                     __pageNumber: page,
                     __pageSize: tools.getValue("selPageSize"),
-                    UserName: txtSearch.value
+                    UserName: txtSearch.value,
+                    OrderByType:1
                 });
                 this.fetchData(urlParameters);
             },

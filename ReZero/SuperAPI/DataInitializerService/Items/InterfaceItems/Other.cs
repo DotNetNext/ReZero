@@ -56,8 +56,10 @@ namespace ReZero.SuperAPI
                             ResultColumnType = ResultColumnType.ConvertDefaultTimeString,
                             PropertyName = nameof(ZeroJwtTokenManagement.Expiration),
                         }
-                    }
+                    },
+
                 };
+
                 it.DataModel = new DataModel()
                 {
                     Columns = new List<DataColumnParameter>()
@@ -103,6 +105,9 @@ namespace ReZero.SuperAPI
                     {
                         PageNumber = 1,
                         PageSize = 20
+                    },
+                    OrderDynamicParemters = new List<DataModelDynamicOrderParemter>() {
+                      new DataModelDynamicOrderParemter(){  FieldName=nameof(ZeroJwtTokenManagement.Id),OrderByType=SqlSugar.OrderByType.Desc }
                     },
                 };
             });
