@@ -1,9 +1,11 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using ReZero.DependencyInjection;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Net.Sockets;
 using System.Security.Cryptography.Xml;
@@ -174,6 +176,60 @@ namespace ReZero.SuperAPI
         public string ExecTemplateByViewWithoutCreatingFiles(long databaseId,bool isView, string viewName, long templateId) 
         {
             return new MethodApi().ExecTemplateByViewWithoutCreatingFiles(databaseId, viewName, isView, templateId);
+        }
+        #endregion
+
+        #region Token
+        [ApiMethod(nameof(InternalInitApi.AddTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_AddTokenManage)]
+        public bool AddTokenManage(ZeroJwtTokenManagement zeroJwtTokenManagement) 
+        {
+            var db = App.Db;
+            var options = SuperAPIModule._apiOptions;
+            var jwt = options?.InterfaceOptions?.Jwt ?? new Configuration.ReZeroJwt();
+            if (!string.IsNullOrEmpty(jwt.UserTableName) || !string.IsNullOrEmpty(jwt.PasswordFieldName) || !string.IsNullOrEmpty(jwt.UserNameFieldName)) 
+            {
+                throw new Exception(TextHandler.GetCommonText($"JWT信息没有配置完整表名字段名存在空", $"The JWT information is not fully configured. Table name The field name is empty"));
+            }
+            DataTable dt = new DataTable(); 
+            try
+            {
+                dt = db.Queryable<object>()
+                  .AS(zeroJwtTokenManagement.UserName)
+                  .Where(jwt.UserNameFieldName, "=", zeroJwtTokenManagement.UserName)
+                  .ToDataTable(); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (dt.Rows.Count == 0) 
+            {
+                throw new Exception(TextHandler.GetCommonText($"JWT用户表没有找到{zeroJwtTokenManagement.UserName}", $" JWT user table not found {zeroJwtTokenManagement.UserName}"));
+            }
+            var password = dt.Rows[0][jwt.PasswordFieldName] + "";
+            var token = new MethodApi().GetToken(zeroJwtTokenManagement.UserName!,password);
+            zeroJwtTokenManagement.CreateTime = DateTime.Now;
+            zeroJwtTokenManagement.Creator = "admin";
+            db.Insertable(zeroJwtTokenManagement).ExecuteCommand();
+            return true;
+        }
+        [ApiMethod(nameof(InternalInitApi.UpdateTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_UpdateTokenManage)]
+        public bool UpdateTokenManage(ZeroJwtTokenManagement zeroJwtTokenManagement)
+        {
+            var db = App.Db;
+            zeroJwtTokenManagement.UpdateTime = DateTime.Now;
+            db.Updateable(zeroJwtTokenManagement)
+                .UpdateColumns(it => new { it.Expiration ,it.UpdateTime}).ExecuteCommand();
+            return true;
+        }
+        [ApiMethod(nameof(InternalInitApi.DeleteTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_DeleteTokenManage))]
+        public bool DeleteTokenManage(long Id)
+        {
+            var db = App.Db;
+            db.Updateable<ZeroJwtTokenManagement>()
+                .SetColumns(it => it.IsDeleted == true)
+                .Where(it => it.Id == Id).ExecuteCommand();
+            return true;
         }
         #endregion
     }

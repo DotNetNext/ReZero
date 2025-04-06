@@ -73,5 +73,8 @@ namespace ReZero.SuperAPI
         public const string InitApi_GetCurrentUser = "/Public/User";
         public const string InitApi_GetBizUsers = "/PrivateReZeroRoute/100003/GetBizUsers";
         public const string InitApi_ViewTemplate = "/PrivateReZeroRoute/100003/ViewTemplate";
+        public const string InitApi_AddTokenManage = "/PrivateReZeroRoute/100003/AddTokenManage";
+        public const string InitApi_UpdateTokenManage = "/PrivateReZeroRoute/100003/UpdateTokenManage";
+        public const string InitApi_DeleteTokenManage = "/PrivateReZeroRoute/100003/DeleteTokenManage";
     }
 }
