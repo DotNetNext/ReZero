@@ -50,6 +50,11 @@ namespace ReZero.SuperAPI
                         {
                             ResultColumnType = ResultColumnType.ConvertDefaultTimeString,
                             PropertyName = nameof(ZeroJwtTokenManagement.CreateTime),
+                        },
+                        new ResultColumnModel()
+                        {
+                            ResultColumnType = ResultColumnType.ConvertDefaultTimeString,
+                            PropertyName = nameof(ZeroJwtTokenManagement.Expiration),
                         }
                     }
                 };
