@@ -189,7 +189,7 @@
             },
             deleteAndConfirm: function (item) {
                 if (item == null) {
-                    var url = "/PrivateReZeroRoute/100003/DeleteJwtToken?Id=" + localStorage.delId;
+                    var url = "/PrivateReZeroRoute/100003/DeleteTokenManage?Id=" + localStorage.delId;
                     axios.get(url, jwHeader)
                         .then(response => {
                             if (response.data.message) {
@@ -211,7 +211,7 @@
             openEditDiv: function (item) {
                 var th = this;
                 this.title = "修改JWT Token";
-                var urlById = "/PrivateReZeroRoute/100003/GetJwtTokenById?id=" + item.Id;
+                var urlById = "/PrivateReZeroRoute/100003/GetTokenManageById?id=" + item.Id;
                 if (item.Id) {
                     axios.get(urlById, jwHeader)
                         .then(response => {
@@ -238,8 +238,8 @@
             addOrUpdate: function () {
                 var formData = this.formData;
                 var url = formData.Id ?
-                    "/PrivateReZeroRoute/100003/UpdateJwtToken" :
-                    "/PrivateReZeroRoute/100003/AddJwtToken";
+                    "/PrivateReZeroRoute/100003/UpdateTokenManage" :
+                    "/PrivateReZeroRoute/100003/AddTokenManage";
                 axios.post(url, formData, jwHeader)
                     .then(response => {
                         if (response.data == true) {

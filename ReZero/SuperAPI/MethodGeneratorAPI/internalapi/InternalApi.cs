@@ -186,7 +186,7 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             var options = SuperAPIModule._apiOptions;
             var jwt = options?.InterfaceOptions?.Jwt ?? new Configuration.ReZeroJwt();
-            if (!string.IsNullOrEmpty(jwt.UserTableName) || !string.IsNullOrEmpty(jwt.PasswordFieldName) || !string.IsNullOrEmpty(jwt.UserNameFieldName)) 
+            if (string.IsNullOrEmpty(jwt.UserTableName) || string.IsNullOrEmpty(jwt.PasswordFieldName) || string.IsNullOrEmpty(jwt.UserNameFieldName)) 
             {
                 throw new Exception(TextHandler.GetCommonText($"JWT信息没有配置完整表名字段名存在空", $"The JWT information is not fully configured. Table name The field name is empty"));
             }
@@ -194,7 +194,7 @@ namespace ReZero.SuperAPI
             try
             {
                 dt = db.Queryable<object>()
-                  .AS(zeroJwtTokenManagement.UserName)
+                  .AS(jwt.UserTableName)
                   .Where(jwt.UserNameFieldName, "=", zeroJwtTokenManagement.UserName)
                   .ToDataTable(); 
             }
@@ -210,6 +210,8 @@ namespace ReZero.SuperAPI
             var token = new MethodApi().GetToken(zeroJwtTokenManagement.UserName!,password);
             zeroJwtTokenManagement.CreateTime = DateTime.Now;
             zeroJwtTokenManagement.Creator = "admin";
+            zeroJwtTokenManagement.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
+            zeroJwtTokenManagement.Token = token;
             db.Insertable(zeroJwtTokenManagement).ExecuteCommand();
             return true;
         }
