@@ -193,6 +193,14 @@ var tools = {
         if (!isValid) {
             input.value = '';
         }
+    },
+    copyText: function (text)
+    {
+        navigator.clipboard.writeText(text).then(() => {
+            tools.alert("复制成功");
+        }).catch(err => {
+            tools.alert("复制失败");
+        });
     }
 }
 Array.prototype.removeArrayItem = function (item) {
