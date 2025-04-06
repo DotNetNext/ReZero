@@ -88,7 +88,7 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label class="control-label">用户名：</label>
-                            <input oninput="tools.validateDatalist(this,'userList')" list="userList" v-model="formData.UserName" class="form-control" placeholder="请选择用户名">
+                            <input :readonly="isReadOnly" oninput="tools.validateDatalist(this,'userList')" list="userList" v-model="formData.UserName" class="form-control" placeholder="请选择用户名">
                             <datalist id="userList">
                                 <option v-for="user in users" :value="user">{{ user }}</option>
                             </datalist>
@@ -113,9 +113,10 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
-<script>var vueObj = new Vue({
+<script>
+    var vueObj = new Vue({
         el: '#apibox',
         data: {
             data: null,
@@ -129,7 +130,8 @@
                 Token: ''
             },
             selectedItems: [],
-            users: [] // 添加用户列表
+            users: [], // 添加用户列表
+            isReadOnly: false // 添加只读状态
         },
         mounted() {
             this.fetchData("");
@@ -199,6 +201,7 @@
             openEditDiv: function (item) {
                 var th = this;
                 this.title = "修改JWT Token";
+                this.isReadOnly = true; // 设置只读状态
                 var urlById = "/PrivateReZeroRoute/100003/GetTokenManageById?id=" + item.Id;
                 if (item.Id) {
                     axios.get(urlById, jwHeader)
@@ -213,6 +216,7 @@
             },
             openAddDiv: function () {
                 this.title = "添加JWT Token";
+                this.isReadOnly = false; // 取消只读状态
                 this.formData = {
                     Id: 0,
                     UserName: '',
@@ -251,3 +255,4 @@
             }
         }
     });</script>
+
