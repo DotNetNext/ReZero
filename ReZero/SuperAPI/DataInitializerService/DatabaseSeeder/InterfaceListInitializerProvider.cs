@@ -347,15 +347,18 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("获取JWT令牌管理")]
         [EnglishTextAttribute("Get jwt token management")]
         public const long GetZeroJwtTokenManagementPageId = 69;
-        [ChineseTextAttribute("添加Token")]
-        [EnglishTextAttribute("Add token")]
+        [ChineseTextAttribute("添加Token管理")]
+        [EnglishTextAttribute("Add token management")]
         public const long AddTokenManageId = 70;
-        [ChineseTextAttribute("更新Token")]
-        [EnglishTextAttribute("Update token")]
+        [ChineseTextAttribute("更新Token管理")]
+        [EnglishTextAttribute("Update token management")]
         public const long UpdateTokenManageId = 71;
-        [ChineseTextAttribute("删除Token")]
-        [EnglishTextAttribute("Delete token")]
+        [ChineseTextAttribute("删除Token管理")]
+        [EnglishTextAttribute("Delete token management")]
         public const long DeleteTokenManageId = 72;
+        [ChineseTextAttribute("获取Token管理")]
+        [EnglishTextAttribute("Get token management")]
+        public const long GetTokenManageById_Id = 73;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

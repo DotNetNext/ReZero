@@ -231,6 +231,12 @@ namespace ReZero.SuperAPI
                 .Where(it => it.Id == Id).ExecuteCommand();
             return true;
         }
+        [ApiMethod(nameof(InternalInitApi.GetZeroJwtTokenManagementById), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_GetTokenManageById)]
+        public ZeroJwtTokenManagement GetZeroJwtTokenManagementById(long id) 
+        {
+            var data = App.Db.Queryable<ZeroJwtTokenManagement>().InSingle(id);
+            return data;
+        }
         #endregion
     }
 }

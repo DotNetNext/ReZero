@@ -204,6 +204,11 @@ namespace ReZero.SuperAPI
                             addItem.IsInitialized = true;
                             addItem.Id = InterfaceListInitializerProvider.DeleteTokenManageId;
                         }
+                        if (addItem.Url == PubConst.InitApi_GetTokenManageById)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.GetTokenManageById_Id;
+                        }
                         zeroInterfaceLists.Add(addItem);
                     }
                 }
