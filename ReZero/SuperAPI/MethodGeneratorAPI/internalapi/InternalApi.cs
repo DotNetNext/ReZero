@@ -183,6 +183,7 @@ namespace ReZero.SuperAPI
         [ApiMethod(nameof(InternalInitApi.AddTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_AddTokenManage)]
         public bool AddTokenManage(ZeroJwtTokenManagement zeroJwtTokenManagement) 
         {
+            CacheManager<ZeroInterfaceList>.Instance.ClearCache();
             var db = App.Db;
             var options = SuperAPIModule._apiOptions;
             var jwt = options?.InterfaceOptions?.Jwt ?? new Configuration.ReZeroJwt();
@@ -226,6 +227,7 @@ namespace ReZero.SuperAPI
         [ApiMethod(nameof(InternalInitApi.UpdateTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_UpdateTokenManage)]
         public bool UpdateTokenManage(ZeroJwtTokenManagement zeroJwtTokenManagement)
         {
+            CacheManager<ZeroInterfaceList>.Instance.ClearCache();
             var db = App.Db;
             zeroJwtTokenManagement.UpdateTime = DateTime.Now;
             db.Updateable(zeroJwtTokenManagement)
@@ -235,6 +237,7 @@ namespace ReZero.SuperAPI
         [ApiMethod(nameof(InternalInitApi.DeleteTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_DeleteTokenManage)]
         public bool DeleteTokenManage(long Id)
         {
+            CacheManager<ZeroInterfaceList>.Instance.ClearCache();
             var db = App.Db;
             db.Updateable<ZeroJwtTokenManagement>()
                 .SetColumns(it => it.IsDeleted == true)

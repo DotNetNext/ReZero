@@ -14,6 +14,7 @@ namespace ReZero.SuperAPI
                 CacheManager<ZeroDatabaseInfo>.Instance.ClearCache();
                 CacheManager<ZeroInterfaceList>.Instance.ClearCache();
                 CacheManager<ZeroEntityInfo>.Instance.ClearCache();
+                CacheManager<ZeroJwtTokenManagement>.Instance.ClearCache();
             }
         }
     }
