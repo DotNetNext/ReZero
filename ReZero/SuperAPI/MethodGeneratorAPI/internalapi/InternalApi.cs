@@ -216,7 +216,7 @@ namespace ReZero.SuperAPI
                 throw new Exception(TextHandler.GetCommonText($"JWT用户表没有找到{zeroJwtTokenManagement.UserName}", $" JWT user table not found {zeroJwtTokenManagement.UserName}"));
             }
             var password = dt.Rows[0][jwt.PasswordFieldName] + "";
-            var token = new MethodApi().GetToken(zeroJwtTokenManagement.UserName!,password);
+            var token = new MethodApi() {  TokenExpiration=zeroJwtTokenManagement.Expiration }.GetToken(zeroJwtTokenManagement.UserName!,password);
             zeroJwtTokenManagement.CreateTime = DateTime.Now;
             zeroJwtTokenManagement.Creator = "admin";
             zeroJwtTokenManagement.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();

@@ -14,6 +14,8 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
+        public DateTime? TokenExpiration { get; set; } 
+
         /// <summary>
         /// 获取JWT Token
         /// </summary>
@@ -111,10 +113,15 @@ namespace ReZero.SuperAPI
             {
                 claims.Add(new Claim(claim.Key, user.GetType().GetProperty(claim.FieldName)?.GetValue(user, null)?.ToString() ?? ""));
             }
+            var tokenExpiration = this.TokenExpiration;
+            if (tokenExpiration == null) 
+            {
+                tokenExpiration = DateTime.UtcNow.AddMinutes(jwt?.Expires ?? 1000);
+            }
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
-                Expires = DateTime.UtcNow.AddMinutes(jwt?.Expires ?? 1000),
+                Expires = tokenExpiration,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
