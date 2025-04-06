@@ -222,7 +222,7 @@ namespace ReZero.SuperAPI
                 .UpdateColumns(it => new { it.Expiration ,it.UpdateTime}).ExecuteCommand();
             return true;
         }
-        [ApiMethod(nameof(InternalInitApi.DeleteTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_DeleteTokenManage))]
+        [ApiMethod(nameof(InternalInitApi.DeleteTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_DeleteTokenManage)]
         public bool DeleteTokenManage(long Id)
         {
             var db = App.Db;
