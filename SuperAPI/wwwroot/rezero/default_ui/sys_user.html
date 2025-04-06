@@ -268,8 +268,7 @@
                 var url = "/PrivateReZeroRoute/100003/SaveUser";
                 axios.post(url, formData, jwHeader)
                     .then(response => {
-                        if (response.data == true) {
-                            tools.alert("保存成功");
+                        if (response.data == true) { 
                             btnAddOrUpdateColse.click();
                             this.error = null;
                             this.onSearch();
