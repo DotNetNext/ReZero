@@ -233,8 +233,7 @@
                     "/PrivateReZeroRoute/100003/AddTokenManage";
                 axios.post(url, formData, jwHeader)
                     .then(response => {
-                        if (response.data == true) {
-                            tools.alert("保存成功");
+                        if (response.data == true) { 
                             btnCloseEdit.click();
                             this.error = null;
                             this.onSearch();

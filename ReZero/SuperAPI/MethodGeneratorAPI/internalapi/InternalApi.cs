@@ -190,6 +190,14 @@ namespace ReZero.SuperAPI
             {
                 throw new Exception(TextHandler.GetCommonText($"JWT信息没有配置完整表名字段名存在空", $"The JWT information is not fully configured. Table name The field name is empty"));
             }
+            if (string.IsNullOrEmpty(zeroJwtTokenManagement.UserName))
+            {
+                throw new Exception(TextHandler.GetCommonText($"用户名必填", $"User name is required"));
+            }
+            if (zeroJwtTokenManagement.Expiration == DateTime.MinValue) 
+            {
+                throw new Exception(TextHandler.GetCommonText($"使用期限必填", $"The usage period is required"));
+            }
             DataTable dt = new DataTable(); 
             try
             {
