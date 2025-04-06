@@ -51,7 +51,7 @@
                                     </td>
                                     <td v-for="column in data.Columns">
                                         <template v-if="column.PropertyName === 'Token'">
-                                            {{ item[column.PropertyName].substring(0, 10) }}...
+                                            {{ item[column.PropertyName].substring(0, 20) }}...
                                             <button @click="copyToClipboard(item[column.PropertyName])" class="btn btn-link btn-sm">复制</button>
                                         </template>
                                         <template v-else>
@@ -203,8 +203,7 @@
                 if (item.Id) {
                     axios.get(urlById, jwHeader)
                         .then(response => {
-                            th.formData = response.data;
-                            btnSave.click();
+                            th.formData = response.data; 
                         })
                         .catch(error => {
                             this.error = error.message;
