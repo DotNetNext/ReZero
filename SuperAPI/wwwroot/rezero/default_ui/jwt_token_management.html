@@ -50,7 +50,13 @@
                                         </label>
                                     </td>
                                     <td v-for="column in data.Columns">
-                                        {{ item[column.PropertyName] }}
+                                        <template v-if="column.PropertyName === 'Token'">
+                                            {{ item[column.PropertyName].substring(0, 10) }}...
+                                            <button @click="copyToClipboard(item[column.PropertyName])" class="btn btn-link btn-sm">复制</button>
+                                        </template>
+                                        <template v-else>
+                                            {{ item[column.PropertyName] }}
+                                        </template>
                                     </td>
                                     <td class="table_opt2">
                                         <button data-toggle="modal" @click="openEditDiv(item)" data-target="#gridSystemModal" class="btn btn-link" type="button">
@@ -254,6 +260,13 @@
                     .catch(error => {
                         this.error = error.message;
                     });
+            },
+            copyToClipboard: function (text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    tools.alert("复制成功");
+                }).catch(err => {
+                    tools.alert("复制失败");
+                });
             }
         }
     });</script>
