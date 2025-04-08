@@ -231,7 +231,7 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             zeroJwtTokenManagement.UpdateTime = DateTime.Now;
             db.Updateable(zeroJwtTokenManagement)
-                .UpdateColumns(it => new { it.Expiration ,it.UpdateTime}).ExecuteCommand();
+                .UpdateColumns(it => new { it.Description,it.EasyDescription ,it.UpdateTime}).ExecuteCommand();
             return true;
         }
         [ApiMethod(nameof(InternalInitApi.DeleteTokenManage), GroupName = nameof(ZeroJwtTokenManagement), Url = PubConst.InitApi_DeleteTokenManage)]

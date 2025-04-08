@@ -99,7 +99,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">使用期限：</label>
-                            <input type="date" v-model="formData.Expiration" name="Expiration" class="form-control">
+                            <input  :readonly="isReadOnly"  type="date" v-model="formData.Expiration" name="Expiration" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">JWT Token：</label>
