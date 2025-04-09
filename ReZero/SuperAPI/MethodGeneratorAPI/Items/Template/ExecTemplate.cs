@@ -263,10 +263,15 @@ namespace ReZero.SuperAPI
             var template = App.Db.Queryable<ZeroTemplate>().First(it => it.Id == templateId);
             var item = new ZeroEntityInfo();
             var viewDb = App.GetDbById(databaseId);
-            if(isView==false)
-              viewName = db.Queryable<ZeroEntityInfo>()!.InSingle(viewName)!.DbTableName!;
+            string className = string.Empty;
+            if (isView == false)
+            {
+                var data = db.Queryable<ZeroEntityInfo>()!.InSingle(viewName);
+                viewName = data!.DbTableName!;
+                className = data!.ClassName!;
+            }
             var dt = viewDb!.Queryable<object>().AS(viewName).Take(1).Select("*").ToDataTable();
-            item.ClassName = viewName;
+            item.ClassName = className==string.Empty? viewName: className;
             item.DbTableName = viewName;
             item.Description = string.Empty;
             item.ZeroEntityColumnInfos = new List<ZeroEntityColumnInfo>();
