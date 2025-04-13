@@ -298,17 +298,33 @@ namespace ReZero.SuperAPI
         [ApiMethod(nameof(InternalInitApi.GetSavePermissionModelById), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetSavePermissionModelById)]
         public SavePermissionInfoDetailModel GetSavePermissionModelById(long id)
         {
+
             var db = App.Db;
-            var result=new SavePermissionInfoDetailModel() {  Users=new List<string>() };
+            var result = new SavePermissionInfoDetailModel() { Users = new List<string>() };
+
+            // 一次性加载分类表到内存
+            var categoryMap = db.Queryable<ZeroInterfaceCategory>()
+                .ToList()
+                .ToDictionary(it => it.Id, it => it.Name ?? "未知分类");
+
+            // 获取所有接口列表
             var interfaces = db.Queryable<ZeroInterfaceList>()
-                .OrderBy(it=>it.SortId)
-                .OrderBy(it=>it.GroupName)
+                .OrderBy(it => it.SortId)
+                .OrderBy(it => it.GroupName)
                 .Where(it => it.IsInitialized == false)
-                .ToList().Select(it=>new PermissionInfoInterfaceItem() {
-                  ZeroInterfaceList=it
-                }).ToList();
+                .ToList()
+                .Select(it => new PermissionInfoInterfaceItem()
+                {
+                    ZeroInterfaceList = it,
+                    Checked = false, // 默认未选中
+                    TypeName = categoryMap.ContainsKey(it.InterfaceCategoryId) ? categoryMap[it.InterfaceCategoryId] : "未知分类" // 根据分类 ID 设置 TypeName
+                })
+                .ToList();
+
             result.items = interfaces;
-            if (id > 0) 
+
+            // 如果 id > 0，设置 Checked 为 true
+            if (id > 0)
             {
                 // 获取与当前权限关联的接口 ID 列表
                 var associatedInterfaceIds = db.Queryable<ZeroPermissionMapping>()
@@ -324,7 +340,7 @@ namespace ReZero.SuperAPI
                         item.Checked = true;
                     }
                 }
-            }
+            } 
             return result;
         }
         #endregion 
