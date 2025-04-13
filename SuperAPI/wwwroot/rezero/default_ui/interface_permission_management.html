@@ -3,6 +3,53 @@
 <script src="js/ace/src-min/ace.js"></script>
 <script src="js/ace/src-min/ext-language_tools.js"></script>
 <style>
+    #divGroupedItems {
+        max-height: 300px; /* 限制高度，启用滚动条 */
+        overflow-y: auto; /* 垂直滚动条 */
+        padding: 10px;
+        border: 1px solid #ddd; /* 边框颜色 */
+        border-radius: 5px; /* 圆角 */
+        background-color: #f9f9f9; /* 背景色 */
+    }
+
+        #divGroupedItems .permission-group {
+            margin-bottom: 10px; /* 分组间距 */ 
+        }
+
+            #divGroupedItems .permission-group label {
+                font-size: 14px; /* 字体大小 */
+                font-weight: 500; /* 字体权重 */
+                color: #333; /* 字体颜色 */
+                display: block; /* 独占一行 */
+                margin-bottom: 5px; /* 标签与内容间距 */
+                text-align:left
+            }
+
+        #divGroupedItems .permission-items {
+            display: flex;
+            flex-wrap: wrap; /* 多行排列 */
+            gap: 8px; /* 项目间距 */
+        }
+
+            #divGroupedItems .permission-items label {
+                font-size: 12px; /* 字体大小 */
+                color: #555; /* 字体颜色 */
+                background-color: #fff; /* 背景色 */
+                border: 1px solid #ddd; /* 边框颜色 */
+                border-radius: 3px; /* 圆角 */
+                padding: 4px 8px; /* 内边距 */
+                cursor: pointer; /* 鼠标样式 */
+                transition: background-color 0.3s ease; /* 动画效果 */
+            }
+
+                #divGroupedItems .permission-items label:hover {
+                    background-color: #f0f0f0; /* 悬停背景色 */
+                }
+
+            #divGroupedItems .permission-items input[type="checkbox"] {
+                margin-right: 5px; /* 复选框与文字间距 */
+            }
+
     .selected-users {
         display: flex;
         flex-wrap: wrap;
@@ -165,7 +212,9 @@
                         </div>
                         <!-- 权限接口选项 -->
                         <div class="form-group">
-                            <label>权限接口选项</label>
+                            <label>授权</label>
+                        </div>
+                        <div id="divGroupedItems" class="form-group"> 
                             <div>
                                 <!-- 总的 CheckBox -->
                                 <label>
