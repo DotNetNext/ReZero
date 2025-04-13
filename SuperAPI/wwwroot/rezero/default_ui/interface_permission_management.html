@@ -2,6 +2,57 @@
 <link href="css/page_table_list.css" rel="stylesheet" />
 <script src="js/ace/src-min/ace.js"></script>
 <script src="js/ace/src-min/ext-language_tools.js"></script>
+<style>
+    .selected-users {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px; /* 卡片间距 */
+        padding: 15px;
+        border: 1px solid #e0e0e0; /* 边框颜色 */
+        border-radius: 8px; /* 圆角 */
+        background-color: #f5f5f5; /* 背景色 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+    }
+
+        .selected-users .user-badge {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff; /* 卡片背景色 */
+            color: #333; /* 字体颜色 */
+            padding: 8px 12px;
+            border-radius: 20px; /* 圆角 */
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 卡片阴影 */
+            border: 1px solid #ddd; /* 卡片边框 */
+            transition: all 0.3s ease; /* 动画效果 */
+        }
+
+            .selected-users .user-badge:hover {
+                background-color: #f0f0f0; /* 悬停背景色 */
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 悬停阴影 */
+            }
+
+            .selected-users .user-badge button {
+                margin-left: 8px;
+                background-color: #ff4d4f; /* 删除按钮背景色 */
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                cursor: pointer;
+                transition: background-color 0.3s ease; /* 动画效果 */
+            }
+
+                .selected-users .user-badge button:hover {
+                    background-color: #d9363e; /* 删除按钮悬停颜色 */
+                }
+</style> 
 <div id="apibox" class="card">
     <!-- 搜索栏 -->
     <div class="search-bar">
@@ -85,7 +136,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">描述</label>
-                            <input id="description" v-model="formData.Description" class="form-control" placeholder="请输入描述"/> 
+                            <input id="description" v-model="formData.Description" class="form-control" placeholder="请输入描述" />
                         </div>
                         <!-- Users 多选下拉框 -->
                         <div class="form-group">
@@ -97,7 +148,7 @@
                                     <button type="button" class="btn btn-sm btn-danger" @click="removeUser(index)">-</button>
                                 </span>
                                 <!-- 添加用户按钮 -->
-                                <button type="button" class="btn btn-sm btn-primary" @click="addUser">+</button>
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addUserModal">+</button>
                             </div>
                         </div>
                         <!-- 权限接口选项 -->
@@ -130,6 +181,32 @@
             </div>
         </div>
     </div>
+
+    <!-- 添加用户模态框 -->
+    <div id="addUserModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog border3CCC width350" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">选择用户</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="userSelect">用户列表</label>
+                        <select id="userSelect" class="form-control" v-model="selectedUser">
+                            <option v-for="user in users" :value="user">{{ user }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" @click="confirmAddUser">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var vueObj = new Vue({
@@ -138,16 +215,17 @@
             data: null,
             selectedItems: [],
             users: [], // 用户列表
-            groupedItems:[],
+            groupedItems: [],
             formData: {
                 Id: 0,
                 PermissionName: '',
                 Description: '',
                 Items: [],
-                Users:[]
+                Users: []
             },
             modalTitle: '',
-            isEdit: false
+            isEdit: false,
+            selectedUser: null // 当前选中的用户
         },
         mounted() {
             this.fetchData();
@@ -172,7 +250,7 @@
             // 打开新增模态框
             openAdd: function () {
                 this.isEdit = false;
-                this.modalTitle = "新增权限"; 
+                this.modalTitle = "新增权限";
                 this.fetchPermissionItems(0);
                 $('#modalEdit').modal('show');
             },
@@ -224,9 +302,8 @@
                     this.selectedItems = [];
                 }
             },
-            //加载权限列表
-            fetchPermissionPageList: function ()
-            { 
+            // 加载权限列表
+            fetchPermissionPageList: function () {
                 var url = "/PrivateReZeroRoute/100003/GetPermissionList";
                 axios.get(url, jwHeader)
                     .then(response => {
@@ -249,7 +326,7 @@
             },
             // 获取权限接口选项
             fetchPermissionItems: function (id) {
-                var url = "/PrivateReZeroRoute/100003/GetSavePermissionModelById?id="+id;
+                var url = "/PrivateReZeroRoute/100003/GetSavePermissionModelById?id=" + id;
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.formData = response.data;
@@ -272,7 +349,7 @@
             },
             // 切换总的全选状态
             toggleAllGroups: function () {
-                if (this.selectAll) { 
+                if (this.selectAll) {
                     this.selectedItems = this.formData.Items.map(item => item.ZeroInterfaceList.Id);
                 } else {
                     this.selectedItems = [];
@@ -298,18 +375,18 @@
                 }
             },
             // 添加用户
-            addUser: function () {
-                const user = prompt("请输入要添加的用户：");
-                if (user && !this.formData.Users.includes(user)) {
-                    this.formData.Users.push(user);
-                } else if (this.formData.Users.includes(user)) {
+            confirmAddUser: function () {
+                if (this.selectedUser && !this.formData.Users.includes(this.selectedUser)) {
+                    this.formData.Users.push(this.selectedUser);
+                    $('#addUserModal').modal('hide'); // 关闭模态框
+                } else if (this.formData.Users.includes(this.selectedUser)) {
                     alert("用户已存在！");
                 }
             },
             // 删除用户
             removeUser: function (index) {
-                this.selectedUsers.splice(index, 1);
+                this.formData.Users.splice(index, 1);
             }
-        } 
+        }
     });
 </script>
