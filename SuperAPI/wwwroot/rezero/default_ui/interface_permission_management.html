@@ -218,7 +218,7 @@
                             <div>
                                 <!-- 总的 CheckBox -->
                                 <label>
-                                    <input type="checkbox" v-model="selectAll" @change="toggleAllGroups"> 全选
+                                    <input type="checkbox" v-model="cbGroupedItemsRooot" @change="toggleAllGroups"> 全选
                                 </label>
                             </div>
                             <div v-for="(group, typeName) in groupedItems" :key="typeName" class="permission-group">
@@ -275,6 +275,7 @@
         data: {
             data: null,
             selectedItems: [],
+            cbGroupedItemsRooot: false,
             users: [], // 用户列表
             groupedItems: [],
             formData: {
@@ -410,7 +411,7 @@
             },
             // 切换总的全选状态
             toggleAllGroups: function () {
-                if (this.selectAll) {
+                if (this.cbGroupedItemsRooot) {
                     this.selectedItems = this.formData.Items.map(item => item.ZeroInterfaceList.Id);
                 } else {
                     this.selectedItems = [];
