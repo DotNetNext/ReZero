@@ -22,11 +22,11 @@ namespace ReZero.SuperAPI
         /// <summary>
         /// 接口ID
         /// </summary>
-        public string? InterfaceId { get; set; }
+        public long? InterfaceId { get; set; }
 
         /// <summary>
         /// 权限信息ID
         /// </summary>
-        public string? PermissionInfoId { get; set; }
+        public long? PermissionInfoId { get; set; }
     }
 }

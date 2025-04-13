@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
 using System.Security.Cryptography.Xml;
 using System.Security.Policy;
@@ -295,9 +296,36 @@ namespace ReZero.SuperAPI
             return true;
         } 
         [ApiMethod(nameof(InternalInitApi.GetSavePermissionModelById), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetSavePermissionModelById)]
-        public ZeroPermissionInfo GetSavePermissionModelById(long id)
+        public SavePermissionInfoDetailModel GetSavePermissionModelById(long id)
         {
-            return new ZeroPermissionInfo() { };
+            var db = App.Db;
+            var result=new SavePermissionInfoDetailModel() {  Users=new List<string>() };
+            var interfaces = db.Queryable<ZeroInterfaceList>()
+                .OrderBy(it=>it.SortId)
+                .OrderBy(it=>it.GroupName)
+                .Where(it => it.IsInitialized == false)
+                .ToList().Select(it=>new PermissionInfoInterfaceItem() {
+                  ZeroInterfaceList=it
+                }).ToList();
+            result.items = interfaces;
+            if (id > 0) 
+            {
+                // 获取与当前权限关联的接口 ID 列表
+                var associatedInterfaceIds = db.Queryable<ZeroPermissionMapping>()
+                    .Where(it => it.PermissionInfoId == id)
+                    .Select(it => it.InterfaceId)
+                    .ToList();
+
+                // 设置关联的接口项的 Checked 为 true
+                foreach (var item in result.items)
+                {
+                    if (item.ZeroInterfaceList != null && associatedInterfaceIds.Contains(item.ZeroInterfaceList.Id))
+                    {
+                        item.Checked = true;
+                    }
+                }
+            }
+            return result;
         }
         #endregion 
     }
