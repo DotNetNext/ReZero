@@ -87,6 +87,34 @@
                             <label for="description">描述</label>
                             <textarea id="description" v-model="formData.Description" class="form-control" placeholder="请输入描述"></textarea>
                         </div>
+                        <!-- Users 多选下拉框 -->
+                        <div class="form-group">
+                            <label for="users">选择用户</label>
+                            <select id="users" v-model="formData.Users" multiple class="form-control">
+                                <option v-for="user in users" :value="user">{{ user }}</option>
+                            </select>
+                        </div>
+                        <!-- 权限接口选项 -->
+                        <div class="form-group">
+                            <label>权限接口选项</label>
+                            <div>
+                                <!-- 总的 CheckBox -->
+                                <label>
+                                    <input type="checkbox" v-model="selectAll" @change="toggleAllGroups"> 全选
+                                </label>
+                            </div>
+                            <div v-for="(group, typeName) in groupedItems" :key="typeName" class="permission-group">
+                                <!-- 分组 CheckBox -->
+                                <label>
+                                    <input type="checkbox" :checked="isGroupChecked(typeName)" @change="toggleGroup(typeName)"> {{ typeName }}
+                                </label>
+                                <div class="permission-items">
+                                    <label v-for="item in group" :key="item.ZeroInterfaceList.Id">
+                                        <input type="checkbox" v-model="selectedItems" :value="item.ZeroInterfaceList.Id"> {{ item.ZeroInterfaceList.Name }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -103,6 +131,8 @@
         data: {
             data: null,
             selectedItems: [],
+            users: [], // 用户列表
+            groupedItems:[],
             formData: {
                 Id: 0,
                 PermissionName: '',
@@ -117,14 +147,9 @@
         methods: {
             // 获取数据
             fetchData: function () {
-                var url = "/PrivateReZeroRoute/100003/GetPermissionList";
-                axios.get(url, jwHeader)
-                    .then(response => {
-                        this.data = response.data;
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                this.fetchUsers();
+                this.fetchPermissionItems();
+                this.fetchPermissionPageList();
             },
             // 搜索
             onSearch: function () {
@@ -191,7 +216,80 @@
                 } else {
                     this.selectedItems = [];
                 }
+            },
+            //加载权限列表
+            fetchPermissionPageList: function ()
+            { 
+                var url = "/PrivateReZeroRoute/100003/GetPermissionList";
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.data = response.data;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+            // 获取用户列表
+            fetchUsers: function () {
+                var url = "/PrivateReZeroRoute/100003/GetBizUsers";
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.users = response.data;
+                    })
+                    .catch(error => {
+                        console.error("获取用户列表失败", error);
+                    });
+            },
+            // 获取权限接口选项
+            fetchPermissionItems: function () {
+                var url = "/PrivateReZeroRoute/100003/GetSavePermissionModelById?id=0";
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.items = response.data.items;
+                        this.groupItemsByTypeName();
+                    })
+                    .catch(error => {
+                        console.error("获取权限接口选项失败", error);
+                    });
+            },
+            // 按 TypeName 分组权限接口选项
+            groupItemsByTypeName: function () {
+                this.groupedItems = this.items.reduce((groups, item) => {
+                    const typeName = item.TypeName || "未分类";
+                    if (!groups[typeName]) {
+                        groups[typeName] = [];
+                    }
+                    groups[typeName].push(item);
+                    return groups;
+                }, {});
+            },
+            // 切换总的全选状态
+            toggleAllGroups: function () {
+                if (this.selectAll) {
+                    this.selectedItems = this.items.map(item => item.ZeroInterfaceList.Id);
+                } else {
+                    this.selectedItems = [];
+                }
+            },
+            // 检查分组是否全选
+            isGroupChecked: function (typeName) {
+                const group = this.groupedItems[typeName];
+                return group.every(item => this.selectedItems.includes(item.ZeroInterfaceList.Id));
+            },
+            // 切换分组全选状态
+            toggleGroup: function (typeName) {
+                const group = this.groupedItems[typeName];
+                const groupIds = group.map(item => item.ZeroInterfaceList.Id);
+                const isChecked = this.isGroupChecked(typeName);
+
+                if (isChecked) {
+                    // 如果分组已全选，则取消选中
+                    this.selectedItems = this.selectedItems.filter(id => !groupIds.includes(id));
+                } else {
+                    // 如果分组未全选，则选中所有
+                    this.selectedItems = [...new Set([...this.selectedItems, ...groupIds])];
+                }
             }
-        }
+        } 
     });
 </script>
