@@ -1,3 +1,197 @@
 ﻿@@master_page.html
+<link href="css/page_table_list.css" rel="stylesheet" />
+<script src="js/ace/src-min/ace.js"></script>
+<script src="js/ace/src-min/ext-language_tools.js"></script>
+<div id="apibox" class="card">
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <form id="frmSearch" onsubmit="return false;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input class="form-control" type="text" id="txtPermissionName" placeholder="权限名称">
+                    </div>
+                    <div class="col-md-3">
+                        <button @click="onSearch()" id="btnSearch" class="btn btn-secondary"><i class="mdi mdi-magnify"></i> 搜索</button>
+                        <button onclick="frmSearch.reset()" class="btn btn-close m-l-15" type="submit">清空</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-开发中
+    <!-- 工具栏 -->
+    <div class="card-toolbar clearfix">
+        <div class="toolbar-btn-action">
+            <a class="btn btn-primary m-r-5" @click="openAdd()" href="#!"><i class="mdi mdi-plus"></i> 新增权限</a>
+        </div>
+    </div>
+
+    <!-- 数据表格 -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <div class="master-table-container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr v-if="data && data.Columns && data.Columns.length > 0">
+                            <th class="width30">
+                                <label class="lyear-checkbox checkbox-primary">
+                                    <input type="checkbox" @change="selectAll" id="check-all"><span></span>
+                                </label>
+                            </th>
+                            <th v-for="column in data.Columns">{{ column.ColumnDescription }}</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="data && data.Data">
+                        <tr v-for="item in data.Data">
+                            <td>
+                                <label class="lyear-checkbox checkbox-primary">
+                                    <input type="checkbox" v-model="selectedItems" :value="item.Id"><span></span>
+                                </label>
+                            </td>
+                            <td v-for="column in data.Columns">
+                                {{ item[column.PropertyName] }}
+                            </td>
+                            <td>
+                                <button @click="openEdit(item)" class="btn btn-link"><i class="mdi mdi-lead-pencil"></i> 修改</button>
+                                <button @click="deleteItem(item)" class="btn btn-link"><i class="mdi mdi-delete"></i> 删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分页 -->
+    @@page_control.html
+
+    <!-- 编辑/新增模态框 -->
+    <div id="modalEdit" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ modalTitle }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="permissionName">权限名称</label>
+                            <input type="text" id="permissionName" v-model="formData.PermissionName" class="form-control" placeholder="请输入权限名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">描述</label>
+                            <textarea id="description" v-model="formData.Description" class="form-control" placeholder="请输入描述"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" @click="saveData()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var vueObj = new Vue({
+        el: '#apibox',
+        data: {
+            data: null,
+            selectedItems: [],
+            formData: {
+                Id: 0,
+                PermissionName: '',
+                Description: ''
+            },
+            modalTitle: '',
+            isEdit: false
+        },
+        mounted() {
+            this.fetchData();
+        },
+        methods: {
+            // 获取数据
+            fetchData: function () {
+                var url = "/PrivateReZeroRoute/100003/GetPermissionList";
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.data = response.data;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+            // 搜索
+            onSearch: function () {
+                var url = "/PrivateReZeroRoute/100003/GetPermissionList?PermissionName=" + encodeURIComponent(document.getElementById('txtPermissionName').value);
+                axios.get(url, jwHeader)
+                    .then(response => {
+                        this.data = response.data;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+            // 打开新增模态框
+            openAdd: function () {
+                this.isEdit = false;
+                this.modalTitle = "新增权限";
+                this.formData = { Id: 0, PermissionName: '', Description: '' };
+                $('#modalEdit').modal('show');
+            },
+            // 打开编辑模态框
+            openEdit: function (item) {
+                this.isEdit = true;
+                this.modalTitle = "编辑权限";
+                this.formData = { ...item };
+                $('#modalEdit').modal('show');
+            },
+            // 保存数据
+            saveData: function () {
+                var url = this.isEdit ? "/PrivateReZeroRoute/100003/UpdatePermission" : "/PrivateReZeroRoute/100003/AddPermission";
+                axios.post(url, this.formData, jwHeader)
+                    .then(response => {
+                        if (response.data) {
+                            $('#modalEdit').modal('hide');
+                            this.fetchData();
+                        } else {
+                            alert("保存失败");
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+            // 删除数据
+            deleteItem: function (item) {
+                if (confirm("确定要删除该权限吗？")) {
+                    var url = "/PrivateReZeroRoute/100003/DeletePermission?Id=" + item.Id;
+                    axios.get(url, jwHeader)
+                        .then(response => {
+                            if (response.data) {
+                                this.fetchData();
+                            } else {
+                                alert("删除失败");
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                }
+            },
+            // 全选/取消全选
+            selectAll: function (event) {
+                if (event.target.checked) {
+                    this.selectedItems = this.data.Data.map(item => item.Id);
+                } else {
+                    this.selectedItems = [];
+                }
+            }
+        }
+    });
+</script>
