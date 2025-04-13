@@ -69,7 +69,7 @@
 
     <!-- 编辑/新增模态框 -->
     <div id="modalEdit" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog  width1000 " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ modalTitle }}</h5>
@@ -106,11 +106,11 @@
                             <div v-for="(group, typeName) in groupedItems" :key="typeName" class="permission-group">
                                 <!-- 分组 CheckBox -->
                                 <label>
-                                    <input type="checkbox" :checked="isGroupChecked(typeName)" @change="toggleGroup(typeName)"> {{ typeName }}
+                                    <input type="checkbox" :checked="isGroupChecked(typeName)" @change="toggleGroup(typeName)">{{ typeName }}</span>
                                 </label>
                                 <div class="permission-items">
                                     <label v-for="item in group" :key="item.ZeroInterfaceList.Id">
-                                        <input type="checkbox" v-model="selectedItems" :value="item.ZeroInterfaceList.Id"> {{ item.ZeroInterfaceList.Name }}
+                                        <input type="checkbox" v-model="selectedItems" :value="item.ZeroInterfaceList.Id"> <span style="font-weight:100">{{ item.ZeroInterfaceList.Name }}</span>
                                     </label>
                                 </div>
                             </div>
