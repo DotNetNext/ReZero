@@ -88,10 +88,14 @@
                         <input type="hidden" v-model="formData.Id" name="Id" />
                         <div class="form-group">
                             <label class="control-label">用户名：</label>
-                            <input :readonly="isReadOnly" oninput="tools.validateDatalist(this,'userList')" list="userList" v-model="formData.UserName" class="form-control" placeholder="请选择用户名">
-                            <datalist id="userList">
+                            <input :readonly="isReadOnly" v-if="users.length > 0&& users[0]" oninput="tools.validateDatalist(this,'userList')" list="userList" v-model="formData.UserName" class="form-control" placeholder="请选择用户名">
+                            <datalist id="userList"  v-if="users.length > 0&& users[0]">
                                 <option v-for="user in users" :value="user">{{ user }}</option>
                             </datalist>
+                            <div v-else class="alert alert-warning">
+                                JWT的信息没有配置完整，不能加载下拉列表
+                                详细：{{bizUserErrorMessage}}
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">描述：</label>
@@ -121,6 +125,7 @@
         data: {
             data: null,
             error: null,
+            bizUserErrorMessage: "",
             title: "添加JWT Token",
             formData: {
                 Id: 0,
@@ -154,7 +159,12 @@
                 var url = "/PrivateReZeroRoute/100003/GetBizUsers"; // 获取用户列表的API
                 axios.get(url, jwHeader)
                     .then(response => {
-                        this.users = response.data;
+                        if (Array.isArray(response.data)) {
+                            this.users = response.data;
+                        } else if (response.data.message) {
+                            this.bizUserErrorMessage = response.data.message;
+                            this.users = [""];
+                        }
                     })
                     .catch(error => {
                         this.error = error.message;
