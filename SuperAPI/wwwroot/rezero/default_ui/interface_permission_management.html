@@ -6,45 +6,38 @@
     .selected-users {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px; /* 卡片间距 */
-        padding: 15px;
-        border: 1px solid #e0e0e0; /* 边框颜色 */
-        border-radius: 8px; /* 圆角 */
-        background-color: #f5f5f5; /* 背景色 */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        gap: 8px; /* 卡片间距 */
+        padding: 8px;
+        border: 1px solid #ddd; /* 边框颜色 */
+        border-radius: 5px; /* 圆角 */
+        background-color: #f9f9f9; /* 背景色 */
     }
 
         .selected-users .user-badge {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            background-color: #ffffff; /* 卡片背景色 */
-            color: #333; /* 字体颜色 */
-            padding: 8px 12px;
-            border-radius: 20px; /* 圆角 */
-            font-size: 14px;
+            background-color: #e6f7ff; /* 卡片背景色 */
+            color: #1890ff; /* 字体颜色 */
+            padding: 4px 8px;
+            border-radius: 12px; /* 圆角 */
+            font-size: 12px;
             font-weight: 500;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 卡片阴影 */
-            border: 1px solid #ddd; /* 卡片边框 */
+            border: 1px solid #91d5ff; /* 卡片边框 */
             transition: all 0.3s ease; /* 动画效果 */
         }
 
-            .selected-users .user-badge:hover {
-                background-color: #f0f0f0; /* 悬停背景色 */
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* 悬停阴影 */
-            }
-
             .selected-users .user-badge button {
-                margin-left: 8px;
-                background-color: #ff4d4f; /* 删除按钮背景色 */
+                margin-left: 6px;
+                background-color: #ff7875; /* 删除按钮背景色 */
                 color: white;
                 border: none;
                 border-radius: 50%;
-                width: 24px;
-                height: 24px;
+                width: 20px;
+                height: 20px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 14px;
+                font-size: 12px;
                 cursor: pointer;
                 transition: background-color 0.3s ease; /* 动画效果 */
             }
@@ -52,6 +45,25 @@
                 .selected-users .user-badge button:hover {
                     background-color: #d9363e; /* 删除按钮悬停颜色 */
                 }
+
+        .selected-users .add-user-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #52c41a; /* 添加按钮背景色 */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* 动画效果 */
+        }
+
+            .selected-users .add-user-btn:hover {
+                background-color: #389e0d; /* 添加按钮悬停颜色 */
+            }
 </style> 
 <div id="apibox" class="card">
     <!-- 搜索栏 -->
