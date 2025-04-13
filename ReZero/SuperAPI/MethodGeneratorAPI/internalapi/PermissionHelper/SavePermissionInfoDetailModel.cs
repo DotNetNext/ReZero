@@ -8,7 +8,7 @@ namespace ReZero.SuperAPI
     { 
         public List<string>? Users { get; set; }
 
-        public List<PermissionInfoInterfaceItem>? items { get; set; }
+        public List<PermissionInfoInterfaceItem>? Items { get; set; }
     }
     public class PermissionInfoInterfaceItem 
     {

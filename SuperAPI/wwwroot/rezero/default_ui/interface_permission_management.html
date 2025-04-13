@@ -156,7 +156,6 @@
             // 获取数据
             fetchData: function () {
                 this.fetchUsers();
-                this.fetchPermissionItems();
                 this.fetchPermissionPageList();
             },
             // 搜索
@@ -173,15 +172,15 @@
             // 打开新增模态框
             openAdd: function () {
                 this.isEdit = false;
-                this.modalTitle = "新增权限";
-                this.formData = { Id: 0, PermissionName: '', Description: '' };
+                this.modalTitle = "新增权限"; 
+                this.fetchPermissionItems(0);
                 $('#modalEdit').modal('show');
             },
             // 打开编辑模态框
             openEdit: function (item) {
                 this.isEdit = true;
                 this.modalTitle = "编辑权限";
-                this.formData = { ...item };
+                this.fetchPermissionItems(item.Id);
                 $('#modalEdit').modal('show');
             },
             // 保存数据
@@ -249,8 +248,8 @@
                     });
             },
             // 获取权限接口选项
-            fetchPermissionItems: function () {
-                var url = "/PrivateReZeroRoute/100003/GetSavePermissionModelById?id=0";
+            fetchPermissionItems: function (id) {
+                var url = "/PrivateReZeroRoute/100003/GetSavePermissionModelById?id="+id;
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.formData = response.data;
@@ -262,7 +261,7 @@
             },
             // 按 TypeName 分组权限接口选项
             groupItemsByTypeName: function () {
-                this.groupedItems = this.formData.items.reduce((groups, item) => {
+                this.groupedItems = this.formData.Items.reduce((groups, item) => {
                     const typeName = item.TypeName || "未分类";
                     if (!groups[typeName]) {
                         groups[typeName] = [];
@@ -273,8 +272,8 @@
             },
             // 切换总的全选状态
             toggleAllGroups: function () {
-                if (this.selectAll) {
-                    this.selectedItems = this.formData.items.map(item => item.ZeroInterfaceList.Id);
+                if (this.selectAll) { 
+                    this.selectedItems = this.formData.Items.map(item => item.ZeroInterfaceList.Id);
                 } else {
                     this.selectedItems = [];
                 }

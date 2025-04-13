@@ -321,7 +321,7 @@ namespace ReZero.SuperAPI
                 })
                 .ToList();
 
-            result.items = interfaces;
+            result.Items = interfaces;
 
             // 如果 id > 0，设置 Checked 为 true
             if (id > 0)
@@ -333,7 +333,7 @@ namespace ReZero.SuperAPI
                     .ToList();
 
                 // 设置关联的接口项的 Checked 为 true
-                foreach (var item in result.items)
+                foreach (var item in result.Items)
                 {
                     if (item.ZeroInterfaceList != null && associatedInterfaceIds.Contains(item.ZeroInterfaceList.Id))
                     {
