@@ -359,6 +359,18 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("获取Token管理")]
         [EnglishTextAttribute("Get token management")]
         public const long GetTokenManageById_Id = 73;
+        [ChineseTextAttribute("获取权限列表")]
+        [EnglishTextAttribute("Get permission list")]
+        public const long  GetPermissionListId = 74;
+        [ChineseTextAttribute("添加权限")]
+        [EnglishTextAttribute("Add permission")]
+        public const long AddPermissionId = 75;
+        [ChineseTextAttribute("修改权限")]
+        [EnglishTextAttribute("Update permission")]
+        public const long UpdatePermissionId = 76;
+        [ChineseTextAttribute("删除权限")]
+        [EnglishTextAttribute("Delete permission")]
+        public const long DeletePermissionId = 77;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {

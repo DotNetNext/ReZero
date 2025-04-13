@@ -209,6 +209,27 @@ namespace ReZero.SuperAPI
                             addItem.IsInitialized = true;
                             addItem.Id = InterfaceListInitializerProvider.GetTokenManageById_Id;
                         }
+                        if (addItem.Url == PubConst.InitApi_GetPermissionList)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.GetPermissionListId;
+                        }
+                        if (addItem.Url == PubConst.InitApi_AddPermission)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.AddPermissionId;
+                        }
+                        if (addItem.Url == PubConst.InitApi_UpdatePermission)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.UpdatePermissionId;
+                        }
+                        if (addItem.Url == PubConst.InitApi_DeletePermission)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.DeletePermissionId;
+                        } 
+
                         zeroInterfaceLists.Add(addItem);
                     }
                 }

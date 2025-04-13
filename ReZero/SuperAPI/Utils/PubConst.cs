@@ -77,5 +77,9 @@ namespace ReZero.SuperAPI
         public const string InitApi_UpdateTokenManage = "/PrivateReZeroRoute/100003/UpdateTokenManage";
         public const string InitApi_DeleteTokenManage = "/PrivateReZeroRoute/100003/DeleteTokenManage";
         public const string InitApi_GetTokenManageById = "/PrivateReZeroRoute/100003/GetTokenManageById";
+        public const string InitApi_GetPermissionList = "/PrivateReZeroRoute/100003/GetPermissionList";
+        public const string InitApi_AddPermission = "/PrivateReZeroRoute/100003/AddPermission";
+        public const string InitApi_UpdatePermission = "/PrivateReZeroRoute/100003/UpdatePermission";
+        public const string InitApi_DeletePermission = "/PrivateReZeroRoute/100003/DeletePermission";
     }
 }

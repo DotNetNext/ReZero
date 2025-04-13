@@ -251,5 +251,48 @@ namespace ReZero.SuperAPI
             return data;
         }
         #endregion
+
+        #region Permission
+
+        [ApiMethod(nameof(InternalInitApi.GetPermissionList), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetPermissionList)]
+        public object GetPermissionList()
+        {
+            var db = App.Db;
+            var permissions = db.Queryable<ZeroPermissionInfo>().ToList();
+            return permissions;
+        }
+
+        [ApiMethod(nameof(InternalInitApi.AddPermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_AddPermission)]
+        public bool AddPermission(ZeroPermissionInfo permission)
+        {
+            var db = App.Db;
+            if (string.IsNullOrEmpty(permission.Name))
+            {
+                throw new Exception("权限名称不能为空");
+            }
+            permission.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
+            permission.CreateTime = DateTime.Now;
+            permission.Creator = "admin";
+            db.Insertable(permission).ExecuteCommand();
+            return true;
+        }
+
+        [ApiMethod(nameof(InternalInitApi.UpdatePermission),GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_UpdatePermission)]
+        public bool UpdatePermission(ZeroPermissionInfo permission)
+        {
+            var db = App.Db;
+            permission.UpdateTime = DateTime.Now;
+            db.Updateable(permission).IgnoreColumns(it => new { it.CreateTime, it.Creator }).ExecuteCommand();
+            return true;
+        }
+
+        [ApiMethod(nameof(InternalInitApi.DeletePermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_DeletePermission)]
+        public bool DeletePermission(long id)
+        {
+            var db = App.Db;
+            db.Updateable<ZeroPermissionInfo>().In(new object[] { id }).SetColumns(it => it.IsDeleted == true).ExecuteCommand();
+            return true;
+        }
+        #endregion 
     }
 }
