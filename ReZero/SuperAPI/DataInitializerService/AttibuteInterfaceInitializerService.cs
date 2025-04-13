@@ -228,8 +228,12 @@ namespace ReZero.SuperAPI
                         {
                             addItem.IsInitialized = true;
                             addItem.Id = InterfaceListInitializerProvider.DeletePermissionId;
-                        } 
-
+                        }
+                        if (addItem.Url == PubConst.InitApi_GetSavePermissionModelById)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.GetSavePermissionModelById_Id;
+                        }
                         zeroInterfaceLists.Add(addItem);
                     }
                 }

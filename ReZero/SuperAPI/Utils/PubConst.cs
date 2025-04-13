@@ -81,5 +81,6 @@ namespace ReZero.SuperAPI
         public const string InitApi_AddPermission = "/PrivateReZeroRoute/100003/AddPermission";
         public const string InitApi_UpdatePermission = "/PrivateReZeroRoute/100003/UpdatePermission";
         public const string InitApi_DeletePermission = "/PrivateReZeroRoute/100003/DeletePermission";
+        public const string InitApi_GetSavePermissionModelById = "/PrivateReZeroRoute/100003/GetSavePermissionModelById";
     }
 }

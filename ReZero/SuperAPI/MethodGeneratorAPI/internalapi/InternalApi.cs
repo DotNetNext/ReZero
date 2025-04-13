@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using ReZero.DependencyInjection;
@@ -84,7 +85,7 @@ namespace ReZero.SuperAPI
                     throw new Exception(TextHandler.GetCommonText("用户名已存在", "The user name already exists"));
                 }
                 zeroUserInfo.CreateTime = DateTime.Now;
-                zeroUserInfo.Creator = "admin";
+                zeroUserInfo.Creator = DataBaseInitializerProvider.UserName;
                 zeroUserInfo.CreatorId = 1;
                 zeroUserInfo.Password = Encryption.Encrypt(zeroUserInfo.Password);
                 zeroUserInfo.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
@@ -93,7 +94,7 @@ namespace ReZero.SuperAPI
             else
             {
                 zeroUserInfo!.Password = Encryption.Encrypt(zeroUserInfo.Password!);
-                zeroUserInfo.Modifier = "admin";
+                zeroUserInfo.Modifier = DataBaseInitializerProvider.UserName;
                 db.Updateable(zeroUserInfo).IgnoreColumns(true).ExecuteCommand();
             }
             return true;
@@ -218,7 +219,7 @@ namespace ReZero.SuperAPI
             var password = dt.Rows[0][jwt.PasswordFieldName] + "";
             var token = new MethodApi() {  TokenExpiration=zeroJwtTokenManagement.Expiration }.GetToken(zeroJwtTokenManagement.UserName!,password);
             zeroJwtTokenManagement.CreateTime = DateTime.Now;
-            zeroJwtTokenManagement.Creator = "admin";
+            zeroJwtTokenManagement.Creator = DataBaseInitializerProvider.UserName;
             zeroJwtTokenManagement.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
             zeroJwtTokenManagement.Token = token;
             db.Insertable(zeroJwtTokenManagement).ExecuteCommand();
@@ -263,7 +264,7 @@ namespace ReZero.SuperAPI
         }
 
         [ApiMethod(nameof(InternalInitApi.AddPermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_AddPermission)]
-        public bool AddPermission(ZeroPermissionInfo permission)
+        public bool AddPermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
             if (string.IsNullOrEmpty(permission.Name))
@@ -272,13 +273,13 @@ namespace ReZero.SuperAPI
             }
             permission.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
             permission.CreateTime = DateTime.Now;
-            permission.Creator = "admin";
+            permission.Creator = DataBaseInitializerProvider.UserName;
             db.Insertable(permission).ExecuteCommand();
             return true;
         }
 
         [ApiMethod(nameof(InternalInitApi.UpdatePermission),GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_UpdatePermission)]
-        public bool UpdatePermission(ZeroPermissionInfo permission)
+        public bool UpdatePermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
             permission.UpdateTime = DateTime.Now;
@@ -292,6 +293,11 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             db.Updateable<ZeroPermissionInfo>().In(new object[] { id }).SetColumns(it => it.IsDeleted == true).ExecuteCommand();
             return true;
+        } 
+        [ApiMethod(nameof(InternalInitApi.GetSavePermissionModelById), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetSavePermissionModelById)]
+        public ZeroPermissionInfo GetSavePermissionModelById(long id)
+        {
+            return new ZeroPermissionInfo() { };
         }
         #endregion 
     }

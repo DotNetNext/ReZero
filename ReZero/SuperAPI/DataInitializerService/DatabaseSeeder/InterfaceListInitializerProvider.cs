@@ -371,6 +371,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("删除权限")]
         [EnglishTextAttribute("Delete permission")]
         public const long DeletePermissionId = 77;
+        [ChineseTextAttribute("获取权限信息根据ID")]
+        [EnglishTextAttribute("Get save permission by id")]
+        public const long GetSavePermissionModelById_Id = 78;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
