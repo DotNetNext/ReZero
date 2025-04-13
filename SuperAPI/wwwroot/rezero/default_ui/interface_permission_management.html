@@ -89,10 +89,16 @@
                         </div>
                         <!-- Users 多选下拉框 -->
                         <div class="form-group">
-                            <label for="users">选择用户</label>
-                            <select id="users" v-model="formData.Users" multiple class="form-control">
-                                <option v-for="user in users" :value="user">{{ user }}</option>
-                            </select>
+                            <label>选择用户</label>
+                            <div class="selected-users">
+                                <!-- 循环显示已选用户 -->
+                                <span v-for="(user, index) in formData.Users" :key="index" class="user-badge">
+                                    {{ user }}
+                                    <button type="button" class="btn btn-sm btn-danger" @click="removeUser(index)">-</button>
+                                </span>
+                                <!-- 添加用户按钮 -->
+                                <button type="button" class="btn btn-sm btn-primary" @click="addUser">+</button>
+                            </div>
                         </div>
                         <!-- 权限接口选项 -->
                         <div class="form-group">
@@ -136,7 +142,9 @@
             formData: {
                 Id: 0,
                 PermissionName: '',
-                Description: ''
+                Description: '',
+                Items: [],
+                Users:[]
             },
             modalTitle: '',
             isEdit: false
@@ -245,7 +253,7 @@
                 var url = "/PrivateReZeroRoute/100003/GetSavePermissionModelById?id=0";
                 axios.get(url, jwHeader)
                     .then(response => {
-                        this.items = response.data.items;
+                        this.formData = response.data;
                         this.groupItemsByTypeName();
                     })
                     .catch(error => {
@@ -254,7 +262,7 @@
             },
             // 按 TypeName 分组权限接口选项
             groupItemsByTypeName: function () {
-                this.groupedItems = this.items.reduce((groups, item) => {
+                this.groupedItems = this.formData.items.reduce((groups, item) => {
                     const typeName = item.TypeName || "未分类";
                     if (!groups[typeName]) {
                         groups[typeName] = [];
@@ -266,7 +274,7 @@
             // 切换总的全选状态
             toggleAllGroups: function () {
                 if (this.selectAll) {
-                    this.selectedItems = this.items.map(item => item.ZeroInterfaceList.Id);
+                    this.selectedItems = this.formData.items.map(item => item.ZeroInterfaceList.Id);
                 } else {
                     this.selectedItems = [];
                 }
@@ -289,6 +297,19 @@
                     // 如果分组未全选，则选中所有
                     this.selectedItems = [...new Set([...this.selectedItems, ...groupIds])];
                 }
+            },
+            // 添加用户
+            addUser: function () {
+                const user = prompt("请输入要添加的用户：");
+                if (user && !this.formData.Users.includes(user)) {
+                    this.formData.Users.push(user);
+                } else if (this.formData.Users.includes(user)) {
+                    alert("用户已存在！");
+                }
+            },
+            // 删除用户
+            removeUser: function (index) {
+                this.selectedUsers.splice(index, 1);
             }
         } 
     });
