@@ -14,6 +14,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography.Xml;
 using System.Security.Policy;
 using System.Text;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace ReZero.SuperAPI
 {
@@ -312,14 +313,15 @@ namespace ReZero.SuperAPI
             {
                 var mappings = permission.Items
                     .Where(item => item.Checked && item.ZeroInterfaceList != null)
-                    .Select(item => new ZeroPermissionMapping
+                    .SelectMany(item => permission.Users!.Select(user => new ZeroPermissionMapping
                     {
                         Id = SqlSugar.SnowFlakeSingle.Instance.NextId(),
                         PermissionInfoId = permission.Id,
                         InterfaceId = item.ZeroInterfaceList!.Id,
+                        UserName = user,
                         CreateTime = DateTime.Now,
                         Creator = DataBaseInitializerProvider.UserName
-                    })
+                    }))
                     .ToList();
 
                 if (mappings.Any())
@@ -331,7 +333,7 @@ namespace ReZero.SuperAPI
             return true;
         }
 
-        [ApiMethod(nameof(InternalInitApi.UpdatePermission),GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_UpdatePermission)]
+        [ApiMethod(nameof(InternalInitApi.UpdatePermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_UpdatePermission)]
         public bool UpdatePermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
@@ -339,7 +341,7 @@ namespace ReZero.SuperAPI
             // 更新权限基本信息
             permission.UpdateTime = DateTime.Now;
             db.Updateable((ZeroPermissionInfo)permission)
-                .IgnoreColumns(it => new { it.CreateTime,it.Creator })
+                .IgnoreColumns(it => new { it.CreateTime, it.Creator })
                 .ExecuteCommand();
 
             // 删除旧的权限映射关系
@@ -352,14 +354,15 @@ namespace ReZero.SuperAPI
             {
                 var mappings = permission.Items
                     .Where(item => item.Checked && item.ZeroInterfaceList != null)
-                    .Select(item => new ZeroPermissionMapping
+                    .SelectMany(item => permission.Users!.Select(user => new ZeroPermissionMapping
                     {
                         Id = SqlSugar.SnowFlakeSingle.Instance.NextId(),
                         PermissionInfoId = permission.Id,
                         InterfaceId = item.ZeroInterfaceList!.Id,
+                        UserName = user,
                         CreateTime = DateTime.Now,
                         Creator = DataBaseInitializerProvider.UserName
-                    })
+                    }))
                     .ToList();
 
                 if (mappings.Any())
@@ -382,9 +385,12 @@ namespace ReZero.SuperAPI
         public SavePermissionInfoDetailModel GetSavePermissionModelById(long id)
         {
 
-            var db = App.Db;
-            var result = new SavePermissionInfoDetailModel() { Users = new List<string>() };
-
+            var db = App.Db; 
+            var result = new SavePermissionInfoDetailModel() { Users = new List<string>() { } };
+            if (id > 0) 
+            {
+                result=db.Queryable<ZeroPermissionInfo>().In(id).Select<SavePermissionInfoDetailModel>().First();
+            } 
             // 一次性加载分类表到内存
             var categoryMap = db.Queryable<ZeroInterfaceCategory>()
                 .ToList()
@@ -410,8 +416,9 @@ namespace ReZero.SuperAPI
             if (id > 0)
             {
                 // 获取与当前权限关联的接口 ID 列表
-                var associatedInterfaceIds = db.Queryable<ZeroPermissionMapping>()
-                    .Where(it => it.PermissionInfoId == id)
+                var mappings = db.Queryable<ZeroPermissionMapping>()
+                    .Where(it => it.PermissionInfoId == id).ToList();
+                var associatedInterfaceIds = mappings
                     .Select(it => it.InterfaceId)
                     .ToList();
 
@@ -423,6 +430,7 @@ namespace ReZero.SuperAPI
                         item.Checked = true;
                     }
                 }
+                result.Users = mappings.Select(it => it.UserName).Distinct()!.ToList()!;
             } 
             return result;
         }

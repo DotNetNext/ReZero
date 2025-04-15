@@ -326,6 +326,16 @@
             },
             // 保存数据
             saveData: function () {
+                // 遍历 formData.Items，更新 Checked 值
+                if (this.formData.Items && this.formData.Items.length > 0) {
+                    this.formData.Items.forEach(item => {
+                        if (item.ZeroInterfaceList && this.selectedItems.includes(item.ZeroInterfaceList.Id)) {
+                            item.Checked = true; // 如果在 selectedItems 中，设置为 true
+                        } else {
+                            item.Checked = false; // 如果不在 selectedItems 中，设置为 false
+                        }
+                    });
+                }
                 var url = this.isEdit ? "/PrivateReZeroRoute/100003/UpdatePermission" : "/PrivateReZeroRoute/100003/AddPermission";
                 axios.post(url, this.formData, jwHeader)
                     .then(response => {
