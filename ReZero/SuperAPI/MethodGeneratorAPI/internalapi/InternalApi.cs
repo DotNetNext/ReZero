@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using ReZero.DependencyInjection;
@@ -257,11 +258,35 @@ namespace ReZero.SuperAPI
         #region Permission
 
         [ApiMethod(nameof(InternalInitApi.GetPermissionList), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetPermissionList)]
-        public object GetPermissionList()
+        public object GetPermissionList(int pageNumber,int pageSize,string permissionName)
         {
             var db = App.Db;
-            var permissions = db.Queryable<ZeroPermissionInfo>().ToList();
-            return permissions;
+            var count = 0;
+            if (pageNumber == 0)
+                pageNumber = 1;
+            if (pageSize == 0)
+                pageSize = 10;
+            var permissions = db.Queryable<ZeroPermissionInfo>()
+                .WhereIF(!string.IsNullOrEmpty(permissionName),it=>it.Name!.Contains(permissionName)).ToPageList(pageNumber,pageSize,ref count);
+            var columns = new List<ResultGridColumn>
+           {
+               new ResultGridColumn { PropertyName = "Id",  ColumnDescription = "权限ID"  },
+               new ResultGridColumn { PropertyName = "Name", ColumnDescription = "权限名称" },
+               new ResultGridColumn { PropertyName = "CreateTime", ColumnDescription = "创建时间"},
+               new ResultGridColumn { PropertyName = "Creator", ColumnDescription = "创建者"}
+           };
+            return new ResultPageGrid
+            {
+                Data = permissions,
+                Columns = columns,
+                Page = new ResultPage()
+                {
+                    TotalCount = count,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPage = (int)Math.Ceiling((double)count / pageSize)
+                }
+            };
         }
 
         [ApiMethod(nameof(InternalInitApi.AddPermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_AddPermission)]
@@ -280,7 +305,7 @@ namespace ReZero.SuperAPI
             permission.Creator = DataBaseInitializerProvider.UserName;
 
             // 插入权限信息
-            db.Insertable(permission).ExecuteCommand();
+            db.Insertable((ZeroPermissionInfo)permission).ExecuteCommand();
 
             // 插入权限与接口的映射关系
             if (permission.Items != null && permission.Items.Any())
@@ -313,7 +338,7 @@ namespace ReZero.SuperAPI
 
             // 更新权限基本信息
             permission.UpdateTime = DateTime.Now;
-            db.Updateable(permission)
+            db.Updateable((ZeroPermissionInfo)permission)
                 .IgnoreColumns(it => new { it.CreateTime,it.Creator })
                 .ExecuteCommand();
 
