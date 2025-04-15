@@ -403,6 +403,12 @@
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.formData = response.data;
+                        // 遍历 formData.Items，根据 Checked 值更新 selectedItems
+                        if (this.formData.Items && this.formData.Items.length > 0) {
+                            this.selectedItems = this.formData.Items
+                                .filter(item => item.Checked && item.ZeroInterfaceList) // 筛选出 Checked 为 true 的项
+                                .map(item => item.ZeroInterfaceList.Id); // 获取对应的 ID
+                        }
                         this.groupItemsByTypeName();
                     })
                     .catch(error => {
