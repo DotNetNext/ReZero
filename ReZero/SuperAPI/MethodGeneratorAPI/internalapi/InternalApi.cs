@@ -268,14 +268,41 @@ namespace ReZero.SuperAPI
         public bool AddPermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
+
             if (string.IsNullOrEmpty(permission.Name))
             {
                 throw new Exception("权限名称不能为空");
             }
+
+            // 设置权限基本信息
             permission.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
             permission.CreateTime = DateTime.Now;
             permission.Creator = DataBaseInitializerProvider.UserName;
+
+            // 插入权限信息
             db.Insertable(permission).ExecuteCommand();
+
+            // 插入权限与接口的映射关系
+            if (permission.Items != null && permission.Items.Any())
+            {
+                var mappings = permission.Items
+                    .Where(item => item.Checked && item.ZeroInterfaceList != null)
+                    .Select(item => new ZeroPermissionMapping
+                    {
+                        Id = SqlSugar.SnowFlakeSingle.Instance.NextId(),
+                        PermissionInfoId = permission.Id,
+                        InterfaceId = item.ZeroInterfaceList!.Id,
+                        CreateTime = DateTime.Now,
+                        Creator = DataBaseInitializerProvider.UserName
+                    })
+                    .ToList();
+
+                if (mappings.Any())
+                {
+                    db.Insertable(mappings).ExecuteCommand();
+                }
+            }
+
             return true;
         }
 
@@ -283,8 +310,39 @@ namespace ReZero.SuperAPI
         public bool UpdatePermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
+
+            // 更新权限基本信息
             permission.UpdateTime = DateTime.Now;
-            db.Updateable(permission).IgnoreColumns(it => new { it.CreateTime, it.Creator }).ExecuteCommand();
+            db.Updateable(permission)
+                .IgnoreColumns(it => new { it.CreateTime,it.Creator })
+                .ExecuteCommand();
+
+            // 删除旧的权限映射关系
+            db.Deleteable<ZeroPermissionMapping>()
+                .Where(it => it.PermissionInfoId == permission.Id)
+                .ExecuteCommand();
+
+            // 插入新的权限映射关系
+            if (permission.Items != null && permission.Items.Any())
+            {
+                var mappings = permission.Items
+                    .Where(item => item.Checked && item.ZeroInterfaceList != null)
+                    .Select(item => new ZeroPermissionMapping
+                    {
+                        Id = SqlSugar.SnowFlakeSingle.Instance.NextId(),
+                        PermissionInfoId = permission.Id,
+                        InterfaceId = item.ZeroInterfaceList!.Id,
+                        CreateTime = DateTime.Now,
+                        Creator = DataBaseInitializerProvider.UserName
+                    })
+                    .ToList();
+
+                if (mappings.Any())
+                {
+                    db.Insertable(mappings).ExecuteCommand();
+                }
+            }
+
             return true;
         }
 
