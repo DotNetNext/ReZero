@@ -259,7 +259,7 @@ namespace ReZero.SuperAPI
         #region Permission
 
         [ApiMethod(nameof(InternalInitApi.GetPermissionList), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetPermissionList)]
-        public object GetPermissionList(int pageNumber,int pageSize,string permissionName)
+        public object GetPermissionList(int pageNumber,int pageSize,string permissionName,string userName)
         {
             var db = App.Db;
             var count = 0;
@@ -268,6 +268,7 @@ namespace ReZero.SuperAPI
             if (pageSize == 0)
                 pageSize = 10;
             var permissions = db.Queryable<ZeroPermissionInfo>()
+                .WhereIF(!string.IsNullOrEmpty(userName),it=> SqlFunc.Subqueryable<ZeroPermissionMapping>().Where(s=>s.PermissionInfoId==it.Id&&s.UserName==userName).Any())
                 .WhereIF(!string.IsNullOrEmpty(permissionName),it=>it.Name!.Contains(permissionName)).ToPageList(pageNumber,pageSize,ref count);
             var columns = new List<ResultGridColumn>
            {

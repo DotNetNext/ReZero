@@ -121,6 +121,12 @@
                     <div class="col-md-3">
                         <input class="form-control" type="text" id="txtPermissionName" placeholder="权限名称">
                     </div>
+                    <div class="col-md-3"> 
+                        <select class="form-control"  id="ddlUserName">
+                            <option value="">请选择用户</option>
+                            <option v-for="user in users" :key="user" :value="user">{{ user }}</option>
+                        </select>
+                    </div>
                     <div class="col-md-3">
                         <button @click="onSearch()" id="btnSearch" class="btn btn-secondary"><i class="mdi mdi-magnify"></i> 搜索</button>
                         <button onclick="frmSearch.reset()" class="btn btn-close m-l-15" type="submit">清空</button>
@@ -301,7 +307,7 @@
             },
             // 搜索
             onSearch: function () {
-                var url = "/PrivateReZeroRoute/100003/GetPermissionList?PermissionName=" + encodeURIComponent(document.getElementById('txtPermissionName').value);
+                var url = "/PrivateReZeroRoute/100003/GetPermissionList?PermissionName=" + encodeURIComponent(document.getElementById('txtPermissionName').value) + "&userName=" + ddlUserName.value;
                 axios.get(url, jwHeader)
                     .then(response => {
                         this.data = response.data;
