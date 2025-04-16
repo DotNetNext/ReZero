@@ -304,7 +304,8 @@ namespace ReZero.SuperAPI
         public bool AddPermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
-
+            CacheManager<ZeroPermissionInfo>.Instance.ClearCache();
+            CacheManager<ZeroPermissionMapping>.Instance.ClearCache();
             if (string.IsNullOrEmpty(permission.Name))
             {
                 throw new Exception("权限名称不能为空");
@@ -347,7 +348,8 @@ namespace ReZero.SuperAPI
         public bool UpdatePermission(SavePermissionInfoDetailModel permission)
         {
             var db = App.Db;
-
+            CacheManager<ZeroPermissionInfo>.Instance.ClearCache();
+            CacheManager<ZeroPermissionMapping>.Instance.ClearCache();
             // 更新权限基本信息
             permission.UpdateTime = DateTime.Now;
             db.Updateable((ZeroPermissionInfo)permission)
@@ -388,6 +390,8 @@ namespace ReZero.SuperAPI
         public bool DeletePermission(long id)
         {
             var db = App.Db;
+            CacheManager<ZeroPermissionInfo>.Instance.ClearCache();
+            CacheManager<ZeroPermissionMapping>.Instance.ClearCache();
             db.Updateable<ZeroPermissionInfo>().In(new object[] { id }).SetColumns(it => it.IsDeleted == true).ExecuteCommand();
             return true;
         } 
