@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace ReZero.SuperAPI
         {
             var handler = helper.GetHandler(requestMethod, context);
             var db = App.Db;
-            var path = context.Request.Path.ToString()?.ToLower(); 
+            var path = context.Request.Path.ToString()?.ToLower();
             var interInfo = CacheManager<ZeroInterfaceList>
                                              .Instance.GetList()
                                              .Where(it =>
@@ -64,8 +65,8 @@ namespace ReZero.SuperAPI
                                                      ||
                                                      (it.OriginalUrl != null && path!.ToLower().StartsWith(it.OriginalUrl.ToLower()))
                                                     )?.First();
-            interInfo=db.Utilities.TranslateCopy(interInfo);
-            var dynamicInterfaceContext = new InterfaceContext() {  InterfaceType= InterfaceType.DynamicApi,HttpContext = context,InterfaceInfo=interInfo };
+            interInfo = db.Utilities.TranslateCopy(interInfo);
+            var dynamicInterfaceContext = new InterfaceContext() { InterfaceType = InterfaceType.DynamicApi, HttpContext = context, InterfaceInfo = interInfo };
             if (interInfo == null)
             {
                 var message = TextHandler.GetCommonText($"未找到内置接口 {path} ，请在表ZeroInterfaceList中查询", $"No built-in interface {path} is found. Query in the table ZeroInterfaceList");
@@ -95,7 +96,7 @@ namespace ReZero.SuperAPI
                     var resultModel = interInfo.CustomResultModel ?? new ResultModel();
                     resultModel.OutPutData = interInfo.DataModel?.OutPutData;
                     data = new ResultService().GetResult(data!, resultModel);
-                    if (IsNoSystemPublicApi(interInfo))
+                    if (IsNoSystemPublicApi(interInfo, context))
                         data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
                     var json = JsonHelper.SerializeObject(data, SuperAPIModule._apiOptions!.InterfaceOptions?.JsonSerializerSettings);
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
@@ -104,8 +105,9 @@ namespace ReZero.SuperAPI
                 catch (Exception ex)
                 {
                     ReZero.DependencyInjection.DependencyResolver.GetLogger().LogInformation(ex.Message);
-                    object data =new ErrorResponse { message = ex.Message } ;
-                    data=SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data)??data;
+                    object data = new ErrorResponse { message = ex.Message };
+                    if (IsNoSystemPublicApi(interInfo, context))
+                        data = SuperAPIModule._apiOptions?.InterfaceOptions?.MergeDataToStandardDtoFunc?.Invoke(data) ?? data;
                     context.Response.ContentType = PubConst.DataSource_ApplicationJson;
                     await context.Response.WriteAsync(JsonHelper.SerializeObject(data, SuperAPIModule._apiOptions!.InterfaceOptions?.JsonSerializerSettings));
                     dynamicInterfaceContext.Exception = ex;
@@ -114,9 +116,11 @@ namespace ReZero.SuperAPI
             }
         }
 
-        private static bool IsNoSystemPublicApi(ZeroInterfaceList interInfo)
+        private static bool IsNoSystemPublicApi(ZeroInterfaceList interInfo, HttpContext context)
         {
-            return (interInfo.Url?.ToLower()?.StartsWith("/public/") != true) && interInfo.Id != InterfaceListInitializerProvider.GetTokenId;
+            var query = context.Request.Query;
+            var supportCustomDto = query.ContainsKey("supportCustomDto") && query["supportCustomDto"].ToString().ToLower() == "true";
+            return ((interInfo.Url?.ToLower()?.StartsWith("/public/") != true) && interInfo.Id != InterfaceListInitializerProvider.GetTokenId) || supportCustomDto;
         }
 
         private static void SetDataToAop(InterfaceContext dynamicInterfaceContext, object? data)

@@ -106,7 +106,7 @@
                 if (!this.userName || !this.password) {
                     tools.alert("用户名或者密码不能为空");
                 } else {
-                    axios.post("/api/rezero/token", { userName: this.userName, password: this.password+"" }, jwHeader)
+                    axios.post("/api/rezero/token?supportCustomDto=true", { userName: this.userName, password: this.password+"" }, jwHeader)
                         .then(response => {
                             this.error = null;
                             this.result = response.data;
