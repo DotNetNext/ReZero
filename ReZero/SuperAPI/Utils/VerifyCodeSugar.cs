@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Collections.Concurrent;
+using SkiaSharp;
 
 namespace ReZero.SuperAPI 
 {
@@ -38,18 +39,35 @@ namespace ReZero.SuperAPI
             }
             return sb.ToString();
         }
-
+         
         private static byte[] GenerateImage(string code)
         {
-            using Bitmap bitmap = new Bitmap(100, 40);
-            using Graphics g = Graphics.FromImage(bitmap);
-            g.Clear(Color.White);
-            using Font font = new Font("Arial", 20, FontStyle.Bold | FontStyle.Italic);
-            using LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, bitmap.Width, bitmap.Height), Color.Blue, Color.DarkRed, 1.2f, true);
-            g.DrawString(code, font, brush, 2, 2);
-            using MemoryStream ms = new MemoryStream();
-            bitmap.Save(ms, ImageFormat.Png);
-            return ms.ToArray();
+            int width = 100;
+            int height = 40;
+
+            using var bitmap = new SKBitmap(width, height);
+            using var canvas = new SKCanvas(bitmap);
+            canvas.Clear(SKColors.White);
+
+            // 设置字体样式
+            var typeface = SKTypeface.FromFamilyName("Arial", SKFontStyle.BoldItalic);
+            using var font = new SKFont(typeface, 24); // 替代 Paint.TextSize 和 Paint.Typeface
+
+            // 创建文本图块
+            var blob = SKTextBlob.Create(code, font);
+
+            // 绘制文本
+            using var paint = new SKPaint
+            {
+                Color = SKColors.DarkRed,
+                IsAntialias = true
+            };
+            canvas.DrawText(blob, 5, 30, paint); // 推荐新写法
+
+            // 输出 PNG
+            using var image = SKImage.FromBitmap(bitmap);
+            using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            return data.ToArray();
         }
     }
 }
