@@ -461,11 +461,16 @@
             },
             // 添加用户
             confirmAddUser: function () {
+                if (this.users.length == 0)
+                {
+                    tools.alert("失败：JWT信息未配置完整，并且业务UserTableName对应的表要有记录");
+                    return;
+                }
                 if (this.selectedUser && !this.formData.Users.includes(this.selectedUser)) {
                     this.formData.Users.push(this.selectedUser);
                     $('#addUserModal').modal('hide'); // 关闭模态框
                 } else if (this.formData.Users.includes(this.selectedUser)) {
-                    alert("用户已存在！");
+                    tools.alert("用户已存在！");
                 }
             },
             // 删除用户
