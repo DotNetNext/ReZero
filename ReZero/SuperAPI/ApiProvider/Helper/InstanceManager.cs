@@ -78,6 +78,22 @@ namespace ReZero.SuperAPI
                             }
                             dynamicInterfaceContext.AttachClaimToHttpContext(claim.Type, value);
                         }
+                        if (claims.Any())
+                        {
+                            var userName = claims[0].Value;
+                            var list=CacheManager<ZeroPermissionInfo>.Instance.GetList();
+                            if (list.Any()) 
+                            {
+                                var mappings=CacheManager<ZeroPermissionMapping>.Instance.GetList();
+                                if (!mappings
+                                    .Where(it => it.UserName!.ToLower() == userName?.ToLower())
+                                    .Where(it=> it.InterfaceId== dynamicInterfaceContext?.InterfaceInfo?.Id)
+                                    .Any()) 
+                                {
+                                    throw new Exception(TextHandler.GetCommonText("当前用户在【接口授权】中没有配置可以访问的接口权限 或者 清空所有【接口授权】中的数据", "No interface permission is configured for the current user or the data in all interface permissions is cleared"));
+                                }
+                            }
+                        }
                         return true;
                     }
                     else
