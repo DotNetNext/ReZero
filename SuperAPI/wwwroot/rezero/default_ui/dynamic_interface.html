@@ -62,8 +62,10 @@
     </div>
     <!-- 添加这个div来显示“还没有数据”当data为空时 -->
     <div v-if="data==null||data.length === 0" class="no-data-message">
-        <div class="alert alert-warning" role="alert">没有创建接口：1、先创建实体，2、点同步创建表，3、创建接口</div>
-        <div class="alert alert-warning" role="alert">创建了没显示： 菜单：接口授权给用户授权接口 或者 删除所有接口授权数据 </div>
+        <div class="alert alert-warning" role="alert">
+            <p>  没有创建接口：1、先创建实体，2、点同步创建表，3、创建接口</p>
+            <p> 创建了没显示： 菜单：【系统配置-接口授权】 给用户授权可以访问的接口 或者 清空所有接口授权</p>
+        </div> 
     </div>
 </div>
 <script>
