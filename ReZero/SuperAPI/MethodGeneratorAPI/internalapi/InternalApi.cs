@@ -394,7 +394,23 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             CacheManager<ZeroPermissionInfo>.Instance.ClearCache();
             CacheManager<ZeroPermissionMapping>.Instance.ClearCache();
-            db.Updateable<ZeroPermissionInfo>().In(new object[] { id }).SetColumns(it => it.IsDeleted == true).ExecuteCommand();
+            try
+            {
+                db.Ado.BeginTran();
+                db.Updateable<ZeroPermissionInfo>().In(new object[] { id }).SetColumns(it => it.IsDeleted == true).ExecuteCommand();
+                var list = db.Queryable<ZeroPermissionMapping>().In(id).ToList();
+                foreach (var item in list)
+                {
+                    item.IsDeleted = true;
+                }
+                db.Updateable(list).ExecuteCommand();
+                db.Ado.CommitTran();
+            }
+            catch (Exception)
+            {
+                db.Ado.RollbackTran();
+                throw;
+            }
             return true;
         } 
         [ApiMethod(nameof(InternalInitApi.GetSavePermissionModelById), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_GetSavePermissionModelById)]
