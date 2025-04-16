@@ -242,8 +242,26 @@ namespace ReZero.SuperAPI
             if (db != null)
             {
                 db!.QueryFilter.ClearAndBackup();
-                db.Deleteable<ZeroInterfaceList>().Where(it => it.IsAttributeMethod == true).ExecuteCommand();
-                db.Insertable(zeroInterfaceLists).ExecuteCommand();
+                try
+                {
+                    db!.Ado.BeginTran();
+                    var list = db.Queryable<ZeroInterfaceList>().Where(it => it.IsAttributeMethod == true).ToList();
+                    db.Deleteable<ZeroInterfaceList>().Where(it => it.IsAttributeMethod == true).ExecuteCommand();
+                    foreach (var item in zeroInterfaceLists)
+                    {
+                        if (list.FirstOrDefault(it => it.Url == item.Url) is { } data)
+                        {
+                            item.Id = data.Id;
+                        }
+                    }
+                    db.Insertable(zeroInterfaceLists).ExecuteCommand();
+                    db!.Ado.CommitTran();
+                }
+                catch (Exception)
+                {
+                    db!.Ado.RollbackTran();
+                    throw;
+                }
                 db!.QueryFilter.Restore();
             }
         }

@@ -331,7 +331,8 @@ namespace ReZero.SuperAPI
                         InterfaceId = item.ZeroInterfaceList!.Id,
                         UserName = user,
                         CreateTime = DateTime.Now,
-                        Creator = DataBaseInitializerProvider.UserName
+                        Creator = DataBaseInitializerProvider.UserName,
+                        IsInitialized=false
                     }))
                     .ToList();
 
@@ -373,7 +374,8 @@ namespace ReZero.SuperAPI
                         InterfaceId = item.ZeroInterfaceList!.Id,
                         UserName = user,
                         CreateTime = DateTime.Now,
-                        Creator = DataBaseInitializerProvider.UserName
+                        Creator = DataBaseInitializerProvider.UserName,
+                        IsInitialized=false
                     }))
                     .ToList();
 
