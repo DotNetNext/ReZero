@@ -275,7 +275,6 @@ namespace ReZero.SuperAPI
            };
             return GetGridDataList<ZeroPermissionInfo>(pageNumber, pageSize, count, permissions, columns);
         }
-
         private static object GetGridDataList<T>(int pageNumber, int pageSize, int count, List<T> permissions, List<ResultGridColumn> columns)
         {
             return new ResultPageGrid
@@ -291,7 +290,6 @@ namespace ReZero.SuperAPI
                 }
             };
         }
-
         private static int SetDefaultPageParameters(ref int pageNumber, ref int pageSize)
         {
             var count = 0;
