@@ -82,7 +82,7 @@ namespace ReZero.SuperAPI
                         {
                             var userName = claims[0].Value;
                             var list=CacheManager<ZeroPermissionInfo>.Instance.GetList();
-                            if (list.Any()) 
+                            if (list.Any()&& dynamicInterfaceContext?.InterfaceType==InterfaceType.DynamicApi) 
                             {
                                 var mappings=CacheManager<ZeroPermissionMapping>.Instance.GetList();
                                 if (!mappings
