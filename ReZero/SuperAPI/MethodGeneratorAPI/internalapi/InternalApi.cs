@@ -262,14 +262,10 @@ namespace ReZero.SuperAPI
         public object GetPermissionList(int pageNumber,int pageSize,string permissionName,string userName)
         {
             var db = App.Db;
-            var count = 0;
-            if (pageNumber == 0)
-                pageNumber = 1;
-            if (pageSize == 0)
-                pageSize = 10;
+            int count = SetDefaultPageParameters(ref pageNumber, ref pageSize);
             var permissions = db.Queryable<ZeroPermissionInfo>()
-                .WhereIF(!string.IsNullOrEmpty(userName),it=> SqlFunc.Subqueryable<ZeroPermissionMapping>().Where(s=>s.PermissionInfoId==it.Id&&s.UserName==userName).Any())
-                .WhereIF(!string.IsNullOrEmpty(permissionName),it=>it.Name!.Contains(permissionName)).ToPageList(pageNumber,pageSize,ref count);
+                .WhereIF(!string.IsNullOrEmpty(userName), it => SqlFunc.Subqueryable<ZeroPermissionMapping>().Where(s => s.PermissionInfoId == it.Id && s.UserName == userName).Any())
+                .WhereIF(!string.IsNullOrEmpty(permissionName), it => it.Name!.Contains(permissionName)).ToPageList(pageNumber, pageSize, ref count);
             var columns = new List<ResultGridColumn>
            {
                new ResultGridColumn { PropertyName = "Id",  ColumnDescription = "权限ID"  },
@@ -277,6 +273,11 @@ namespace ReZero.SuperAPI
                new ResultGridColumn { PropertyName = "CreateTime", ColumnDescription = "创建时间"},
                new ResultGridColumn { PropertyName = "Creator", ColumnDescription = "创建者"}
            };
+            return GetGridDataList<ZeroPermissionInfo>(pageNumber, pageSize, count, permissions, columns);
+        }
+
+        private static object GetGridDataList<T>(int pageNumber, int pageSize, int count, List<T> permissions, List<ResultGridColumn> columns)
+        {
             return new ResultPageGrid
             {
                 Data = permissions,
@@ -289,6 +290,16 @@ namespace ReZero.SuperAPI
                     TotalPage = (int)Math.Ceiling((double)count / pageSize)
                 }
             };
+        }
+
+        private static int SetDefaultPageParameters(ref int pageNumber, ref int pageSize)
+        {
+            var count = 0;
+            if (pageNumber == 0)
+                pageNumber = 1;
+            if (pageSize == 0)
+                pageSize = 10;
+            return count;
         }
 
         [ApiMethod(nameof(InternalInitApi.AddPermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_AddPermission)]
