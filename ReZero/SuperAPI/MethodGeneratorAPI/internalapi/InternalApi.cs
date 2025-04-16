@@ -133,7 +133,7 @@ namespace ReZero.SuperAPI
         {
             var userName = DependencyResolver.GetLoggedInUser();
             var defaultSrc = "images/users/avatar.jpg";
-            var defaultUserName = userName; 
+            var defaultUserName = userName??"ReZero"; 
             var userInfo = App.Db.Queryable<ZeroUserInfo>().Where(it => it.UserName == userName || it.BusinessAccount == userName)
                 .First();
             if (userInfo?.Avatar==string.Empty)
