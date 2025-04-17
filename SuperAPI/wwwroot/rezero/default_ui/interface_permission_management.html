@@ -209,12 +209,16 @@
                             <label>选择用户</label>
                             <div class="selected-users">
                                 <!-- 循环显示已选用户 -->
-                                <span v-for="(user, index) in formData.Users" :key="index" class="user-badge">
+                                <span v-if="users.length > 0&& users[0]" v-for="(user, index) in formData.Users" :key="index" class="user-badge">
                                     {{ user }}
                                     <button type="button" class="btn btn-sm btn-danger" @click="removeUser(index)">-</button>
                                 </span>
                                 <!-- 添加用户按钮 -->
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addUserModal">+</button>
+                                <button v-if="users.length > 0&& users[0]" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addUserModal">+</button>
+                                <div v-else class="alert alert-warning">
+                                    JWT的信息没有配置完整，不能加载下拉列表
+                                    {{bizUserErrorMessage}}
+                                </div>
                             </div>
                         </div>
                         <!-- 权限接口选项 -->
@@ -285,6 +289,7 @@
             cbGroupedItemsRooot: false,
             users: [], // 用户列表
             groupedItems: [],
+            bizUserErrorMessage:"",
             formData: {
                 Id: 0,
                 PermissionName: '',
@@ -331,7 +336,7 @@
                 $('#modalEdit').modal('show');
             },
             // 保存数据
-            saveData: function () {
+            saveData: function () { 
                 // 遍历 formData.Items，更新 Checked 值
                 if (this.formData.Items && this.formData.Items.length > 0) {
                     this.formData.Items.forEach(item => {
@@ -397,7 +402,12 @@
                 var url = "/PrivateReZeroRoute/100003/GetBizUsers";
                 axios.get(url, jwHeader)
                     .then(response => {
-                        this.users = response.data;
+                        if (Array.isArray(response.data)) {
+                            this.users = response.data;
+                        } else if (response.data.message) {
+                            this.bizUserErrorMessage = response.data.message;
+                            this.users = [""];
+                        }
                     })
                     .catch(error => {
                         console.error("获取用户列表失败", error);
@@ -460,12 +470,7 @@
                 }
             },
             // 添加用户
-            confirmAddUser: function () {
-                if (this.users.length == 0)
-                {
-                    tools.alert("失败：JWT信息未配置完整，并且业务UserTableName对应的表要有记录");
-                    return;
-                }
+            confirmAddUser: function () { 
                 if (this.selectedUser && !this.formData.Users.includes(this.selectedUser)) {
                     this.formData.Users.push(this.selectedUser);
                     $('#addUserModal').modal('hide'); // 关闭模态框
