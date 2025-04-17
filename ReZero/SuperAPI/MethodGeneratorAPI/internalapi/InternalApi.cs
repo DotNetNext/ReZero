@@ -306,11 +306,7 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             CacheManager<ZeroPermissionInfo>.Instance.ClearCache();
             CacheManager<ZeroPermissionMapping>.Instance.ClearCache();
-            if (string.IsNullOrEmpty(permission.Name))
-            {
-                throw new Exception("权限名称不能为空");
-            }
-
+            CheckPermissionModel(permission);
             // 设置权限基本信息
             permission.Id = SqlSugar.SnowFlakeSingle.Instance.NextId();
             permission.CreateTime = DateTime.Now;
@@ -332,7 +328,7 @@ namespace ReZero.SuperAPI
                         UserName = user,
                         CreateTime = DateTime.Now,
                         Creator = DataBaseInitializerProvider.UserName,
-                        IsInitialized=false
+                        IsInitialized = false
                     }))
                     .ToList();
 
@@ -348,6 +344,7 @@ namespace ReZero.SuperAPI
         [ApiMethod(nameof(InternalInitApi.UpdatePermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_UpdatePermission)]
         public bool UpdatePermission(SavePermissionInfoDetailModel permission)
         {
+            CheckPermissionModel(permission);
             var db = App.Db;
             CacheManager<ZeroPermissionInfo>.Instance.ClearCache();
             CacheManager<ZeroPermissionMapping>.Instance.ClearCache();
@@ -388,6 +385,18 @@ namespace ReZero.SuperAPI
             return true;
         }
 
+
+        private static void CheckPermissionModel(SavePermissionInfoDetailModel permission)
+        {
+            if (string.IsNullOrEmpty(permission.Name))
+            {
+                throw new Exception("权限名称不能为空");
+            }
+            if (permission.Users?.Any() != true)
+            {
+                throw new Exception("用户不能为空");
+            }
+        }
         [ApiMethod(nameof(InternalInitApi.DeletePermission), GroupName = nameof(ZeroPermissionInfo), Url = PubConst.InitApi_DeletePermission)]
         public bool DeletePermission(long id)
         {
