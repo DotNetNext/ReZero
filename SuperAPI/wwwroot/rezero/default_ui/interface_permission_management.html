@@ -350,11 +350,12 @@
                 var url = this.isEdit ? "/PrivateReZeroRoute/100003/UpdatePermission" : "/PrivateReZeroRoute/100003/AddPermission";
                 axios.post(url, this.formData, jwHeader)
                     .then(response => {
-                        if (response.data) {
-                            $('#modalEdit').modal('hide');
-                            this.fetchData();
+                        if (response.data == true) {
+                            btnCloseEdit.click();
+                            this.error = null;
+                            this.onSearch();
                         } else {
-                            alert("保存失败");
+                            tools.alert(response.data.message);
                         }
                     })
                     .catch(error => {
