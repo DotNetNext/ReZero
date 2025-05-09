@@ -52,7 +52,12 @@ Rezero.Api
 builder.Services.AddReZeroServices(api =>
 {
     //启用超级API
-    api.EnableSuperApi();//默认载体为sqlite ，有重载可以配置数据库
+    //有重载可换json文件
+    var apiObj = new ReZero.SuperAPI.SuperAPIOptions();
+    //注册DLL
+    apiObj!.DependencyInjectionOptions = new ReZero.SuperAPI.DependencyInjectionOptions(Assembly.GetExecutingAssembly());
+    //启用超级API
+    api.EnableSuperApi(apiObj);
 
 });
 //写在builder.Build前面就行只需要一行
