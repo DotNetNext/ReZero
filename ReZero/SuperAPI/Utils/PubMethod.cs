@@ -49,6 +49,10 @@ namespace ReZero.SuperAPI
             Type[] types = assembly.GetTypes();
             foreach (Type type in types)
             {
+                if (type.Name == nameof(SavePermissionInfoDetailModel)) 
+                {
+                    continue;
+                }
                 if (type.IsSubclassOf(baseType))
                 {
                     derivedTypes.Add(type);
