@@ -131,7 +131,7 @@ namespace ReZero.SuperAPI
         public SuperAPIConnectionConfig ConnectionConfig { get; set; } = new SuperAPIConnectionConfig()
         {
             DbType = SqlSugar.DbType.Sqlite,
-            ConnectionString = "datasource=ReZero.db"
+            ConnectionString = "datasource=ReZero.db" 
         };
 
         /// <summary>

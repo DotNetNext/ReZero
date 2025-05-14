@@ -27,7 +27,9 @@ namespace ReZero.SuperAPI
                 IsAutoCloseConnection = true,
                 MoreSettings=new ConnMoreSettings() 
                 {
-                    SqlServerCodeFirstNvarchar=true
+                    SqlServerCodeFirstNvarchar=true,
+                    DatabaseModel=rezeroConnectionConfig.DatabaseModel,
+                    MaxParameterNameLength= rezeroConnectionConfig.Oracle_VersionLe11? 30:0
                 }
             };
 
