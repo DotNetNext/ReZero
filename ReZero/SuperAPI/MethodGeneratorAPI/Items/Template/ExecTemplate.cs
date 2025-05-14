@@ -285,6 +285,13 @@ namespace ReZero.SuperAPI
                     PropertyType = EntityGeneratorManager.GetNativeTypeByType(dataColumn.DataType)
                 });
             }
+            var entityInfo = db.Queryable<ZeroEntityInfo>()
+                .Includes(it=>it.ZeroEntityColumnInfos).Where(it => it.DbTableName == item.DbTableName)
+             .First();
+            if (!isView&&entityInfo != null)
+            {
+                item = entityInfo;
+            }
             var classString = GetClassString(databaseId, template, item, out _);
             return classString;
         }
