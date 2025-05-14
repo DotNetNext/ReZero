@@ -41,7 +41,6 @@ builder.Services.AddReZeroServices(api =>
     //有重载可换json文件
     var apiObj = SuperAPIOptions.GetOptions();
 
-    apiObj.DatabaseOptions!.ConnectionConfig.Oracle_VersionLe11 = true;
 
     //IOC业务等所有需要的所有集程集
     var assemblyList = Assembly.GetExecutingAssembly()
