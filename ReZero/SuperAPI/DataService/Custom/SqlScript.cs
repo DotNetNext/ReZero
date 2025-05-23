@@ -86,7 +86,10 @@ namespace ReZero.SuperAPI
                 }),
                 Page = new ResultPage()
                 {
-                    TotalCount = count.Value
+                    TotalCount = count.Value,
+                    PageNumber=pageNumber,
+                    PageSize = pageSize,
+                    TotalPage = (int)Math.Ceiling((double)count / pageSize)
                 }
             }; 
         }
