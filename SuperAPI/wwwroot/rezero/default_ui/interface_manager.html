@@ -970,6 +970,14 @@
                 }
                 var th = this;
                 btnDivAddColumns.click();
+                setTimeout(function () {
+                    th.columns.forEach(function (col) {
+                        // 查找 selectedColumns 里是否有同 PropertyName 的列
+                        var match = th.selectedColumns.find(sel => sel.PropertyName === col.PropertyName);
+                        // 如果有则用 selectedColumns 里的 DbColumnName，否则用原值
+                        col.DbColumnName = match ? match.DbColumnName : col.DbColumnName;
+                    });
+                }, 500); // 200ms 视接口响应速度可调整
                 this.setColumns();
             },
             saveColumns: function () {
