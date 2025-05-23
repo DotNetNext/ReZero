@@ -32,6 +32,11 @@ namespace ReZero.SuperAPI
                     Key=((int)SqlResultType.DataSet).ToString(),
                     Value=TextHandler.GetCommonText("DataSet", "DataSet"),
                  }
+                 ,
+                 new ActionTypeFormElementSelectDataSourceModel(){
+                    Key=((int)SqlResultType.PageQuery).ToString(),
+                    Value=TextHandler.GetCommonText("分页查询", "Page query"),
+                 }
                 },
             });
             result.Insert(3, new ActionTypeFormElementModel()

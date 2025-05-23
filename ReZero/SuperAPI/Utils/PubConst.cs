@@ -32,6 +32,10 @@ namespace ReZero.SuperAPI
         public readonly static string Common_Q = "?";
         public readonly static string Common_ArrayKey = "[]";
         public readonly static string Common_RegexWKey = "_____asfalflsgayfaggugglgfgyydfyiypqombbgjoosbds____";
+        public readonly static string Common_Sql_PageNumber = "Sql_PageNumber";
+        public readonly static string Common_Sql_PageSize = "Sql_PageSize";
+        public readonly static int Common_Sql_PageNumberDefaultValue =1;
+        public readonly static int Common_Sql_PageSizeDefaultValue = 10;
 
         public const string CacheKey_Type = "ReZero_Type_{0}";
 

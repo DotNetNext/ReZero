@@ -9,6 +9,7 @@ namespace ReZero.SuperAPI
         Query=1,
         AffectedRows=2,
         DataSet=3,
-        IdNumber=4
+        IdNumber=4,
+        PageQuery = 5
     }
 }

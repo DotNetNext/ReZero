@@ -25,39 +25,65 @@ namespace ReZero.SuperAPI
             zeroInterfaceList!.DataModel!.DefaultParameters = new List<DataModelDefaultParameter>();
             // 定义正则表达式
             Regex regex = new Regex(@"{(?<type>\w+):(?<name>\w+)}");
-            var replaceKey =PubConst.Common_RegexWKey;
+            var replaceKey = PubConst.Common_RegexWKey;
             var keyword = PubConst.Common_ArrayKey;
-            var sqlQuery = zeroInterfaceList!.DataModel.Sql!.Replace(keyword, replaceKey) +string.Empty;
+            var sqlQuery = zeroInterfaceList!.DataModel.Sql!.Replace(keyword, replaceKey) + string.Empty;
             // 匹配所有的 {type:name} 格式
             MatchCollection matches = regex.Matches(sqlQuery);
-             
+
             // 循环替换匹配的内容
-            foreach (Match match in matches.GroupBy(it => it.Groups["name"]+"").Select(it=>it.First()).ToList())
+            foreach (Match match in matches.GroupBy(it => it.Groups["name"] + "").Select(it => it.First()).ToList())
             {
                 string type = match.Groups["type"].Value;
-                string name = match.Groups["name"].Value; 
+                string name = match.Groups["name"].Value;
                 string replacement = "@" + name;
-                if (type?.Contains(replaceKey) == true) 
+                if (type?.Contains(replaceKey) == true)
                 {
                     type = type?.Replace(replaceKey, string.Empty) + keyword;
                 }
                 sqlQuery = sqlQuery.Replace(match.Value, replacement);
-                zeroInterfaceList!.DataModel!.DefaultParameters.Add(new DataModelDefaultParameter() {
-                    ValueIsReadOnly=false,
-                    Name=name, 
-                    ValueType=type
-                });
-                if (type?.ToLower() == PubConst.Orm_ClaimkeyName) 
+                zeroInterfaceList!.DataModel!.DefaultParameters.Add(new DataModelDefaultParameter()
                 {
-                    var currentParameter=zeroInterfaceList!.DataModel!.DefaultParameters.Last();
-                    currentParameter.Value =null;
+                    ValueIsReadOnly = false,
+                    Name = name,
+                    ValueType = type
+                });
+                if (type?.ToLower() == PubConst.Orm_ClaimkeyName)
+                {
+                    var currentParameter = zeroInterfaceList!.DataModel!.DefaultParameters.Last();
+                    currentParameter.Value = null;
                     currentParameter.ValueType = PubConst.Orm_WhereValueTypeClaimKey;
                     currentParameter.ValueIsReadOnly = true;
                 }
             }
             zeroInterfaceList!.DataModel.Sql = sqlQuery.Replace(replaceKey, keyword);
+            if (IsPageQueryResult(zeroInterfaceList))
+            {
+                AddPageQueryDefaults(zeroInterfaceList);
+            }
         }
-        
+
+        private static bool IsPageQueryResult(ZeroInterfaceList zeroInterfaceList)
+        {
+            return zeroInterfaceList!.DataModel!.ResultType == SqlResultType.PageQuery;
+        }
+
+        private static void AddPageQueryDefaults(ZeroInterfaceList zeroInterfaceList)
+        { 
+            zeroInterfaceList!.DataModel!.DefaultParameters!.Add(new DataModelDefaultParameter()
+            {
+                ValueIsReadOnly = false,
+                Name =PubConst.Common_Sql_PageNumber,
+                ValueType = typeof(int).Name
+            });
+            zeroInterfaceList!.DataModel!.DefaultParameters.Add(new DataModelDefaultParameter()
+            {
+                ValueIsReadOnly = false,
+                Name =PubConst.Common_Sql_PageSize,
+                ValueType = typeof(int).Name
+            });
+        }
+
         private  void SetDataModel(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
             zeroInterfaceList.DataModel!.DataBaseId = saveInterfaceListModel!.Json!.DataBaseId ?? 0;
