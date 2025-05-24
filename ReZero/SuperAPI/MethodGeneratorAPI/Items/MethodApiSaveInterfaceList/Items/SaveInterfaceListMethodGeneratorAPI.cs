@@ -33,7 +33,7 @@ namespace ReZero.SuperAPI
         private  void SetDataModel(SaveInterfaceListModel saveInterfaceListModel, ZeroInterfaceList zeroInterfaceList)
         {
             zeroInterfaceList.DataModel!.DataBaseId = saveInterfaceListModel!.Json!.DataBaseId ?? 0;
-            zeroInterfaceList.DataModel.ActionType = ActionType.SqlScript;
+            zeroInterfaceList.DataModel.ActionType = ActionType.MethodGeneratorAPI;
             zeroInterfaceList.DataModel.Sql = saveInterfaceListModel.Sql;
             zeroInterfaceList.DataModel.ResultType = saveInterfaceListModel?.ResultType;
         }
