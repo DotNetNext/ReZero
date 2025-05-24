@@ -32,7 +32,7 @@ namespace ReZero.SuperAPI
             // Parse code text into syntax tree (currently an empty string)
             var syntaxTree = CSharpSyntaxTree.ParseText("");
             // Generate a unique assembly name
-            var assemblyName = nameof(CodeAnalysisControllerLoader) + zeroInterface.Id;
+            var assemblyName = GenerateAssemblyName(zeroInterface);
 
             // Collect loaded assemblies
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
@@ -114,6 +114,11 @@ namespace ReZero.SuperAPI
 
             // Notify MVC framework to refresh Action descriptors
             CodeAnalysisControllerLoaderActionDescriptorChangeProvider.Instance.NotifyChanges();
+        }
+
+        public static string GenerateAssemblyName(ZeroInterfaceList zeroInterface)
+        {
+            return nameof(CodeAnalysisControllerLoader) + zeroInterface.Id;
         }
 
         /// <summary>
