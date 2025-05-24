@@ -217,6 +217,11 @@
                                                     <textarea rows="10" style="display:none" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
                                                     <div id="divAceEditor" style="width:100%;height:300px;"></div>
                                                 </template>
+                                                <!--C#Test-->
+                                                <template v-if="item.ElementType==13">
+                                                    <p>功能还在开发中....暂时还不能使用</p>
+                                                    <textarea rows="10"  :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
+                                                </template>
                                                 <!--DefaultValueColumns-->
                                                 <template v-if="item.ElementType==8">
                                                     <span class="btn btn-primary m-b-10" @click="openDefaultValue"><i class="mdi-account-settings-variant mdi"></i> 配置 </span>

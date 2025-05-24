@@ -18,5 +18,6 @@ namespace ReZero.SuperAPI
         UpdateResultType=10,
         Where = 11,
         InsertResultType = 12,
+        CSharpText = 13,
     }
 }
