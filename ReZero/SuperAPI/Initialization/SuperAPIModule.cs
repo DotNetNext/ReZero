@@ -9,6 +9,7 @@ using System.Text;
 using System.Linq;
 using ReZero.Configuration;
 using System.Data;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 namespace ReZero.SuperAPI
 {
     public static partial class SuperAPIModule
@@ -50,6 +51,9 @@ namespace ReZero.SuperAPI
                 ); 
                 services.AddSingleton(provider=>corsOptions);
                 services.AddTransient<IStartupFilter,SuperAPICorsFilter>();
+                services.AddSingleton(CodeAnalysisControllerLoaderActionDescriptorChangeProvider.Instance);
+                services.AddSingleton<IActionDescriptorChangeProvider>(sp => sp.GetRequiredService<CodeAnalysisControllerLoaderActionDescriptorChangeProvider>());
+
             }
         }
 
