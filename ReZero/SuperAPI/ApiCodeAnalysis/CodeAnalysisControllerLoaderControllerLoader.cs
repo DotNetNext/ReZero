@@ -25,12 +25,10 @@ namespace ReZero.SuperAPI
         /// Dynamically compiles and loads a Controller into the application.
         /// </summary>
         /// <param name="zeroInterface">Interface definition object containing code text and other information.</param>
-        public void LoadController(ZeroInterfaceList zeroInterface)
+        public Assembly LoadController(ZeroInterfaceList zeroInterface)
         {
-            // Get code text parameter
-            var codeText = zeroInterface!.DataModel!.DefaultParameters.FirstOrDefault(it => it.Name == "codeText");
             // Parse code text into syntax tree (currently an empty string)
-            var syntaxTree = CSharpSyntaxTree.ParseText("");
+            var syntaxTree = CSharpSyntaxTree.ParseText(zeroInterface!.DataModel!.CSharpText!);
             // Generate a unique assembly name
             var assemblyName = GenerateAssemblyName(zeroInterface);
 
@@ -114,6 +112,7 @@ namespace ReZero.SuperAPI
 
             // Notify MVC framework to refresh Action descriptors
             CodeAnalysisControllerLoaderActionDescriptorChangeProvider.Instance.NotifyChanges();
+            return assembly;
         }
 
         public static string GenerateAssemblyName(ZeroInterfaceList zeroInterface)

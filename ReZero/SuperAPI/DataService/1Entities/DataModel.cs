@@ -41,6 +41,8 @@ namespace ReZero.SuperAPI
         public WhereRelation? WhereRelation { get;  set; }
         public string? WhereRelationTemplate { get;  set; }
         public string? CurrentDataString { get;   set; }
+        public string? CSharpText { get;  set; }
+        public string? AssemblyName { get;  set; }
         #endregion
 
         #region Http

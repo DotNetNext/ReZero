@@ -22,7 +22,31 @@ namespace ReZero.SuperAPI
 
         private  void SetParameters(ZeroInterfaceList zeroInterfaceList)
         {
-           
+            var loader = new CodeAnalysisControllerLoader();
+            var assemblyObj = loader.LoadController(zeroInterfaceList);
+            zeroInterfaceList.DataModel!.AssemblyName = assemblyObj.GetName().Name;
+            var type = assemblyObj.GetTypes().FirstOrDefault(it => it.Name == "DynamicApiEntry");
+            var memthod = type?.GetMethods()?.Any(it => it.Name == "InvokeAsync");
+            ValidateDynamicApiEntry(type, memthod);
+            zeroInterfaceList.DataModel.MyMethodInfo = new MyMethodInfo()
+            {
+                MethodClassFullName = type?.FullName,
+                MethodName = "InvokeAsync",
+                MethodArgsCount = type?.GetMethod("InvokeAsync")?.GetParameters().Length ?? 0,
+                ArgsTypes = type?.GetMethod("InvokeAsync")?.GetParameters().Select(p => p.ParameterType).ToArray()
+            };
+        }
+
+        private static void ValidateDynamicApiEntry(Type? type, bool? memthod)
+        {
+            if (type == null)
+            {
+                throw new Exception(TextHandler.GetCommonText("缺少DynamicApiEntry类", "需要改成英文"));
+            }
+            else if (memthod == null)
+            {
+                throw new Exception(TextHandler.GetCommonText("DynamicApiEntry类中缺少InvokeAsync方法", "需要改成英文"));
+            }
         }
 
         private static bool IsPageQueryResult(ZeroInterfaceList zeroInterfaceList)
@@ -35,6 +59,7 @@ namespace ReZero.SuperAPI
             zeroInterfaceList.DataModel!.DataBaseId = saveInterfaceListModel!.Json!.DataBaseId ?? 0;
             zeroInterfaceList.DataModel.ActionType = ActionType.MethodGeneratorAPI;
             zeroInterfaceList.DataModel.Sql = saveInterfaceListModel.Sql;
+            zeroInterfaceList.DataModel.CSharpText = saveInterfaceListModel.CSharpText;
             zeroInterfaceList.DataModel.ResultType = saveInterfaceListModel?.ResultType;
         }
 

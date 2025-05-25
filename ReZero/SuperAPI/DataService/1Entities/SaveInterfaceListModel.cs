@@ -16,8 +16,9 @@ namespace ReZero.SuperAPI
         public string? InterfaceCategoryId { get; set; }
         public ActionType? ActionType { get; set; }
         public CommonConfig? Json { get; set; }
-        public string? Sql { get; set; }
+        public string? Sql { get; set; } 
         public string? TreeCode { get; set; }
+        public string? CSharpText { get; set; } 
         public string? TreeParentCode { get; set; }
         public string? TreeRootParentValue { get; set; }
         public string? HttpMethod { get; set; }
