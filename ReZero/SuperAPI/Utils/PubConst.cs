@@ -36,6 +36,8 @@ namespace ReZero.SuperAPI
         public readonly static string Common_Sql_PageSize = "Sql_PageSize";
         public readonly static int Common_Sql_PageNumberDefaultValue =1;
         public readonly static int Common_Sql_PageSizeDefaultValue = 10;
+        public readonly static string Common_DynamicApiEntry="DynamicApiEntry";
+        public readonly static string Common_DynamicApiEntry_InvokeAsync = "InvokeAsync";
 
         public const string CacheKey_Type = "ReZero_Type_{0}";
 

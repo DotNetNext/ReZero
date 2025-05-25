@@ -26,8 +26,8 @@ namespace ReZero.SuperAPI
             var loader = new CodeAnalysisControllerLoader();
             var assemblyObj = loader.LoadController(zeroInterfaceList);
             zeroInterfaceList.DataModel!.AssemblyName = assemblyObj.GetName().Name;
-            var type = assemblyObj.GetTypes().FirstOrDefault(it => it.Name == "DynamicApiEntry");
-            var method = type?.GetMethods()?.FirstOrDefault(it => it.Name == "InvokeAsync");
+            var type = assemblyObj.GetTypes().FirstOrDefault(it => it.Name == PubConst.Common_DynamicApiEntry);
+            var method = type?.GetMethods()?.FirstOrDefault(it => it.Name == PubConst.Common_DynamicApiEntry_InvokeAsync);
             ValidateDynamicApiEntry(type, method);
             var parameters = type?.GetMethod("InvokeAsync")?.GetParameters();
             var types = parameters.Select(p => p.ParameterType).ToArray(); 
