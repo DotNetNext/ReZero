@@ -62,15 +62,28 @@ namespace ReZero.SuperAPI
         }
 
         private Type? GetDynamicApiEntryType(DataModel dataModel)
-        {  
+        {
             // Add new assembly to ApplicationPartManager
             var partManager = DependencyResolver.GetRequiredService<ApplicationPartManager>();
             // Find and remove the corresponding AssemblyPart
-            var partToRemove = partManager.ApplicationParts
-                .OfType<AssemblyPart>()
-                .FirstOrDefault(p => p.Assembly.GetName().Name == dataModel.AssemblyName);
-            var result= partToRemove.Assembly.GetType(PubConst.Common_DynamicApiEntry);
+            var partToRemove = FindAssemblyPartToRemove(dataModel, partManager);
+            if (partToRemove == null)
+            {
+                var loader = new CodeAnalysisControllerLoader();
+                var id =Convert.ToInt64(dataModel!.AssemblyName!.Replace(nameof(CodeAnalysisControllerLoader),string.Empty));
+                var zeroInterfaceList=App.Db.Queryable<ZeroInterfaceList>().Where(it => it.Id == id).First();
+                loader.LoadController(zeroInterfaceList);
+                partToRemove= FindAssemblyPartToRemove(dataModel, partManager);
+            }
+            var result = partToRemove.Assembly.GetType(PubConst.Common_DynamicApiEntry);
             return result;
+        }
+
+        private static AssemblyPart FindAssemblyPartToRemove(DataModel dataModel, ApplicationPartManager partManager)
+        {
+            return partManager.ApplicationParts
+                            .OfType<AssemblyPart>()
+                            .FirstOrDefault(p => p.Assembly.GetName().Name == dataModel.AssemblyName);
         }
 
         private static bool IsDynamicApiEntry(DataModel dataModel, Type? classType)
