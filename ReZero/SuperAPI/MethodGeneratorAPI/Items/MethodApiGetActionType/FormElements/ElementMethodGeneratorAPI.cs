@@ -17,7 +17,14 @@ namespace ReZero.SuperAPI
                 Text = TextHandler.GetCommonText("C#文本", "C# code text"),
                 ElementType = ElementType.CSharpText,
                 Name = "CSharpText",
-                Value = @"using SqlSugar;
+                Value = GetDefaultText()
+            });
+            return result;
+        }
+
+        private static string GetDefaultText()
+        {
+            return @"using SqlSugar;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -51,10 +58,9 @@ public class DynamicApiEntry
     {
         return true;
     }
-}"
-            });
-            return result; 
+}";
         }
+
         private static void RemoveCommonItem(List<ActionTypeFormElementModel> result)
         {
             result.RemoveAll(it => it.Name == "TableId");
