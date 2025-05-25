@@ -48,6 +48,9 @@ namespace ReZero.SuperAPI
             // Collect loaded assemblies
             var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
                 .Where(a => !a.IsDynamic && !string.IsNullOrWhiteSpace(a.Location))
+                .Where(it => {
+                    return !it.GetName().Name.StartsWith(nameof(CodeAnalysisControllerLoader));
+                })
                 .ToList();
 
             // Load dependencies (including NUGET package DLLs)
