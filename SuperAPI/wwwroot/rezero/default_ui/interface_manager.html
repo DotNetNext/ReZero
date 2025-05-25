@@ -1499,7 +1499,7 @@
             setValueEditCode: function () {
                 var $sql = $("[name='CSharpText']");
                 if ($sql.size() > 0) {
-                    var editor = ace.edit("divAceEditor");
+                    var editor = ace.edit("divMonacoContainer");
                     this.currentActionTypeContext.FormElements[3].Value = editor.getValue();
                     $sql.val(editor.getValue());
                 }
