@@ -828,7 +828,8 @@
                                 }
                             }
                             btnSave.click();
-                            this.showEditSql()
+                            this.showEditSql();
+                            this.showEditCode();
                             setTimeout(function () {
                                 th.setSelectedOptions();
                             }, 500);
@@ -864,6 +865,7 @@
                 this.currentActionTypeContext = this.currentActionType.Items[0];
                 this.currentActionTypeContext.FormElements[0].Value = this.currentActionTypeContext.Text;
                 this.showEditSql();
+                this.showEditCode();
             },
             addOrUpdateInterfaceList: function () {
 
@@ -1466,6 +1468,28 @@
                         editor.selection.clearSelection();
                     }
 
+                }, 100);
+            },
+            showEditCode: function () {
+                setTimeout(function () {
+                    var $sql = $("[name='CSharpText']");
+                    if ($sql.length > 0)
+                    {
+                        window.MonacoEnvironment = {
+                            getWorkerUrl: function (moduleId, label) {
+                                return 'js/monaco-editor/vs/base/worker/workerMain.js';
+                            }
+                        };
+                        require.config({ paths: { vs: 'js/monaco-editor/vs' } }); // vs 目录根据你的路径调整
+                        require(['vs/editor/editor.main'], function () {
+                            // 创建 Monaco 编辑器实例，替换 divAceEditor 容器
+                            var editor = monaco.editor.create(document.getElementById('divMonacoContainer'), {
+                                 
+                            });
+
+                            // 清除选择（Monaco默认不选中，不用特殊调用）
+                        });
+                    }
                 }, 100);
             },
             setValueEditSql: function () {
