@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Monaco Editor C# Demo</title>
+<style>
+  html, body, #container {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+</head>
+<body>
+  <div id="container"></div>
+
+  <script src="vs/loader.js"></script>
+  <script>
+    require.config({ paths: { 'vs': './vs' } });
+    require(['vs/editor/editor.main'], function() {
+      monaco.editor.create(document.getElementById('container'), {
+        value: `using System;
+
+class Program {
+    static void Main() {
+        Console.WriteLine("Hello, Monaco!");
+    }
+}`,
+        language: 'csharp',
+        theme: 'vs-dark',
+      });
+    });
+  </script>
+</body>
+</html>
