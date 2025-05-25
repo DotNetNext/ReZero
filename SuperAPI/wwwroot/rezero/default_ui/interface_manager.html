@@ -2,7 +2,8 @@
 <link href="css/page_table_list.css" rel="stylesheet" />
 <link href="css/page_interface_manager.css" rel="stylesheet" />
 <script src="js/ace/src-min/ace.js"></script>
-<script src="js/ace/src-min/ext-language_tools.js"></script> 
+<script src="js/ace/src-min/ext-language_tools.js"></script>
+<script src="js/monaco-editor/vs/loader.js"></script>
 <div id="apibox" class="card">
     <!--主列表搜索-->
     <div class="search-bar">
@@ -16,7 +17,7 @@
                     <div class="col-md-2"><select id="selInterfaceCategoryId" class="form-control"><option value="">==分类==</option> <option v-for="item in interfaceCategroyList" :value="item.Id">{{item.Name}}</option></select></div>
                     <div class="col-md-3">
                         <button @click="onSearch()" id="btnSearch" class="btn btn-secondary"><i class="mdi mdi-magnify"></i>搜索</button>
-                        <button onclick="frmSearach.reset()"  class="btn btn-close m-l-15" type="submit">清空</button>
+                        <button onclick="frmSearach.reset()" class="btn btn-close m-l-15" type="submit">清空</button>
                     </div>
                 </div>
             </div>
@@ -30,7 +31,7 @@
         </div>
     </div>
     <!--主列表-->
-    <div class="card-body"> 
+    <div class="card-body">
         <div class="table-responsive">
             <div class="master-table-container">
                 <table class="table table-bordered">
@@ -127,7 +128,7 @@
                                     <form id="frmSave" action="#!" method="post" name="edit-form" class="edit-form">
                                         <input v-model="editId" type="hidden" value="0" />
                                         <div v-for="item in currentActionTypeContext.FormElements" class="form-group col-md-12">
-                                            <label v-if="item.ElementType!=5" >{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
+                                            <label v-if="item.ElementType!=5">{{item.Text}}<span class="red" v-if="item.IsRequired">*</span></label>
                                             <div class="form-controls">
                                                 <!--text-->
                                                 <template v-if="item.ElementType==0">
@@ -642,7 +643,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-if="selectDefaultValueColumns&&selectDefaultValueColumns.length>0"  v-for="x in  selectDefaultValueColumns" >
+                                <tr v-if="selectDefaultValueColumns&&selectDefaultValueColumns.length>0" v-for="x in  selectDefaultValueColumns">
                                     <td> {{x.PropertyName}} </td>
                                     <td>
                                         <select v-model="x.Type" class="form-control">
@@ -654,11 +655,11 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input  v-model="x.Value"  :class="[x.Type != 1&&x.Type != 4 ? 'hidden' : '', 'form-control'].join(' ')" />
+                                        <input v-model="x.Value" :class="[x.Type != 1&&x.Type != 4 ? 'hidden' : '', 'form-control'].join(' ')" />
                                     </td>
                                 </tr>
                             </tbody>
-                        </table> 
+                        </table>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -691,7 +692,7 @@
             selectedTables: [],
             databaseId: 0,
             database: [],
-            editId:0,
+            editId: 0,
             columns: [],
             joinColumns: [],
             selectColumns: [],
@@ -707,7 +708,7 @@
             selectedWheresConditionalRelation: "AND",
             selectdWherePreviewString: null,
             selectDefaultValueColumns: [],
-            saveDefaultValueColumns:[],
+            saveDefaultValueColumns: [],
             //ComplexityColumn
             copcol_JoinTable: null,
             copcol_MasterField: null,
@@ -718,7 +719,7 @@
             copcol_ShowField: null,
             copcol_ShowFields: [],
             //update
-            updateColumns:[]
+            updateColumns: []
         },
         mounted() {
             this.fetchData("");
@@ -749,7 +750,7 @@
 
                 var urlParameters = "?" + tools.objectToQueryString({
                     __pageNumber: page,
-                   __pageSize: tools.getValue("selPageSize"),
+                    __pageSize: tools.getValue("selPageSize"),
                     Name: txtName.value,
                     GroupName: selGroupName.value,
                     DataBaseId: selDatabase.value,
@@ -757,8 +758,7 @@
                 });
                 this.fetchData(urlParameters);
             },
-            changeDatabase: function ()
-            {
+            changeDatabase: function () {
                 this.onSearch(1);
             },
             selectAll(event) {
@@ -801,32 +801,30 @@
             /*
                编辑接口
             */
-            openEdit: function (item)
-            {
+            openEdit: function (item) {
                 var th = this;
                 var title = th.editTitle;
                 var urlById = "/PrivateReZeroRoute/100003/GetInternalDetail?id=" + item.Id;
-                if (item.Id) { 
+                if (item.Id) {
                     axios.get(urlById, jwHeader)
                         .then(response => {
                             var oldData = JSON.parse(JSON.stringify(th.$data));
                             var oldDatabase = th.database;
                             var data = JSON.parse(response.data.DataModel.CurrentDataString);
-                            tools.assignValuesToObject(data, th); 
-                            th.title = title;  
-                            th.editId = response.data.Id; 
+                            tools.assignValuesToObject(data, th);
+                            th.title = title;
+                            th.editId = response.data.Id;
                             th.data = oldData.data;
                             th.interfaceCategroyList = oldData.interfaceCategroyList;
                             th.actionList = oldData.actionList;
                             th.database = oldDatabase;
                             if (th.currentActionTypeContext) {
-                                if (th.currentActionTypeContext.FormElements)
-                                {
+                                if (th.currentActionTypeContext.FormElements) {
                                     if (th.currentActionTypeContext.FormElements[1].SelectDataSource) {
                                         th.currentActionTypeContext.FormElements[1].SelectDataSource
                                             = oldData.actionList[0].Items[1].FormElements[1].SelectDataSource;
                                     }
-                                   
+
                                 }
                             }
                             btnSave.click();
@@ -839,7 +837,7 @@
                             this.error = error.message;
                             this.data = null;
                         });
-                }  
+                }
             },
 
 
@@ -881,19 +879,19 @@
                     }
                 });
 
-                if (isSuccess) { 
+                if (isSuccess) {
                     this.setValueEditSql();
                     var formData = tools.formToJson("frmSave");
-                    formData.DatabaseId = this.DatabaseId; 
+                    formData.DatabaseId = this.DatabaseId;
                     var vueData = this.$data;
                     vueData.data = [];
                     var oldActionList = vueData.actionList;
                     vueData.actionList = null;
-                    var currentString = JSON.stringify(vueData); 
+                    var currentString = JSON.stringify(vueData);
                     vueData.actionList = oldActionList;
                     formData.Json = {
                         Id: this.editId,
-                        Columns:this.selectedColumns,
+                        Columns: this.selectedColumns,
                         ComplexityColumns: this.selectedComplexityColumns,
                         Where: this.selectedWheres,
                         WhereRelation: this.selectedWheresConditionalRelation,
@@ -925,7 +923,7 @@
             interfaceListTabClick: function (index, item) {
                 this.tabIndex = index;
                 this.currentActionTypeContext = this.currentActionType.Items[index];
-                if (this.currentActionTypeContext.FormElements.length>0)
+                if (this.currentActionTypeContext.FormElements.length > 0)
                     this.currentActionTypeContext.FormElements[0].Value = item.Text;
                 this.showEditSql();
             },
@@ -1021,7 +1019,7 @@
                 this.joinColumns = [];
             },
             saveComplexityColumns: function () {
-                // 封装以 this.copcol_ 开头的属性到 json 对象中  
+                // 封装以 this.copcol_ 开头的属性到 json 对象中
                 var json = {
                     ShowField: this.copcol_ShowField,
                     Name: this.copcol_Name,
@@ -1030,26 +1028,23 @@
                     MasterField: this.copcol_MasterField,
                     joinField: this.copcol_joinField,
                     SortId: this.copcol_SortId
-                }; 
+                };
                 if (json.ShowField) {
                     if (!this.checkCommas(json.ShowField, json.Name)) {
                         return;
                     }
                 }
-                else
-                {
+                else {
                     tools.alert("带*的请填写完整");
                     return;
                 }
-                if (!json.Name)
-                {
+                if (!json.Name) {
                     json.Name = json.ShowField;
                 }
                 var newJsons = this.splitJsonByTwoKeys(json, "ShowField", "Name");
                 var isOk = true;
                 newJsons.forEach(copcolJson => {
-                    if (!isOk)
-                    {
+                    if (!isOk) {
                         return;
                     }
                     if (this.selectColumnsTabIndex != 1) {
@@ -1062,7 +1057,7 @@
                         tools.alert("带*的请填写完整");
                         isOk = false;
                         return;
-                    } 
+                    }
 
                     var asName = copcolJson.Name || copcolJson.ShowField;
 
@@ -1125,7 +1120,7 @@
                     }));
                     var selectComplexityColumnOrderBys = this.selectedComplexityColumns.map(it => ({
                         Name: it.DbColumnName
-                  }));
+                    }));
                     this.selectedOrderBys = this.selectedOrderBys.concat(selectComplexityColumnOrderBys);
                 }
                 btnAddOrderBy.click();
@@ -1170,7 +1165,7 @@
                     })
                     .catch(error => {
                         this.error = error.message;
-                    }); 
+                    });
                 btnAddWhere.click();
             },
             clearMiniWhere: function () {
@@ -1230,7 +1225,7 @@
                         `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`})\r\n `
                     ).join(empStr);
                     this.selectdWherePreviewString = wheres;
-                } 
+                }
             },
             //7.配置插入或者更新默认值
             saveDefaultValue: function () {
@@ -1253,10 +1248,10 @@
                     .then(response => {
                         th.selectDefaultValueColumns = [];
                         response.data.filter(it => !it.IsPrimarykey).forEach(function (item) {
-                            if (th.saveDefaultValueColumns.some(it => it.PropertyName == item.PropertyName)) { 
+                            if (th.saveDefaultValueColumns.some(it => it.PropertyName == item.PropertyName)) {
                                 var match = th.saveDefaultValueColumns.find(it => it.PropertyName == item.PropertyName);
-                                th.selectDefaultValueColumns.push({ PropertyName: match.PropertyName, Value: match.Value, Type: match.Type });  
-                            } else{
+                                th.selectDefaultValueColumns.push({ PropertyName: match.PropertyName, Value: match.Value, Type: match.Type });
+                            } else {
                                 th.selectDefaultValueColumns.push({ PropertyName: item.PropertyName, Type: 0, Value: null });
                             }
                         });
@@ -1265,7 +1260,7 @@
                     .catch(error => {
                         this.error = error.message;
                     });
-            }, 
+            },
 
             /*
                   次要方法
@@ -1335,7 +1330,7 @@
                             this.error = error.message;
                         });
                 }
-            }, 
+            },
             setJoinColumns: function () {
                 var th = this;
                 var tableId = this.copcol_JoinTable;
@@ -1388,7 +1383,7 @@
                     this.copcol_MasterField == null ||
                     this.copcol_JoinTable == null) {
                     return false;
-                } 
+                }
                 return true;
             },
             getWhereModel: function () {
@@ -1396,38 +1391,35 @@
             },
             checkCommas: function (str1, str2) {
 
-                if (!str2)
-                {
+                if (!str2) {
                     return true;
                 }
 
                 // 计算两个字符串中的逗号数量
                 var commasInStr1 = (str1.match(/,/g) || []).length;
-                if (commasInStr1 == 0)
-                {
+                if (commasInStr1 == 0) {
                     return true;
                 }
                 var commasInStr2 = (str2.match(/,/g) || []).length;
 
                 // 比较两个字符串中的逗号数量是否相等
-                if (commasInStr1 === commasInStr2) { 
+                if (commasInStr1 === commasInStr2) {
                     return true;
                 } else {
                     tools.alert("【关联显示字段别名】存在多个要用 “,” 分割开，数量要一样。");
                     return false;
                 }
             },
-            changeShowField: function ()
-            {
-                this.copcol_ShowField=this.copcol_ShowFields.join(",");
+            changeShowField: function () {
+                this.copcol_ShowField = this.copcol_ShowFields.join(",");
             },
             splitJsonByTwoKeys: function (jsonObj, key1, key2) {
-                // 验证输入对象是否有效  
+                // 验证输入对象是否有效
                 if (typeof jsonObj !== 'object' || jsonObj === null) {
                     throw new Error('Invalid input: jsonObj must be an object.');
                 }
 
-                // 验证key1和key2是否存在于jsonObj中且为字符串类型  
+                // 验证key1和key2是否存在于jsonObj中且为字符串类型
                 if (!(key1 in jsonObj) || typeof jsonObj[key1] !== 'string') {
                     throw new Error(`Invalid input: ${key1} must be a string property of jsonObj.`);
                 }
@@ -1435,32 +1427,32 @@
                     throw new Error(`Invalid input: ${key2} must be a string property of jsonObj.`);
                 }
 
-                // 分割key1和key2对应的值  
+                // 分割key1和key2对应的值
                 const values1 = jsonObj[key1].split(',');
                 const values2 = jsonObj[key2].split(',');
 
-                // 验证两个键的值分割后长度是否一致  
+                // 验证两个键的值分割后长度是否一致
                 if (values1.length !== values2.length) {
                     throw new Error(`The number of elements in ${key1} and ${key2} must be the same.`);
                 }
 
-                // 创建结果数组  
+                // 创建结果数组
                 const result = [];
 
-                // 遍历分割后的值，构建新的对象并添加到结果数组中  
+                // 遍历分割后的值，构建新的对象并添加到结果数组中
                 for (let i = 0; i < values1.length; i++) {
-                    const newObj = Object.assign({}, jsonObj); // 复制原始对象  
-                    newObj[key1] = values1[i].trim(); // 替换key1的值  
-                    newObj[key2] = values2[i].trim(); // 替换key2的值  
+                    const newObj = Object.assign({}, jsonObj); // 复制原始对象
+                    newObj[key1] = values1[i].trim(); // 替换key1的值
+                    newObj[key2] = values2[i].trim(); // 替换key2的值
                     result.push(newObj);
                 }
 
                 return result;
             },
-            showEditSql: function () { 
+            showEditSql: function () {
 
                 setTimeout(function () {
-                     
+
                     var $sql = $("[name='Sql']");
                     if ($sql.size() > 0) {
                         var editor = ace.edit("divAceEditor");
@@ -1476,8 +1468,7 @@
 
                 }, 100);
             },
-            setValueEditSql: function ()
-            {
+            setValueEditSql: function () {
                 var $sql = $("[name='Sql']");
                 if ($sql.size() > 0) {
                     var editor = ace.edit("divAceEditor");
@@ -1489,38 +1480,38 @@
 
                 var editor = ace.edit("divAceEditor");
                 editor.destroy();
-            }, 
+            },
             bindUpdates: function () {
                 var th = this;
                 var url = "/PrivateReZeroRoute/100003/GetEntityColuminsByEntityId?TableId=" + this.selectedTables[0].Id;
                 axios.get(url, jwHeader)
                     .then(response => {
-                        th.updateColumns = response.data; 
+                        th.updateColumns = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;
                     });
             },
             setUpdateColums: function (item) {
-                // 初始化一个空数组来存储选中的值  
+                // 初始化一个空数组来存储选中的值
                 var selectedValues = [];
 
-                // 遍历 <select> 元素的所有 <option> 子元素  
+                // 遍历 <select> 元素的所有 <option> 子元素
                 for (var i = 0; i < selUpdateColumns.options.length; i++) {
-                    // 检查 <option> 是否被选中  
+                    // 检查 <option> 是否被选中
                     if (selUpdateColumns.options[i].selected) {
-                        // 如果被选中，则将其值添加到 selectedValues 数组中  
+                        // 如果被选中，则将其值添加到 selectedValues 数组中
                         selectedValues.push(selUpdateColumns.options[i].value);
                     }
                 }
-                // 将选中的值转换为逗号分隔的字符串  
+                // 将选中的值转换为逗号分隔的字符串
                 var valueStr = selectedValues.join(',');
                 item.Value = valueStr;
-            }, 
+            },
             setSelectedOptions: function () {
                 var id = "selUpdateColumns";
-                var selectElement = document.getElementById(id); 
-                if (selectElement == null) return; 
+                var selectElement = document.getElementById(id);
+                if (selectElement == null) return;
                 var valueStr = $(selectElement).prev().val();
                 // 清空当前select的所有选中项
                 for (var i = 0; i < selectElement.options.length; i++) {
@@ -1546,5 +1537,5 @@
             }
 
         }
-    }); 
+    });
 </script>
