@@ -210,17 +210,17 @@
                                                 <template v-if="item.ElementType==6">
                                                     <label class="lyear-checkbox   t_a_l "><input v-model="item.Value" :name="item.Name" value="true" type="checkbox"> <span class="p-l-15">是否分页</span></label>
                                                 </template>
-                                                <!--SqlTest-->
+                                                <!--SqlText-->
                                                 <template v-if="item.ElementType==7">
                                                     <p><code>接口参数：{string:name} 等于 @name=string类型的参数 ，C#类型有string、int、DateTime等</code></p>
                                                     <p><code>授权参数：{ClaimKey:OrgId} 等于 你授权的Claim[OrgId]</code></p>
                                                     <textarea rows="10" style="display:none" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
                                                     <div id="divAceEditor" style="width:100%;height:300px;"></div>
                                                 </template>
-                                                <!--C#Test-->
+                                                <!--C#Text-->
                                                 <template v-if="item.ElementType==13">
-                                                    <p>功能还在开发中....暂时还不能使用</p>
-                                                    <textarea rows="10"  :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
+                                                    <div id="divMonacoContainer"></div>
+                                                    <input type="hidden" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control" />
                                                 </template>
                                                 <!--DefaultValueColumns-->
                                                 <template v-if="item.ElementType==8">
