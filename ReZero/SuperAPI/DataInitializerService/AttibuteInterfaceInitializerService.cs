@@ -41,11 +41,18 @@ namespace ReZero.SuperAPI
                 }
             };
             it.DataModel.DefaultParameters = new List<DataModelDefaultParameter>();
+            InitializeDefaultParameters(type, method, isUrlParameters, it);
+            return it;
+        }
+
+        internal static void InitializeDefaultParameters(Type type, MethodInfo method, bool isUrlParameters, ZeroInterfaceList it)
+        {
             var isAdd = true;
+            it.DataModel!.DefaultParameters = new List<DataModelDefaultParameter>();
             foreach (var item in method.GetParameters())
             {
                 var nonNullableType = item.ParameterType.GetNonNullableType();
-                it.Url = GetUrl(type, isUrlParameters, it.Url, item, nonNullableType);
+                it.Url = GetUrl(type, isUrlParameters, it.Url!, item, nonNullableType);
                 DataModelDefaultParameter dataModelDefaultParameter = new DataModelDefaultParameter();
                 dataModelDefaultParameter.Name = item.Name;
                 if (IsDefaultType(item.ParameterType))
@@ -65,7 +72,7 @@ namespace ReZero.SuperAPI
                 else if (method.GetParameters().Count() == 1)
                 {
                     isAdd = false;
-                    it.DataModel.MyMethodInfo.ArgsTypes = new Type[] { typeof(SingleModel) };
+                    it.DataModel!.MyMethodInfo!.ArgsTypes = new Type[] { typeof(SingleModel) };
                     var paramters = item.ParameterType.GetProperties();
                     AddSingleClassParameters(it, paramters);
                 }
@@ -76,9 +83,8 @@ namespace ReZero.SuperAPI
                     dataModelDefaultParameter.Value = new SerializeService().SerializeObject(obj);
                 }
                 if (isAdd)
-                    it.DataModel.DefaultParameters.Add(dataModelDefaultParameter);
+                    it.DataModel!.DefaultParameters!.Add(dataModelDefaultParameter);
             }
-            return it;
         }
 
         private static string GetUrl(Type type, bool isUrlParameters, string url, ParameterInfo item, Type nonNullableType)

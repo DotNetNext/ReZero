@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -26,18 +27,21 @@ namespace ReZero.SuperAPI
             var assemblyObj = loader.LoadController(zeroInterfaceList);
             zeroInterfaceList.DataModel!.AssemblyName = assemblyObj.GetName().Name;
             var type = assemblyObj.GetTypes().FirstOrDefault(it => it.Name == "DynamicApiEntry");
-            var memthod = type?.GetMethods()?.Any(it => it.Name == "InvokeAsync");
-            ValidateDynamicApiEntry(type, memthod);
+            var method = type?.GetMethods()?.FirstOrDefault(it => it.Name == "InvokeAsync");
+            ValidateDynamicApiEntry(type, method);
+            var parameters = type?.GetMethod("InvokeAsync")?.GetParameters();
+            var types = parameters.Select(p => p.ParameterType).ToArray(); 
             zeroInterfaceList.DataModel.MyMethodInfo = new MyMethodInfo()
             {
                 MethodClassFullName = type?.FullName,
                 MethodName = "InvokeAsync",
                 MethodArgsCount = type?.GetMethod("InvokeAsync")?.GetParameters().Length ?? 0,
-                ArgsTypes = type?.GetMethod("InvokeAsync")?.GetParameters().Select(p => p.ParameterType).ToArray()
+                ArgsTypes = types
             };
+            AttibuteInterfaceInitializerService.InitializeDefaultParameters(type!, method!, false, zeroInterfaceList);
         }
 
-        private static void ValidateDynamicApiEntry(Type? type, bool? memthod)
+        private static void ValidateDynamicApiEntry(Type? type, MethodInfo? memthod)
         {
             if (type == null)
             {
