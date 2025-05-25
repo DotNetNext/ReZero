@@ -3,7 +3,7 @@
 <link href="css/page_interface_manager.css" rel="stylesheet" />
 <script src="js/ace/src-min/ace.js"></script>
 <script src="js/ace/src-min/ext-language_tools.js"></script>
-<script src="js/monaco-editor/vs/loader.js"></script>
+<!--<script src="js/monaco-editor/vs/loader.js"></script>-->
 <div id="apibox" class="card">
     <!--主列表搜索-->
     <div class="search-bar">
@@ -219,9 +219,9 @@
                                                     <div id="divAceEditor" style="width:100%;height:300px;"></div>
                                                 </template>
                                                 <!--C#Text-->
-                                                <template v-if="item.ElementType==13">
-                                                    <div id="divMonacoContainer"></div>
-                                                    <input type="hidden" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control" />
+                                                <template v-if="item.ElementType==13"> 
+                                                    <textarea rows="10" style="display:none" :placeholder="item.Placeholder" :name="item.Name" v-model="item.Value" class="form-control"></textarea>
+                                                    <div id="divMonacoContainer" style="width:100%;height:500px;"></div>
                                                 </template>
                                                 <!--DefaultValueColumns-->
                                                 <template v-if="item.ElementType==8">
@@ -883,6 +883,7 @@
 
                 if (isSuccess) {
                     this.setValueEditSql();
+                    this.setValueEditCode();
                     var formData = tools.formToJson("frmSave");
                     formData.DatabaseId = this.DatabaseId;
                     var vueData = this.$data;
@@ -1475,20 +1476,15 @@
                     var $sql = $("[name='CSharpText']");
                     if ($sql.length > 0)
                     {
-                        window.MonacoEnvironment = {
-                            getWorkerUrl: function (moduleId, label) {
-                                return 'js/monaco-editor/vs/base/worker/workerMain.js';
-                            }
-                        };
-                        require.config({ paths: { vs: 'js/monaco-editor/vs' } }); // vs 目录根据你的路径调整
-                        require(['vs/editor/editor.main'], function () {
-                            // 创建 Monaco 编辑器实例，替换 divAceEditor 容器
-                            var editor = monaco.editor.create(document.getElementById('divMonacoContainer'), {
-                                 
-                            });
-
-                            // 清除选择（Monaco默认不选中，不用特殊调用）
-                        });
+                        var editor = ace.edit("divMonacoContainer");
+                        editor.setOption("showPrintMargin", false);
+                        editor.setTheme("ace/theme/twilight"); // 设置主题
+                        editor.getSession().setMode("ace/mode/csharp"); // 设置语言模式为SQL
+                        editor.setOption("enableBasicAutocompletion", true);
+                        editor.setOption("enableSnippets", true);
+                        editor.setOption("enableLiveAutocompletion", true)
+                        editor.setValue($sql.val());
+                        editor.selection.clearSelection();
                     }
                 }, 100);
             },
@@ -1500,9 +1496,22 @@
                     $sql.val(editor.getValue());
                 }
             },
+            setValueEditCode: function () {
+                var $sql = $("[name='CSharpText']");
+                if ($sql.size() > 0) {
+                    var editor = ace.edit("divAceEditor");
+                    this.currentActionTypeContext.FormElements[3].Value = editor.getValue();
+                    $sql.val(editor.getValue());
+                }
+            },
             closeEditSql: function () {
 
                 var editor = ace.edit("divAceEditor");
+                editor.destroy();
+            },
+            closeEditCode: function () {
+
+                var editor = ace.edit("divMonacoContainer");
                 editor.destroy();
             },
             bindUpdates: function () {
