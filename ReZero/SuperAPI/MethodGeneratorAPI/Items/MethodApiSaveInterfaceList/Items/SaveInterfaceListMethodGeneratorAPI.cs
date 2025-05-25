@@ -24,7 +24,7 @@ namespace ReZero.SuperAPI
         private  void SetParameters(ZeroInterfaceList zeroInterfaceList)
         {
             var loader = new CodeAnalysisControllerLoader();
-            var assemblyObj = loader.LoadController(zeroInterfaceList);
+            var assemblyObj = loader.UpdateController(zeroInterfaceList);
             zeroInterfaceList.DataModel!.AssemblyName = assemblyObj.GetName().Name;
             var type = assemblyObj.GetTypes().FirstOrDefault(it => it.Name == PubConst.Common_DynamicApiEntry);
             var method = type?.GetMethods()?.FirstOrDefault(it => it.Name == PubConst.Common_DynamicApiEntry_InvokeAsync);

@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ReZero.DependencyInjection;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,10 @@ namespace ReZero.SuperAPI
 
             var classType = Type.GetType(dataModel.MyMethodInfo?.MethodClassFullName);
             classType = GetTypeByAttribute(dataModel, classType);
+            if (IsDynamicApiEntry(dataModel, classType))
+            {
+                classType = GetDynamicApiEntryType(dataModel);
+            }
             var methodInfo = classType.GetMyMethod(dataModel?.MyMethodInfo?.MethodName, dataModel!.MyMethodInfo!.MethodArgsCount);
             var classObj = ReZero.DependencyInjection.ActivatorHelper.CreateInstance(classType!, nonPublic: true, (ServiceProvider)dataModel.ServiceProvider!);
             object[] parameters = new object[methodInfo.GetParameters().Length];
@@ -32,7 +38,7 @@ namespace ReZero.SuperAPI
             var unitType = methodInfo.GetCustomAttributes().FirstOrDefault(it => it.GetType().GetInterfaces().Any(s => s == typeof(IUnitOfWork)));
             if (unitType != null)
             {
-                var unitObj =(IUnitOfWork)ReZero.DependencyInjection.ActivatorHelper.CreateInstance(unitType!.GetType(), nonPublic: true, (ServiceProvider)dataModel.ServiceProvider!);
+                var unitObj = (IUnitOfWork)ReZero.DependencyInjection.ActivatorHelper.CreateInstance(unitType!.GetType(), nonPublic: true, (ServiceProvider)dataModel.ServiceProvider!);
                 unitObj.db = ((ServiceProvider)dataModel.ServiceProvider!).GetRequiredService<ISqlSugarClient>();
                 try
                 {
@@ -46,13 +52,30 @@ namespace ReZero.SuperAPI
                 {
                     unitObj.RollbackTran();
                     throw;
-                } 
+                }
             }
             else
             {
                 object result = await ExecuteMethodAsync(methodInfo, classObj, parameters);
                 return result;
             }
+        }
+
+        private Type? GetDynamicApiEntryType(DataModel dataModel)
+        {  
+            // Add new assembly to ApplicationPartManager
+            var partManager = DependencyResolver.GetRequiredService<ApplicationPartManager>();
+            // Find and remove the corresponding AssemblyPart
+            var partToRemove = partManager.ApplicationParts
+                .OfType<AssemblyPart>()
+                .FirstOrDefault(p => p.Assembly.GetName().Name == dataModel.AssemblyName);
+            var result= partToRemove.Assembly.GetType(PubConst.Common_DynamicApiEntry);
+            return result;
+        }
+
+        private static bool IsDynamicApiEntry(DataModel dataModel, Type? classType)
+        {
+            return classType == null && dataModel?.MyMethodInfo?.MethodClassFullName == PubConst.Common_DynamicApiEntry;
         }
 
         private object[] GetParameters(DataModel dataModel, MethodInfo methodInfo, object[] parameters, Type[]? argsTypes)

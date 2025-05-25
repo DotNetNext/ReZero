@@ -21,6 +21,19 @@ namespace ReZero.SuperAPI
     /// </summary>
     public class CodeAnalysisControllerLoader
     {
+
+        /// <summary>
+        /// Updates a Controller (removes the old one and then loads the new one).
+        /// </summary>
+        /// <param name="zeroInterface">Interface definition object.</param>
+        public Assembly UpdateController(ZeroInterfaceList zeroInterface)
+        {
+            // Remove the old Controller first
+            RemoveController(zeroInterface);
+            // Then load the new Controller
+            return LoadController(zeroInterface);
+        }
+
         /// <summary>
         /// Dynamically compiles and loads a Controller into the application.
         /// </summary>
@@ -115,11 +128,6 @@ namespace ReZero.SuperAPI
             return assembly;
         }
 
-        public static string GenerateAssemblyName(ZeroInterfaceList zeroInterface)
-        {
-            return nameof(CodeAnalysisControllerLoader) + zeroInterface.Id;
-        }
-
         /// <summary>
         /// Removes a loaded Controller.
         /// </summary>
@@ -142,15 +150,15 @@ namespace ReZero.SuperAPI
         }
 
         /// <summary>
-        /// Updates a Controller (removes the old one and then loads the new one).
+        /// Generate assembly name
         /// </summary>
-        /// <param name="zeroInterface">Interface definition object.</param>
-        public void UpdateController(ZeroInterfaceList zeroInterface)
+        /// <param name="zeroInterface"></param>
+        /// <returns></returns>
+        public static string GenerateAssemblyName(ZeroInterfaceList zeroInterface)
         {
-            // Remove the old Controller first
-            RemoveController(zeroInterface);
-            // Then load the new Controller
-            LoadController(zeroInterface);
+            return nameof(CodeAnalysisControllerLoader) + zeroInterface.Id;
         }
+
+
     }
 }
