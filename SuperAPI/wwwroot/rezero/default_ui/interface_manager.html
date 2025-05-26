@@ -1195,6 +1195,7 @@
                 }
             },
             showWherePreview: function () {
+                var th = this;
                 var cr = this.selectedWheresConditionalRelation;
                 var isAndAll = cr == "AndAll";
                 var isOrAll = cr == "OrAll";
@@ -1220,13 +1221,13 @@
                 if (isAnd || isOr) {
                     var type = isAnd ? andStr : orStr;
                     var wheres = this.selectedWheres.map(it =>
-                        `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value} OR (@${it.Value} IS NULL)`})\r\n`
+                        `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? th.getPreviewStringValueByType(it.WhereType,it.Value) : `@${it.Value} OR (@${it.Value} IS NULL)`})\r\n`
                     ).join(empStr);
                     this.selectdWherePreviewString = wheres;
                 } else if (isAndAll || isOrAll) {
                     var type = isAndAll ? andStr : orStr;
                     var wheres = this.selectedWheres.map(it =>
-                        `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? it.Value : `@${it.Value}`})\r\n `
+                        `${type} (${it.PropertyName} ${it.WhereType} ${it.ValueType == 0 ? th.getPreviewStringValueByType(it.WhereType, it.Value) : `@${it.Value}`})\r\n `
                     ).join(empStr);
                     this.selectdWherePreviewString = wheres;
                 }
@@ -1567,6 +1568,16 @@
                             break; // 找到匹配项后跳出内层循环
                         }
                     }
+                }
+            },
+            getPreviewStringValueByType: function (type, value)
+            {
+                if (type == "In" || type =="NotIn")
+                {
+                    return "(" + value + ")";
+                } else
+                {
+                    return value;
                 }
             }
 
