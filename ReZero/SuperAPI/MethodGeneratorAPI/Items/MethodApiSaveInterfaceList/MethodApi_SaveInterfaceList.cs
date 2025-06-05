@@ -16,6 +16,7 @@ namespace ReZero.SuperAPI
             ISaveInterfaceList saveInterfaceList = GetSaveInterfaceList(saveInterfaceListModel);
             var result= saveInterfaceList.SaveInterfaceList(saveInterfaceListModel); 
             CacheManager<ZeroInterfaceList>.Instance.ClearCache();
+            db.Utilities.RemoveCacheByLikeKey<SqlSugar.EntityInfo>(string.Empty);
             return result;
         }
 
