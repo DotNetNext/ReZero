@@ -23,7 +23,6 @@ namespace ReZero.SuperAPI
                 var type = await EntityGeneratorManager.GetTypeAsync(dataModel.TableId);
                 base.InitDb(type,_sqlSugarClient);
                 var queryObject = _sqlSugarClient.QueryableByObject(type, PubConst.Orm_TableDefaultMasterTableShortName);
-                _sqlSugarClient.MappingColumns = new MappingColumnList();
                 queryObject = Join(type, dataModel, queryObject);
                 queryObject = Where(type, dataModel, queryObject);
                 queryObject = OrderBySelectBefore(type, dataModel, queryObject);
