@@ -25,6 +25,7 @@ namespace ReZero.SuperAPI
                 tableInfo.ColumnCount = newColumns.Length;
                 App.Db.Updateable(tableInfo).UpdateColumns(it => new { it.ColumnCount }).ExecuteCommand();
                 CacheManager<ZeroEntityInfo>.Instance.ClearCache();
+                CacheManager<ZeroEntityColumnInfo>.Instance.ClearCache();
                 return true;
             }
             catch (Exception ex)
