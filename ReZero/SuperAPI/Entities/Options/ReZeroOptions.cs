@@ -110,6 +110,7 @@ namespace ReZero.SuperAPI
 
         public Func<object, object>? MergeDataToStandardDtoFunc { get; set; }
         public  ReZeroJwt?  Jwt { get; set; }
+        public RezeroLicense? License{ get; set; }
         public ReZeroCors CorsOptions { get; set; } = new ReZeroCors();
 
         public JsonSerializerSettings? JsonSerializerSettings { get; set; }
