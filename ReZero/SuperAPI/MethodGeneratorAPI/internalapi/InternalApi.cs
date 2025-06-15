@@ -46,13 +46,12 @@ namespace ReZero.SuperAPI
             return sysSetting.BoolValue;
         }
         [ApiMethod(nameof(InternalInitApi.SaveLicenseConfig), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_SystemSaveLicenseConfig)]
-        public bool SaveLicenseConfig(bool enable,string license)
+        public bool SaveLicenseConfig(string license)
         {
             var db = App.Db;
             var sysSetting = db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLicenseType).First();
             if (sysSetting == null)
                 sysSetting = new ZeroSysSetting() { Id = SqlSugar.SnowFlakeSingle.Instance.NextId(), TypeId = PubConst.Setting_EnableLicenseType, StringValue= license };
-            sysSetting.BoolValue = enable;
             db.Storageable(sysSetting).ExecuteCommand();
             return true;
         }
