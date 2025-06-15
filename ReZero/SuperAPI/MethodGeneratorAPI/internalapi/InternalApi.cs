@@ -45,11 +45,12 @@ namespace ReZero.SuperAPI
             if (sysSetting == null) return false;
             return sysSetting.BoolValue;
         }
-        [ApiMethod(nameof(InternalInitApi.VerifyCode), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_VerifyCode)]
-
         #endregion
 
         #region User
+
+        [ApiMethod(nameof(InternalInitApi.VerifyCode), GroupName = PubConst.InitApi_SystemCommon, Url = PubConst.InitApi_VerifyCode)]
+
         public object VerifyCode()
         {
             var bytes = VerifyCodeSugar.Create();
