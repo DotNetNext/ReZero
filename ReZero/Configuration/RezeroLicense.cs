@@ -7,7 +7,7 @@ namespace ReZero.Configuration
     public class RezeroLicense
     {
         public bool? Enable { get; set; }
-        public Func<DateTime>? LicenseValidateFunc { get; set; }
-        public bool LicenseFilePath { get; set; }
+        public Func<string,DateTime>? LicenseValidateFunc { get; set; }
+        public string? LicenseFilePath { get; set; }
     }
 }
