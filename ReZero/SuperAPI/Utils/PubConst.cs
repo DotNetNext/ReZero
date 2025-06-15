@@ -66,12 +66,15 @@ namespace ReZero.SuperAPI
         public const int Setting_EntityType = 1;
         public const int Setting_ImportUnunderlineType = 1;
         public const int Setting_EnableLoginType = 2;
+        public const int Setting_EnableLicenseType = 100;
 
 
         public const string InitApi_SystemCommon = "SystemCommon";
         public const string InitApi_RootUrl = "/PrivateReZeroRoute/100003/";
         public const string InitApi_SystemSaveConfig = "/PrivateReZeroRoute/100003/SaveLoginConfig";
         public const string InitApi_SystemGetInitConfig = "/PrivateReZeroRoute/100003/GetLoginConfig";
+        public const string InitApi_SystemSaveLicenseConfig = "/PrivateReZeroRoute/100003/SaveLicenseConfig";
+        public const string InitApi_SystemGetLicenseConfig = "/PrivateReZeroRoute/100003/GetLicenseConfig";
         public const string InitApi_VerifyCode = "/Public/InitApi_VerifyCode";
         public const string InitApi_SaveUser = "/PrivateReZeroRoute/100003/SaveUser";
         public const string InitApi_GetUserById = "/PrivateReZeroRoute/100003/GetUserById";
