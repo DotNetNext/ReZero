@@ -375,6 +375,13 @@ namespace ReZero.SuperAPI
         [EnglishTextAttribute("Get save permission by id")]
         public const long GetSavePermissionModelById_Id = 78;
 
+        [ChineseTextAttribute("保存License")]
+        [EnglishTextAttribute("Save license")]
+        public const long SaveLicenseId = 79;
+        [ChineseTextAttribute("获取License")]
+        [EnglishTextAttribute("Get license")]
+        public const long GetLicenseId = 80;
+
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
             var result = new ZeroInterfaceList()

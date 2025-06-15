@@ -159,7 +159,17 @@ namespace ReZero.SuperAPI
                         {
                             addItem.IsInitialized = true;
                             addItem.Id = InterfaceListInitializerProvider.GetInitConfigId;
+                        } 
+                        if (addItem.Url == PubConst.InitApi_SystemSaveLicenseConfig)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.SaveLicenseId;
                         }
+                        if (addItem.Url == PubConst.InitApi_SystemGetLicenseConfig)
+                        {
+                            addItem.IsInitialized = true;
+                            addItem.Id = InterfaceListInitializerProvider.GetLicenseId;
+                        } 
                         if (addItem.Url == PubConst.InitApi_VerifyCode) 
                         {
                             addItem.IsInitialized = true;
