@@ -137,7 +137,7 @@
                 axios.post('/PrivateReZeroRoute/100003/SaveLicenseConfig', { license: this.licenseConfig.License }, jwHeader)
                     .then(() => {
                         tools.alert('保存成功');
-                        th.getLicenseConfig();
+                        window.location.href = window.location.href;
                        }
                     );
             }
