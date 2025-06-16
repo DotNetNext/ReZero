@@ -8,6 +8,6 @@ namespace ReZero.Configuration
     {
         public bool? Enable { get; set; }
         public Func<string,DateTime>? LicenseValidateFunc { get; set; }
-        public string? LicenseFilePath { get; set; }
+        //public string? LicenseFilePath { get; set; }
     }
 }

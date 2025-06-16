@@ -7,6 +7,7 @@ using ReZero.DependencyInjection;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -60,9 +61,10 @@ namespace ReZero.SuperAPI
         public object GetLicenseConfig()
         {
             var db = App.Db;
+            var options = SuperAPIModule._apiOptions;
             var sysSetting = db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLicenseType).First();
             if (sysSetting == null) return false;
-            return sysSetting.BoolValue;
+            return new { x= options?.InterfaceOptions?.License?.Enable==true, License = sysSetting.StringValue };
         }
         #endregion
 
