@@ -22,7 +22,7 @@
             <button @click="saveLicenseConfig" class="btn btn-primary m-t-10">保存</button>
         </div>
     </div>
-
+    <div v-if="licenseConfig.HideUi!=true"> 
     <div class="card">
         <div class="card-header"><h4>实体管理配置</h4></div>
         <div class="card-body">
@@ -46,6 +46,7 @@
             </div>
         </div>
     </div>
+   </div>
 </div>
 <script>
     var vueObj = new Vue({

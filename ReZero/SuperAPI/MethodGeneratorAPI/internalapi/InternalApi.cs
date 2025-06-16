@@ -73,12 +73,12 @@ namespace ReZero.SuperAPI
             {
                 time=(func(key).Date-DateTime.Now.Date).TotalDays;
             }
-            object expirationTime = time;
+            object expirationTime = time; 
             if (time <= 0) 
             {
                 expirationTime =TextHandler.GetCommonText("已过期", "Expired");
             }
-            return new { ExpirationTime= expirationTime, Enable = isEnable, License = sysSetting.StringValue };
+            return new { HideUi=time<=0&&isEnable,ExpirationTime= expirationTime, Enable = isEnable, License = sysSetting.StringValue };
         }
         #endregion
 
