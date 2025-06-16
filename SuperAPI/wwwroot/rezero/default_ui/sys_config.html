@@ -1,5 +1,5 @@
 ﻿@@master_page.html
-<div id="apibox"> 
+<div id="apibox">
     <!--<div class="card">
         <div class="card-header"><h4>登录配置</h4></div>
         <div class="card-body">
@@ -14,6 +14,13 @@
             </div>
         </div>
     </div>-->
+    <div v-if="licenseConfig.Enable" class="card">
+        <div class="card-header"><h4>License 配置</h4></div>
+        <div class="card-body">
+            <input v-model="licenseConfig.License" class="form-control" placeholder="请输入License" />
+            <button @click="saveLicenseConfig" class="btn btn-primary m-t-10">保存</button>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-header"><h4>实体管理配置</h4></div>
@@ -50,11 +57,13 @@
             },
             setting: {
                 importUnunderline: false
-            }
+            },
+            licenseConfig: {}
         },
         mounted() {
             //this.getLoginConfig();
             this.getSettingItem(1, 1);
+            this.getLicenseConfig();
         },
         methods: {
             //getLoginConfig: function () {
@@ -115,6 +124,16 @@
                         this.error = error.message;
                         this.data = null;
                     });
+            },
+            getLicenseConfig() {
+                axios.post('/PrivateReZeroRoute/100003/GetLicenseConfig', {}, jwHeader)
+                    .then(res => {
+                        this.licenseConfig = res.data;
+                    });
+            },
+            saveLicenseConfig() {
+                axios.post('/PrivateReZeroRoute/100003/SaveLicenseConfig', { license: this.licenseConfig.License }, jwHeader)
+                    .then(() => tools.alert('保存成功'));
             }
         }
     });
