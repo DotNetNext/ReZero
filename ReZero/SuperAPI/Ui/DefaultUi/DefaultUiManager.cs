@@ -7,8 +7,9 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks; 
-
+using System.Threading.Tasks;
+using System.Linq;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 namespace ReZero.SuperAPI
 {
     /// <summary>
@@ -49,6 +50,7 @@ namespace ReZero.SuperAPI
 
             //menu html
             var menuList = await App.Db.Queryable<ZeroInterfaceCategory>().ToTreeAsync(it => it.SubInterfaceCategories, it => it.ParentId, 0, it => it.Id);
+            menuList = FilterMenuList(menuList);
             var currentMenu = await App.Db.Queryable<ZeroInterfaceCategory>().Where(it => it.Url!.ToLower() == url).FirstAsync();
             if (currentMenu == null)
             {
@@ -91,6 +93,33 @@ namespace ReZero.SuperAPI
             //version
             masterPageHtml = masterPageHtml.Replace(version, $"{Assembly.GetExecutingAssembly().GetName().Version}");
             return masterPageHtml;
+        }
+
+        private static List<ZeroInterfaceCategory> FilterMenuList(List<ZeroInterfaceCategory> menuList)
+        {
+            var db = App.Db;
+            var options = SuperAPIModule._apiOptions;
+            var sysSetting = db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLicenseType).First();
+            if (sysSetting == null)
+                sysSetting = new ZeroSysSetting();
+            var isEnable = options?.InterfaceOptions?.License?.Enable == true;
+            double time = 0;
+            if (sysSetting.StringValue is { } key && options?.InterfaceOptions?.License?.LicenseValidateFunc is { } func)
+            {
+                time = (func(key).Date - DateTime.Now.Date).TotalDays;
+            }
+            object expirationTime = time;
+            if (time <= 0 && isEnable)
+            {
+                menuList = menuList.Where(it => it.Id == InterfaceCategoryInitializerProvider.SystemSettingId).ToList();
+                var firstObj = menuList.FirstOrDefault();
+                if (firstObj != null)
+                {
+                    firstObj.SubInterfaceCategories = firstObj.SubInterfaceCategories.Where(it => it.Id == InterfaceCategoryInitializerProvider.Id300010).ToList();
+                }
+            }
+
+            return menuList;
         }
 
         private string GetAuthorizationHtml(HttpContext content, string masterPageHtml)
