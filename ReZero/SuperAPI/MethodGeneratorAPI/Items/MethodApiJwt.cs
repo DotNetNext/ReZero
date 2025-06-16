@@ -145,10 +145,15 @@ namespace ReZero.SuperAPI
             {
                 claims.Add(new Claim(claim.Key, user[claim.FieldName] + ""));
             }
+            var expires = DateTime.UtcNow.AddMinutes(jwt?.Expires ?? 1000);
+            if (this.TokenExpiration != null) 
+            {
+                expires = this.TokenExpiration.Value;
+            }
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
-                Expires = DateTime.UtcNow.AddMinutes(jwt?.Expires ?? 1000),
+                Expires = expires,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
