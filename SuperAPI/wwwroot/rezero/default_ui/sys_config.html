@@ -17,6 +17,7 @@
     <div v-if="licenseConfig.Enable" class="card">
         <div class="card-header"><h4>License 配置</h4></div>
         <div class="card-body">
+            <code class="m-tb-10">剩余时间 (单位:天) : {{licenseConfig.ExpirationTime}} </code>
             <input v-model="licenseConfig.License" class="form-control" placeholder="请输入License" />
             <button @click="saveLicenseConfig" class="btn btn-primary m-t-10">保存</button>
         </div>
@@ -132,8 +133,13 @@
                     });
             },
             saveLicenseConfig() {
+                var th = this;
                 axios.post('/PrivateReZeroRoute/100003/SaveLicenseConfig', { license: this.licenseConfig.License }, jwHeader)
-                    .then(() => tools.alert('保存成功'));
+                    .then(() => {
+                        tools.alert('保存成功');
+                        th.getLicenseConfig();
+                       }
+                    );
             }
         }
     });

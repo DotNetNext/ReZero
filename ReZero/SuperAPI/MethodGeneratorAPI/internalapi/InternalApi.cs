@@ -52,7 +52,9 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             var sysSetting = db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLicenseType).First();
             if (sysSetting == null)
-                sysSetting = new ZeroSysSetting() { Id = SqlSugar.SnowFlakeSingle.Instance.NextId(), TypeId = PubConst.Setting_EnableLicenseType, StringValue= license };
+                sysSetting = new ZeroSysSetting() { Id = SqlSugar.SnowFlakeSingle.Instance.NextId(), TypeId = PubConst.Setting_EnableLicenseType, StringValue = license };
+            else
+                sysSetting.StringValue = license;
             db.Storageable(sysSetting).ExecuteCommand();
             return true;
         }
@@ -63,8 +65,20 @@ namespace ReZero.SuperAPI
             var db = App.Db;
             var options = SuperAPIModule._apiOptions;
             var sysSetting = db.Queryable<ZeroSysSetting>().Where(it => it.TypeId == PubConst.Setting_EnableLicenseType).First();
-            if (sysSetting == null) return false;
-            return new { x= options?.InterfaceOptions?.License?.Enable==true, License = sysSetting.StringValue };
+            if (sysSetting == null)
+                sysSetting = new ZeroSysSetting();
+            var isEnable = options?.InterfaceOptions?.License?.Enable == true;
+            double time = 0;
+            if (sysSetting.StringValue is { } key&& options?.InterfaceOptions?.License?.LicenseValidateFunc is { } func) 
+            {
+                time=(func(key).Date-DateTime.Now.Date).TotalDays;
+            }
+            object expirationTime = time;
+            if (time <= 0) 
+            {
+                expirationTime =TextHandler.GetCommonText("已过期", "Expired");
+            }
+            return new { ExpirationTime= expirationTime, Enable = isEnable, License = sysSetting.StringValue };
         }
         #endregion
 
