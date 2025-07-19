@@ -48,7 +48,7 @@ app.MapControllers();
 try 
 	{	        
 		    // 假设您的应用程序在本地5000端口上运行  
-            string url = "http://localhost:5000/rezero/dynamic_interface.html?InterfaceCategoryId=200100";
+            string url = "http://localhost:65000/rezero/dynamic_interface.html?InterfaceCategoryId=200100";
             Process.Start(new ProcessStartInfo
             {
                 FileName = url,
