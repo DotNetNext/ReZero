@@ -9,13 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReZero", "ReZero\ReZero.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperAPITest", "SuperAPI\SuperAPITest.csproj", "{A04287D1-F1AF-4102-924A-A9EB3B9B7A66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NugetTest", "NugetTest\NugetTest.csproj", "{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "NugetTest\Api.csproj", "{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextTemplateTest", "TextTemplateTest\TextTemplateTest.csproj", "{EA58EB55-47DD-44FD-A12A-0231F97F06C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoTest", "DemoTest", "{1032E893-22CF-4883-8857-049526541333}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjectionTest", "DependencyInjectionTest\DependencyInjectionTest.csproj", "{E7355DEA-E652-4C6A-960C-CECF4B4EB673}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NugetTest", "NugetTest", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{BA1AD8C9-8AEC-4E0E-9F68-FC0D1403731C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{EA58EB55-47DD-44FD-A12A-0231F97F06C5} = {1032E893-22CF-4883-8857-049526541333}
 		{E7355DEA-E652-4C6A-960C-CECF4B4EB673} = {1032E893-22CF-4883-8857-049526541333}
 	EndGlobalSection
