@@ -270,7 +270,13 @@ namespace ReZero.SuperAPI
                 viewName = data!.DbTableName!;
                 className = data!.ClassName!;
             }
-            var dt = viewDb!.Queryable<object>().AS(viewName).Take(1).Select("*").ToDataTable();
+            var selectValue = "*";
+            if (viewDb!.CurrentConnectionConfig.DbType == SqlSugar.DbType.Oracle) 
+            {
+                var sqlBuilder = viewDb!.Queryable<object>().SqlBuilder;
+                selectValue = $"{sqlBuilder.GetTranslationColumnName(viewName)}.{selectValue}";
+            }
+            var dt = viewDb!.Queryable<object>().AS(viewName).Take(1).Select(selectValue).ToDataTable();
             item.ClassName = className==string.Empty? viewName: className;
             item.DbTableName = viewName;
             item.Description = string.Empty;
