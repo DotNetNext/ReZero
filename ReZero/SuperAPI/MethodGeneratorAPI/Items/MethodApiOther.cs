@@ -13,16 +13,25 @@ namespace ReZero.SuperAPI
 {
     public partial class MethodApi
     {
-        public bool TestDb(long Id)
+        public object TestDb(long Id)
         {
-            SqlSugarClient? db = App.GetDbById(Id);
+            using SqlSugarClient? db = App.GetDbById(Id);
             if (db == null)
             {
                 return false;
             }
             else
             {
-                return db.Ado.IsValidConnection();
+                try
+                {
+                    db.Open();
+                    db.Close();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
             }
         }
 
