@@ -66,8 +66,12 @@
                                     <img class="img-avatar img-avatar-48 m-r-10" :src="userInfo.Avatar" onerror="this.src='images/users/avatar.jpg';" :alt="userInfo.UserName" />
                                     <span> {{userInfo.UserName}} </span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-right"> 
-                                    <li> <a href="/rezero/my_user.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li> 
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li> <a target="_blank" href="https://www.donet5.com/Doc/32/2580"><i class="mdi mdi-book"></i> API教程</a> </li>
+                                    <li class="divider"></li>
+                                    <li> <a target="_blank" href="https://www.donet5.com/Doc/33"><i class="mdi mdi-book"></i> 生成器教程</a> </li>
+                                    <li class="divider"></li>
+                                    <li> <a href="/rezero/my_user.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
                                     <li class="divider"></li>
                                     <li> <a onclick="localStorage['@@authorizationLocalStorageName'] = null; window.location.href = '/rezero/login.html';"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
                                 </ul>
