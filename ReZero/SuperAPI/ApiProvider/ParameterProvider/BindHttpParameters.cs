@@ -93,9 +93,13 @@ namespace ReZero.SuperAPI
             }
             else if (dataModel!.DefaultParameters != null)
             {
-                if (interInfo.IsAttributeMethod==true)
+                if (interInfo.IsAttributeMethod == true)
                 {
                     //
+                }
+                else if (dataModel?.AssemblyName?.StartsWith(nameof(CodeAnalysisControllerLoader)) == true) 
+                {
+
                 }
                 else
                 {
