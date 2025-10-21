@@ -1,4 +1,4 @@
-﻿using SqlSugar;
+using SqlSugar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,7 +49,7 @@ namespace ReZero.SuperAPI
                 var columnInfo = entityInfo.Columns.FirstOrDefault(it => it.PropertyName.EqualsCase(DefaultValue.PropertyName!));
                 var value = columnInfo.PropertyInfo.GetValue(item);
                 var defauleValue = UtilMethods.GetDefaultValue(columnInfo.UnderType);
-                if (columnInfo != null&& (value == null||value.Equals(defauleValue) || (value is string && value?.ToString()==""))) 
+                if (columnInfo != null&& (value == null||value.Equals(defauleValue) || (value is string && value?.ToString()=="")) || DefaultValue.Type == DefaultValueType.ClaimKey)
                 {
                     try
                     {
