@@ -674,6 +674,11 @@
                     });
             },
             removeColumns: function (index) {
+                if (this.columns && this.columns.length == 1)
+                {
+                    tools.alert("至少要有一列");
+                    return;
+                }
                 this.columns.splice(index, 1);
             },
             addFast: function () {
