@@ -1,4 +1,4 @@
-﻿@@master_page.html
+@@master_page.html
 <link href="css/page_table_list.css?v=1" rel="stylesheet" />
 <link href="css/page_entity_manager.css?v=1" rel="stylesheet" />
 <script src="js/ace/src-min/ace.js"></script>
@@ -165,7 +165,7 @@
 
                 <div class="modal-body">
                     <div class="table-container">
-                        <table class="table">
+                        <table class="table" id="dragTable">
                             <thead>
                                 <tr>
                                     <th>实体属性</th>
@@ -175,14 +175,14 @@
                                     <th width="50">可空</th>
                                     <th width="50">主键</th>
                                     <th width="50">自增</th>
-                                    <th width="250">
-                                        <a class="btn  btn-secondary m-r-5" @click="openCopy" href="#!"><i class="mdi mdi-content-copy"></i> 复制列</a>
+                                    <th width="280">
+                                        <a class="btn  btn-secondary m-r-5" @click="openCopy" href="#!"><i class="mdi mdi-content-copy"></i> 复制列模版</a>
                                         <a class="btn  btn-secondary m-r-5" href="#!" onclick="alert('开发中')"><i class="mdi mdi-lead-pencil"></i> 配置索引</a>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(item,index) in columns" :key="index">
+                                <tr v-for="(item,index) in columns" :key="index" draggable="true">
                                     <td scope="row">
                                         <input v-model="item.Id" type="hidden" />
                                         <input v-model="item.PropertyName" class="form-control" placeholder="必填" type="text" />
@@ -205,10 +205,11 @@
                                     <td><input v-model="item.IsPrimarykey" type="checkbox" class="form-control" /></td>
                                     <td><input v-model="item.IsIdentity" type="checkbox" class="form-control" /></td>
                                     <td>
-                                        <span @click="pushColumns(item)" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
-                                        <span @click="removeColumns(index)" class="pointer"><i class="mdi  mdi-window-close"></i>删除</span>
-                                        <span @click="move(index,true)" class="pointer"><i class="mdi  mdi-arrow-up"></i>上移</span>
-                                        <span @click="move(index,false)" class="pointer"><i class="mdi mdi-arrow-down"></i>下移</span>
+                                        <span @click="pushColumns(item,index)" class="pointer m-r-10"><i class="mdi mdi-plus"></i>添加</span>
+                                        <span @click="removeColumns(index)" class="pointer m-r-10"><i class="mdi  mdi-window-close"></i>删除</span>
+                                        <span class="pointer"><i class="mdi mdi-drag-vertical"></i>拖拽</span>
+                                        <!--<span @click="move(index,true)" class="pointer"><i class="mdi  mdi-arrow-up"></i>上移</span>-->
+                                        <!--<span @click="move(index,false)" class="pointer"><i class="mdi mdi-arrow-down"></i>下移</span>-->
                                     </td>
                                 </tr>
                             </tbody>
@@ -216,8 +217,16 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
+                    <div class="form-inline">
+                        <div class="form-group pull-left">
+                            <button type="button" class="btn btn-danger pull-left m-r-5" @click="addFast()">快捷添加</button>
+                            <input id="public_field" type="text" class="form-control" placeholder="字段名|类型|备注 英文,分隔" style="width:600px"/>
+                        </div>
+                        <div class="form-group pull-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" @click="addOrUpdateColumnInfoSubmit()" class="btn btn-primary">点击保存</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -229,11 +238,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="myLargeModalLabel">复制列</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">复制列模版</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <div class="alert alert-success">技巧: 建一个只有 创建时间、创建人 这样的表 作为模版表</div>
+                        <div class="alert alert-success">技巧: 建一个只有创建人、 创建时间、租户id等需要作为公共字段的表作为模版表</div>
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="control-label">表名：</label>
@@ -444,7 +453,7 @@
                 </div>
                 <div class="modal-body ">
                     <code>双击可以全选，预览只显示一个实体</code>
-                    <pre @dblclick="selectText" id="preReviewClass" style="height:380px !important" >{{reviewClass}}</pre>
+                    <pre @dblclick="selectText" id="preReviewClass" style="height:380px !important">{{reviewClass}}</pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnClosePreviewEntity" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -488,7 +497,7 @@
             isView: false,
             viewName: null,
             tempUrl: "/rezero/template.html",
-            reviewClass:null
+            reviewClass: null
         },
         mounted() {
             this.bindDatabaseSelect();
@@ -524,8 +533,8 @@
 
                 var urlParameters = "&" + tools.objectToQueryString({
                     ClassName: txtSearch.value,
-                    __pageNumber: page, 
-                   __pageSize: tools.getValue("selPageSize"),
+                    __pageNumber: page,
+                    __pageSize: tools.getValue("selPageSize"),
                     DataBaseId: selDataBaseId.value,
                     OrderByType: this.sort,
                     OrderByName: this.sortName
@@ -638,13 +647,13 @@
                     .catch(error => {
                         this.error = error.message;
                     });
+                //初始化拖拽
+                let _that = this;
+                _that.initDrag();
             },
-            openEditNativeType: function (item) { 
+            openEditNativeType: function (item) {
                 this.currentColumn = item;
                 btnEditNativeType.click();
-            },  
-            removeColumns: function (index) {
-                this.columns.splice(index, 1);
             },
             addOrUpdateColumnInfoSubmit: function () {
                 var url = "/PrivateReZeroRoute/100003/SaveEntityColumnInfos"
@@ -664,8 +673,84 @@
                         this.error = error.message;
                     });
             },
-            pushColumns: function (item) {
-                this.columns.push({ TableId: item.TableId, IsNullable: true });
+            removeColumns: function (index) {
+                this.columns.splice(index, 1);
+            },
+            addFast: function () {
+                //去掉默认的一行
+                if (this.columns.length == 1) {
+                    this.columns.splice(0, 1);
+                }
+                var field = $("#public_field").val();
+                var fields = field.split(",");
+                for (var i = 0; i < fields.length; i++) {
+                    var f = fields[i];
+                    if (f && f.indexOf("|") > 0) {
+                        var arr = f.split("|");
+                        var nativeType = this.nativeTypes.find(nt => nt.Name === arr[1]);
+                        this.columns.push({
+                            TableId: this.editTableId,
+                            PropertyName: arr[0],
+                            PropertyType: nativeType.Value,
+                            Description: arr.length > 2 ? arr[2] : "",
+                            IsNullable: arr[0].toLowerCase() != "id" ? true : false,
+                            IsPrimarykey: arr[0].toLowerCase() == "id" ? true : false
+                        });
+                    }
+                }
+            },
+            pushColumns: function (item, index) {
+                this.columns.splice(index + 1, 0, { TableId: item.TableId, PropertyType: 0, IsNullable: true });
+            },
+            //初始化拖拽
+            initDrag: function () {
+                const $tableBody = $('#dragTable tbody');
+                let draggedRow = null;
+                $tableBody.find('tr').attr('draggable', 'true');
+                $tableBody.on('dragstart', 'tr', function (e) {
+                    draggedRow = this;
+                    $(this).addClass('dragging');
+                    e.originalEvent.dataTransfer.effectAllowed = 'move';
+                });
+
+                // 拖拽结束：清除样式
+                $tableBody.on('dragend', 'tr', function () {
+                    $(this).removeClass('dragging');
+                    $tableBody.find('tr').removeClass('drag-over');
+                    draggedRow = null;
+                });
+
+                // 拖拽经过
+                $tableBody.on('dragover', 'tr', function (e) {
+                    e.preventDefault(); //
+                    e.stopPropagation();
+                    if (this !== draggedRow) {
+                        $(this).addClass('drag-over');
+                    }
+                    return false;
+                });
+
+                // 拖拽离开：移除提示样式
+                $tableBody.on('dragleave', 'tr', function () {
+                    $(this).removeClass('drag-over');
+                });
+
+                // 放置：交换行位置
+                $tableBody.on('drop', 'tr', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $tableBody.find('tr').removeClass('drag-over');
+                    if (draggedRow !== this) {
+                        const $target = $(this);
+                        const $dragged = $(draggedRow);
+                        // 更新vueObj.columns的index
+                        const draggedIndex = $dragged.index();
+                        const targetIndex = $target.index();
+                        const temp = vueObj.columns[draggedIndex];
+                        vueObj.columns.splice(draggedIndex, 1);
+                        vueObj.columns.splice(targetIndex, 0, temp);
+                    }
+                });
             },
             openCompareDatabaseStructure: function () {
                 if (!this.selectedItems || this.selectedItems.length == 0) {
@@ -690,8 +775,7 @@
                 //    tools.alert("请选择实体");
                 //    return;
                 //}
-                if (this.isView && !this.viewName)
-                {
+                if (this.isView && !this.viewName) {
                     tools.alert("请填写视图名");
                     return;
                 }
@@ -701,7 +785,7 @@
                     .then(response => {
                         btnGenerateFileClose.click();
                         btnPreviewEntity.click();
-                        this.reviewClass=response.data; 
+                        this.reviewClass = response.data;
                     })
                     .catch(error => {
                         this.error = error.message;
@@ -799,24 +883,25 @@
             classNameInput: function () {
                 this.formData.DbTableName = this.formData.ClassName;
             },
-            move: function (index, tyep) {
-                if (tyep) {
-                    if (index == 0) {
-                        return;
-                    }
-                    var temp = this.columns[index];
-                    this.columns.splice(index, 1);
-                    this.columns.splice(index - 1, 0, temp);
-                }
-                else {
-                    if (index == this.columns.length - 1) {
-                        return;
-                    }
-                    var temp = this.columns[index];
-                    this.columns.splice(index, 1);
-                    this.columns.splice(index + 1, 0, temp);
-                }
-            },
+            //废弃
+            //move: function (index, tyep) {
+            //    if (tyep) {
+            //        if (index == 0) {
+            //            return;
+            //        }
+            //        var temp = this.columns[index];
+            //        this.columns.splice(index, 1);
+            //        this.columns.splice(index - 1, 0, temp);
+            //    }
+            //    else {
+            //        if (index == this.columns.length - 1) {
+            //            return;
+            //        }
+            //        var temp = this.columns[index];
+            //        this.columns.splice(index, 1);
+            //        this.columns.splice(index + 1, 0, temp);
+            //    }
+            //},
             sortAsc: function () {
                 this.sort = 0;
                 this.sortName = "ClassName";
@@ -867,9 +952,9 @@
                 var sql = editor.getValue("\r\n");
                 var url = "/PrivateReZeroRoute/100003/ExecuetSql";
                 axios.post(url, { databaseId: this.databaseId, sql: sql }, jwHeader)
-                    .then(response => { 
+                    .then(response => {
                         var editorResult = ace.edit("divAceEditorResult");
-                        editorResult.setValue(JSON.stringify(response.data, null, 4)); 
+                        editorResult.setValue(JSON.stringify(response.data, null, 4));
                         editorResult.selection.clearSelection();
                         this.error = null;
                     })
@@ -882,27 +967,27 @@
                 var sql = editor.getValue("\r\n");
                 var th = this;
                 axios.get("/PrivateReZeroRoute/100003/ExecuetSqlReturnExcel", {
-                    params: { 
+                    params: {
                         databaseId: this.databaseId, sql: sql
                     },
                     responseType: 'blob',
                     headers: jwHeader.headers
                 })
                     .then(function (response) {
-                        // 创建一个 Blob 对象，指向数据的 URL  
+                        // 创建一个 Blob 对象，指向数据的 URL
                         var url = window.URL.createObjectURL(new Blob([response.data]));
                         var link = document.createElement('a');
                         link.href = url;
 
-                        // 设置下载文件的名称，可以根据实际情况调整  
+                        // 设置下载文件的名称，可以根据实际情况调整
                         var fileName = 'sql.xlsx';
                         link.setAttribute('download', fileName);
 
-                        // 触发下载  
+                        // 触发下载
                         document.body.appendChild(link);
                         link.click();
 
-                        // 清理资源  
+                        // 清理资源
                         window.URL.revokeObjectURL(link.href);
                         document.body.removeChild(link);
                     })
@@ -923,7 +1008,7 @@
                 this.bindSqlResult();
                 btnDatabaseTool.click();
             },
-            clearSql: function() {
+            clearSql: function () {
                 var editor = ace.edit("divAceEditor");
                 editor.setValue("\r\n");
                 editor.selection.clearSelection();
@@ -932,8 +1017,7 @@
                 editorResult.setValue("\r\n");
                 editorResult.selection.clearSelection()
             },
-            bindSqlResult: function ()
-            {
+            bindSqlResult: function () {
                 var editor = ace.edit("divAceEditorResult");
                 editor.setOption("showPrintMargin", false);
                 editor.setTheme("ace/theme/twilight"); // 设置主题
@@ -944,11 +1028,10 @@
                 editor.setValue("\r\n");
                 editor.selection.clearSelection();
             },
-            openSetting: function ()
-            {
+            openSetting: function () {
                 btnSetting.click();
                 this.getSettingItem(1, 1);
-               
+
             },
             saveSetting: function () {
 
@@ -965,29 +1048,28 @@
                     headers: jwHeader.headers
                 })
                     .then(function (response) {
-                        // 创建一个 Blob 对象，指向数据的 URL  
+                        // 创建一个 Blob 对象，指向数据的 URL
                         var url = window.URL.createObjectURL(new Blob([response.data]));
                         var link = document.createElement('a');
                         link.href = url;
 
-                        // 设置下载文件的名称，可以根据实际情况调整  
-                        var fileName = $("#selDataBaseId option:selected").text() + '.xlsx'; 
+                        // 设置下载文件的名称，可以根据实际情况调整
+                        var fileName = $("#selDataBaseId option:selected").text() + '.xlsx';
                         link.setAttribute('download', fileName);
 
-                        // 触发下载  
+                        // 触发下载
                         document.body.appendChild(link);
                         link.click();
 
-                        // 清理资源  
+                        // 清理资源
                         window.URL.revokeObjectURL(link.href);
-                        document.body.removeChild(link); 
+                        document.body.removeChild(link);
                     })
                     .catch(function (error) {
                         console.error("Error downloading the Excel file:", error);
                     });
             },
-            getSettingItem: function (typeId, childTypeId)
-            {
+            getSettingItem: function (typeId, childTypeId) {
                 var url = "/PrivateReZeroRoute/100003/GetSetting";
                 var th = this;
                 axios.post(url, { typeId: typeId, childTypeId: childTypeId }, jwHeader)
@@ -1000,11 +1082,11 @@
                         this.data = null;
                     });
             },
-            saveSettingItem: function (typeId, childTypeId,value) {
+            saveSettingItem: function (typeId, childTypeId, value) {
                 var url = "/PrivateReZeroRoute/100003/UpdateSetting";
                 axios.post(url, { typeId: typeId, childTypeId: childTypeId, value: value }, jwHeader)
                     .then(response => {
-                        tools.alert("保存成功"); 
+                        tools.alert("保存成功");
                         btnSettingClose.click();
                         this.error = null;
                     })
@@ -1023,13 +1105,12 @@
                 btnGenerateFile.click();
             },
             openGenerateCodeByView: function () {
-            
+
                 this.isView = true;
                 btnGenerateFile.click();
             },
             submitGenerateFile: function () {
-                if (this.isView && !this.viewName)
-                {
+                if (this.isView && !this.viewName) {
                     tools.alert("视图名不能为空");
                     return;
                 }
@@ -1042,7 +1123,7 @@
                     ViewName: this.viewName
                 }, jwHeader)
                     .then(response => {
-                        if (response.data && response.data.message){
+                        if (response.data && response.data.message) {
                             tools.alert("生成出错:" + response.data.message);
                         } else {
                             tools.alert("已生成到目录" + response.data);
@@ -1052,13 +1133,12 @@
                         this.error = error.message;
                     });
             },
-            bindTemplates: function ()
-            {
+            bindTemplates: function () {
                 var th = this;
                 var url = "/PrivateReZeroRoute/100003/GetTemplateListByTypeId?typeId=1";
                 axios.get(url, jwHeader)
                     .then(response => {
-                        th.templates = response.data; 
+                        th.templates = response.data;
                         th.currentTemplate = th.templates[0];
                         th.currentTemplateId = th.templates[0].Id;
                     })
@@ -1066,10 +1146,22 @@
                         th.error = error.message;
                     });
             },
-            changeTemplate: function (template)
-            {
-                this.currentTemplate = this.templates.find(item => item.Id === this.currentTemplateId); 
+            changeTemplate: function (template) {
+                this.currentTemplate = this.templates.find(item => item.Id === this.currentTemplateId);
             }
         }
     });
 </script>
+<!--加入拖拽功能-->
+<!--<table class="table" id="dragTable">-->
+<!--<tr draggable="true">-->
+<style>
+    .table tr.dragging {
+        opacity: 0.5;
+        background-color: #e9f7fe;
+    }
+
+    .table tr.drag-over {
+        border-top: 2px solid #0d6efd;
+    }
+</style>
