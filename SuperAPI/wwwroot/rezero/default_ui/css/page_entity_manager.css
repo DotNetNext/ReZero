@@ -82,3 +82,12 @@
     top: -30px;
     left: 370px;
 }
+ 
+.table tr.dragging {
+    opacity: 0.5;
+    background-color: #e9f7fe;
+}
+
+.table tr.drag-over {
+    border-top: 2px solid #0d6efd;
+}
