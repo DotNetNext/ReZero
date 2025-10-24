@@ -196,7 +196,7 @@ namespace ReZero.SuperAPI
         /// <returns>The URL with replaced placeholders.</returns>
         private static string GetUrl(string url, TemplateEntitiesGen templateEntitiesGen)
         {
-            url = url.Replace(PubConst.Common_Format0, templateEntitiesGen.ClassName).Replace(PubConst.Common_Format1, templateEntitiesGen.TableName);
+            url = url.Replace(PubConst.Common_Format0, templateEntitiesGen.ClassName?.Trim()).Replace(PubConst.Common_Format1, templateEntitiesGen.TableName);
             return url;
         }
 
