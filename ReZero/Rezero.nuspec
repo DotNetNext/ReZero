@@ -14,7 +14,7 @@
 		<tags>低代码 Zero 超级API  API 导出文档</tags>
 		<dependencies>
 			<dependency id="ClosedXML" version="0.102.2" />
-			<dependency id="SqlSugarCore" version="5.1.4.193" />
+			<dependency id="SqlSugarCore" version="5.1.4.207" />
 			<dependency id="System.Linq.Dynamic.Core" version="1.6.0.2" />
 			<dependency id="Microsoft.CodeAnalysis.CSharp.Scripting" version="4.10.0" /> 
 		</dependencies>
