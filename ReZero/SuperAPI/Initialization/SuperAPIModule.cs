@@ -31,6 +31,12 @@ namespace ReZero.SuperAPI
                 AddTransientServices(services, _apiOptions);
                 InitDynamicAttributeApi();
             }
+            var delSwagger = !(options?.SuperApiOptions?.UiOptions?.ShowNativeApiDocument == true);
+            var db = App.PreStartupDb!;
+            db.Updateable<ZeroInterfaceCategory>()
+                .Where(it => it.Id == InterfaceCategoryInitializerProvider.Id1)
+                .SetColumns(it => it.IsDeleted == delSwagger)
+                .ExecuteCommand();
         }
 
         private static void InitCors(IServiceCollection services, SuperAPIOptions apiOptions)
