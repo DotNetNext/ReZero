@@ -217,6 +217,18 @@ namespace ReZero.SuperAPI
         {
             return new MethodApi().ExecTemplateByViewWithoutCreatingFiles(databaseId, viewName, isView, templateId);
         }
+        [ApiMethod(nameof(InternalInitApi.DeleteEntity), GroupName = nameof(ZeroEntityInfo), Url = PubConst.InitApi_DeleteEntity)]
+        public bool  DeleteEntity(string ids)
+        {
+            var db = App.Db;
+            var idArray=db.Utilities.DeserializeObject<List<long>>(ids);
+            db.Updateable<ZeroEntityInfo>()
+                .SetColumns(it=>new ZeroEntityInfo()
+                {
+                    IsDeleted=true
+                }).Where(it => idArray.Contains(it.Id)).ExecuteCommand();
+            return true;
+        }
         #endregion
 
         #region Token

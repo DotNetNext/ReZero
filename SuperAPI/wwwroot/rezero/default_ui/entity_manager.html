@@ -570,7 +570,7 @@
                 if (!confirm("确定要删除选中的实体吗？")) {
                     return;
                 }
-                var url = "/PrivateReZeroRoute/100003/DeleteEntityInfoBatch";
+                var url = "/PrivateReZeroRoute/100003/DeleteSelectedEntities";
                 axios.post(url, { ids: this.selectedItems }, jwHeader)
                     .then(response => {
                         if (response.data && response.data.message) {

@@ -381,6 +381,9 @@ namespace ReZero.SuperAPI
         [ChineseTextAttribute("获取License")]
         [EnglishTextAttribute("Get license")]
         public const long GetLicenseId = 80;
+        [ChineseTextAttribute("删除实体")]
+        [EnglishTextAttribute("Delete Entity")]
+        public const long DeleteEntityId = 81;
 
         private static ZeroInterfaceList GetNewItem(Action<ZeroInterfaceList> action)
         {
