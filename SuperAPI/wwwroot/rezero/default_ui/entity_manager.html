@@ -36,6 +36,7 @@
                     <a class="btn btn-purple m-r-10" @click="openGenerateCode()" data-toggle="tooltip" data-original-title="根据实体生成文件" href="#!"><i class="mdi mdi-language-csharp"></i>实体生成器</a>
                     <a class="btn btn-primary m-r-10" @click="openGenerateCodeByView()" data-toggle="tooltip" data-original-title="根据视图生成文件" href="#!"><i class="mdi mdi-language-csharp"></i>视图生成器</a>
                     <a class="btn btn-cyan m-r-10" @click="openSetting()" data-toggle="tooltip" data-original-title="实体管理个性化配置" href="#!"><i class="mdi mdi-account-settings-variant"></i> 配置</a>
+                    <a class="btn btn-danger m-r-10" @click="deleteSelectedEntities()" data-toggle="tooltip" data-original-title="批量删除选中实体" href="#!"><i class="mdi mdi-delete"></i> 删除</a>
                 </div>
             </div>
             <div class="card-body">
@@ -95,7 +96,7 @@
                 @@page_control.html
             </div>
         </div>
-    </div>
+    </div>  
     <!--插入或者新增-->
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="gridSystemModal" style="display: none;">
         <div class="modal-dialog" role="document">
@@ -560,6 +561,30 @@
                 } else {
                     localStorage.delId = item.Id;
                 }
+            },
+            deleteSelectedEntities: function () {
+                if (!this.selectedItems || this.selectedItems.length === 0) {
+                    tools.alert("请先选择要删除的实体");
+                    return;
+                }
+                if (!confirm("确定要删除选中的实体吗？")) {
+                    return;
+                }
+                var url = "/PrivateReZeroRoute/100003/DeleteEntityInfoBatch";
+                axios.post(url, { ids: this.selectedItems }, jwHeader)
+                    .then(response => {
+                        if (response.data && response.data.message) {
+                            tools.alert(response.data.message);
+                        }
+                        this.error = null;
+                        this.onSearch();
+                        this.selectedItems = [];
+                        document.getElementById('check-all').checked = false;
+                    })
+                    .catch(error => {
+                        this.error = error.message;
+                        this.data = null;
+                    });
             },
             openEditDiv: function (item) {
                 var urlById = "/PrivateReZeroRoute/100003/GetEntityInfoById?id=" + item.Id;
