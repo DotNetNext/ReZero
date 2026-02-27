@@ -88,6 +88,7 @@ namespace ReZero.SuperAPI
                     dynamicInterfaceContext.ServiceProvider = service;
                     interInfo.DataModel!.ServiceProvider = service;
                     if (path!=null&&path.EqualsCase(PubConst.Jwt_TokenUrl)) SuperAPIModule._apiOptions!.InterfaceOptions.SuperApiAop = new DefaultSuperApiAop();
+                    if (path != null && path.EqualsCase(PubConst.InitApi_GetCurrentUser)) SuperAPIModule._apiOptions!.InterfaceOptions.SuperApiAop = new DefaultSuperApiAop();
                     await SuperAPIModule._apiOptions!.InterfaceOptions!.SuperApiAop!.OnExecutingAsync(dynamicInterfaceContext);
                     await InstanceManager.AuthorizationAsync(context, dynamicInterfaceContext);
                     var data = await dataService.ExecuteAction(interInfo.DataModel!);
